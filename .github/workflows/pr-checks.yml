@@ -80,5 +80,8 @@ jobs:
       - name: Install test dependencies
         run: npm ci --ignore-scripts --prefix tests
 
+      - name: Prepare test configuration
+        run: cp default/config.yaml config.yaml
+
       - name: Run unit tests
         run: npm run test:unit --prefix tests
