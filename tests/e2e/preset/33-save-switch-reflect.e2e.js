@@ -58,7 +58,7 @@ async function setMainPromptContent(page, content) {
     // prompt-manager UI's edit-and-save flow is build-variable; the
     // resulting state always lives at chatCompletionSettings.prompts[<main>].content.
     await page.evaluate((c) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const oai = ctx.chatCompletionSettings;
         const main = (oai.prompts || []).find(p => p?.identifier === 'main');
         if (main) main.content = c;

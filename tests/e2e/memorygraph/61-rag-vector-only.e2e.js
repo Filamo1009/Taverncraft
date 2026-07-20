@@ -145,7 +145,7 @@ async function enableMgAndSelectRag(page) {
         // user turns, suppressing them from the recall selection. Turn the
         // window off so the assertion exercises the RAG ranker itself, not
         // the post-filter.
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const s = ctx.extensionSettings?.memory_graph;
         if (s) s.recentRawTurns = 0;
     });
@@ -183,7 +183,7 @@ test.describe('#61 — RAG recall mode reaches the seeded graph via real chat se
         // (cliff lantern). The send drives the GENERATION_AFTER_WORLD_INFO_SCAN
         // listener → safeInjectMemoryPrompts → runRagRecall.
         await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const settings = ctx.extensionSettings?.memory_graph;
             const main = await import('/scripts/extensions/memory-graph/main.js');
             const vi = await import('/scripts/extensions/memory-graph/vector-index.js');
@@ -213,7 +213,7 @@ test.describe('#61 — RAG recall mode reaches the seeded graph via real chat se
         // the prompt. This is the same store field rendered by the
         // "View Last Injection" button.
         const trace = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const main = await import('/scripts/extensions/memory-graph/main.js');
             const store = await main.ensureMemoryStoreLoaded(ctx);
             return store?.lastRecallTrace || [];

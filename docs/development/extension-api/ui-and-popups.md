@@ -80,7 +80,7 @@ callGenericPopup(
 Function-style shortcut equivalent to `new Popup(...).show()`. Use this when you don't need to hold a reference to the popup instance.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 // Confirm
 const result = await ctx.callGenericPopup(
@@ -138,7 +138,7 @@ Recommended API for blocking the UI during a long operation. `loader.show()` ret
 | `onHide` | `null` | Called when the loader is hidden |
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 const handle = ctx.loader.show({
     message: 'Importing...',
@@ -187,7 +187,7 @@ Loads an HTML template from `scripts/extensions/${extensionName}/${templateId}.h
 For a third-party extension at `scripts/extensions/third-party/MyExt/dialog.html`:
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const html = await ctx.renderExtensionTemplateAsync('third-party/MyExt', 'dialog', {
     title: 'Settings',
     items: ['a', 'b', 'c'],
@@ -226,7 +226,7 @@ Returns the rendered HTML for a message, applying:
 Use this when rendering message-like content in plugin UI (e.g., a preview popup) so it matches the styling of the chat.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const html = ctx.messageFormatting(
     rawText,
     'Preview',
@@ -242,10 +242,10 @@ const html = ctx.messageFormatting(
 context.markdownConverter: showdown.Converter
 ```
 
-The shared `showdown.Converter` instance configured with Luker's project-wide markdown rules (emoji, mid-word underscores, tables, GitHub-flavored extensions, etc.). Use `.makeHtml(source)` to render markdown the same way Luker's chat pipeline does, without rebuilding a converter and having to mirror its option set. Live binding — read fresh each access (the underlying converter is rebuilt when markdown options change).
+The shared `showdown.Converter` instance configured with Taverncraft's project-wide markdown rules (emoji, mid-word underscores, tables, GitHub-flavored extensions, etc.). Use `.makeHtml(source)` to render markdown the same way Taverncraft's chat pipeline does, without rebuilding a converter and having to mirror its option set. Live binding — read fresh each access (the underlying converter is rebuilt when markdown options change).
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const html = ctx.markdownConverter.makeHtml('**hello**');
 ```
 
@@ -260,7 +260,7 @@ new ModuleWorkerWrapper(updateFn: () => Promise<void>): { update(): Promise<void
 Mutex wrapper for periodic worker functions — prevents overlapping ticks when the previous run hasn't finished. Typical pattern:
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 const worker = new ctx.ModuleWorkerWrapper(async () => {
     await doExpensiveTick();
@@ -320,7 +320,7 @@ const { renderLukerTabs } = SillyTavern.getContext();
 | `moduleName` | `string` | `extension_settings` bucket key (e.g. `'memory_graph'`) |
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 const html = ctx.renderLukerTabs({
     id: 'my_ext_tabs',
@@ -366,7 +366,7 @@ const { renderFieldHelpButton } = SillyTavern.getContext();
 | `targetSelectId` | `string?` | Optional id of a nearby `<select>` used for context-sensitive help |
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 const labelHtml = `<label>Query rewrite ${ctx.renderFieldHelpButton({
     title: 'About query rewrite',

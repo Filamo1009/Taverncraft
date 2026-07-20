@@ -79,7 +79,7 @@ export async function openIterStudio(page, variant, { timeoutMs = 20_000 } = {})
     const trigger = page.locator(`${v.openTrigger}:visible`).first();
     await trigger.waitFor({ state: 'visible', timeout: timeoutMs });
     await trigger.click();
-    // The iter-studio popup is a Luker popup with the iter shell mounted
+    // The iter-studio popup is a Taverncraft popup with the iter shell mounted
     // inside. Wait for the variant-specific Send button to render.
     const sendBtn = page.locator(`[${v.actionAttr}="send"]`).last();
     await sendBtn.waitFor({ state: 'visible', timeout: timeoutMs });
@@ -202,7 +202,7 @@ export async function rollbackIterBatch(page, variant, { timeoutMs = 10_000, tur
 }
 
 /**
- * Close the currently-open iter-studio popup by clicking the Luker popup
+ * Close the currently-open iter-studio popup by clicking the Taverncraft popup
  * close (or X) button. Falls back to Escape if none found.
  */
 export async function closeIterStudio(page) {

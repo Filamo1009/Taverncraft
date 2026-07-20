@@ -1,10 +1,10 @@
 # LAN Sync
 
-LAN Sync keeps two Luker instances on the same network in sync — desktop and phone, two computers, anything reachable over LAN. Only changed data crosses the wire; full re-uploads aren't needed.
+LAN Sync keeps two Taverncraft instances on the same network in sync — desktop and phone, two computers, anything reachable over LAN. Only changed data crosses the wire; full re-uploads aren't needed.
 
 ## When to use which
 
-Luker has two ways to move data between devices:
+Taverncraft has two ways to move data between devices:
 
 - **[Migrate](/guide/migration)** — one-time, full-data transfer. Best for first install on a new device.
 - **LAN Sync** (this page) — repeated, two-way, incremental. Best when both devices are in regular use.
@@ -81,7 +81,7 @@ Never synced (each device keeps its own):
 
 If a sync overwrites something you wanted back, open the LAN Sync panel and click **Undo last sync**. It rewinds to the state immediately before that sync. The other device is not affected (the undo is local).
 
-For a stronger safety net before a risky sync, use Luker's full ZIP backup (Settings → Back up & Restore) and then sync.
+For a stronger safety net before a risky sync, use Taverncraft's full ZIP backup (Settings → Back up & Restore) and then sync.
 
 ## Storage modes
 

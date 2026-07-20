@@ -9,7 +9,7 @@
 //
 // Tested here directly instead of through studio.js so we can pin
 // contract without dragging studio.js's ST-context / jQuery import
-// graph into jest (studio.js reads `Luker.getContext()` at module
+// graph into jest (studio.js reads `Taverncraft.getContext()` at module
 // load).
 //
 // Path semantics: root is the schema array, so paths use lodash-style

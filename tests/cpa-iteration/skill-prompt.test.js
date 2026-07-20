@@ -1,7 +1,7 @@
 // tests/cpa-iteration/skill-prompt.test.js
 import { describe, test, expect, beforeAll } from '@jest/globals';
 
-// skill-prompt.js is pure (no DOM, no Luker globals, no transitive script.js
+// skill-prompt.js is pure (no DOM, no Taverncraft globals, no transitive script.js
 // pull) — no module mocks needed. The catalog fetch is supplied by the caller
 // via opts.listSkillsInScope, so the test threads stubs directly.
 

@@ -3,7 +3,7 @@
 Shared helpers for the expanded e2e suite under `tests/e2e/<area>/`.
 
 These helpers exist so each batch of e2e specs:
-- spawns its own Luker server on an isolated port + data directory
+- spawns its own Taverncraft server on an isolated port + data directory
 - shares the same login/idle/send/restart primitives
 - uses the same RP-immersive fixtures (no "say hi" placeholder content)
 
@@ -13,7 +13,7 @@ import from here.
 
 ## Modules
 
-- `server.js`   — spawn / probe-ready / restart / kill a Luker server on a
+- `server.js`   — spawn / probe-ready / restart / kill a Taverncraft server on a
   configurable port + dataRoot. Each spec calls `startServer({batchKey})`
   which picks a port from the batch's reserved range and APFS-clones a
   fresh data directory from the shared seed.

@@ -56,10 +56,22 @@ describe('TavernCardValidator', () => {
             expect(v.validate()).toBe(false);
         });
 
-        test('prefers V1 when card satisfies both V1 and V2', () => {
+        test('prefers an explicit V2 spec over mirrored V1 fields', () => {
             const card = { ...makeV1Card(), ...makeV2Card() };
             const v = new TavernCardValidator(card);
-            expect(v.validate()).toBe(1);
+            expect(v.validate()).toBe(2);
+        });
+
+        test('prefers an explicit V3 spec over mirrored V1 fields', () => {
+            const card = { ...makeV1Card(), ...makeV3Card() };
+            const v = new TavernCardValidator(card);
+            expect(v.validate()).toBe(3);
+        });
+
+        test('does not accept a malformed explicit V3 card as V1', () => {
+            const card = { ...makeV1Card(), ...makeV3Card(), data: null };
+            const v = new TavernCardValidator(card);
+            expect(v.validate()).toBe(false);
         });
     });
 

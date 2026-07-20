@@ -230,7 +230,7 @@ clearObsoleteSessions: async () => {
 
 ## 三层 API 暴露
 
-按 Luker API 约定，外壳每个能力都在三层暴露 —— 与 `edits-lib` 一致：
+按 Taverncraft API 约定，外壳每个能力都在三层暴露 —— 与 `edits-lib` 一致：
 
 ```js
 // Layer 1 —— 直接 ESM import（仓库内扩展）

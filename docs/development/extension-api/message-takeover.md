@@ -11,7 +11,7 @@ The handle is a pure text / reasoning buffer. It does not touch `chat`, emit ST 
 The core `Generate()` path emits `event_types.GENERATE_TAKEOVER_DISPATCH` after the LLM payload is fully assembled but before any dispatch. Subscribers claim takeover by filling `eventData.takeoverHandle`:
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 
 context.eventSource.on(context.eventTypes.GENERATE_TAKEOVER_DISPATCH, async (eventData) => {
     if (!shouldTakeover(eventData)) return;
@@ -192,5 +192,5 @@ Other plugins are free to depend on `orchestrator/editor-ops.js` or implement th
 | Layer | Access |
 |-------|--------|
 | Layer 1 | `import { createMessageEditorHandle, GENERATE_TAKEOVER_DISPATCH, TakeoverError } from 'public/scripts/message-takeover.js'` |
-| `getContext()` | `Luker.getContext().createMessageEditorHandle(...)` + `Luker.getContext().eventTypes.GENERATE_TAKEOVER_DISPATCH` |
+| `getContext()` | `Taverncraft.getContext().createMessageEditorHandle(...)` + `Taverncraft.getContext().eventTypes.GENERATE_TAKEOVER_DISPATCH` |
 | ext `ctx` | `ctx.lukerContext.createMessageEditorHandle(...)` + `ctx.lukerContext.eventTypes.GENERATE_TAKEOVER_DISPATCH` |

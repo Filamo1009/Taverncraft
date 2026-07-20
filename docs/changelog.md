@@ -1,6 +1,6 @@
 # Changelog
 
-> 🚧 A full changelog is still being assembled. The list below is a feature snapshot of the current Luker release.
+> 🚧 A full changelog is still being assembled. The list below is a feature snapshot of the current Taverncraft release.
 
 ## Current version
 
@@ -8,7 +8,7 @@
 
 - **Search tools support regex** — `draft_search` (new) and the existing `chat_search` / `lorebook_search` / `skill_search` all accept a `pattern` (JavaScript RegExp source) and return grep `-n` style output. Critics use this to systematically scan for vocabulary patterns instead of relying on eye-reading.
 - **Runtime lorebook browse tools** — orchestration agents (loop / director main + sub-agents / agenda agents / spec nodes) gain `world_book_list` (visible books overview) and `lorebook_list` (per-book entry index, grep-style `uid name key` rows); `lorebook_get` now accepts a `uid` handle alongside `entry_key`. Iteration Studio prompts updated so the editor's tool surface and the runtime agent's tool surface are no longer conflated, and a hard rule forbids meta-narration of runtime mechanism inside the prompts that runtime agents read.
-- Custom tools — extend agents in any of the four orchestration modes with handwritten tools, tools from other Luker extensions, or bridged SillyTavern function tools.
+- Custom tools — extend agents in any of the four orchestration modes with handwritten tools, tools from other Taverncraft extensions, or bridged SillyTavern function tools.
 - Handwritten custom tools travel with the profile; profile-scoped tools attached to a character override are exported with the card.
 - Iteration Studio sees the visible custom tools and can toggle them on or off per profile.
 
@@ -54,7 +54,7 @@
 
 - **edits-lib now supports two integration patterns**: wrapping it in the iteration-studio shell for popup-friendly surfaces, or using the library primitives directly for fullscreen / custom-UI. CardApp Studio is the in-tree reference for direct usage.
 
-- **CPA rebuilt on the iteration-studio shell** (SP-4 of the adapter migration, closes Plan 2). The 309-line `dialog-ui.js` is deleted; CPA's existing IDE-style business helpers (`handleApplyDraft`, `handleRollbackToMessage`, `handleMessageDiff`) are unchanged and now run inside the shared shell. With SP-4 landed, all five AI-driven editing surfaces in Luker (orchestrator, memory-graph, CEA CardApp Studio, CEA Character Editor, CPA) share one shell, one storage model, one edits-lib, and one conflict-resolution UI.
+- **CPA rebuilt on the iteration-studio shell** (SP-4 of the adapter migration, closes Plan 2). The 309-line `dialog-ui.js` is deleted; CPA's existing IDE-style business helpers (`handleApplyDraft`, `handleRollbackToMessage`, `handleMessageDiff`) are unchanged and now run inside the shared shell. With SP-4 landed, all five AI-driven editing surfaces in Taverncraft (orchestrator, memory-graph, CEA CardApp Studio, CEA Character Editor, CPA) share one shell, one storage model, one edits-lib, and one conflict-resolution UI.
 - **CEA CardApp Studio rebuilt on the iteration-studio shell** (SP-2 of the adapter migration). The standalone session / popup / diff infrastructure has been replaced with the SP-1 v2 adapter contract: `live()` is the single authority, the 4 file-write tools route through `normalizeToolCallToEdit`, the 2 file-read tools through `executeControlToolCall`, and `commit()` diffs against the previous snapshot before fanning out to the existing `saveFileContent / deleteFile` helpers. The old `cardapp_studio_sessions` character-sidecar bucket is wiped once on first open after upgrade; CardApp files on disk are untouched.
 - **CEA Character Editor rebuilt on the iteration-studio shell** (SP-3 of the adapter migration). The lorebook-sync analysis popup is replaced with a multi-turn iteration session. Edits a character card and its lorebook in one adapter; introduces 3 CEA-owned custom edits-lib ops (`lorebook_entry_add / update / remove`) keyed by entry uid. The shell now invokes `adapter.registerCustomOps(registry)` once per open. Old `lorebookSyncHistory` settings entry is wiped on first open; character cards + lorebooks on disk are untouched.
 - **Iteration Studio adapter contract v2 (IDE-style).** The shell no longer carries a `workingProfile` snapshot; the adapter's `live()` is the single authority. In-tree orchestrator + memory-graph adapters migrated. Out-of-tree adapters require updates (see `docs/development/extension-api/iteration-studio.md`). Old iteration-studio session data is wiped once per adapter on first open after upgrade; live artifacts (preset files, character cards, settings) are untouched. CEA and CPA adapters arrive in subsequent releases.

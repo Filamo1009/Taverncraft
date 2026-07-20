@@ -9,7 +9,7 @@ import {
 
 const PASS_SAFETY = () => ({ codes: [], errors: [] });
 
-const SAMPLE = `# Luker config
+const SAMPLE = `# Taverncraft config
 dataRoot: ./data
 
 # storage block
@@ -47,7 +47,7 @@ describe('rewriteStorageBlock — pure transform', () => {
             mysqlInline: { url: 'mysql://a:b@db:3306/x' },
             postgresInline: null,
         });
-        expect(out).toContain('# Luker config');
+        expect(out).toContain('# Taverncraft config');
         expect(out).toContain('# storage block');
         // Inline enum hint after `mode:` survives (yaml v2 keeps trailing comments).
         expect(out).toMatch(/mode: mysql[^\n]*'fs' \| 'sqlite' \| 'mysql' \| 'postgres'/);
@@ -125,7 +125,7 @@ describe('persistStorageBackendToConfig — file IO', () => {
         expect(result).toEqual({ ok: true });
         const written = await fsPromises.readFile(configPath, 'utf8');
         expect(written).toMatch(/mode: sqlite/);
-        expect(written).toContain('# Luker config');
+        expect(written).toContain('# Taverncraft config');
     });
 
     test('happy path: mysql inline url + poolSize lands in file', async () => {

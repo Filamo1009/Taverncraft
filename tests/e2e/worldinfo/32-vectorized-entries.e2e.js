@@ -241,7 +241,7 @@ async function enableVectorsWI(page) {
     // again via the widget for safety.
     await page.evaluate(() => {
         const jq = window.jQuery || window.$;
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const cm = ctx.extensionSettings?.connectionManager;
         const embedProfiles = (cm?.profiles || []).filter(p => p.mode === 'embed');
         if (embedProfiles.length === 0) throw new Error('no embed profile available');
@@ -272,14 +272,14 @@ test.describe('#32 — Vectorized WI entries', () => {
         await awaitMainUI(page, server.baseURL);
         await selectCharacterByName(page, 'Ash Navigator');
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             if (!ctx) return false;
             const id = ctx.characterId;
             if (typeof id !== 'number' && typeof id !== 'string') return false;
             return ctx.characters?.[id]?.data?.extensions?.world === 'vector-book';
         }, { timeout: 10_000 });
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -322,14 +322,14 @@ test.describe('#32 — Vectorized WI entries', () => {
         await awaitMainUI(page, server.baseURL);
         await selectCharacterByName(page, 'Ash Navigator');
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             if (!ctx) return false;
             const id = ctx.characterId;
             if (typeof id !== 'number' && typeof id !== 'string') return false;
             return ctx.characters?.[id]?.data?.extensions?.world === 'vector-book';
         }, { timeout: 10_000 });
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 

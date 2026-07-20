@@ -1,6 +1,6 @@
 # Preset World Info
 
-Preset World Info is an improvement introduced by Luker that allows you to bind specific World Info (Lorebooks) to presets. When switching presets, the associated World Info is automatically activated.
+Preset World Info is an improvement introduced by Taverncraft that allows you to bind specific World Info (Lorebooks) to presets. When switching presets, the associated World Info is automatically activated.
 
 ## Use Cases
 

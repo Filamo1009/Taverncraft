@@ -35,8 +35,8 @@
  *   - `getSettings`               accessor for the current global settings
  */
 
-const getContext = Luker.getContext;
-const UNSET_VALUE = Luker.getContext().constants.unset;
+const getContext = Taverncraft.getContext;
+const UNSET_VALUE = Taverncraft.getContext().constants.unset;
 
 let deps = {
     MODULE_NAME: 'memory_graph',

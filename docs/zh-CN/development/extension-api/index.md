@@ -1,6 +1,6 @@
 # 扩展 API 参考
 
-本文档是 Luker 扩展 API 的完整参考，面向插件开发者。所有 API 均通过 `Luker.getContext()` 暴露。完整参考分为以下子页面：
+本文档是 Taverncraft 扩展 API 的完整参考，面向插件开发者。所有 API 均通过 `Taverncraft.getContext()` 暴露。完整参考分为以下子页面：
 
 | 页面 | 涵盖内容 |
 | --- | --- |
@@ -20,16 +20,16 @@
 ## 全局入口
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 ```
 
 | 别名 | 说明 |
 |------|------|
-| `Luker.getContext()` | 推荐使用 |
+| `Taverncraft.getContext()` | 推荐使用 |
 | `SillyTavern.getContext()` | 兼容别名 |
 | `st.getContext()` | 兼容别名 |
 
-新插件应统一使用 `Luker.getContext()`。兼容别名仅为迁移期保留。
+新插件应统一使用 `Taverncraft.getContext()`。兼容别名仅为迁移期保留。
 
 ## 命名空间速查
 
@@ -56,9 +56,9 @@ const context = Luker.getContext();
 
 ## 与 SillyTavern 的 API 差异
 
-Luker 基于 SillyTavern 构建，但在 API 层面有以下主要差异：
+Taverncraft 基于 SillyTavern 构建，但在 API 层面有以下主要差异：
 
-| 领域 | SillyTavern | Luker |
+| 领域 | SillyTavern | Taverncraft |
 |------|-------------|-------|
 | 聊天持久化 | 整文件覆写 | Patch-first（RFC 6902 增量更新） |
 | 聊天绑定状态 | 仅 `chat_metadata` | 新增聊天状态机制 + 楼层状态 |
@@ -70,14 +70,14 @@ Luker 基于 SillyTavern 构建，但在 API 层面有以下主要差异：
 | 生成钩子 | 基础事件 | 新增 `GENERATION_CONTEXT_READY`、`GENERATION_BEFORE_WORLD_INFO_SCAN` 等细粒度钩子 |
 | 事件排序 | 注册顺序 | 支持 `priority`、`pluginOrder`、`makeFirst`/`makeLast` |
 | 正则运行时 | 无插件 API | `registerManagedRegexProvider()` |
-| 搜索工具 | 无插件 API | `Luker.searchTools` 全局 API |
+| 搜索工具 | 无插件 API | `Taverncraft.searchTools` 全局 API |
 | 函数调用 | 基础 `ToolManager` | 纯文本模式支持 + 连接级独立开关 + `sendOpenAIRequest` 预设覆盖 |
 | 连接配置 | 全局单一 | `context.presets.resolve()` 支持按预设解析连接配置 |
 | 宏引擎 | 字符串替换 | 结构化 `macros.register()`，带处理器上下文、参数、分类 |
 | 角色对象 | 朴素 V1/V2 字段 | Proxy，带 V2 规范化和旧版写入弃用警告 |
 
 > [!IMPORTANT]
-> 优先使用 `Luker.getContext()` 提供的 API，而非直接调用底层 HTTP 端点。Context API 封装了 patch-first 语义、冲突处理和重试逻辑，直接调用端点需要自行处理这些细节。
+> 优先使用 `Taverncraft.getContext()` 提供的 API，而非直接调用底层 HTTP 端点。Context API 封装了 patch-first 语义、冲突处理和重试逻辑，直接调用端点需要自行处理这些细节。
 
 ## 相关页面
 

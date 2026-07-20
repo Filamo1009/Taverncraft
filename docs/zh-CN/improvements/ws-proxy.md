@@ -1,6 +1,6 @@
 # WebSocket 代理
 
-Luker 提供了 WebSocket（WS）代理功能，通过持久的 WebSocket 隧道传输 AI 生成请求，替代传统的 HTTP 请求方式。这在网络不稳定或受限的环境中尤其有用。
+Taverncraft 提供了 WebSocket（WS）代理功能，通过持久的 WebSocket 隧道传输 AI 生成请求，替代传统的 HTTP 请求方式。这在网络不稳定或受限的环境中尤其有用。
 
 ## 什么是 WS 代理
 
@@ -149,15 +149,15 @@ WS_MSG -> DISPATCH.GOOD_MOCK: "派发请求"
 以下场景特别适合使用 WS 代理：
 
 - **移动设备使用** — 手机网络切换（Wi-Fi ↔ 蜂窝）时保持生成不中断
-- **远程服务器部署** — Luker 部署在远程服务器上，通过不稳定的网络访问
+- **远程服务器部署** — Taverncraft 部署在远程服务器上，通过不稳定的网络访问
 - **长文本生成** — 生成较长的回复时，减少因超时导致的失败
 - **企业网络环境** — 绕过可能干扰长连接的网络设备
 
 ::: tip
-WS 代理是 Luker 的内部传输优化，对用户来说是透明的——你不需要进行额外配置，Luker 会在适当的时候自动使用。
+WS 代理是 Taverncraft 的内部传输优化，对用户来说是透明的——你不需要进行额外配置，Taverncraft 会在适当的时候自动使用。
 :::
 
 ## 相关页面
 
 - [性能优化](/zh-CN/improvements/performance) — 其他性能改进
-- [生成层](/zh-CN/improvements/generation-layer) — Luker 的统一生成架构
+- [生成层](/zh-CN/improvements/generation-layer) — Taverncraft 的统一生成架构

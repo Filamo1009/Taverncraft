@@ -1,10 +1,10 @@
 # 角色卡開發者指南
 
-本指南面向角色卡創作者，介紹如何利用 Luker 的擴充能力建立更豐富、更智慧的角色卡。Luker 在保持與 SillyTavern 角色卡格式完全相容的基礎上，提供了多項增強功能。
+本指南面向角色卡創作者，介紹如何利用 Taverncraft 的擴充能力建立更豐富、更智慧的角色卡。Taverncraft 在保持與 SillyTavern 角色卡格式完全相容的基礎上，提供了多項增強功能。
 
 ## 角色卡擴充欄位
 
-Luker 使用角色卡 `data.extensions` 中的多個命名空間儲存擴充資料。這些欄位不會影響角色卡在 SillyTavern 中的正常使用——不識別的欄位會被忽略。
+Taverncraft 使用角色卡 `data.extensions` 中的多個命名空間儲存擴充資料。這些欄位不會影響角色卡在 SillyTavern 中的正常使用——不識別的欄位會被忽略。
 
 ### data.extensions 擴充欄位結構
 
@@ -43,7 +43,7 @@ Luker 使用角色卡 `data.extensions` 中的多個命名空間儲存擴充資�
 
 ## 綁定預設和人設
 
-Luker 支援在角色卡中綁定推薦的生成預設和使用者人設。當使用者載入角色卡時，可以一鍵套用創作者推薦的設定，確保最佳的角色扮演體驗。
+Taverncraft 支援在角色卡中綁定推薦的生成預設和使用者人設。當使用者載入角色卡時，可以一鍵套用創作者推薦的設定，確保最佳的角色扮演體驗。
 
 綁定資訊儲存在角色卡的狀態檔案中：
 
@@ -92,7 +92,7 @@ Luker 支援在角色卡中綁定推薦的生成預設和使用者人設。當�
 
 ## CardApp 開發
 
-[CardApp](/zh-TW/features/cardapp) 是 Luker 的角色卡內嵌應用系統，允許你在角色卡中嵌入互動式 JavaScript 應用。
+[CardApp](/zh-TW/features/cardapp) 是 Taverncraft 的角色卡內嵌應用系統，允許你在角色卡中嵌入互動式 JavaScript 應用。
 
 ### 適用場景
 
@@ -197,7 +197,7 @@ CardApp 的上下文物件提供以下 API：
 | API | 說明 |
 |-----|------|
 | `ctx.getWorldBooks()` | 取得當前角色可見的世界書名稱列表（角色主世界書 + 角色附加世界書 + 聊天綁定 + 全域啟用，已去重）。傳 `{ withSource: true }` 可拿到帶 `source: 'character' \| 'character_aux' \| 'chat' \| 'global'` 的標註列表 |
-| `ctx.getCharacterAuxWorldBooks()` | 取得當前角色綁定的附加世界書（非主世界書）。這些與主世界書一同參與提示詞組裝，但透過 Luker 的世界書編輯器單獨管理 |
+| `ctx.getCharacterAuxWorldBooks()` | 取得當前角色綁定的附加世界書（非主世界書）。這些與主世界書一同參與提示詞組裝，但透過 Taverncraft 的世界書編輯器單獨管理 |
 | `ctx.getWorldBookEntries(bookName)` | 取得指定世界書的所有條目 |
 | `ctx.createWorldBookEntry(bookName, fields?)` | 建立世界書條目，回傳新條目物件（含 uid） |
 | `ctx.updateWorldBookEntry(bookName, uid, patch)` | 更新世界書條目（淺合併） |
@@ -207,7 +207,7 @@ CardApp 的上下文物件提供以下 API：
 
 | API | 說明 |
 |-----|------|
-| `ctx.eventSource` | Luker 的內部事件匯流排。訂閱用 `ctx.eventSource.on(eventName, handler)`，取消訂閱用 `ctx.eventSource.off(eventName, handler)`。事件名在 `ctx.lukerContext.eventTypes` 上（`CHAT_CHANGED`、`MESSAGE_DELETED`、`MESSAGE_SWIPED` 等）。每次 `.on()` 都搭配 `ctx.onDispose(() => ctx.eventSource.off(eventName, handler))`，CardApp 卸載時監聽器才會被移除乾淨。 |
+| `ctx.eventSource` | Taverncraft 的內部事件匯流排。訂閱用 `ctx.eventSource.on(eventName, handler)`，取消訂閱用 `ctx.eventSource.off(eventName, handler)`。事件名在 `ctx.lukerContext.eventTypes` 上（`CHAT_CHANGED`、`MESSAGE_DELETED`、`MESSAGE_SWIPED` 等）。每次 `.on()` 都搭配 `ctx.onDispose(() => ctx.eventSource.off(eventName, handler))`，CardApp 卸載時監聽器才會被移除乾淨。 |
 | `ctx.addEventListener(target, event, handler, options?)` | 訂閱 DOM 元素上的事件。`target` 通常是 `ctx.container` 或 `querySelector` 的回傳值；用於容器內的 UI 事件如 click、keydown、scroll。CardApp 卸載時監聽器會自動移除。 |
 | `ctx.setInterval(fn, ms)` | `setInterval` 的封裝，卸載時控制代碼自動清理。 |
 | `ctx.setTimeout(fn, ms)` | `setTimeout` 的封裝，卸載時控制代碼自動清理。 |
@@ -248,7 +248,7 @@ CardApp 運行在受限環境中：
 
 ## 世界書最佳實踐
 
-世界書（World Info / Lorebook）是角色卡的重要組成部分。以下是在 Luker 中使用世界書的最佳實踐：
+世界書（World Info / Lorebook）是角色卡的重要組成部分。以下是在 Taverncraft 中使用世界書的最佳實踐：
 
 ### 1. 合理組織條目
 
@@ -258,7 +258,7 @@ CardApp 運行在受限環境中：
 
 ### 2. 利用預設綁定世界書
 
-Luker 支援將世界書綁定到預設。當使用者切換預設時，關聯的世界書會自動啟動。這適用於需要不同世界觀設定的場景。
+Taverncraft 支援將世界書綁定到預設。當使用者切換預設時，關聯的世界書會自動啟動。這適用於需要不同世界觀設定的場景。
 
 ### 3. 搜尋工具與世界書整合
 
@@ -266,7 +266,7 @@ Luker 支援將世界書綁定到預設。當使用者切換預設時，關聯�
 
 ### 4. 控制注入深度和順序
 
-合理設定世界書條目的注入深度（depth）和排序（order），確保關鍵設定在提示詞中的位置合理。Luker 的搜尋工具提供了 `lorebookDepth`、`lorebookRole`、`lorebookEntryOrder` 等設定項來精細控制。
+合理設定世界書條目的注入深度（depth）和排序（order），確保關鍵設定在提示詞中的位置合理。Taverncraft 的搜尋工具提供了 `lorebookDepth`、`lorebookRole`、`lorebookEntryOrder` 等設定項來精細控制。
 
 ### 5. 與記憶圖配合
 
@@ -285,9 +285,9 @@ Luker 支援將世界書綁定到預設。當使用者切換預設時，關聯�
 
 ### 建議
 
-- 在角色卡描述中註明推薦使用 Luker 以獲得完整體驗
-- 如果角色卡依賴 CardApp，說明所需的 Luker 版本
-- 提供不依賴 Luker 擴充功能的基礎體驗，將 Luker 特性作為增強
+- 在角色卡描述中註明推薦使用 Taverncraft 以獲得完整體驗
+- 如果角色卡依賴 CardApp，說明所需的 Taverncraft 版本
+- 提供不依賴 Taverncraft 擴充功能的基礎體驗，將 Taverncraft 特性作為增強
 
 ## 相關頁面
 

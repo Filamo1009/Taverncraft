@@ -1007,7 +1007,7 @@ function wrapExecWithSession(exec) {
  * can no-op without throwing.
  */
 function loadOrchestratorRegistrar() {
-    const orch = Luker.getContext().getExtensionApi('orchestrator');
+    const orch = Taverncraft.getContext().getExtensionApi('orchestrator');
     if (!orch || typeof orch.registerOrchestrationTool !== 'function') return null;
     return orch;
 }

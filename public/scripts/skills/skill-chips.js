@@ -10,14 +10,14 @@
  * The component is mounted via `mountSkillChips(host, opts)`. It writes
  * the entire `value` shape via `opts.onChange(nextValue)` on every
  * mutation; the caller is responsible for splicing that into its profile
- * editor and triggering the Luker save flow.
+ * editor and triggering the Taverncraft save flow.
  *
  * Pure helpers (chipKindFor, computeAddOptions, applyChipToggle,
  * applyChipRemove, applyChipAdd, renderSkillChipsHtml) are exported for
  * unit testing without a DOM. The interactive `mountSkillChips` binds
  * delegated `click` handlers on the host element, addressing chips via
  * `data-skill-chip-action` / `data-skill-chip-name` attributes — matching
- * the convention used by other Luker UI panels.
+ * the convention used by other Taverncraft UI panels.
  *
  * Inheritance semantics: agent-level chip rows accept an `inheritFrom`
  * (the mode-level value). When present, the component renders an

@@ -2,7 +2,7 @@
 
 Skills 是给 agent 用的知识包。导演派发某个 sub-agent（`intent_scout`、`voice_critic`、`plot_brainstormer` 等）时，会顺便把"它能读哪些 skills"的清单和几个查询工具塞给它，它判断哪条相关再去拉正文。整个机制就这点东西。
 
-难的是写出一条真能改变输出的 skill。Luker 自带二十多条作为起点——比如 `director-character-voice-zh`，规定每个角色（包括三无、android 这种冷感人设）首先都是有感官与本能的活的人，禁止情绪戏里出现 "她注意到对方瞳孔散大" 这种观察分析体；它默认就挂在导演 profile 里，每次导演跑，所有 sub-agent 都看得到。
+难的是写出一条真能改变输出的 skill。Taverncraft 自带二十多条作为起点——比如 `director-character-voice-zh`，规定每个角色（包括三无、android 这种冷感人设）首先都是有感官与本能的活的人，禁止情绪戏里出现 "她注意到对方瞳孔散大" 这种观察分析体；它默认就挂在导演 profile 里，每次导演跑，所有 sub-agent 都看得到。
 
 自带集合覆盖不到的纪律，就要自己补一条。两条路：让 AI 迭代工作台替你写（推荐），或者自己手写。
 

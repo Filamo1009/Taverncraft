@@ -194,7 +194,7 @@ vectorsDescribe('#90 — vectors vectorize+query+inject (real ollama embedder)',
 
         // Confirm the vectors extension picked up the bootstrapped profile.
         const wiring = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const v = ctx.extensionSettings?.vectors;
             const cm = ctx.extensionSettings?.connectionManager;
             const profile = (cm?.profiles || []).find(p => p?.id === v?.embeddingProfileId);
@@ -233,7 +233,7 @@ vectorsDescribe('#90 — vectors vectorize+query+inject (real ollama embedder)',
         // This is the same function the module worker invokes; we are
         // simply running it to completion before the assertion turn.
         const syncResult = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const v = ctx.extensionSettings?.vectors;
             if (!v?.embeddingProfileId) return { reason: 'no-profile' };
             // Drive the module's exported worker by toggling enable so the
@@ -249,7 +249,7 @@ vectorsDescribe('#90 — vectors vectorize+query+inject (real ollama embedder)',
 
         // Confirm the vectra store on disk actually has hashes — that is
         // the public proof that real embedding happened end-to-end.
-        const chatId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+        const chatId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
         const beforeQueryRequests = mock.requests.length;
 
         // ── Send the query turn. The vectors interceptor runs first.

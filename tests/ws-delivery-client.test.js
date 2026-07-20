@@ -101,6 +101,20 @@ describe('lukerDelivery client', () => {
         await expect(reader.read()).rejects.toThrow(/lost/);
     });
 
+    test('unsubscribe before head releases both head wait and stream reader', async () => {
+        const { createLukerDelivery } = await import('../public/scripts/ws-delivery.js');
+        const delivery = createLukerDelivery();
+        await delivery.connect(async () => 'tik');
+        const { stream, headPromise, unsubscribe } = delivery.subscribe('req-abort-before-head', {});
+        const abortError = new Error('user aborted');
+        abortError.name = 'AbortError';
+
+        unsubscribe(abortError);
+
+        await expect(headPromise).resolves.toMatchObject({ status: 0, error: abortError });
+        await expect(stream.getReader().read()).rejects.toMatchObject({ name: 'AbortError' });
+    });
+
     test('reconnect after WS close, resume outstanding subs', async () => {
         const { createLukerDelivery } = await import('../public/scripts/ws-delivery.js');
         const delivery = createLukerDelivery({ reconnectBackoffMs: 5 });

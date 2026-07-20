@@ -12,7 +12,7 @@
  *
  *   1. Outbound requests — `requestToolCallWithRetry` (single forced
  *      function) and `requestToolCallsWithRetry` (multi tool, allowed
- *      names list). Both wrap `context.generateTask` from the Luker
+ *      names list). Both wrap `context.generateTask` from the Taverncraft
  *      extension API: the helper resolves the connection profile + LLM
  *      preset internally, so callers pass `apiPresetName` /
  *      `llmPresetName` strings and a pre-resolved `runtimeWorldInfo`

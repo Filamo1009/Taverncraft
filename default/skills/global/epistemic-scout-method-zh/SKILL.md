@@ -2,7 +2,7 @@
 name: epistemic-scout-method-zh
 description: epistemic_scout method — cross-source per-character knowledge boundary mapping (Knows / Doesn't-know / Omniscience-traps) to prevent POV breaches.
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 

@@ -1,10 +1,10 @@
 # 外掛註冊正則
 
-外掛註冊正則是 Luker 引入的擴充機制，允許外掛動態註冊正則表達式規則到 SillyTavern 的正則處理系統中。
+外掛註冊正則是 Taverncraft 引入的擴充機制，允許外掛動態註冊正則表達式規則到 SillyTavern 的正則處理系統中。
 
 ## 概述
 
-SillyTavern 的正則系統允許使用者定義文字替換規則，在 AI 回覆顯示前對文字進行處理（例如格式化、過濾特定內容等）。Luker 擴展了這個系統，允許外掛作為正則規則的「提供者」（Provider），動態註冊和管理正則規則。
+SillyTavern 的正則系統允許使用者定義文字替換規則，在 AI 回覆顯示前對文字進行處理（例如格式化、過濾特定內容等）。Taverncraft 擴展了這個系統，允許外掛作為正則規則的「提供者」（Provider），動態註冊和管理正則規則。
 
 ## 運作方式
 
@@ -26,4 +26,4 @@ SillyTavern 的正則系統允許使用者定義文字替換規則，在 AI 回�
 
 - [記憶圖](/zh-TW/features/memory-graph) — 外掛註冊正則的主要使用者
 - [Extension API 參考](/zh-TW/development/extension-api/) — 完整的擴充 API 文件
-- [前端外掛開發](/zh-TW/development/frontend-plugin) — 如何開發 Luker 外掛
+- [前端外掛開發](/zh-TW/development/frontend-plugin) — 如何開發 Taverncraft 外掛

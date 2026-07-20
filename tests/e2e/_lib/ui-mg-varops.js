@@ -38,7 +38,7 @@ export async function openMgGraphView(page, { timeoutMs = 15_000 } = {}) {
 export async function openMgSchemaEditor(page, { timeoutMs = 15_000 } = {}) {
     await openMgSettingsPanel(page);
     await page.locator('#luker_rpg_memory_open_schema_editor').click();
-    // Schema editor mounts inside a Luker popup; wait for at least one
+    // Schema editor mounts inside a Taverncraft popup; wait for at least one
     // schema field row to render or the popup to be visible.
     const popup = page.locator('.popup:visible').last();
     await popup.waitFor({ state: 'visible', timeout: timeoutMs });

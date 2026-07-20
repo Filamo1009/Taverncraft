@@ -2,7 +2,7 @@
 
 一个 Skill 是一个目录：一份必需文件（`SKILL.md`）+ 可选子文件夹。创作一个 Skill 就是给它取名字、写 frontmatter、写一段 agent 能读的正文。仅此而已。
 
-本页讲 Luker（与 Anthropic）期望的约定，沿途要做的选择，以及拿两个出厂 Skill 逐一拆解的真实例子。
+本页讲 Taverncraft（与 Anthropic）期望的约定，沿途要做的选择，以及拿两个出厂 Skill 逐一拆解的真实例子。
 
 ## 写一个 skill 的两种方式
 
@@ -28,7 +28,7 @@ my-skill-name/
 └── scripts/          # 可选 —— 前向兼容预留，v1 不会执行
 ```
 
-只有 `SKILL.md` 是必需的。其它文件夹是约定 —— Luker 不强制，但和 Anthropic 布局一致，Skill 保持可移植。
+只有 `SKILL.md` 是必需的。其它文件夹是约定 —— Taverncraft 不强制，但和 Anthropic 布局一致，Skill 保持可移植。
 
 ::: info 子文件夹共用同一个 `skill_read` 工具
 agent 不会按子文件夹得到不同的工具。它们用 `skill_read({ name, path })` 加相对路径：`skill_read({ name: "my-skill", path: "references/checklist.md" })`。子文件夹纯粹是组织手段。
@@ -128,7 +128,7 @@ frontmatter：
 name: director-anti-cliche-zh
 description: 叙事写作的反八股模式 —— 禁用措辞、AI 自造标签、契约词汇、升华八股。
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 ```
@@ -148,7 +148,7 @@ frontmatter：
 name: event-summary-rules-zh
 description: 给 memory_curator 用的事件摘要写作规则（V10）—— 7 步流程、闸门循环、反复述纪律。
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 ```

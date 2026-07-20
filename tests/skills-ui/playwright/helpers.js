@@ -1,14 +1,14 @@
 /**
  * Shared helpers for the skills-UI Playwright smoke specs.
  *
- * Mirrors the inline-helper pattern used by other Luker e2e suites
+ * Mirrors the inline-helper pattern used by other Taverncraft e2e suites
  * (`tests/frontend/IterWorkspaceSplit.e2e.js`, etc.) but lifts the
  * three load-bearing helpers into a module: the smoke suite has
  * three spec files and each needs `awaitMainUI`, the extensions
  * drawer open routine, and the orchestrator inline-drawer routine.
  *
  * Suite-wide conventions:
- *   - Tests rely on a running Luker dev server. The Playwright config
+ *   - Tests rely on a running Taverncraft dev server. The Playwright config
  *     resolves `PLAYWRIGHT_BASE_URL` (defaulting to 127.0.0.1:8000); if
  *     no server responds, Playwright surfaces a connection error
  *     immediately rather than masking the failure. The smoke spec must
@@ -35,7 +35,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // stable location regardless of where `playwright test` is launched
 // from. Playwright runs tests with cwd = the playwright.config.js
 // directory by default, but we want absolute paths to be unambiguous
-// across worktree boundaries (Luker tests live in `tests/`, the docs
+// across worktree boundaries (Taverncraft tests live in `tests/`, the docs
 // folder is at repo root). We write under `docs/public/_screenshots/`
 // (not bare `docs/_screenshots/`) so Vitepress's static-asset pipeline
 // serves them at /_screenshots/... — both `npm run dev` and the
@@ -62,8 +62,8 @@ export function screenshotPath(scenario, step) {
 }
 
 /**
- * Wait for the main Luker UI to be interactive. Mirrors the pattern
- * used by every Luker e2e file: hit "/", possibly click a userSelect
+ * Wait for the main Taverncraft UI to be interactive. Mirrors the pattern
+ * used by every Taverncraft e2e file: hit "/", possibly click a userSelect
  * tile, then wait for the preloader element to be removed.
  *
  * @param {import('@playwright/test').Page} page
@@ -163,7 +163,7 @@ export async function openSkillManagerPanel(page) {
  */
 export async function ensureSkillsApiAvailable(page) {
     const hasApi = await page.evaluate(() => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         return Boolean(ctx?.skills && typeof ctx.skills.list === 'function');
     });
     expect(hasApi, 'context.skills API must be exposed by the dev server under test').toBe(true);
@@ -193,7 +193,7 @@ export async function activateConnectionProfile(page) {
     // settings at all, the dropdown waitForFunction below burns 30s for
     // nothing. Probe the settings shape first (no DOM access).
     const hasAnyProfile = await page.evaluate(() => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         const profiles = ctx?.extensionSettings?.connectionManager?.profiles;
         return Array.isArray(profiles) && profiles.length > 0;
     }).catch(() => false);
@@ -212,7 +212,7 @@ export async function activateConnectionProfile(page) {
         // returns '' which the caller treats as "skip".
     }
     return await page.evaluate(async () => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         if (!ctx) return '';
         const profiles = ctx.extensionSettings?.connectionManager?.profiles;
         if (!Array.isArray(profiles) || !profiles.length) return '';
@@ -249,7 +249,7 @@ export async function activateConnectionProfile(page) {
  */
 export async function ensureCharacterLoaded(page) {
     return await page.evaluate(async () => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         if (!ctx) return '';
         const cur = ctx.characters?.[ctx.characterId];
         if (cur?.avatar) return String(cur.avatar);
@@ -283,7 +283,7 @@ export async function ensureCharacterLoaded(page) {
  */
 export async function getActiveCharacterAvatar(page) {
     return await page.evaluate(() => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         const cur = ctx?.characters?.[ctx?.characterId];
         return String(cur?.avatar || '');
     });
@@ -307,7 +307,7 @@ export async function getActiveCharacterAvatar(page) {
 export async function ensureDirectorProfileInitialized(page) {
     // Step 1: wait for the orchestrator settings bucket to exist.
     await page.waitForFunction(() => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         const settings = ctx?.extensionSettings?.orchestrator;
         return Boolean(settings && typeof settings === 'object');
     }, null, { timeout: 30000 });
@@ -316,7 +316,7 @@ export async function ensureDirectorProfileInitialized(page) {
     // setting it inline (idempotently — only when absent) is faster
     // and less brittle than driving a UI path that triggers the lazy.
     await page.evaluate(async () => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         const settings = ctx.extensionSettings.orchestrator;
         if (settings.directorProfile && typeof settings.directorProfile === 'object') return;
         try {
@@ -391,7 +391,7 @@ export function buildSyntheticEmbed({ name, description, bodyTail = '' }) {
 export async function cleanupSkill(page, scope, name) {
     await page.evaluate(async ({ scope, name }) => {
         try {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             const api = ctx?.skills;
             if (!api || typeof api.delete !== 'function') return;
             await api.delete(scope, name);

@@ -2,7 +2,7 @@
 
 Skills are knowledge packs your agents read on demand. The director hands each dispatched sub-agent (`intent_scout`, `voice_critic`, `plot_brainstormer`, ...) a short list of "skills you're allowed to consult" plus a few tools to pull a skill's content when relevant. That's the whole mechanism.
 
-The hard part is writing a skill that actually changes how the agents write. Luker ships about two dozen as a starting point — `director-character-voice-zh`, for example, is the rule that every character (including cold archetypes like androids and three-no types) must be written as a living being first; it bans observation/analysis verbs at emotional moments and prose like *"she noted that his pupils dilated"*. It's already pinned in the default director profile, so every dispatch sees it.
+The hard part is writing a skill that actually changes how the agents write. Taverncraft ships about two dozen as a starting point — `director-character-voice-zh`, for example, is the rule that every character (including cold archetypes like androids and three-no types) must be written as a living being first; it bans observation/analysis verbs at emotional moments and prose like *"she noted that his pupils dilated"*. It's already pinned in the default director profile, so every dispatch sees it.
 
 When the bundled set doesn't cover a discipline you care about, you add your own. Two paths: let the AI Iteration Studio write one for you (recommended), or write it by hand.
 

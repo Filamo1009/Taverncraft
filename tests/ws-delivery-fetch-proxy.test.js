@@ -36,7 +36,10 @@ describe('installFetchProxy', () => {
             });
         });
         global.crypto = { randomUUID: () => 'test-uuid-fixed' };
-        global.window = global.window || {};
+        // Each test installs an intentionally idempotent fetch proxy. Give it
+        // a fresh window realm so a prior test's disposer does not make the
+        // next install a no-op with stale mocks.
+        global.window = {};
     });
 
     test('passes through non-proxied URLs untouched', async () => {

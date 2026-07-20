@@ -1,10 +1,10 @@
 # 插件注册正则
 
-插件注册正则是 Luker 引入的扩展机制，允许插件动态注册正则表达式规则到 SillyTavern 的正则处理系统中。
+插件注册正则是 Taverncraft 引入的扩展机制，允许插件动态注册正则表达式规则到 SillyTavern 的正则处理系统中。
 
 ## 概述
 
-SillyTavern 的正则系统允许用户定义文本替换规则，在 AI 回复显示前对文本进行处理（例如格式化、过滤特定内容等）。Luker 扩展了这个系统，允许插件作为正则规则的「提供者」（Provider），动态注册和管理正则规则。
+SillyTavern 的正则系统允许用户定义文本替换规则，在 AI 回复显示前对文本进行处理（例如格式化、过滤特定内容等）。Taverncraft 扩展了这个系统，允许插件作为正则规则的「提供者」（Provider），动态注册和管理正则规则。
 
 ## 工作方式
 
@@ -26,4 +26,4 @@ SillyTavern 的正则系统允许用户定义文本替换规则，在 AI 回复�
 
 - [记忆图](/zh-CN/features/memory-graph) — 插件注册正则的主要使用者
 - [Extension API 参考](/zh-CN/development/extension-api/) — 完整的扩展 API 文档
-- [前端插件开发](/zh-CN/development/frontend-plugin) — 如何开发 Luker 插件
+- [前端插件开发](/zh-CN/development/frontend-plugin) — 如何开发 Taverncraft 插件

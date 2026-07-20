@@ -53,7 +53,7 @@ let currentInitVoiceMapPromise = null;
 
 const DEFAULT_VOICE_MARKER = '[Default Voice]';
 const DISABLED_VOICE_MARKER = 'disabled';
-const SYSTEM_VOICE_ALIASES = new Set(['Luker System', 'SillyTavern System']);
+const SYSTEM_VOICE_ALIASES = new Set(['Taverncraft System', 'Luker System', 'SillyTavern System']);
 
 export function isSystemVoiceAlias(name) {
     return SYSTEM_VOICE_ALIASES.has(name);

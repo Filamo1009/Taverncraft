@@ -54,17 +54,17 @@ test('sanity (SQLite): migrate fs->sqlite then run the first-turn happy path', a
     await selectCharacterByName(page, 'Seraphina');
 
     await page.waitForFunction(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
     }, { timeout: 10_000 }).catch(() => {});
 
     const before = mock.requests.length;
-    const initialChatLen = await page.evaluate(() => window.Luker.getContext().chat?.length || 0);
+    const initialChatLen = await page.evaluate(() => window.Taverncraft.getContext().chat?.length || 0);
 
     await sendMessageAndAwaitReply(page, 'I walked the cliff path. The wind is cold but the lantern holds.');
 
     const finalChat = await page.evaluate(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return ctx.chat.map(m => ({ is_user: !!m.is_user, mes: String(m.mes || '').slice(0, 80) }));
     });
     expect(finalChat.length).toBeGreaterThanOrEqual(initialChatLen + 2);

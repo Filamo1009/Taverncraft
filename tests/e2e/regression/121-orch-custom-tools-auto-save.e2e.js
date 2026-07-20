@@ -117,7 +117,7 @@ test.describe('#121 — orchestrator customTools[] auto-save', () => {
         // (it only re-renders the popup). Post-reload the drawer will
         // rebuild from settings; that's the load-bearing verification.
         const persistedNames = await page.evaluate(() => {
-            const ext = window.Luker?.getContext()?.extensionSettings?.orchestrator;
+            const ext = window.Taverncraft?.getContext()?.extensionSettings?.orchestrator;
             const loopLib = ext?.presetLibraries?.loop || {};
             const activeId = ext?.activePresetIds?.loop || '';
             const active = loopLib[activeId] || null;

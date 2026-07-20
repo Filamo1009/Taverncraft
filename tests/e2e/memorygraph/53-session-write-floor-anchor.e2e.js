@@ -141,7 +141,7 @@ test.describe('#53 — session-write floor anchor: delete-floor truncates MG rec
         // Disable the delete-confirmation popup so deleteMessageViaUI does
         // not need a follow-up OK click.
         await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             if (ctx.powerUserSettings) ctx.powerUserSettings.confirm_message_delete = false;
         });
 
@@ -185,7 +185,7 @@ test.describe('#53 — session-write floor anchor: delete-floor truncates MG rec
 
         // Verify the sentinels are visible BEFORE the delete.
         const beforeDelete = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const mg = ctx.getExtensionApi?.('memory-graph');
             const session = await mg?.openSession?.(ctx);
             if (!session) return { titles: [], chatLen: ctx.chat.length };
@@ -203,7 +203,7 @@ test.describe('#53 — session-write floor anchor: delete-floor truncates MG rec
 
         // Delete the LAST assistant message via the real trash icon.
         const lastAssistantId = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             for (let i = ctx.chat.length - 1; i >= 0; i--) {
                 if (!ctx.chat[i]?.is_user) return i;
             }
@@ -227,7 +227,7 @@ test.describe('#53 — session-write floor anchor: delete-floor truncates MG rec
         // sentinels on disk. Give it time before invalidating the cache
         // and reading fresh.
         await page.waitForFunction((prevLen) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.chat.length === prevLen - 1;
         }, beforeDelete.chatLen, { timeout: 15_000 });
         // Yield generously so the MG MESSAGE_DELETED listener can complete
@@ -247,7 +247,7 @@ test.describe('#53 — session-write floor anchor: delete-floor truncates MG rec
         });
 
         const afterDelete = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const mg = ctx.getExtensionApi?.('memory-graph');
             const session = await mg?.openSession?.(ctx);
             if (!session) return { titles: [] };

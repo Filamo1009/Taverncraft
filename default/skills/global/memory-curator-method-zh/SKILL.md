@@ -2,7 +2,7 @@
 name: memory-curator-method-zh
 description: memory_curator method — leaf events 用 prose body + 三段可选 section (不可逆 / 未结 / 原文摘录) 格式 (见 event-summary-rules-zh); rollup compress 用 depth-aware outline 格式 + 跨 children 主题归并; thread title 必须编码 resolution 条件; 写作纪律 (§2 颗粒度 / §2.2 心理 A/B/C / §4 十类黑名单) leaf 与 rollup 共享。
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
 ---
 
 # memory-curator-method-zh

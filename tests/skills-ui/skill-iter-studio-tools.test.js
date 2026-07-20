@@ -45,7 +45,7 @@ const mockSkillsApi = {
     moveScope: jest.fn(),
     delete: jest.fn(),
 };
-globalThis.Luker = {
+globalThis.Taverncraft = {
     getContext: () => ({
         skills: mockSkillsApi,
         lib: { yaml: { parse: parseYaml, stringify: stringifyYaml } },

@@ -5,7 +5,7 @@
 //
 // Driving notes:
 //
-//  * `_lib/fixtures.js#writeCharacter` writes only a sidecar JSON; Luker's
+//  * `_lib/fixtures.js#writeCharacter` writes only a sidecar JSON; Taverncraft's
 //    character endpoint reads card data exclusively from PNG `chara`/`ccv3`
 //    chunks, so the sidecar is ignored. We use the batch-local
 //    `_helpers.js#writeCharacterWithChunks` to embed the card JSON properly.
@@ -59,7 +59,7 @@ test.describe('#99 — persona switch propagates to user name and prompt', () =>
         await selectCharacterByName(page, 'Ash the Cartographer');
 
         // Wait for the greeting to settle so we don't race MESSAGE_RECEIVED.
-        await page.waitForFunction(() => (window.Luker?.getContext?.()?.chat?.length ?? 0) >= 1,
+        await page.waitForFunction(() => (window.Taverncraft?.getContext?.()?.chat?.length ?? 0) >= 1,
             { timeout: 10_000 }).catch(() => {});
 
         // Sanity: the seeded persona shows up in the persona panel.
@@ -72,9 +72,9 @@ test.describe('#99 — persona switch propagates to user name and prompt', () =>
         // /persona-set + the persona-panel click both funnel through.
         await selectPersonaByName(page, PERSONA_NAME);
 
-        await page.waitForFunction((expected) => window.Luker.getContext().name1 === expected,
+        await page.waitForFunction((expected) => window.Taverncraft.getContext().name1 === expected,
             PERSONA_NAME, { timeout: 10_000 });
-        expect(await page.evaluate(() => window.Luker.getContext().name1)).toBe(PERSONA_NAME);
+        expect(await page.evaluate(() => window.Taverncraft.getContext().name1)).toBe(PERSONA_NAME);
 
         // Close the persona panel so it doesn't intercept the send-area click.
         await closeRightNavDrawer(page).catch(() => {});
@@ -87,7 +87,7 @@ test.describe('#99 — persona switch propagates to user name and prompt', () =>
 
         // The user-attributed message in the chat must carry name=Iyana.
         const lastUserBubble = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const last = [...ctx.chat].reverse().find(m => m.is_user);
             return last ? { name: last.name, mes: last.mes } : null;
         });

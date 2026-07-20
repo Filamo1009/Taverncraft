@@ -20,8 +20,8 @@
 import { describe, test, expect, jest, beforeAll, beforeEach } from '@jest/globals';
 import { STATE_ERROR_REASONS } from '../../public/scripts/state-errors.js';
 
-// Minimal Luker shim for the discovery executors that import getContext.
-globalThis.Luker = {
+// Minimal Taverncraft shim for the discovery executors that import getContext.
+globalThis.Taverncraft = {
     getContext: () => ({
         chat: [],
         characters: [],

@@ -1,6 +1,6 @@
 # 函数调用运行时
 
-Luker 内置了统一的函数调用（Function Calling）运行时，让 AI 角色能够执行结构化的操作——搜索信息、管理记忆、操作状态——而不仅仅是生成文本。无论底层模型是否原生支持 tool call，Luker 都提供一致的调用体验。
+Taverncraft 内置了统一的函数调用（Function Calling）运行时，让 AI 角色能够执行结构化的操作——搜索信息、管理记忆、操作状态——而不仅仅是生成文本。无论底层模型是否原生支持 tool call，Taverncraft 都提供一致的调用体验。
 
 ## 统一的函数调用框架
 
@@ -47,7 +47,7 @@ TEXT.T_EXEC -> INJECT
 
 ## 原生模式
 
-当连接的模型原生支持 Function Calling 时（如 OpenAI、Claude、Gemini），Luker 使用模型的原生 tool call 格式。运行时会：
+当连接的模型原生支持 Function Calling 时（如 OpenAI、Claude、Gemini），Taverncraft 使用模型的原生 tool call 格式。运行时会：
 
 1. 将注册的工具转换为模型要求的 schema 格式
 2. 在请求中附加工具定义
@@ -59,7 +59,7 @@ TEXT.T_EXEC -> INJECT
 
 ## 纯文本模式
 
-对于不支持原生 Function Calling 的模型，Luker 提供了纯文本协议作为降级方案。运行时会在 System Prompt 中自动注入工具使用说明，引导模型以特定的文本格式输出工具调用请求。
+对于不支持原生 Function Calling 的模型，Taverncraft 提供了纯文本协议作为降级方案。运行时会在 System Prompt 中自动注入工具使用说明，引导模型以特定的文本格式输出工具调用请求。
 
 纯文本模式的工作流程：
 

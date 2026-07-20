@@ -161,7 +161,7 @@ test.describe('#125 — orchestrator preset switch persists across page reload',
         // In-memory: settings.activePresetIds.spec must reflect the switch.
         await expect.poll(async () => {
             return await page.evaluate(() => {
-                const ctx = window.Luker.getContext();
+                const ctx = window.Taverncraft.getContext();
                 return ctx.extensionSettings.orchestrator?.activePresetIds?.spec || '';
             });
         }, { timeout: 10_000 }).toBe(EXTRA_PRESET_ID);

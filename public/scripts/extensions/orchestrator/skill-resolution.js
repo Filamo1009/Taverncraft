@@ -1,7 +1,7 @@
 /**
  * Skill-resolution helpers for orchestrator runtimes.
  *
- * Bridges Luker's skill inventory (`skillsApi.list`) with the orchestrator's
+ * Bridges Taverncraft's skill inventory (`skillsApi.list`) with the orchestrator's
  * per-agent visibility model. Each orchestrator mode profile (director / loop /
  * spec / agenda) plus each per-agent config (sub-agent, spec node, agenda
  * worker, loop's single agent) carries an optional `skills: { visible, deny }`
@@ -38,7 +38,7 @@
  * refresh.
  */
 
-const skillsApi = Luker.getContext().skills;
+const skillsApi = Taverncraft.getContext().skills;
 
 let cachedInventory = null;
 let cacheStamp = 0;

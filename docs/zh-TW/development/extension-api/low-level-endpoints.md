@@ -1,7 +1,7 @@
 # 底層端點參考
 
 > [!WARNING]
-> 以下端點僅供進階除錯和無法使用 `Luker.getContext()` 的整合場景參考。它們是同源 Web 應用路由，不是主要的外掛 API 契約。正常外掛開發應使用其他擴充 API 子頁面所述的 Context API。
+> 以下端點僅供進階除錯和無法使用 `Taverncraft.getContext()` 的整合場景參考。它們是同源 Web 應用路由，不是主要的外掛 API 契約。正常外掛開發應使用其他擴充 API 子頁面所述的 Context API。
 
 外掛也可以透過 context API 讀寫世界書條目；下面列出世界書的原始 HTTP 路由。
 

@@ -19,7 +19,7 @@ This coupling causes significant frustration in practice:
 
 ## Field Classification Mechanism
 
-Luker classifies each field in a preset as either a "connection field" or a "generation parameter field":
+Taverncraft classifies each field in a preset as either a "connection field" or a "generation parameter field":
 
 - **Connection fields** — API source, custom URL, model name, reverse proxy address, proxy password, etc.
 - **Generation parameter fields** — Temperature, Top-P, max tokens, etc.
@@ -42,7 +42,7 @@ ST: "SillyTavern: coupled" {
   SWITCH1 -> ST_CONN: "accidentally overwritten" {style.stroke-dash: 3}
 }
 
-LK: "Luker: decoupled" {
+LK: "Taverncraft: decoupled" {
   LK_PRESET: "Chat completion preset"
   LK_CONN: "Connection profile"
   LK_GEN: "Generation params only"

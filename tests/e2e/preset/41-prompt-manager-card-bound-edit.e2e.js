@@ -147,7 +147,7 @@ test.describe('#41 — saveOpenAIPreset dispatch: card-bound selected + matching
         // Read the runtime openai_settings state: the global with SHARED_NAME
         // should still hold GLOBAL_TEMPERATURE (0.55), NOT the edited value.
         const globalBodyTemperature = await page.evaluate((n) => {
-            const openai = window.Luker?.getContext?.()?.openai;
+            const openai = window.Taverncraft?.getContext?.()?.openai;
             const settings = openai?.settings;
             const names = openai?.settingNames;
             if (!Array.isArray(settings) || !names) return null;

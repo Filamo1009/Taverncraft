@@ -14,7 +14,7 @@
 
 import { describe, test, expect } from '@jest/globals';
 
-globalThis.Luker = globalThis.Luker || {
+globalThis.Taverncraft = globalThis.Taverncraft || {
     getContext: () => ({
         translate: (s) => String(s ?? ''),
         addLocaleData: () => {},

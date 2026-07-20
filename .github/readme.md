@@ -6,24 +6,23 @@
 
 English | [German](readme-de_de.md) | [中文](readme-zh_cn.md) | [繁體中文](readme-zh_tw.md) | [日本語](readme-ja_jp.md) | [Русский](readme-ru_ru.md) | [한국어](readme-ko_kr.md)
 
-[![GitHub Stars](https://img.shields.io/github/stars/SillyTavern/SillyTavern.svg)](https://github.com/SillyTavern/SillyTavern/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/SillyTavern/SillyTavern.svg)](https://github.com/SillyTavern/SillyTavern/forks)
-[![GitHub Issues](https://img.shields.io/github/issues/SillyTavern/SillyTavern.svg)](https://github.com/SillyTavern/SillyTavern/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/SillyTavern/SillyTavern.svg)](https://github.com/SillyTavern/SillyTavern/pulls)
+[![GitHub Stars](https://img.shields.io/github/stars/Filamo1009/Taverncraft.svg)](https://github.com/Filamo1009/Taverncraft/stargazers)
+[![GitHub Issues](https://img.shields.io/github/issues/Filamo1009/Taverncraft.svg)](https://github.com/Filamo1009/Taverncraft/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/Filamo1009/Taverncraft.svg)](https://github.com/Filamo1009/Taverncraft/pulls)
 
 </div>
 
 ---
 
-## Luker Fork Notes
+## Taverncraft 酒馆工坊
 
-Luker is a fork of SillyTavern focused on cleaner API design and stronger extension capabilities.
+Taverncraft is a moddable world-simulation and interactive narrative engine based directly on [Luker](https://github.com/funnycups/Luker), which is derived from SillyTavern. See [NOTICE.md](../NOTICE.md) for provenance and compatibility details.
 
 - Patch-first persistence (`chat append/patch`, metadata/state patch, and settings patch) to avoid repeated full-save payloads.
 - Backend-owned generation lifecycle (including reconnect-safe persistence and active-output recovery behavior).
 - Plugin-first helpers via `getContext()` and generation world-info hooks.
 - Built-in `Orchestrator` and `Memory` plugins.
-- Plugin/API migration guide: [docs/luker-api-migration.md](https://github.com/funnycups/Luker/blob/release/docs/luker-api-migration.md)
+- Phase 1 development plan: [docs/development/phase1-single-npc-world-engine.md](../docs/development/phase1-single-npc-world-engine.md)
 
 SillyTavern provides a single unified interface for many LLM APIs (KoboldAI/CPP, Horde, NovelAI, Ooba, Tabby, OpenAI, OpenRouter, Claude, Mistral and more), a mobile-friendly layout, Visual Novel Mode, Automatic1111 & ComfyUI API image generation integration, TTS, WorldInfo (lorebooks), customizable UI, auto-translate, more prompt options than you'd ever want or need, and endless growth potential via third-party extensions.
 

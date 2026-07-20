@@ -126,7 +126,7 @@ The search plugin provides a global API for integration by other plugins. For ex
 ### Usage Example
 
 ```javascript
-const api = Luker.searchTools;
+const api = Taverncraft.searchTools;
 if (api) {
   // Check if it's a search tool
   api.isToolName('luker_web_search'); // true

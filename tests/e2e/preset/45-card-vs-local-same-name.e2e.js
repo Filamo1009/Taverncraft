@@ -12,7 +12,7 @@
 //   1. Seed a card with `data.extensions.luker.chat_completion_preset =
 //      { presets: [{name:'ConflictFoo', preset:{temperature:0.13}}],
 //        defaultPresetName:'ConflictFoo' }` via writeEmbeddedCharacter.
-//   2. Boot Luker, select the card via the visible list so onCharacterChange
+//   2. Boot Taverncraft, select the card via the visible list so onCharacterChange
 //      renders the Card-bound optgroup.
 //   3. Save a local global preset also named 'ConflictFoo' with a distinct
 //      temperature via the visible Save-preset-as icon (real click gesture).

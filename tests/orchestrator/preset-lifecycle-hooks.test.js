@@ -6,7 +6,7 @@ import { jest } from '@jest/globals';
 // pull in the same transitive chain that character-overrides-presets.test.js
 // mocks — provide the same shim + module mocks so module evaluation
 // succeeds under jest.
-globalThis.Luker = {
+globalThis.Taverncraft = {
     getContext: () => ({
         constants: {
             promptRoles: { SYSTEM: 0, USER: 1, ASSISTANT: 2 },

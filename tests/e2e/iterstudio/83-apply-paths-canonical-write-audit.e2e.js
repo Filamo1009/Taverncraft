@@ -156,7 +156,7 @@ test.describe('#83 — All 4 iter-studio Apply paths route through canonical wri
         // Assert: active director slot carries the new prompt; legacy
         // settings.directorProfile is NOT a mirror of the new value.
         const after = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const s = ctx.extensionSettings.orchestrator;
             const activeId = s?.activePresetIds?.director || '';
             return {

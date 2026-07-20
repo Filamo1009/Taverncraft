@@ -4,7 +4,7 @@ APIs for registering custom macros, evaluating macros in text, and reading/writi
 
 ## Macros
 
-Luker exposes a macro system through the `macros` namespace, plus the legacy `MacrosParser` for backwards compatibility. Built-in macros like <span v-pre>`{{user}}`</span>, <span v-pre>`{{char}}`</span>, <span v-pre>`{{lastMessage}}`</span>, and <span v-pre>`{{getvar::name}}`</span> are registered by core; plugins can add their own through `macros.register()`.
+Taverncraft exposes a macro system through the `macros` namespace, plus the legacy `MacrosParser` for backwards compatibility. Built-in macros like <span v-pre>`{{user}}`</span>, <span v-pre>`{{char}}`</span>, <span v-pre>`{{lastMessage}}`</span>, and <span v-pre>`{{getvar::name}}`</span> are registered by core; plugins can add their own through `macros.register()`.
 
 ### macros.register
 
@@ -54,7 +54,7 @@ The handler receives a `MacroExecutionContext` with:
 | `warn(message, error?)` | Log a warning attributed to this macro |
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 ctx.macros.register('myStatus', {
     description: 'Returns the plugin status string.',
@@ -213,7 +213,7 @@ Same surface as local. Persisted across chats.
 ### Usage Example
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 // Read a local var with default
 const turns = Number(ctx.variables.local.get('turns_taken')) || 0;
@@ -266,7 +266,7 @@ Details when `floor` is set:
 - **Dotted names work the same way for floor-bound writes** — `setVariable('roster.alice.hp', 50, { floor })` splits on the first `.` and forwards `path` into the op record. `op.key` stays as the top-level variable name, so replay treats the whole structure as one unit.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 // Immediate write — same bucket as ctx.variables.local.set
 await ctx.setVariable('quest_stage', 'intro');

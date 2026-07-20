@@ -2,7 +2,7 @@
 name: director-turn-workflow-zh
 description: Director main-agent 7-step turn workflow — pre-draft scouting wave, brainstorming, draft, critics, integrate, housekeeping, finalize.
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 

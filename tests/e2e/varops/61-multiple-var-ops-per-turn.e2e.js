@@ -54,7 +54,7 @@ test.describe('#61 — One turn / multiple var_ops mutations → rendered panel 
         await selectCharacterByName(page, 'Seraphina');
 
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -69,7 +69,7 @@ test.describe('#61 — One turn / multiple var_ops mutations → rendered panel 
         // explicitly for the post-extract state: extra.var_ops populated AND
         // chat[].mes scrubbed of macro literals (redrawMessageBubble follows).
         await page.waitForFunction((id) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const m = ctx.chat?.[id];
             if (!m || !Array.isArray(m?.extra?.var_ops) || m.extra.var_ops.length === 0) return false;
             return !String(m.mes || '').includes('{{setvar');
@@ -77,7 +77,7 @@ test.describe('#61 — One turn / multiple var_ops mutations → rendered panel 
 
         // ctx.chat[id].mes is the canonical stripped body (post-extractor).
         const persisted = await page.evaluate((id) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const m = ctx.chat?.[id];
             return { mes: m?.mes || '', ops: m?.extra?.var_ops || [] };
         }, replyId);
@@ -120,13 +120,13 @@ test.describe('#61 — One turn / multiple var_ops mutations → rendered panel 
         await selectCharacterByName(page, 'Seraphina');
 
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return Array.isArray(ctx?.chat) && ctx.chat.length >= 2;
         }, { timeout: 15_000 });
 
         // Find the assistant message that carries var_ops in the rehydrated chat.
         const reopenId = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             for (let i = ctx.chat.length - 1; i >= 0; i--) {
                 if (!ctx.chat[i]?.is_user && Array.isArray(ctx.chat[i]?.extra?.var_ops) && ctx.chat[i].extra.var_ops.length > 0) {
                     return i;

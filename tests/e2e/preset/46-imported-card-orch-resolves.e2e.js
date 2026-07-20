@@ -15,7 +15,7 @@
 //              defaultPresetName:'CardOnlyPromptPreset' }
 //        - data.extensions.orchestrator = loop mode override referencing
 //          the card-embedded preset by name.
-//   2. Boot Luker; select the character via the visible character list.
+//   2. Boot Taverncraft; select the character via the visible character list.
 //   3. Open the orchestrator drawer, ensure loop mode, open the
 //      Orchestration Editor popup so the loop workspace mounts.
 //   4. Assert #luker_orch_loop_prompt_preset contains a Card-bound

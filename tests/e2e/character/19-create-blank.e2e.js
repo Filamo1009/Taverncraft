@@ -139,7 +139,7 @@ test.describe('#19 — Create blank character via UI form', () => {
 
         // Wait for the character to be added to ctx.characters.
         await page.waitForFunction((wantName) => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return !!ctx?.characters?.find?.(c => c?.name === wantName);
         }, NAME, { timeout: 15_000 });
 
@@ -181,7 +181,7 @@ test.describe('#19 — Create blank character via UI form', () => {
         await reloadAndAwait(page, server.baseURL);
 
         await page.waitForFunction((wantName) => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return !!ctx?.characters?.find?.(c => c?.name === wantName);
         }, NAME, { timeout: 15_000 });
 

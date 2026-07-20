@@ -84,7 +84,7 @@ getCharaFilename(
 Returns the avatar filename **without extension** for a character. Falls back to the current character when `chid` is omitted. Pass `manualAvatarKey` when you only have the avatar key string (e.g. from a state entry). Returns `null` if no avatar can be resolved.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const filename = ctx.getCharaFilename();  // e.g. 'tavernkeeper'
 ```
 
@@ -145,7 +145,7 @@ Writes `data.extensions[key]` on a character card and persists.
 Pass `value: context.constants.unset` (the `UNSET_VALUE` sentinel) to delete the key entirely. Plain `null` writes a literal `null` (the key remains).
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 // Replace data.extensions.my_plugin_state with exactly { level: 5 }.
 // Any other keys previously under my_plugin_state are wiped.
@@ -195,7 +195,7 @@ updateCharacterData(
 Update one or more **form-level** fields on a character's `data` object without requiring the character editor popup to be open. The patch shape is dot-paths into `character.data` for form-level fields (`description`, `name`, `personality`, ...). Intermediate objects are auto-created.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 // Update a top-level field
 await ctx.updateCharacterData(ctx.characterId, { description: 'A new description.' });
 ```
@@ -241,7 +241,7 @@ Schedule a debounced `persistCharacterData(charId)` call (per-character — conc
 Fires after `updateCharacterData` mutates `characters[charId].data` and before persistence completes. Listeners receive `{ charId, keys }` where `keys` is the dotted-path array from the patch. Use this to sync views (popup form, CardApp panels) without polling.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 ctx.eventSource.on(ctx.eventTypes.CHARACTER_FIELDS_UPDATED, ({ charId, keys }) => {
     if (charId === ctx.characterId && keys.includes('description')) {
         // refresh your UI from characters[charId].data.description
@@ -318,7 +318,7 @@ setCharacterState(avatar: string, namespace: string, data: any): Promise<void>
 Writes state. Pass `data: null` to delete the state for that namespace.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const character = ctx.characters[ctx.characterId];
 
 await ctx.setCharacterState(character.avatar, 'my-plugin', {

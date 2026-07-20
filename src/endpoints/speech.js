@@ -347,7 +347,7 @@ elevenlabs.post('/voices/add', async (req, res) => {
 
         const formData = new FormData();
         formData.append('name', name || 'Custom Voice');
-        formData.append('description', description || 'Uploaded via Luker');
+        formData.append('description', description || 'Uploaded via Taverncraft');
         formData.append('labels', labels || '');
 
         for (const fileData of (files || [])) {

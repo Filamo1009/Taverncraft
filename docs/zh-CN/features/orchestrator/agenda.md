@@ -125,7 +125,7 @@ finalizer -> out
 
 ## Function Call Runtime 依赖
 
-Agenda 模式的 Planner 调度通过 OpenAI 工具调用实现，依赖 Luker 的 [Function Call Runtime](/zh-CN/improvements/function-call-runtime)框架。这意味着：
+Agenda 模式的 Planner 调度通过 OpenAI 工具调用实现，依赖 Taverncraft 的 [Function Call Runtime](/zh-CN/improvements/function-call-runtime)框架。这意味着：
 
 - Planner 用的连接配置必须支持 function calling（OpenAI / Claude / Gemini 都支持）
 - 工具调用失败时的重试由 Function Call Runtime 处理（详见对应文档）

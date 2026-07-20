@@ -1,10 +1,10 @@
 # API 連線
 
-Luker 本身不包含 AI 模型，它透過 API 連線到外部的大型語言模型（LLM）服務來產生回覆。本頁介紹如何設定和管理 API 連線。
+Taverncraft 本身不包含 AI 模型，它透過 API 連線到外部的大型語言模型（LLM）服務來產生回覆。本頁介紹如何設定和管理 API 連線。
 
 ## 支援的 API 類型
 
-Luker 支援多種主流的 LLM API：
+Taverncraft 支援多種主流的 LLM API：
 
 ### Chat Completion（聊天補全）
 
@@ -31,7 +31,7 @@ Chat Completion 和 Text Completion 是兩種不同的 API 模式。大多數商
 
 ## 連線管理器
 
-Luker 提供了**連線管理器**（Connection Manager）來管理多個 API 連線配置。
+Taverncraft 提供了**連線管理器**（Connection Manager）來管理多個 API 連線配置。
 
 ### 建立連線配置
 
@@ -68,17 +68,17 @@ Luker 提供了**連線管理器**（Connection Manager）來管理多個 API �
 
 ### 填寫金鑰
 
-在連線配置中填入對應的 API 金鑰。金鑰會安全地儲存在 Luker 的伺服器端，不會在前端暴露。
+在連線配置中填入對應的 API 金鑰。金鑰會安全地儲存在 Taverncraft 的伺服器端，不會在前端暴露。
 
 ::: tip
-如果你使用的是自行部署的 Luker 實例，API 金鑰儲存在你自己的伺服器上。如果使用他人提供的 Luker 實例，請注意金鑰安全。
+如果你使用的是自行部署的 Taverncraft 實例，API 金鑰儲存在你自己的伺服器上。如果使用他人提供的 Taverncraft 實例，請注意金鑰安全。
 :::
 
 ## 模型選擇
 
-設定好 API 連線後，你需要選擇要使用的具體模型。Luker 會根據 API 類型動態載入可用的模型清單。
+設定好 API 連線後，你需要選擇要使用的具體模型。Taverncraft 會根據 API 類型動態載入可用的模型清單。
 
-對於 Claude 和 Gemini 等 API，Luker 支援**動態模型清單**——自動從 API 取得最新的可用模型，無需手動更新。你也可以為每個 API 來源自訂模型清單。詳見[其他改進](/zh-TW/improvements/other)。
+對於 Claude 和 Gemini 等 API，Taverncraft 支援**動態模型清單**——自動從 API 取得最新的可用模型，無需手動更新。你也可以為每個 API 來源自訂模型清單。詳見[其他改進](/zh-TW/improvements/other)。
 
 ## 代理設定
 
@@ -91,7 +91,7 @@ Luker 提供了**連線管理器**（Connection Manager）來管理多個 API �
 
 ## 與預設解耦的關係
 
-在 Luker 中，API 連線和聊天補全預設是**完全獨立**的兩個概念：
+在 Taverncraft 中，API 連線和聊天補全預設是**完全獨立**的兩個概念：
 
 - **連線配置**管理的是「用哪個 API、哪個模型、透過什麼位址存取」
 - **聊天補全預設**管理的是「用什麼提示詞、什麼取樣參數」
@@ -107,7 +107,7 @@ Luker 提供了**連線管理器**（Connection Manager）來管理多個 API �
 
 ## 斜線命令
 
-Luker 的連線管理器提供了斜線命令，方便進階使用者快速操作：
+Taverncraft 的連線管理器提供了斜線命令，方便進階使用者快速操作：
 
 | 命令 | 說明 |
 |------|------|
@@ -118,7 +118,7 @@ Luker 的連線管理器提供了斜線命令，方便進階使用者快速操�
 
 ## 請求檢查器
 
-Luker 內建了請求檢查器（Request Inspector），可以查看每次產生請求的詳細資訊，包括傳送給 API 的完整請求內容和回傳的回應。這在除錯連線問題或優化提示詞時非常有用。
+Taverncraft 內建了請求檢查器（Request Inspector），可以查看每次產生請求的詳細資訊，包括傳送給 API 的完整請求內容和回傳的回應。這在除錯連線問題或優化提示詞時非常有用。
 
 ## 下一步
 

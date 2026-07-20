@@ -121,7 +121,7 @@ async function selectProfileFromDropdown(page, profileName) {
     // Wait for the manager to register the selection then for the
     // settings-save debounce to flush.
     await page.waitForFunction((name) => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         const cm = ctx?.extensionSettings?.connectionManager;
         if (!cm) return false;
         const sel = cm.profiles?.find(p => p.id === cm.selectedProfile);

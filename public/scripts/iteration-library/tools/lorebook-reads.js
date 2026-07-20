@@ -122,7 +122,7 @@ async function listWorldBooks(context, avatar) {
 
     push(character?.data?.extensions?.world, 'character');
 
-    const ctxRoot = (typeof Luker !== 'undefined' && Luker.getContext) ? Luker.getContext() : null;
+    const ctxRoot = (typeof Taverncraft !== 'undefined' && Taverncraft.getContext) ? Taverncraft.getContext() : null;
     const getCharaFilename = ctxRoot?.getCharaFilename;
     const getCharaAuxWorlds = ctxRoot?.getCharaAuxWorlds;
     const getChatWorldInfoNames = ctxRoot?.chatWorldInfo?.getNames;
@@ -242,7 +242,7 @@ async function getEntries(context, args) {
  *
  * @param {object} call — `{ id, name, args }` from the runner
  * @param {object} ctx
- * @param {object} ctx.context — SillyTavern context (from `Luker.getContext()`)
+ * @param {object} ctx.context — SillyTavern context (from `Taverncraft.getContext()`)
  * @param {string} [ctx.avatar] — character avatar; required only by `world_book_list`
  * @returns {Promise<{ ok: true, result: any } | { ok: false, error: string }>}
  */

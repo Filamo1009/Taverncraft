@@ -9,7 +9,7 @@
 // What stays as e2e (this file):
 //   The full mid-run abort case, which drives the production
 //   takeover-hook → director-runtime → store flow end-to-end against
-//   a real Luker server with a slow mock LLM, then asserts the next
+//   a real Taverncraft server with a slow mock LLM, then asserts the next
 //   user turn renders normally. This tests cross-module coordination
 //   (script.js stopGeneration → director-runtime's signal handler →
 //   store finishRun(aborted) → chat-array integrity → next turn
@@ -165,7 +165,7 @@ test.describe('#75 — Abort mid-run', () => {
             // into (preserved on abort by handle.abort()). We check
             // that the array exists and is iterable.
             const ok = await page.evaluate(() => {
-                const ctx = window.Luker.getContext();
+                const ctx = window.Taverncraft.getContext();
                 return Array.isArray(ctx.chat);
             });
             expect(ok).toBe(true);

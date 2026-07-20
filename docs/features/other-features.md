@@ -1,10 +1,10 @@
 # Other Features
 
-This page lists other user-facing features unique to Luker. While smaller in scope, these features significantly improve the day-to-day experience.
+This page lists other user-facing features unique to Taverncraft. While smaller in scope, these features significantly improve the day-to-day experience.
 
 ## World Info Activation Trace
 
-Luker records the complete chain from matching to injection for World Info entries, helping you debug complex World Info configurations. See [World Info Activation Trace](/features/world-info-trace) for details.
+Taverncraft records the complete chain from matching to injection for World Info entries, helping you debug complex World Info configurations. See [World Info Activation Trace](/features/world-info-trace) for details.
 
 ## Chat Persona Lock
 
@@ -22,7 +22,7 @@ The Popup Updater provides an in-app update flow. When a new version is availabl
 
 ## Image Generation Enhancements
 
-Luker's improvement to image generation is ComfyUI WebSocket connection support — using WebSocket instead of frequent HTTP polling endpoints to communicate with ComfyUI, improving generation efficiency and real-time responsiveness, with smart fallback and reconnection retry support.
+Taverncraft's improvement to image generation is ComfyUI WebSocket connection support — using WebSocket instead of frequent HTTP polling endpoints to communicate with ComfyUI, improving generation efficiency and real-time responsiveness, with smart fallback and reconnection retry support.
 
 ## Plugin Regex Provider
 

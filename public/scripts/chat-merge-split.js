@@ -1,7 +1,7 @@
 import { getRequestHeaders } from '../script.js';
 import { eventSource, event_types } from './events.js';
 import { t } from './i18n.js';
-import { callGenericPopup, POPUP_TYPE, POPUP_RESULT } from './popup.js';
+import { callGenericPopup, Popup, POPUP_TYPE, POPUP_RESULT } from './popup.js';
 import { getContext } from './st-context.js';
 import { openGroupChat } from './group-chats.js';
 import { openCharacterChat } from '../script.js';
@@ -360,11 +360,10 @@ export async function openMergeDialog({ isGroup, avatarUrl, groupId, characterNa
     const markup = buildMergeDialogMarkup({ defaultName, segments });
     let capturedTargetName = '';
     let capturedSegments = [];
-    const result = await callGenericPopup(markup, POPUP_TYPE.CONFIRM, '', {
+    const popup = new Popup(markup, POPUP_TYPE.CONFIRM, '', {
         okButton: t`Merge`,
         cancelButton: t`Cancel`,
         wide: true,
-        onOpen: () => bindMergeDialogBehavior(undefined, { isGroup, avatarUrl, groupId }),
         onClosing: (popup) => {
             // Capture form state BEFORE the popup DOM is torn down so the
             // post-resolution path can still read what the user entered.
@@ -374,6 +373,13 @@ export async function openMergeDialog({ isGroup, avatarUrl, groupId, characterNa
             return true;
         },
     });
+    // Popup.onOpen runs only after the opening animation. A fast click on
+    // "+ Add chat" can land as soon as the dialog is visible, before that
+    // delayed hook fires, and be lost. Bind to this popup's detached DOM
+    // before show() so every visible control is immediately interactive.
+    const resultPromise = popup.show();
+    bindMergeDialogBehavior(popup.dlg.querySelector('.cms-dialog'), { isGroup, avatarUrl, groupId });
+    const result = await resultPromise;
     if (result !== POPUP_RESULT.AFFIRMATIVE) return { openedNewChat: false };
     if (!capturedTargetName || capturedSegments.length === 0) return { openedNewChat: false };
 
@@ -513,8 +519,8 @@ function refreshSplitValues(root, sourceFileName, totalMessages, points) {
     toggleSplitOkButton(root, points);
 }
 
-function bindSplitDialogBehavior(sourceFileName, totalMessages) {
-    const root = document.querySelector('.cms-dialog-split');
+function bindSplitDialogBehavior(rootOverride, sourceFileName, totalMessages) {
+    const root = rootOverride || document.querySelector('.cms-dialog-split');
     if (!root) return;
     rebuildSplitUi(root, sourceFileName, totalMessages, getPointsFromDom(root));
 
@@ -590,11 +596,10 @@ export async function openSplitDialog({ isGroup, avatarUrl, groupId, sourceFileN
     const markup = buildSplitDialogMarkup({ sourceFileName, totalMessages, initialPoint: initial });
     let capturedPoints = [];
     let capturedNames = [];
-    const result = await callGenericPopup(markup, POPUP_TYPE.CONFIRM, '', {
+    const popup = new Popup(markup, POPUP_TYPE.CONFIRM, '', {
         okButton: t`Split`,
         cancelButton: t`Cancel`,
         wide: true,
-        onOpen: () => bindSplitDialogBehavior(sourceFileName, totalMessages),
         onClosing: (popup) => {
             const dialog = popup?.dlg?.querySelector('.cms-dialog-split') || document.querySelector('.cms-dialog-split');
             const state = readSplitStateFromDom(dialog);
@@ -603,6 +608,9 @@ export async function openSplitDialog({ isGroup, avatarUrl, groupId, sourceFileN
             return true;
         },
     });
+    const resultPromise = popup.show();
+    bindSplitDialogBehavior(popup.dlg.querySelector('.cms-dialog-split'), sourceFileName, totalMessages);
+    const result = await resultPromise;
     if (result !== POPUP_RESULT.AFFIRMATIVE) return { createdCount: 0 };
     if (capturedPoints.length === 0) return { createdCount: 0 };
 

@@ -1,5 +1,5 @@
 /**
- * End-to-end sync flow across two real Luker server
+ * End-to-end sync flow across two real Taverncraft server
  * instances.
  *
  * Two `makeEndpointHarness` instances (A and B) each get their own

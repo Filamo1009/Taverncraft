@@ -157,7 +157,7 @@ async function probeReadyLocal(port, timeoutMs = 60_000) {
 }
 
 /**
- * Spawn a Luker server bound to a deterministic port assigned by
+ * Spawn a Taverncraft server bound to a deterministic port assigned by
  * pickStableWorldInfoPort. Mirrors the shared `startServer` API surface
  * (returns { port, dataRoot, baseURL, restart, stop }) but bypasses the
  * shared port reservation to avoid PW_WORKERS=2 collisions.

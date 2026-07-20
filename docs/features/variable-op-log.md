@@ -1,12 +1,12 @@
 # Per-Message Variables
 
-Luker introduces **per-message variables** on top of SillyTavern's existing variable system: AI replies can write variables that are extracted, structured, persisted with the message, and replayed deterministically when chat history changes — so deleting a message, switching swipes, or regenerating a reply leaves your variables in the right state automatically.
+Taverncraft introduces **per-message variables** on top of SillyTavern's existing variable system: AI replies can write variables that are extracted, structured, persisted with the message, and replayed deterministically when chat history changes — so deleting a message, switching swipes, or regenerating a reply leaves your variables in the right state automatically.
 
 ## Why this exists
 
 In stock SillyTavern, side-effect macros like <code v-pre>{{setvar::hp::50}}</code> only run when they appear in a *prompt template* (preset, world info, or the very first message). If the AI writes the same literal in its reply, nothing happens — the macro is just text. Even worse, when the literal is rendered to the user it shows up verbatim, polluting the narrative.
 
-Luker fixes this by extracting side-effect macros out of AI / user messages at save time, recording them as structured ops attached to that message, and replaying them when needed. The literal is removed from the visible text; the operation is preserved as data.
+Taverncraft fixes this by extracting side-effect macros out of AI / user messages at save time, recording them as structured ops attached to that message, and replaying them when needed. The literal is removed from the visible text; the operation is preserved as data.
 
 ## How it works
 
@@ -47,7 +47,7 @@ REPLAY -> REBUILD
 
 ### Extraction
 
-When a message is saved (AI reply, continue, regenerate, swipe, or user message), Luker scans `mes` for the recognized side-effect macros:
+When a message is saved (AI reply, continue, regenerate, swipe, or user message), Taverncraft scans `mes` for the recognized side-effect macros:
 
 - <code v-pre>{{setvar::name::value}}</code>
 - <code v-pre>{{addvar::name::value}}</code>
@@ -86,7 +86,7 @@ The flip side: a macro followed by a literal `}` in narrative text (e.g. <span v
 
 ### Replay on structural changes
 
-When something changes the chat structure, Luker rebuilds the relevant parts of the variable cache:
+When something changes the chat structure, Taverncraft rebuilds the relevant parts of the variable cache:
 
 | Event | What we do |
 |-------|------------|
@@ -102,7 +102,7 @@ The replay is deliberately minimal: it only touches keys that are mentioned some
 
 `var_ops` lives on `message.extra`, which SillyTavern already mirrors per swipe via `swipe_info[i].extra`. Switching swipes hands you the right ops for free.
 
-When a new swipe begins generating, `clearMessageData` drops the previous swipe's `var_ops` (Luker added it to the whitelist), so extraction starts from a clean slate.
+When a new swipe begins generating, `clearMessageData` drops the previous swipe's `var_ops` (Taverncraft added it to the whitelist), so extraction starts from a clean slate.
 
 ### Continue
 

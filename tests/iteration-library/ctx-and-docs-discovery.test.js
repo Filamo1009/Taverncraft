@@ -11,7 +11,7 @@
 
 import { describe, test, expect, jest, beforeAll } from '@jest/globals';
 
-globalThis.Luker = {
+globalThis.Taverncraft = {
     getContext: () => ({
         chat: ['msg1', 'msg2'],
         characters: [{ name: 'A' }, { name: 'B' }],

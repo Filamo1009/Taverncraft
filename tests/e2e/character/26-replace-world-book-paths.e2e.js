@@ -63,7 +63,7 @@ async function waitForCeaReplaceLorebookPopup(page) {
 
 async function inspectState(page) {
     return page.evaluate(() => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         const idx = ctx?.characterId;
         const ch = idx !== undefined ? ctx.characters[idx] : null;
         return {
@@ -149,7 +149,7 @@ test.describe('#26 — post-replace world-book paths actually work', () => {
             expect(existsSync(newBookPath), `${BRIALLEN_BOOK_NAME}.json on disk`).toBe(true);
             // Wait for the binding to land (writeExtensionField + saveCharacterDebounced)
             await page.waitForFunction(({ want }) => {
-                const ctx = window.Luker?.getContext?.();
+                const ctx = window.Taverncraft?.getContext?.();
                 const idx = ctx?.characterId;
                 const ch = idx !== undefined ? ctx.characters[idx] : null;
                 return String(ch?.data?.extensions?.world || '').trim() === want;
@@ -169,7 +169,7 @@ test.describe('#26 — post-replace world-book paths actually work', () => {
             await dismissAnyPopup(page);
             await openCharacterEditPanel(page);
             await page.waitForFunction(({ want }) => {
-                const ctx = window.Luker?.getContext?.();
+                const ctx = window.Taverncraft?.getContext?.();
                 const idx = ctx?.characterId;
                 const ch = idx !== undefined ? ctx.characters[idx] : null;
                 return String(ch?.data?.extensions?.world || '').trim() === want;

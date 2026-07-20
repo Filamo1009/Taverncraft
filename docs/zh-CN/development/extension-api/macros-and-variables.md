@@ -4,7 +4,7 @@
 
 ## 宏
 
-Luker 通过 `macros` 命名空间提供宏系统，同时为向后兼容保留了 `MacrosParser`。<span v-pre>`{{user}}`</span>、<span v-pre>`{{char}}`</span>、<span v-pre>`{{lastMessage}}`</span>、<span v-pre>`{{getvar::name}}`</span> 等内置宏由核心注册；插件可以通过 `macros.register()` 添加自己的宏。
+Taverncraft 通过 `macros` 命名空间提供宏系统，同时为向后兼容保留了 `MacrosParser`。<span v-pre>`{{user}}`</span>、<span v-pre>`{{char}}`</span>、<span v-pre>`{{lastMessage}}`</span>、<span v-pre>`{{getvar::name}}`</span> 等内置宏由核心注册；插件可以通过 `macros.register()` 添加自己的宏。
 
 ### macros.register
 
@@ -54,7 +54,7 @@ macros.register(name: string, options: {
 | `warn(message, error?)` | 记录归属于此宏的警告 |
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 ctx.macros.register('myStatus', {
     description: 'Returns the plugin status string.',
@@ -213,7 +213,7 @@ context.variables.global.get / set / add / inc / dec / del / has
 ### 使用示例
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 // 读本地变量并给默认值
 const turns = Number(ctx.variables.local.get('turns_taken')) || 0;
@@ -266,7 +266,7 @@ context.setVariable(
 - **点号路径名同样支持楼层级写入**——`setVariable('roster.alice.hp', 50, { floor })` 会在第一个 `.` 处拆分，把 `path` 透传进 op 记录。`op.key` 仍然是顶层变量名，重放时把整个结构当成一个单位。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 // 立即写,跟 ctx.variables.local.set 落到同一个桶
 await ctx.setVariable('quest_stage', 'intro');

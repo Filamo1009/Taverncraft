@@ -4561,7 +4561,7 @@ class PromptManager {
             throw new Error('Prompt order strategy not supported.');
         }
 
-        // Import prompt groups if present (Luker extension data)
+        // Import prompt groups if present (Taverncraft extension data)
         if (Array.isArray(importData.data.extensions?.luker?.prompt_groups)) {
             const importedGroups = importData.data.extensions.luker.prompt_groups;
             const existingGroups = this.getPromptGroups();

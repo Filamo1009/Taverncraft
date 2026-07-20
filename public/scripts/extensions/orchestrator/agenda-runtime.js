@@ -41,7 +41,7 @@
  *   - `maxTotalRuns` — caps total agent runs across all rounds.
  */
 
-const extension_settings = Luker.getContext().extensionSettings;
+const extension_settings = Taverncraft.getContext().extensionSettings;
 import { isAbortSignalLike, throwIfAborted } from './abort-utils.js';
 import { canonicalStringifyArgs } from './canonical-stringify.js';
 import { extractLastUserMessage, getRecentMessages } from './anchors.js';
@@ -1029,7 +1029,7 @@ export async function runAgendaOrchestration(context, payload, messages, profile
     const runId = startRun({
         mode: 'agenda',
         chatKey,
-        abortFn: () => { try { Luker.getContext().stopGeneration(); } catch (_) { /* best-effort */ } },
+        abortFn: () => { try { Taverncraft.getContext().stopGeneration(); } catch (_) { /* best-effort */ } },
         // Fast-unwind hook installed by the top-level orchestration
         // dispatch; renderer prefers it over abortFn to skip the wait
         // for the LLM sender to reject. Undefined for iter-studio

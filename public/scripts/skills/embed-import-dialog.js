@@ -22,7 +22,7 @@
  *      collected per-skill conflictStrategies map.
  *
  * Like the other Unit-{2..4} dialogs, pure helpers are exported for tests
- * without needing a DOM (Luker's Jest runs in node, not jsdom). The
+ * without needing a DOM (Taverncraft's Jest runs in node, not jsdom). The
  * interactive entry point `runEmbedImportFlow` is what callers (card-app /
  * preset-manager hooks) invoke.
  */
@@ -272,7 +272,7 @@ export async function runEmbedImportFlow({ context, payload, targetScope, t = (s
 
     // 2) Show dialog with per-skill decisions (driven by `different` rows).
     //
-    // The dialog uses Luker's `Popup` class for fine-grained access to the
+    // The dialog uses Taverncraft's `Popup` class for fine-grained access to the
     // rendered DOM (so we can read radio state on close). callGenericPopup
     // returns just the result code; Popup gives us `popup.dlg` for DOM scrapes.
     const Popup = context.Popup;

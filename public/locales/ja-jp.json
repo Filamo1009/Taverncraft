@@ -1292,9 +1292,9 @@
     "Example: username:password": "例: ユーザー名:パスワード",
     "Important:": "重要：",
     "sd_auto_auth_warning_1": "SD Web UIを",
-    "sd_auto_auth_warning_2": "フラグを指定して実行してください! サーバーは Luker ホスト マシンからアクセスできる必要があります。",
+    "sd_auto_auth_warning_2": "フラグを指定して実行してください! サーバーは Taverncraft ホスト マシンからアクセスできる必要があります。",
     "sd_drawthings_url": "例: {{drawthings_url}}",
-    "sd_drawthings_auth_txt": "UI で HTTP API スイッチを有効にして DrawThings アプリを実行します。サーバーは Luker ホスト マシンからアクセスできる必要があります。",
+    "sd_drawthings_auth_txt": "UI で HTTP API スイッチを有効にして DrawThings アプリを実行します。サーバーは Taverncraft ホスト マシンからアクセスできる必要があります。",
     "sd_vlad_url": "例: {{vlad_url}}",
     "The server must be accessible from the SillyTavern host machine.": "サーバーは SillyTavern ホスト マシンからアクセスできる必要があります。",
     "Hint: Save an API key in AI Horde API settings to use it here.": "ヒント: ここで使用するには、AI Horde API 設定に API キーを保存してください。",
@@ -1460,10 +1460,10 @@
     "Loading chat…": "チャットを読み込み中…",
     "Bulk Delete": "一括削除",
     "Deleting ${0} character(s)…": "${0}人のキャラクターを削除中…",
-    "Welcome to Luker!": "Luker へようこそ!",
-    "Luker is aimed at advanced users.": "Luker は上級ユーザーを対象としています。",
-    "The server must be accessible from the Luker host machine.": "サーバーは Luker ホスト マシンからアクセスできる必要があります。",
-    "To enable multi-account features, restart the Luker server with": "マルチアカウント機能を有効にするには、Lukerサーバーを再起動します。",
-    "Luker Documentation Site": "Lukerドキュメントサイト",
-    "Join the Luker Discord": "LukerのDiscordに参加"
+    "Welcome to Taverncraft!": "Taverncraft へようこそ!",
+    "Taverncraft is aimed at advanced users.": "Taverncraft は上級ユーザーを対象としています。",
+    "The server must be accessible from the Taverncraft host machine.": "サーバーは Taverncraft ホスト マシンからアクセスできる必要があります。",
+    "To enable multi-account features, restart the Taverncraft server with": "マルチアカウント機能を有効にするには、Taverncraftサーバーを再起動します。",
+    "Taverncraft Documentation Site": "Taverncraftドキュメントサイト",
+    "Join the Taverncraft Discord": "TaverncraftのDiscordに参加"
 }

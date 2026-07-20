@@ -302,7 +302,7 @@ object LukerCrashCapture {
                 }
             }
             ApplicationExitInfo.REASON_CRASH -> {
-                "trace: <no JVM stack was attached to this exit record; Luker's in-process handler should normally capture one — its absence here suggests the crash happened before the handler was installed>"
+                "trace: <no JVM stack was attached to this exit record; Taverncraft's in-process handler should normally capture one — its absence here suggests the crash happened before the handler was installed>"
             }
             ApplicationExitInfo.REASON_LOW_MEMORY -> {
                 "trace: <Android killed the process because the device was low on memory; no stack trace is produced for this reason>"

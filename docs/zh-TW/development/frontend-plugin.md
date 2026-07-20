@@ -1,14 +1,14 @@
 # 前端外掛開發
 
-Luker 的外掛系統基於 SillyTavern 的擴充功能架構，並在此基礎上進行了增強。本文件面向希望為 Luker 開發第三方外掛的開發者，涵蓋外掛的檔案結構、生命週期、事件系統、UI 整合和除錯技巧。
+Taverncraft 的外掛系統基於 SillyTavern 的擴充功能架構，並在此基礎上進行了增強。本文件面向希望為 Taverncraft 開發第三方外掛的開發者，涵蓋外掛的檔案結構、生命週期、事件系統、UI 整合和除錯技巧。
 
 ## 術語說明
 
-Luker 中「外掛」和「擴充功能」（Extension）指同一概念。內建擴充功能位於 `public/scripts/extensions/` 目錄下，第三方外掛安裝到 `public/scripts/extensions/third-party/` 目錄。
+Taverncraft 中「外掛」和「擴充功能」（Extension）指同一概念。內建擴充功能位於 `public/scripts/extensions/` 目錄下，第三方外掛安裝到 `public/scripts/extensions/third-party/` 目錄。
 
 ## 外掛檔案結構
 
-一個標準的 Luker 外掛包含以下檔案：
+一個標準的 Taverncraft 外掛包含以下檔案：
 
 ```
 third-party/my-plugin/
@@ -53,7 +53,7 @@ third-party/my-plugin/
 
 ### index.js
 
-入口腳本是外掛的核心檔案。Luker 使用 ES Module 動態匯入載入外掛，因此入口檔案應使用 `import`/`export` 語法。
+入口腳本是外掛的核心檔案。Taverncraft 使用 ES Module 動態匯入載入外掛，因此入口檔案應使用 `import`/`export` 語法。
 
 一個最小的入口腳本結構：
 
@@ -93,7 +93,7 @@ jQuery(async () => {
 
 ### style.css
 
-樣式檔案會被自動載入。建議使用帶有外掛前綴的 CSS 類別名稱，避免與其他外掛或 Luker 核心樣式衝突：
+樣式檔案會被自動載入。建議使用帶有外掛前綴的 CSS 類別名稱，避免與其他外掛或 Taverncraft 核心樣式衝突：
 
 ```css
 .my-plugin-container {
@@ -128,16 +128,16 @@ jQuery(async () => {
 
 ## 全域物件
 
-### Luker.getContext()
+### Taverncraft.getContext()
 
-`Luker.getContext()` 是外掛與 Luker 互動的主要介面。它回傳一個包含豐富 API 的上下文物件：
+`Taverncraft.getContext()` 是外掛與 Taverncraft 互動的主要介面。它回傳一個包含豐富 API 的上下文物件：
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 ```
 
 > [!NOTE]
-> `SillyTavern.getContext()` 和 `st.getContext()` 是相容別名，新外掛應使用 `Luker.getContext()`。
+> `SillyTavern.getContext()` 和 `st.getContext()` 是相容別名，新外掛應使用 `Taverncraft.getContext()`。
 
 上下文物件包含以下主要類別的 API：
 
@@ -155,12 +155,12 @@ const context = Luker.getContext();
 
 ## 事件系統
 
-Luker 的事件系統是外掛開發的核心機制。外掛透過監聽事件來回應使用者操作和系統狀態變化。
+Taverncraft 的事件系統是外掛開發的核心機制。外掛透過監聽事件來回應使用者操作和系統狀態變化。
 
 ### 基本用法
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 
 // 監聽事件
 context.eventSource.on(context.eventTypes.CHAT_CHANGED, (chatId) => {
@@ -177,7 +177,7 @@ context.eventSource.makeLast(context.eventTypes.CHAT_CHANGED, handler);
 
 ### 監聽器執行順序
 
-Luker 的事件監聽器按以下優先順序**串行**執行（每個監聽器會被 `await`）：
+Taverncraft 的事件監聽器按以下優先順序**串行**執行（每個監聽器會被 `await`）：
 
 1. **顯式外掛排序**（`pluginOrder`）— 透過 `eventSource.setOrderConfig()` 或內建的 Hook Order 擴充功能設定
 2. **監聽器優先順序**（`priority`）— `eventSource.on()` 的第三個參數，數字越大越先執行
@@ -336,12 +336,12 @@ GENERATION_ENDED / GENERATION_STOPPED
 
 ## 聊天狀態
 
-Luker 提供了聊天狀態機制，讓外掛可以將資料綁定到特定聊天，而不是塞進 `chat_metadata`。
+Taverncraft 提供了聊天狀態機制，讓外掛可以將資料綁定到特定聊天，而不是塞進 `chat_metadata`。
 
 ### 基本用法
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 const NAMESPACE = 'my-plugin';
 
 // 讀取狀態
@@ -411,7 +411,7 @@ jQuery(async () => {
 
 ### 彈窗對話框
 
-Luker 提供了 `callGenericPopup` 等彈窗 API，用於顯示自訂對話框：
+Taverncraft 提供了 `callGenericPopup` 等彈窗 API，用於顯示自訂對話框：
 
 ```js
 import { callGenericPopup, POPUP_TYPE } from '../../../popup.js';
@@ -449,7 +449,7 @@ registerSlashCommand(
 
 ```js
 // 註冊方
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 context.registerExtensionApi('my-plugin', {
   doSomething: () => { /* ... */ },
   getData: () => myData,
@@ -466,13 +466,13 @@ if (myPluginApi) {
 
 ### 瀏覽器開發者工具
 
-- 在瀏覽器主控台中使用 `Luker.getContext()` 直接檢查上下文物件
+- 在瀏覽器主控台中使用 `Taverncraft.getContext()` 直接檢查上下文物件
 - 使用 `context.eventSource.getListenersMeta(eventName)` 查看某個事件的所有監聽器資訊
 - 外掛身分在排序/除錯中透過擴充功能路徑推斷，包括第三方擴充功能（`third-party/<name>`）
 
 ### 前端日誌管理器
 
-Luker 內建了前端日誌管理器，會攔截 `console` 輸出和 `fetch` 請求。透過 `getFrontendLogsSnapshot()` 取得日誌快照，支援按時間範圍和 ID 過濾。詳見[日誌系統](/zh-TW/features/logging)。
+Taverncraft 內建了前端日誌管理器，會攔截 `console` 輸出和 `fetch` 請求。透過 `getFrontendLogsSnapshot()` 取得日誌快照，支援按時間範圍和 ID 過濾。詳見[日誌系統](/zh-TW/features/logging)。
 
 ### 常見問題排查
 
@@ -493,4 +493,4 @@ Luker 內建了前端日誌管理器，會攔截 `console` 輸出和 `fetch` 請
 - [後端外掛開發](/zh-TW/development/server-plugin) — 伺服端外掛開發指南（檔案系統、API 代理、憑證儲存）
 - [擴充 API 參考](/zh-TW/development/extension-api/) — 完整的 API 列表和詳細參數說明
 - [角色卡開發](/zh-TW/development/card-developers) — 角色卡擴充欄位和 CardApp 開發
-- [貢獻指南](/zh-TW/development/contributing) — 如何向 Luker 提交程式碼
+- [貢獻指南](/zh-TW/development/contributing) — 如何向 Taverncraft 提交程式碼

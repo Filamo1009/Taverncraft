@@ -184,7 +184,7 @@ test.describe('#25 — Activation strategies all inject correctly', () => {
 
         // Wait for the character card to finish loading so the bound book pointer resolves.
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             if (!ctx) return false;
             const id = ctx.characterId;
             if (typeof id !== 'number' && typeof id !== 'string') return false;
@@ -193,7 +193,7 @@ test.describe('#25 — Activation strategies all inject correctly', () => {
 
         // Settle: first_mes greeting populates ctx.chat before our /send.
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 

@@ -1,6 +1,6 @@
 # World Info
 
-APIs for reading, writing, and scanning World Info (lorebook) entries. All functions are exposed through `Luker.getContext()`; raw HTTP routes are listed in [Low-Level Endpoints](/development/extension-api/low-level-endpoints).
+APIs for reading, writing, and scanning World Info (lorebook) entries. All functions are exposed through `Taverncraft.getContext()`; raw HTTP routes are listed in [Low-Level Endpoints](/development/extension-api/low-level-endpoints).
 
 ## Reading World Info
 
@@ -13,7 +13,7 @@ loadWorldInfo(name: string): Promise<WorldInfoData | null>
 Reads a single World Info file by name. Name lookup is case- and accent-insensitive. Returns `null` when no matching file exists. Internally cached — repeated reads of the same file are served from memory.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const book = await ctx.loadWorldInfo('My Lorebook');
 console.log(Object.keys(book.entries).length);
 ```
@@ -230,7 +230,7 @@ Returns the deduped list of auxiliary World Info names bound to a character. Res
 Returns `[]` when `charaFilename` is falsy or no binding exists. Pair with [`getCharaFilename`](/development/extension-api/characters#getcharafilename) to resolve the current character:
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const auxBooks = ctx.getCharaAuxWorlds(ctx.getCharaFilename());
 const datas = await ctx.loadWorldInfoBatch(auxBooks);
 ```
@@ -261,7 +261,7 @@ context.worldInfoEntry.template: WIEntry
 The canonical default entry shape (`uid: 0` placeholder, empty keys, `position: 0`, etc.). Clone-and-modify when constructing entries in bulk, so future additions to the entry schema flow through automatically.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const fresh = { ...ctx.worldInfoEntry.template, uid: newUid, key: ['npc:Bob'], content: 'A baker.' };
 ```
 
@@ -361,7 +361,7 @@ context.constants.wiPosition: {
 Numeric enum for entry-level `position` values. Use when constructing entries or filtering by injection slot.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const entry = {
     ...ctx.worldInfoEntry.template,
     position: ctx.constants.wiPosition.before,
@@ -373,7 +373,7 @@ const entry = {
 ### Plugin reads + edits a lorebook
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 const book = await ctx.loadWorldInfo('Setting Bible');
 if (!book) {

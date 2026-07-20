@@ -1,6 +1,6 @@
 # Character Editor Assistant Extension API
 
-The `character-editor-assistant` (CEA) extension publishes three helpers through Luker's extension registry so other plugin-owned iteration studios can reuse CEA's helper-tool surface without importing across the plugin boundary. This is what the orchestrator's iter-studio popup and the memory-graph schema iter-studio popup both consume.
+The `character-editor-assistant` (CEA) extension publishes three helpers through Taverncraft's extension registry so other plugin-owned iteration studios can reuse CEA's helper-tool surface without importing across the plugin boundary. This is what the orchestrator's iter-studio popup and the memory-graph schema iter-studio popup both consume.
 
 ## Why this exists
 
@@ -44,7 +44,7 @@ buildCharacterEditorHelperApis(
 - `context` — the SillyTavern context (must expose `characters`, `loadWorldInfo`, …).
 - `opts.avatar` — character avatar that scopes the lorebook / world-book-list APIs to the right card. Omit when the popup is global.
 
-The returned array always contains four helpers (lorebook reads, lorebook writes, simulate, world-book-list) plus an optional fifth helper for web search when `globalThis.Luker.searchTools` is wired.
+The returned array always contains four helpers (lorebook reads, lorebook writes, simulate, world-book-list) plus an optional fifth helper for web search when `globalThis.Taverncraft.searchTools` is wired.
 
 ### `runCharacterEditorHelperToolCall(call, helperApis)`
 

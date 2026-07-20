@@ -1,5 +1,5 @@
 /**
- * Luker Edits — public entry point.
+ * Taverncraft Edits — public entry point.
  *
  * Wires lodash methods from `public/lib.js` into the engine and registers
  * the built-in op handlers. Re-exports the engine API for direct ESM use

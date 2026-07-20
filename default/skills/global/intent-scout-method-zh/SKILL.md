@@ -2,7 +2,7 @@
 name: intent-scout-method-zh
 description: intent_scout method — cross-source extraction of user asks + lorebook authoring directives for this turn.
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 

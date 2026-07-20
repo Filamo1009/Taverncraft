@@ -3,7 +3,7 @@
 // branch, swipe, persistence, MG-extraction-fired, etc).
 //
 // Each spec calls `startMockLLM({ scriptedReplies })` and gets back a
-// base URL it can plug into Luker as a CUSTOM chat-completion endpoint
+// base URL it can plug into Taverncraft as a CUSTOM chat-completion endpoint
 // via the connection profile.
 //
 // `scriptedReplies` is a queue of strings; each /v1/chat/completions
@@ -300,7 +300,7 @@ export async function startMockLLM({ scriptedReplies = [], scriptedToolCalls = [
 
         if (latencyMs > 0) await new Promise(r => setTimeout(r, latencyMs));
 
-        // Models list endpoint — Luker probes this for the model dropdown.
+        // Models list endpoint — Taverncraft probes this for the model dropdown.
         if (req.url.endsWith('/models') || req.url.endsWith('/v1/models')) {
             res.writeHead(200, { 'content-type': 'application/json' });
             res.end(JSON.stringify({

@@ -2,7 +2,7 @@
 //
 // "Director mode" in a group context: an external decision picks which
 // member speaks for a given turn instead of letting the group's
-// activation strategy rotate. The canonical Luker entry point is the
+// activation strategy rotate. The canonical Taverncraft entry point is the
 // `/trigger <member-name>` slash command, which routes to
 // `Generate('normal', { force_chid })` — group-chats.js#generateGroupWrapper
 // short-circuits its activation strategy when `params.force_chid` is
@@ -72,10 +72,10 @@ test.afterAll(async () => {
  * the caller can identify which member spoke.
  */
 async function directorPicksSpeaker(page, { userText, memberName, timeoutMs = 120_000 }) {
-    const lengthBefore = await page.evaluate(() => window.Luker.getContext().chat?.length || 0);
+    const lengthBefore = await page.evaluate(() => window.Taverncraft.getContext().chat?.length || 0);
 
     const wrapperDonePromise = page.evaluate((to) => new Promise((resolve, reject) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const t = setTimeout(() => reject(new Error('group wrapper timeout')), to);
         const handler = (payload) => {
             clearTimeout(t);
@@ -86,7 +86,7 @@ async function directorPicksSpeaker(page, { userText, memberName, timeoutMs = 12
     }), timeoutMs);
 
     await page.evaluate(async ({ user, name }) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         // Inject the user turn (no auto-trigger) so the chat reflects
         // what the user said, then have the director force the speaker.
         // `/trigger await=true <name>` blocks until the picked member's
@@ -97,7 +97,7 @@ async function directorPicksSpeaker(page, { userText, memberName, timeoutMs = 12
     await wrapperDonePromise;
 
     const messages = await page.evaluate((startAt) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const all = ctx.chat || [];
         return all.slice(startAt).map(m => ({
             name: m.name,
@@ -182,7 +182,7 @@ test.describe('#87 — Director mode picks a single group speaker per turn', () 
         // ---- Cross-cut: Rhonin (member 2) was never picked, never spoke ----
         const memberTwo = trio[1];
         const allMessagesFromStart = await page.evaluate((startAt) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return (ctx.chat || []).slice(startAt).map(m => ({
                 name: m.name,
                 is_user: !!m.is_user,

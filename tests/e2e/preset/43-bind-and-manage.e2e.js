@@ -81,7 +81,7 @@ test.afterAll(async () => {
 /** Read the card-bound state directly from the character in the browser's runtime. */
 async function readCardState(page) {
     return page.evaluate(() => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         const chid = ctx?.characterId ?? window.this_chid;
         const c = ctx?.characters?.[chid];
         const raw = c?.data?.extensions?.luker?.chat_completion_preset ?? null;
@@ -144,7 +144,7 @@ async function selectPresetByNameFromOrigin(page, name, origin) {
     } else {
         // Global path — preset_settings_openai carries the name at runtime.
         await page.waitForFunction((target) => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return ctx?.chatCompletionSettings?.preset_settings_openai === target;
         }, name, { timeout: 10_000 });
     }
@@ -385,7 +385,7 @@ test.describe('#43 — Bind (add + set-default) and Manage Bound Presets dialog'
         //    we need to update for this test.
         await closeCurrentPopup(page);
         await page.evaluate(async ({ n, expected }) => {
-            const mgr = window.Luker?.getContext?.()?.getPresetManager?.('openai');
+            const mgr = window.Taverncraft?.getContext?.()?.getPresetManager?.('openai');
             const cur = mgr?.getStoredPreset?.(n);
             if (!cur) throw new Error(`no local preset '${n}'`);
             const next = { ...cur, temperature: expected };
@@ -393,7 +393,7 @@ test.describe('#43 — Bind (add + set-default) and Manage Bound Presets dialog'
         }, { n: SLOT_B, expected: UPDATED_B_TEMP });
         // Wait for the runtime settings array to reflect the new temperature.
         await page.waitForFunction(({ n, expected }) => {
-            const openai = window.Luker?.getContext?.()?.openai;
+            const openai = window.Taverncraft?.getContext?.()?.openai;
             const settings = openai?.settings;
             const names = openai?.settingNames;
             if (!Array.isArray(settings) || !names) return false;

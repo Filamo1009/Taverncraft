@@ -126,7 +126,7 @@ AGENT: "預請求 Agent 模式" {
 ### 使用範例
 
 ```javascript
-const api = Luker.searchTools;
+const api = Taverncraft.searchTools;
 if (api) {
   // 檢查是否為搜尋工具
   api.isToolName('luker_web_search'); // true

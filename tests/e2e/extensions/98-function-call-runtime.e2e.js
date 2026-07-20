@@ -8,7 +8,7 @@
 //      tool_call for get_weather, second call returns plain text that
 //      mentions sunny + 21°C.
 //   4. Test types a user question into #send_textarea + clicks #send_but
-//      (real user gesture). Luker invokes the tool, recurses into the
+//      (real user gesture). Taverncraft invokes the tool, recurses into the
 //      LLM with the tool result, the second reply lands in chat.
 //   5. Test asserts the final assistant bubble (rendered DOM text on
 //      .mes_text) contains "sunny" and "21°C". Also asserts the
@@ -43,7 +43,7 @@ test.describe('#98 — function-call runtime tool round-trip via real send', () 
         await selectCharacterByName(page, 'Seraphina');
 
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -55,7 +55,7 @@ test.describe('#98 — function-call runtime tool round-trip via real send', () 
                 mod.oai_settings.custom_prompt_post_processing = '';
                 mod.oai_settings.stream_openai = false;
                 mod.oai_settings.tool_call_recurse_limit = 5;
-                const ctx = window.Luker.getContext();
+                const ctx = window.Taverncraft.getContext();
                 ctx.ToolManager.RECURSE_LIMIT = 5;
             });
         });
@@ -64,7 +64,7 @@ test.describe('#98 — function-call runtime tool round-trip via real send', () 
         // extensions use — this is production-equivalent setup, not a
         // test-only hook.
         await page.evaluate((toolResult) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             try { ctx.unregisterFunctionTool('get_weather'); } catch {}
             ctx.registerFunctionTool({
                 name: 'get_weather',
@@ -87,7 +87,7 @@ test.describe('#98 — function-call runtime tool round-trip via real send', () 
 
         // Sanity: the registry sees the tool.
         const registeredNames = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.ToolManager.tools.map(t => t.toFunctionOpenAI?.().function?.name);
         });
         expect(registeredNames).toContain('get_weather');
@@ -98,13 +98,13 @@ test.describe('#98 — function-call runtime tool round-trip via real send', () 
         mock.scriptReply(finalText);
 
         // REAL send: type into the textarea, click send.
-        const chatLenBefore = await page.evaluate(() => window.Luker.getContext().chat.length);
+        const chatLenBefore = await page.evaluate(() => window.Taverncraft.getContext().chat.length);
         await sendMessageAndAwaitReply(page, 'What will the weather be tomorrow in Bryn-on-Sea?');
 
         // After the user turn lands and the tool result loops back through
         // Generate(), the final assistant bubble must contain both tokens.
         await page.waitForFunction((targetLen) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.chat.some((m, i) => i > targetLen && !m.is_user && !m.is_system && typeof m.mes === 'string' && m.mes.includes('sunny'));
         }, chatLenBefore, { timeout: 60_000 });
 
@@ -136,7 +136,7 @@ test.describe('#98 — function-call runtime tool round-trip via real send', () 
         // saveFunctionToolInvocations writes a system message with
         // extra.tool_invocations[] — find it and confirm the result.
         const invocationRecord = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             for (let i = ctx.chat.length - 1; i >= 0; i--) {
                 const m = ctx.chat[i];
                 const inv = Array.isArray(m?.extra?.tool_invocations) ? m.extra.tool_invocations : null;

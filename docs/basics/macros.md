@@ -4,7 +4,7 @@ Macros are <span v-pre>`{{name}}`</span> placeholders that get replaced with dyn
 
 ## Macros 2.0 / experimental engine
 
-The features on this page run on the chevrotain-based macro engine — the same one SillyTavern introduced as **Macros 2.0** (the "Experimental Macro Engine"). It's on by default in Luker. Toggle it under **User Settings → Chat/Message Handling → Experimental Macro Engine**.
+The features on this page run on the chevrotain-based macro engine — the same one SillyTavern introduced as **Macros 2.0** (the "Experimental Macro Engine"). It's on by default in Taverncraft. Toggle it under **User Settings → Chat/Message Handling → Experimental Macro Engine**.
 
 With the experimental engine **off**, macros still resolve but the following fall back to the legacy regex pipeline and stop working:
 
@@ -108,7 +108,7 @@ The form <span v-pre>`{{time_UTC+N}}`</span> is also rewritten to <span v-pre>`{
 
 ## Variable shorthand
 
-In addition to the verbose <span v-pre>`{{getvar::name}}`</span> / <span v-pre>`{{setvar::name::value}}`</span> macros, Luker provides a compact **variable expression** syntax that reads like an assignment:
+In addition to the verbose <span v-pre>`{{getvar::name}}`</span> / <span v-pre>`{{setvar::name::value}}`</span> macros, Taverncraft provides a compact **variable expression** syntax that reads like an assignment:
 
 | Form | Meaning | Returns |
 |---|---|---|
@@ -293,7 +293,7 @@ This pairs naturally with <span v-pre>`{{each}}`</span>: an NPC roster, an inven
 
 In stock SillyTavern, side-effect macros like <span v-pre>`{{setvar::hp::50}}`</span> only run when they appear in a *prompt template* — preset, world info, or the very first message. When the AI writes the same literal in its reply, it does nothing and shows up verbatim in the chat.
 
-Luker fixes this with **per-message variable extraction**. When a message (AI reply, user message, swipe, continue) is saved, Luker:
+Taverncraft fixes this with **per-message variable extraction**. When a message (AI reply, user message, swipe, continue) is saved, Taverncraft:
 
 1. Scans the text for <span v-pre>`{{setvar}}`</span>, <span v-pre>`{{addvar}}`</span>, <span v-pre>`{{incvar}}`</span>, <span v-pre>`{{decvar}}`</span>, <span v-pre>`{{deletevar}}`</span>.
 2. Resolves any nested display macros (<span v-pre>`{{user}}`</span>, <span v-pre>`{{getvar::other}}`</span>, <span v-pre>`{{time}}`</span>, …) against the current state.
@@ -301,7 +301,7 @@ Luker fixes this with **per-message variable extraction**. When a message (AI re
 4. Records a structured op on `message.extra.var_ops`.
 5. Strips the literal from the visible text.
 
-When you delete a message, switch swipes, regenerate, or edit, Luker **replays the surviving op log** so your variables stay consistent with the visible timeline.
+When you delete a message, switch swipes, regenerate, or edit, Taverncraft **replays the surviving op log** so your variables stay consistent with the visible timeline.
 
 This is what the **Per-Message Variables** UI surfaces — a flask icon on every message with extracted ops, opening an editor where you can inspect, edit, delete, or add ops. The result is that the AI can own and mutate state directly through its replies, and that state survives all the chat-structure operations users routinely perform.
 
@@ -554,7 +554,7 @@ The engine walks each text fragment once and resolves macros left to right.
 Extensions can register their own macros:
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 ctx.macros.register('myStatus', {
     description: 'Returns the plugin status string.',

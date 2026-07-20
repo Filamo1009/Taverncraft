@@ -178,7 +178,7 @@ http.globalAgent = new http.Agent({ keepAlive: cliArgs.enableKeepAlive });
 https.globalAgent = new https.Agent({ keepAlive: cliArgs.enableKeepAlive });
 
 const app = express();
-// Root for Luker-shipped scaffolding (e.g. bundled skills under
+// Root for Taverncraft-shipped scaffolding (e.g. bundled skills under
 // default/skills/global/). Endpoints that consume bundled content read it
 // via req.app.get('lukerDefaultRoot') so tests can override per-request.
 app.set('lukerDefaultRoot', path.join(serverDirectory, 'default'));
@@ -306,7 +306,7 @@ if (!cliArgs.disableCsrf) {
             // or via the user's basic-auth credentials forwarded by the
             // initiating peer (`/session/offer`). CSRF protection assumes
             // browser-driven cross-site attacks, which doesn't apply when
-            // every legitimate caller is another Luker server's fetch()
+            // every legitimate caller is another Taverncraft server's fetch()
             // (with no shared cookie jar). Without this carve-out, a server-
             // side `/pair/accept` call to the peer's `/session/offer` is
             // rejected with "Invalid CSRF token" — the peer has no way to
@@ -638,14 +638,14 @@ async function preSetupTasks() {
 
     // Print formatted header
     console.log();
-    console.log(`Luker ${version.pkgVersion}`);
+    console.log(`Taverncraft ${version.pkgVersion}`);
     if (version.gitBranch && version.commitDate) {
         const date = new Date(version.commitDate);
         const localDate = date.toLocaleString('en-US', { timeZoneName: 'short' });
         console.log(`Running '${version.gitBranch}' (${version.gitRevision}) - ${localDate}`);
         checkRemoteVersion().then((remoteData) => {
             if (!remoteData.isLatest && ['staging', 'release'].includes(version.gitBranch)) {
-                console.log('INFO: A newer tagged Luker version is available.');
+                console.log('INFO: A newer tagged Taverncraft version is available.');
                 console.log('      Pull latest tags/changes to update.');
             }
         });
@@ -835,9 +835,9 @@ async function postSetupTasks(result) {
         setInterval(writeHeartbeat, intervalMs).unref();
     }
 
-    setWindowTitle('Luker WebServer');
+    setWindowTitle('Taverncraft WebServer');
 
-    let logListen = 'Luker is listening on';
+    let logListen = 'Taverncraft is listening on';
 
     if (result.useIPv6 && !result.v6Failed) {
         logListen += color.green(
@@ -851,7 +851,7 @@ async function postSetupTasks(result) {
         );
     }
 
-    const goToLog = `Go to: ${color.blue(browserLaunchUrl)} to open Luker`;
+    const goToLog = `Go to: ${color.blue(browserLaunchUrl)} to open Taverncraft`;
     const plainGoToLog = removeColorFormatting(goToLog);
 
     console.log(logListen);

@@ -100,7 +100,7 @@ test.describe('#67 — Director RP one full round → 1:1 bubble fidelity', () =
         // the HTML rendering of it (see spec #68 which uses the same
         // raw-mes assertion for the same reason).
         const committedMes = await page.evaluate((id) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return String(ctx.chat?.[id]?.mes ?? '');
         }, replyId);
         expect(committedMes.trim()).toBe(FINAL_REPLY.trim());
@@ -113,7 +113,7 @@ test.describe('#67 — Director RP one full round → 1:1 bubble fidelity', () =
 
         // Wait for the persisted chat to rehydrate.
         await page.waitForFunction((wantLen) => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return Array.isArray(ctx?.chat) && ctx.chat.length >= wantLen;
         }, before.length, { timeout: 30_000 });
 

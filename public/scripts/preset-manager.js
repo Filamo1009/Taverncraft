@@ -1887,7 +1887,7 @@ export async function initPresetManager() {
     $(document).on('click', '[data-preset-manager-rename]', async function () {
         const apiId = $(this).data('preset-manager-rename');
 
-        // Luker: card-bound dispatch MUST run before the global rename path.
+        // Taverncraft: card-bound dispatch MUST run before the global rename path.
         // When the openai preset selector currently shows a card-bound ghost
         // option (value encoded via preset-ref-codec), route rename through
         // the Layer 1 API `renameCharacterBoundPreset` which mutates only the

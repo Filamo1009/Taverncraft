@@ -74,7 +74,7 @@ export function augmentStudioPromptWithCustomTools(basePrompt, profile, extensio
     lines.push('- `luker_orch_dry_run_custom_tool` — compile + run a body in a 3-second sandbox with sample args; relays full exception + console output back. ALWAYS run this with realistic args before staging a write proposal — never make the user approve a body you have not validated against the live ctx.');
     lines.push('');
     lines.push('Discovery tools (use BEFORE writing or patching JavaScript that touches ctx):');
-    lines.push('- `luker_ctx_list_keys` + `luker_ctx_describe` — enumerate the runtime ctx surface (the same object SillyTavern/Luker extensions get via getContext()). Returns type / arity / source preview / sub-keys. Do not guess `ctx.foo.bar`; walk into it.');
+    lines.push('- `luker_ctx_list_keys` + `luker_ctx_describe` — enumerate the runtime ctx surface (the same object SillyTavern/Taverncraft extensions get via getContext()). Returns type / arity / source preview / sub-keys. Do not guess `ctx.foo.bar`; walk into it.');
     lines.push('- `luker_docs_list` + `luker_docs_read` — read authoritative docs under `docs/`. Useful starting points: `features/orchestrator/custom-tools.md` (ctx surface inside a custom tool body), `development/extension-api/chat-and-state.md` (Floor State / chat state / character state), `development/extension-api/generation.md`, `development/extension-api/world-info.md`, `development/extension-api/orchestrator-tools.md`.');
     lines.push('');
     lines.push('Every write goes through user review on the ProposalBus before reaching the live profile. Reads + dry-runs are immediate.');

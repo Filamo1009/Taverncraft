@@ -2580,8 +2580,10 @@ router.post('/export', validateAvatarUrlMiddleware, async function (request, res
                 name: syncResult.name,
                 ...(syncResult.error ? { error: syncResult.error } : {}),
             });
-            response.setHeader('X-Luker-Export-Warning', Buffer.from(payload, 'utf8').toString('base64'));
-            response.setHeader('Access-Control-Expose-Headers', 'X-Luker-Export-Warning');
+            const encodedWarning = Buffer.from(payload, 'utf8').toString('base64');
+            response.setHeader('X-Taverncraft-Export-Warning', encodedWarning);
+            response.setHeader('X-Luker-Export-Warning', encodedWarning);
+            response.setHeader('Access-Control-Expose-Headers', 'X-Taverncraft-Export-Warning, X-Luker-Export-Warning');
         };
 
         switch (request.body.format) {

@@ -16,7 +16,7 @@
  * now and will move into more specific modules in later refactors.
  */
 
-const __ctx = Luker.getContext();
+const __ctx = Taverncraft.getContext();
 const extension_prompt_roles = __ctx.constants.promptRoles;
 const world_info_position = __ctx.constants.wiPosition;
 
@@ -273,7 +273,7 @@ export const RUNTIME_AGENT_CONTEXT_MENTAL_MODEL = Object.freeze([
 export const CUSTOM_TOOL_AUTHORING_DOCTRINE_LINES = Object.freeze([
     '# Custom-tool authoring doctrine',
     '',
-    'You can author and edit Layer-3 tools directly on this profile via the `luker_orch_*_custom_tool` family. Custom tools are async JavaScript bodies the runtime agent calls during a real turn; the body receives `(args, ctx)` and runs in the page context with the same session permissions the rest of Luker has.',
+    'You can author and edit Layer-3 tools directly on this profile via the `luker_orch_*_custom_tool` family. Custom tools are async JavaScript bodies the runtime agent calls during a real turn; the body receives `(args, ctx)` and runs in the page context with the same session permissions the rest of Taverncraft has.',
     '',
     '**When a custom tool is the right call.** Reach for one when the task is genuinely codifiable — a check / extraction / transformation that a small function can do exactly, where asking the model to "try harder in the systemPrompt" would be unreliable. Examples: validating that the reply ends with a required tag, extracting a structured field from the draft for a downstream node, looking up a stable JSON map the user maintains in chat state. If the task is fundamentally a judgment call (style, tone, in-character consistency), it does NOT belong in a custom tool — that\'s what the model is for.',
     '',

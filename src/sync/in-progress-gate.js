@@ -35,7 +35,7 @@
  * `since` timestamp is also useful for the diagnostic `/api/sync/v1/
  * status` view and for logging "this gate has been held for X ms".
  *
- * Process-local — there is no cross-process coordination because Luker
+ * Process-local — there is no cross-process coordination because Taverncraft
  * is a single-process server and a second instance pointed at the
  * same data root would defeat `write-file-atomic` regardless.
  */

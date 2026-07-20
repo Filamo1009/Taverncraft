@@ -30,7 +30,7 @@ import { collectUnembeddedPresets } from './collect-unembedded-presets.js';
  * English strings here.
  *
  * @param {object}   deps
- * @param {object}   deps.context             SillyTavern context (Luker-augmented).
+ * @param {object}   deps.context             SillyTavern context (Taverncraft-augmented).
  * @param {object}   deps.activeCharacter     Character object (proxy-safe; caller
  *                                            resolves via ctx.characters.find).
  * @param {object}   deps.profile             Sanitized profile draft (loop/agenda/

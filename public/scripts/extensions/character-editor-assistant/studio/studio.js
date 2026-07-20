@@ -4,7 +4,7 @@
  * Layout: Left panel (AI chat) | Center (real chat/CardApp) | Right panel (code editor)
  */
 
-const __ctx = Luker.getContext();
+const __ctx = Taverncraft.getContext();
 const getRequestHeaders = __ctx.getRequestHeaders;
 const saveSettingsDebounced = __ctx.saveSettingsDebounced;
 const translate = __ctx.translate;
@@ -12,7 +12,7 @@ const DOMPurify = __ctx.lib.DOMPurify;
 const DiffMatchPatch = __ctx.lib.DiffMatchPatch;
 const showdown = __ctx.lib.showdown;
 const extension_settings = __ctx.extensionSettings;
-const getContext = Luker.getContext;
+const getContext = Taverncraft.getContext;
 const getExtensionApi = __ctx.getExtensionApi;
 const getCharacterState = __ctx.getCharacterState;
 const updateCharacterState = __ctx.updateCharacterState;
@@ -451,8 +451,8 @@ function createCtxCompletionSource(cm) {
         { label: 'ctx.deleteLastMessage', type: 'method', info: 'Delete the last message', detail: '() => void' },
         { label: 'ctx.container', type: 'property', info: 'The CardApp container DOM element', detail: 'HTMLElement' },
         { label: 'ctx.charId', type: 'property', info: 'Current character ID', detail: 'string' },
-        { label: 'ctx.eventSource', type: 'property', info: 'Luker event bus', detail: 'EventEmitter' },
-        { label: 'ctx.lukerContext', type: 'property', info: 'Escape hatch: full Luker extension API (200+ properties). Use when ctx doesn\'t expose what you need.', detail: 'SillyTavernContext' },
+        { label: 'ctx.eventSource', type: 'property', info: 'Taverncraft event bus', detail: 'EventEmitter' },
+        { label: 'ctx.lukerContext', type: 'property', info: 'Escape hatch: full Taverncraft extension API (200+ properties). Use when ctx doesn\'t expose what you need.', detail: 'SillyTavernContext' },
         { label: 'ctx.registerRenderer', type: 'method', info: 'Register custom message renderer', detail: '({ renderMessage, removeMessage }) => void' },
         { label: 'ctx.getChatState', type: 'method', info: 'async — Read chat-bound sidecar namespace. Returns { ok, state } envelope.', detail: '(namespace: string, options?: object) => Promise<{ok: true, state: object|null} | {ok: false, state: null, reason: string, hint: string}>' },
         { label: 'ctx.updateChatState', type: 'method', info: 'async — Reducer-style write of chat-bound sidecar. Returns { ok, state, updated } envelope.', detail: '(namespace: string, updater: (current: object) => object|null, options?: object) => Promise<{ok: true, state: object|null, updated: boolean} | {ok: false, reason: string, hint: string}>' },

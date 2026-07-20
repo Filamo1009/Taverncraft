@@ -116,7 +116,7 @@ test.describe('#49 — director run + card-bound preset roundtrip', () => {
                 el.dispatchEvent(new Event('input', { bubbles: true }));
                 el.dispatchEvent(new Event('change', { bubbles: true }));
             }
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const s = ctx.chatCompletionSettings;
             if (Array.isArray(s.prompts) && s.prompts[0]) {
                 s.prompts[0].content = 'User-edited main prompt (director roundtrip).';
@@ -139,7 +139,7 @@ test.describe('#49 — director run + card-bound preset roundtrip', () => {
 
         async function readCardSlotBody() {
             return await page.evaluate(async () => {
-                const ctx = window.Luker.getContext();
+                const ctx = window.Taverncraft.getContext();
                 const chId = ctx.characterId;
                 const char = ctx.characters?.[chId];
                 const presets = char?.data?.extensions?.luker?.chat_completion_preset?.presets;
@@ -152,7 +152,7 @@ test.describe('#49 — director run + card-bound preset roundtrip', () => {
             .poll(async () => {
                 const [slot, live] = await Promise.all([
                     readCardSlotBody(),
-                    page.evaluate(() => window.Luker.getContext().chatCompletionSettings?.temp_openai),
+                    page.evaluate(() => window.Taverncraft.getContext().chatCompletionSettings?.temp_openai),
                 ]);
                 return { slot: slot?.temperature, live };
             }, { timeout: 15_000 })
@@ -165,7 +165,7 @@ test.describe('#49 — director run + card-bound preset roundtrip', () => {
         // `temperature`); preset body <-> oai_settings 的键映射见
         // openai.js:484 settingsToUpdate。
         const beforeApply = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const s = ctx.chatCompletionSettings;
             return {
                 ghostSelectValue: String(document.getElementById('settings_preset_openai')?.value ?? ''),
@@ -264,7 +264,7 @@ test.describe('#49 — director run + card-bound preset roundtrip', () => {
 
         // Assertion (c): restore 后 live oai_settings 与 apply 前逐字节相等。
         const afterRestoreLive = await page.evaluate(() => {
-            const s = window.Luker.getContext().chatCompletionSettings;
+            const s = window.Taverncraft.getContext().chatCompletionSettings;
             return JSON.stringify({
                 temp_openai: s.temp_openai,
                 prompts: s.prompts,

@@ -4,7 +4,7 @@
 // restart, reload, and assert the toggle is still set.
 //
 // "Power User" controls are rendered inside the User Settings drawer in
-// Luker — there is no separate panel — so we pick distinct representative
+// Taverncraft — there is no separate panel — so we pick distinct representative
 // DOM ids for "User Settings" (UI behaviour like timestamps) and
 // "Power User" (chat-flow like trim_sentences). The other two panels
 // have their own drawers (#sys-settings-button, #advanced-formatting-button).

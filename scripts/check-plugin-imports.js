@@ -3,12 +3,12 @@
 // Copyright (C) 2026 FunnyCups
 
 /**
- * Boundary linter for Luker-new plugins.
+ * Boundary linter for Taverncraft-new plugins.
  *
- * Contract: a Luker-new plugin in `public/scripts/extensions/<plugin>/**`
- * MUST consume core capabilities through `Luker.getContext()` / the
+ * Contract: a Taverncraft-new plugin in `public/scripts/extensions/<plugin>/**`
+ * MUST consume core capabilities through `Taverncraft.getContext()` / the
  * three-layer API, never via cross-boundary import. Cross-plugin coupling
- * (Luker-new plugin → another Luker-new plugin) is also disallowed —
+ * (Taverncraft-new plugin → another Taverncraft-new plugin) is also disallowed —
  * sibling plugins talk over the published `getExtensionApi(name)` registry
  * (see `docs/development/extension-api/*`). Reverse coupling (core
  * importing a plugin) is the third banned direction. Upstream-shipped
@@ -16,16 +16,16 @@
  *
  * Detection
  * ---------
- * For each Luker-new plugin path, scan every `.js` for `import ... from
+ * For each Taverncraft-new plugin path, scan every `.js` for `import ... from
  * '<path>'` statements (static + dynamic). Any specifier resolving to:
- *   1. A core file (escapes `extensions/` and is not Luker platform), or
- *   2. A sibling Luker-new plugin directory
- * is a violation. Luker self-platform layer (`iteration-library/`,
+ *   1. A core file (escapes `extensions/` and is not Taverncraft platform), or
+ *   2. A sibling Taverncraft-new plugin directory
+ * is a violation. Taverncraft self-platform layer (`iteration-library/`,
  * `skills/`, `lib/edits/`, `vendor/`) is the only whitelisted escape.
  *
  * For the reverse direction, scan `public/script.js` plus every
  * `public/scripts/*.js` (non-extensions) plus `src/**\/*.js`, and flag
- * any import whose specifier resolves into a Luker-new plugin directory.
+ * any import whose specifier resolves into a Taverncraft-new plugin directory.
  *
  * Output is grouped by plugin; exit code is non-zero when any violation
  * is detected so CI can fail the run.
@@ -120,7 +120,7 @@ function classifyForPlugin(specifier, fromFile, pluginDir) {
     const relFromExt = relative(EXT_DIR, resolved).split(sep);
 
     if (relFromExt[0] === '..') {
-        // Escapes extensions/. Either core or Luker platform layer.
+        // Escapes extensions/. Either core or Taverncraft platform layer.
         const rel = relative(resolve(EXT_DIR, '..'), resolved).split(sep);
         if (rel[0] === '..') return { kind: 'core', target: relative(REPO_ROOT, resolved) };
         if (LUKER_PLATFORM_DIRS.has(rel[0])) return null;
@@ -244,8 +244,8 @@ function main() {
 
     console.error(`\n${total} violation(s) found.`);
     console.error('Fix:');
-    console.error('  - plugin → core:    consume via Luker.getContext().');
-    console.error('  - plugin → plugin:  consume via Luker.getContext().getExtensionApi(name); provider publishes via registerExtensionApi(name, api).');
+    console.error('  - plugin → core:    consume via Taverncraft.getContext().');
+    console.error('  - plugin → plugin:  consume via Taverncraft.getContext().getExtensionApi(name); provider publishes via registerExtensionApi(name, api).');
     console.error('  - core → plugin:    move the symbol the other way; core never imports from extensions/<luker-plugin>/.');
     process.exit(1);
 }

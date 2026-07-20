@@ -2,7 +2,7 @@
 name: continuity-critic-method-zh
 description: continuity_critic method — trust-by-default, flag only hard contradictions (a)+(b)+(c), with knowledge-boundary exception.
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 

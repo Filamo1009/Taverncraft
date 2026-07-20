@@ -2,7 +2,7 @@
 name: director-dispatch-protocol-zh
 description: Sub-agent dispatch protocol — task brief shape, parallel pattern, what sub-agents see, briefing discipline.
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 

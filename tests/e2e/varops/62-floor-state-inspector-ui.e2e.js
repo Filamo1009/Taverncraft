@@ -50,7 +50,7 @@ test.describe('#62 — Floor-state inspector UI shows current floor full state',
         await selectCharacterByName(page, 'Seraphina');
 
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -63,7 +63,7 @@ test.describe('#62 — Floor-state inspector UI shows current floor full state',
         ]) {
             const { replyId } = await sendMessageAndAwaitReply(page, text);
             await page.waitForFunction((id) => {
-                const ctx = window.Luker.getContext();
+                const ctx = window.Taverncraft.getContext();
                 const m = ctx.chat?.[id];
                 return Boolean(m && Array.isArray(m?.extra?.var_ops) && m.extra.var_ops.length > 0);
             }, replyId, { timeout: 15_000 });
@@ -104,7 +104,7 @@ test.describe('#62 — Floor-state inspector UI shows current floor full state',
         // all surviving ops from every floor we sent — this is the "full
         // state" the inspector shadows.
         const fullState = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.chatMetadata?.variables ?? null;
         });
         // hp=50 (turn 1) → +1 (turn 2) → 51

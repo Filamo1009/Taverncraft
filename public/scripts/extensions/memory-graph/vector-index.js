@@ -10,7 +10,7 @@
 // `findSimilarNodes` / `syncVectorIndex` orchestration.
 
 import { getEmbeddingProfileById, getRerankProfileById } from '../connection-manager/embed-rerank.js';
-const EmbeddingService = Luker.getContext().embeddingService;
+const EmbeddingService = Taverncraft.getContext().embeddingService;
 import {
     validateVectorConfig,
     buildCollectionId,

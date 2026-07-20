@@ -53,11 +53,11 @@ test.describe('#42 — profile with no URL surfaces a friendly error', () => {
         // Wait for greeting so any failure we observe is the attempted
         // send turn, not the initial load.
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
-        const chatLenBefore = await page.evaluate(() => window.Luker.getContext().chat.length);
+        const chatLenBefore = await page.evaluate(() => window.Taverncraft.getContext().chat.length);
 
         // REAL act: type into the textarea and click send.
         const textarea = page.locator('#send_textarea');
@@ -69,7 +69,7 @@ test.describe('#42 — profile with no URL surfaces a friendly error', () => {
         const outcome = await page.evaluate(async () => {
             const deadline = Date.now() + 20_000;
             while (Date.now() < deadline) {
-                const ctx = window.Luker.getContext();
+                const ctx = window.Taverncraft.getContext();
                 const chat = ctx?.chat || [];
                 const last = chat[chat.length - 1];
                 const isAsst = last && !last.is_user;
@@ -88,7 +88,7 @@ test.describe('#42 — profile with no URL surfaces a friendly error', () => {
 
         expect(outcome.kind, `expected user-visible failure signal within 20s; got ${JSON.stringify(outcome)}`).not.toBe('timeout');
 
-        const chatLenAfter = await page.evaluate(() => window.Luker.getContext().chat.length);
+        const chatLenAfter = await page.evaluate(() => window.Taverncraft.getContext().chat.length);
         if (outcome.kind === 'asst-bubble') {
             expect(outcome.mes.toLowerCase()).toMatch(/error|fail|url|fetch|invalid|400|500/);
         }

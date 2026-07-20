@@ -69,7 +69,7 @@ test.describe('#105 — strict per-user data isolation across users + restart', 
         try {
             await loginAs(a, 'userone', 'pwA');
 
-            // /api/characters/create is multipart, but Luker also accepts
+            // /api/characters/create is multipart, but Taverncraft also accepts
             // JSON via /api/characters/edit-attribute style operations.
             // The simplest known-good shape is /api/characters/create with
             // multipart fields. Build it inline.
@@ -120,7 +120,7 @@ test.describe('#105 — strict per-user data isolation across users + restart', 
                 ],
                 avatar_url: aCharacters.find(c => c.name === 'AshA')?.avatar,
             });
-            // /api/chats/save returns 204 on success in Luker — accept any 2xx.
+            // /api/chats/save returns 204 on success in Taverncraft — accept any 2xx.
             expect(saveChat.status() < 300, `A save-chat failed (${saveChat.status()})`).toBe(true);
         } finally {
             await a.dispose();

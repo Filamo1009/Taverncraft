@@ -1,6 +1,6 @@
 # 世界书
 
-读取、写入、扫描世界书（lorebook）条目的相关 API。所有函数均通过 `Luker.getContext()` 暴露；原始 HTTP 路由参见[底层端点](/zh-CN/development/extension-api/low-level-endpoints)。
+读取、写入、扫描世界书（lorebook）条目的相关 API。所有函数均通过 `Taverncraft.getContext()` 暴露；原始 HTTP 路由参见[底层端点](/zh-CN/development/extension-api/low-level-endpoints)。
 
 ## 读取世界书
 
@@ -13,7 +13,7 @@ loadWorldInfo(name: string): Promise<WorldInfoData | null>
 按名称读取单个世界书文件。名称查找忽略大小写和重音符。无匹配文件时返回 `null`。内部带缓存——重复读取同一文件直接走内存。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const book = await ctx.loadWorldInfo('My Lorebook');
 console.log(Object.keys(book.entries).length);
 ```
@@ -230,7 +230,7 @@ getCharaAuxWorlds(charaFilename: string): string[]
 `charaFilename` 为 falsy 或没有绑定时返回 `[]`。配合 [`getCharaFilename`](/zh-CN/development/extension-api/characters#getcharafilename) 解析当前角色：
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const auxBooks = ctx.getCharaAuxWorlds(ctx.getCharaFilename());
 const datas = await ctx.loadWorldInfoBatch(auxBooks);
 ```
@@ -261,7 +261,7 @@ context.worldInfoEntry.template: WIEntry
 条目的标准默认结构（占位 `uid: 0`、空 key 列表、`position: 0` 等）。批量构造条目时用「克隆—修改」方式使用，这样未来 schema 新增字段会自动跟上。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const fresh = { ...ctx.worldInfoEntry.template, uid: newUid, key: ['npc:Bob'], content: '一位面包师。' };
 ```
 
@@ -361,7 +361,7 @@ context.constants.wiPosition: {
 条目级 `position` 值的数值枚举。构造条目或按注入槽过滤时使用。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const entry = {
     ...ctx.worldInfoEntry.template,
     position: ctx.constants.wiPosition.before,
@@ -373,7 +373,7 @@ const entry = {
 ### 插件读取并编辑一个世界书
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 const book = await ctx.loadWorldInfo('Setting Bible');
 if (!book) {

@@ -98,7 +98,7 @@ async function loginViaForm(page, baseURL, handle, password) {
     // password block when an account has no password). Wait for the
     // SPA to come up either way.
     await page.waitForFunction(() => document.getElementById('preloader') === null, { timeout: 60_000 });
-    await page.waitForFunction(() => !!window.Luker?.getContext, { timeout: 30_000 });
+    await page.waitForFunction(() => !!window.Taverncraft?.getContext, { timeout: 30_000 });
 }
 
 /**

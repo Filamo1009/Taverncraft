@@ -25,7 +25,7 @@
  * the whole system cache otherwise. The catalog appearing on the user side
  * is fine: the AI reads it once per turn either way.
  *
- * Pure module — no DOM, no Luker globals, no Skill API call inline. The
+ * Pure module — no DOM, no Taverncraft globals, no Skill API call inline. The
  * catalog fetch is plumbed via `opts.listSkillsInScope` so studio.js owns
  * the caller-side error handling and this module stays trivial to test.
  */

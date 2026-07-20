@@ -1,6 +1,6 @@
 # Character Card Basics
 
-Character cards are one of the most fundamental concepts in Luker. A character card defines everything about an AI character — from name and appearance to personality, speech patterns, and even the world they inhabit. Each time you chat with the AI, the information in the character card is sent to the AI model, guiding it to roleplay as that character.
+Character cards are one of the most fundamental concepts in Taverncraft. A character card defines everything about an AI character — from name and appearance to personality, speech patterns, and even the world they inhabit. Each time you chat with the AI, the information in the character card is sent to the AI model, guiding it to roleplay as that character.
 
 ## What is a Character Card
 
@@ -15,7 +15,7 @@ A character card can be very simple (just a name and a few lines of description)
 
 ## V2 Format
 
-Luker uses character cards that follow the **Character Card V2** specification, a widely adopted community standard. V2 character cards typically exist as `.png` files — the character's portrait image with JSON character data embedded inside. You can also use plain JSON files (`.json`) for import and export.
+Taverncraft uses character cards that follow the **Character Card V2** specification, a widely adopted community standard. V2 character cards typically exist as `.png` files — the character's portrait image with JSON character data embedded inside. You can also use plain JSON files (`.json`) for import and export.
 
 ## Core Fields
 
@@ -71,16 +71,16 @@ You can import character cards in the following ways:
 When exporting, you can choose PNG or JSON format. PNG format embeds the character data into the portrait image, making it convenient to share.
 
 ::: info
-Exported character cards include all core field data. If the character card has bound Luker extension data (such as bound presets, orchestration configs), that data is exported as well.
+Exported character cards include all core field data. If the character card has bound Taverncraft extension data (such as bound presets, orchestration configs), that data is exported as well.
 :::
 
-## Luker's Character Card Extensions
+## Taverncraft's Character Card Extensions
 
-Building on the standard V2 format, Luker adds several practical extensions to character cards. This extension data is stored in the `data.extensions.luker` field and doesn't affect compatibility with other tools.
+Building on the standard V2 format, Taverncraft adds several practical extensions to character cards. This extension data is stored in the `data.extensions.luker` field and doesn't affect compatibility with other tools.
 
 ### Card-Bound Presets and Personas
 
-Character cards can bind one or more dedicated **chat completion presets** and one or more **user personas**. When you open a chat with this character, Luker adds the card's presets as a Card-bound group in the preset selector and applies the card's default; user personas the card recommends are surfaced the same way.
+Character cards can bind one or more dedicated **chat completion presets** and one or more **user personas**. When you open a chat with this character, Taverncraft adds the card's presets as a Card-bound group in the preset selector and applies the card's default; user personas the card recommends are surfaced the same way.
 
 This solves a common pain point: card creators no longer need to ask users to manually import specific presets, nor do they need to put user personas in world info. Card-bound presets are runtime-only — they don't appear in your global preset list and don't overwrite same-named local presets.
 
@@ -94,7 +94,7 @@ Card creators can design custom orchestration workflows for specific characters 
 
 ### Memory Graph Schema Override
 
-If you use Luker's Memory Graph plugin, character cards can override the default Memory Graph schema (node types and structure definitions). This allows card creators to customize how memories are stored and recalled for specific characters.
+If you use Taverncraft's Memory Graph plugin, character cards can override the default Memory Graph schema (node types and structure definitions). This allows card creators to customize how memories are stored and recalled for specific characters.
 
 ## Next Steps
 

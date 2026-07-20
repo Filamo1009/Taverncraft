@@ -1,6 +1,6 @@
 # Skills
 
-`context.skills.*` is the JavaScript surface for installing, reading, editing, and packaging skills. Extensions reach for it through `Luker.getContext()`; CardApps reach for the same shape on their `ctx.skills`.
+`context.skills.*` is the JavaScript surface for installing, reading, editing, and packaging skills. Extensions reach for it through `Taverncraft.getContext()`; CardApps reach for the same shape on their `ctx.skills`.
 
 Skills are the [knowledge packs](/features/skills/) the orchestrator uses; this API is the read/write transport that backs the skill manager subpanel, the inline editor, and the iter-studio's 17 skill tools.
 
@@ -11,7 +11,7 @@ For the conceptual model — scopes, visibility policy, embed lifecycle — star
 ## Accessing the API
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 const skills = context.skills;
 
 // Or from a CardApp ctx (same shape):
@@ -20,7 +20,7 @@ async function init(ctx) {
 }
 ```
 
-The CardApp ctx surface is a thin wrapper around the same underlying functions — call signatures and return shapes are identical (per Luker's [API parity convention](https://github.com/funnycups/Luker/blob/release/CLAUDE.md)).
+The CardApp ctx surface is a thin wrapper around the same underlying functions — call signatures and return shapes are identical according to Taverncraft's API parity convention.
 
 ## Scope shapes
 

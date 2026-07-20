@@ -80,7 +80,7 @@ URL 匯入器有意做窄 —— 它只抓一份 Markdown 檔案。再複雜（�
 
 ### 從角色卡 / 預設抽取
 
-匯入帶 `embedded_skills_source` 欄位的角色卡（PNG）或預設（JSON）時，Luker 會自動彈出預覽對話框：
+匯入帶 `embedded_skills_source` 欄位的角色卡（PNG）或預設（JSON）時，Taverncraft 會自動彈出預覽對話框：
 
 ![嵌入匯入預覽](/_screenshots/skills/embed-import-preview.png)
 
@@ -114,7 +114,7 @@ Skill 在跟它所依賴的產物（角色卡、預設）一起分發時最有�
 
 在編排器面板裡，[補全預設助手](/zh-TW/features/preset-assistant) 會派生出一份 `-orchestrator` 預設。派生緊接著，助手在工具列給出一條**為該預設打包 Skills**連結，點開後會進入 Skill 管理並自動開啟多選模式。挑你想要的 Skill，點**把所選打包進預設……**，再選目標預設。
 
-打包器把這些 Skill 寫進預設的 `extensions.luker.embedded_skills_source` 欄位。下一次儲存預設時，嵌入隨 JSON 一起被持久化。其他 Luker 使用者匯入這份預設時會看到上文描述的嵌入抽取對話框。
+打包器把這些 Skill 寫進預設的 `extensions.luker.embedded_skills_source` 欄位。下一次儲存預設時，嵌入隨 JSON 一起被持久化。其他 Taverncraft 使用者匯入這份預設時會看到上文描述的嵌入抽取對話框。
 
 ### 打包進角色卡
 

@@ -12,9 +12,9 @@ const diagrams = createBuildTimeDiagramsPlugin({
 type DocLocale = 'en' | 'zh-CN' | 'zh-TW'
 
 const localeMeta: Record<DocLocale, { tagline: string }> = {
-  en: { tagline: 'Next-gen Roleplay Chat Platform' },
-  'zh-CN': { tagline: '下一代角色扮演聊天平台' },
-  'zh-TW': { tagline: '下一代角色扮演聊天平台' },
+  en: { tagline: 'World Simulation & Interactive Narrative Engine' },
+  'zh-CN': { tagline: '世界模拟与互动叙事引擎' },
+  'zh-TW': { tagline: '世界模擬與互動敘事引擎' },
 }
 
 function detectLocale(relativePath: string): DocLocale {
@@ -70,7 +70,7 @@ const zhCNSidebar = [
   {
   text: '入门指南',
   items: [
-  { text: 'Luker 是什么', link: '/zh-CN/guide/what-is-luker' },
+  { text: 'Taverncraft 是什么', link: '/zh-CN/guide/what-is-taverncraft' },
   { text: '快速开始', link: '/zh-CN/guide/getting-started' },
   { text: '从 SillyTavern 迁移', link: '/zh-CN/guide/migration' },
   { text: '从 Termux 迁移到 APK', link: '/zh-CN/guide/migration-from-termux' },
@@ -113,6 +113,7 @@ const zhCNSidebar = [
   {
   text: '独有功能',
   items: [
+  { text: '世界引擎（单 NPC）', link: '/zh-CN/features/world-engine' },
   { text: '记忆图', link: '/zh-CN/features/memory-graph' },
   {
     text: '多Agent编排',
@@ -221,7 +222,7 @@ const zhTWSidebar = [
   {
     text: '入門指南',
     items: [
-      { text: 'Luker 是什麼', link: '/zh-TW/guide/what-is-luker' },
+      { text: 'Taverncraft 是什麼', link: '/zh-TW/guide/what-is-taverncraft' },
       { text: '快速開始', link: '/zh-TW/guide/getting-started' },
       { text: '從 SillyTavern 遷移', link: '/zh-TW/guide/migration' },
       { text: '從 Termux 遷移到 APK', link: '/zh-TW/guide/migration-from-termux' },
@@ -372,7 +373,7 @@ const enSidebar = [
   {
     text: 'Getting Started',
     items: [
-      { text: 'What is Luker', link: '/guide/what-is-luker' },
+      { text: 'What is Taverncraft', link: '/guide/what-is-taverncraft' },
       { text: 'Quick Start', link: '/guide/getting-started' },
       { text: 'Migrating from SillyTavern', link: '/guide/migration' },
       { text: 'Migrating from Termux to the APK', link: '/guide/migration-from-termux' },
@@ -415,6 +416,7 @@ const enSidebar = [
   {
     text: 'Unique Features',
     items: [
+      { text: 'World Engine (Single NPC)', link: '/features/world-engine' },
       { text: 'Memory Graph', link: '/features/memory-graph' },
       {
         text: 'Multi-Agent Orchestrator',
@@ -520,8 +522,8 @@ const enSidebar = [
 ]
 
 export default defineConfig({
-  title: 'Luker',
-  description: 'Next-gen Roleplay Chat Platform',
+  title: 'Taverncraft',
+  description: 'World Simulation & Interactive Narrative Engine',
   base: '/',
 
   // superpowers/ holds working specs and plans that aren't published docs.
@@ -530,18 +532,18 @@ export default defineConfig({
   head: [
     ['meta', { name: 'theme-color', content: '#4F46E5' }],
     ['meta', { property: 'og:type', content: 'website' }],
-    ['meta', { property: 'og:site_name', content: 'Luker' }],
+    ['meta', { property: 'og:site_name', content: 'Taverncraft' }],
   ],
 
   transformPageData(pageData) {
     const locale = detectLocale(pageData.relativePath)
     const fb = localeMeta[locale]
     const isHome = pageData.frontmatter.layout === 'home'
-    const baseTitle = pageData.title || pageData.frontmatter.title || 'Luker'
+    const baseTitle = pageData.title || pageData.frontmatter.title || 'Taverncraft'
 
-    const ogTitle = (isHome || baseTitle === 'Luker')
-      ? `Luker — ${fb.tagline}`
-      : `${baseTitle} | Luker`
+    const ogTitle = (isHome || baseTitle === 'Taverncraft')
+      ? `Taverncraft — ${fb.tagline}`
+      : `${baseTitle} | Taverncraft`
 
     let description: string | undefined = pageData.frontmatter.description
     if (!description && isHome && pageData.frontmatter.hero?.tagline) {
@@ -573,7 +575,7 @@ export default defineConfig({
       lang: 'en',
       themeConfig: {
         nav: [
-          { text: 'Guide', link: '/guide/what-is-luker' },
+          { text: 'Guide', link: '/guide/what-is-taverncraft' },
           { text: 'Features', link: '/features/memory-graph' },
           { text: 'Development', link: '/development/frontend-plugin' },
           { text: 'Changelog', link: '/changelog' },
@@ -588,7 +590,7 @@ export default defineConfig({
         langMenuLabel: 'Change language',
         footer: {
           message: 'Built upon SillyTavern',
-          copyright: '© 2026-present funnycups',
+          copyright: '© 2026-present Taverncraft contributors',
         },
       },
     },
@@ -598,7 +600,7 @@ export default defineConfig({
       link: '/zh-CN/',
       themeConfig: {
         nav: [
-          { text: '指南', link: '/zh-CN/guide/what-is-luker' },
+          { text: '指南', link: '/zh-CN/guide/what-is-taverncraft' },
           { text: '功能', link: '/zh-CN/features/memory-graph' },
           { text: '开发', link: '/zh-CN/development/frontend-plugin' },
           { text: '更新日志', link: '/zh-CN/changelog' },
@@ -613,7 +615,7 @@ export default defineConfig({
         langMenuLabel: '切换语言',
         footer: {
           message: '基于 SillyTavern 构建',
-          copyright: '© 2026-present funnycups',
+          copyright: '© 2026-present Taverncraft contributors',
         },
       },
     },
@@ -623,7 +625,7 @@ export default defineConfig({
       link: '/zh-TW/',
       themeConfig: {
         nav: [
-          { text: '指南', link: '/zh-TW/guide/what-is-luker' },
+          { text: '指南', link: '/zh-TW/guide/what-is-taverncraft' },
           { text: '功能', link: '/zh-TW/features/memory-graph' },
           { text: '開發', link: '/zh-TW/development/frontend-plugin' },
           { text: '更新日誌', link: '/zh-TW/changelog' },
@@ -638,7 +640,7 @@ export default defineConfig({
         langMenuLabel: '切換語言',
         footer: {
           message: '基於 SillyTavern 建構',
-          copyright: '© 2026-present funnycups',
+          copyright: '© 2026-present Taverncraft contributors',
         },
       },
     },
@@ -646,10 +648,10 @@ export default defineConfig({
 
   themeConfig: {
     logo: undefined,
-    siteTitle: 'Luker',
+    siteTitle: 'Taverncraft',
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/funnycups/Luker' },
+      { icon: 'github', link: 'https://github.com/Filamo1009/Taverncraft' },
     ],
 
     search: {

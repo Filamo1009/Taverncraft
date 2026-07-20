@@ -63,7 +63,7 @@ test.describe('#64 — Variables persist across restart (typed /setvar in textar
         await selectCharacterByName(page, 'Seraphina');
 
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -81,7 +81,7 @@ test.describe('#64 — Variables persist across restart (typed /setvar in textar
 
         // Verify cache reflects the writes.
         const beforeRestart = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return {
                 metadata: ctx.chatMetadata?.variables ?? null,
                 viaApi: {
@@ -102,14 +102,14 @@ test.describe('#64 — Variables persist across restart (typed /setvar in textar
 
         // ── Persistence: on-disk header carries the variables block ────
         const avatarFolder = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return (ctx.characters[ctx.characterId]?.avatar || '').replace(/\.png$/, '');
         });
         const chatDir = resolve(server.dataRoot, 'default-user', 'chats', avatarFolder);
         expect(existsSync(chatDir), `chat dir exists at ${chatDir}`).toBe(true);
         const files = readdirSync(chatDir).filter(f => f.endsWith('.jsonl'));
         expect(files.length, 'at least one jsonl chat persisted').toBeGreaterThan(0);
-        const chatId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+        const chatId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
         const targetFile = chatId && files.includes(`${chatId}.jsonl`) ? `${chatId}.jsonl` : files[0];
         const headerOnDisk = JSON.parse(readFileSync(resolve(chatDir, targetFile), 'utf8').split('\n')[0]);
         const persistedVars = headerOnDisk?.chat_metadata?.variables ?? {};
@@ -125,12 +125,12 @@ test.describe('#64 — Variables persist across restart (typed /setvar in textar
         await selectCharacterByName(page, 'Seraphina');
 
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return Array.isArray(ctx?.chat) && ctx.chat.length > 0;
         }, { timeout: 15_000 });
 
         const afterRestart = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return {
                 metadata: ctx.chatMetadata?.variables ?? null,
                 viaApi: {
@@ -156,7 +156,7 @@ test.describe('#64 — Variables persist across restart (typed /setvar in textar
         await sendMessageAndAwaitReply(page, 'And the tally still stands at three. Confirm.');
 
         const afterNextTurn = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.chatMetadata?.variables ?? null;
         });
         expect(afterNextTurn, 'slash-set keys survive the post-turn rebuild').toMatchObject({

@@ -2,7 +2,7 @@
 name: lorebook-scout-method-zh
 description: lorebook_scout method — single-source lorebook scan for setting / worldbuilding / character-canon entries relevant to the scene.
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 

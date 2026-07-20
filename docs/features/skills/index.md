@@ -2,7 +2,7 @@
 
 A **skill** is a small, self-contained knowledge pack an agent can read on demand. Instead of cramming every writing rule, every voice convention, every anti-cliché checklist into one giant system prompt, you keep them in named skill packs and let agents pull them in when they're relevant.
 
-Luker's skill format is compatible with [Anthropic's Claude Skills](https://www.anthropic.com/news/skills) — the same `SKILL.md` + frontmatter + optional sub-files shape — so a skill written for Claude Code drops into Luker and a skill written in Luker drops into Claude Code without conversion.
+Taverncraft's skill format is compatible with [Anthropic's Claude Skills](https://www.anthropic.com/news/skills) — the same `SKILL.md` + frontmatter + optional sub-files shape — so a skill written for Claude Code drops into Taverncraft and a skill written in Taverncraft drops into Claude Code without conversion.
 
 The orchestrator's default director profile is built on skills: a short main-agent identity prompt plus 24 bundled skills that the agents read by name. You can do the same for your own profiles.
 
@@ -32,7 +32,7 @@ name: director-anti-cliche-zh
 description: Anti-cliché patterns for narrative writing.
 license: MIT
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
   tags: [writing-rules, zh, director]
 ---
@@ -43,14 +43,14 @@ This skill documents the cliché patterns the director profile actively guards a
 ```
 
 - `name` and `description` are required.
-- `license` and `metadata.*` are optional and follow the Anthropic standard. Luker does not introduce private namespaces.
+- `license` and `metadata.*` are optional and follow the Anthropic standard. Taverncraft does not introduce private namespaces.
 - The body is the contract — when an agent reads this skill, the body is what they consume. Write it directively; put your "when to use," "how to use," and "tools you should prefer" guidance into the body.
 
 For the full authoring playbook, see [Authoring skills](/features/skills/authoring).
 
 ## Three scopes
 
-Skills physically live under `data/<user>/skills/<scope>/`. Luker has three scopes:
+Skills physically live under `data/<user>/skills/<scope>/`. Taverncraft has three scopes:
 
 | Scope | Where it lives | When it applies | Use for |
 |---|---|---|---|
@@ -95,7 +95,7 @@ user: "User-installed / authored" {
   fs: "data/<user>/skills/\n  global / preset / character" { style.fill: "#fffde7" }
 }
 
-bundled: "Shipped with Luker" {
+bundled: "Shipped with Taverncraft" {
   style.fill: "#fff3e0"
   pop: "default/skills/global/*\n(populates global scope on fresh install)" { style.fill: "#fffde7" }
 }
@@ -140,7 +140,7 @@ The user-facing write surfaces:
 
 ## The 24 bundled skills
 
-A fresh Luker install populates `data/<user>/skills/global/` with 24 default skills derived from the director profile's original inline prompts. They fall into three families:
+A fresh Taverncraft install populates `data/<user>/skills/global/` with 24 default skills derived from the director profile's original inline prompts. They fall into three families:
 
 - **Shared (5)** — `director-anti-cliche-zh`, `director-character-voice-zh`, `director-no-meta-zh`, `director-output-discipline-zh`, `director-zh-style-baseline`. Visible to every default director sub-agent.
 - **Main-agent (2)** — `director-turn-workflow-zh`, `director-dispatch-protocol-zh`. Visible only to the main agent.

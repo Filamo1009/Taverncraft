@@ -2,7 +2,7 @@
 name: canon-scout-method-zh
 description: canon_scout method — on-demand web search for fanfiction / canon-derived sessions (original-source canon, established fanon, character profiles).
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 

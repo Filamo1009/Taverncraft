@@ -15,7 +15,7 @@
  * Pure UI; caller does the actual apply.
  */
 
-const __ctx = Luker.getContext();
+const __ctx = Taverncraft.getContext();
 const Popup = __ctx.Popup;
 const POPUP_TYPE = __ctx.POPUP_TYPE;
 const POPUP_RESULT = __ctx.POPUP_RESULT;

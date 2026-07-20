@@ -1,6 +1,6 @@
 # Character Card Editor Assistant
 
-The Character Card Editor Assistant (CEA) is Luker's built-in AI-assisted editing tool. It lets you modify character card settings, World Info entries, and CardApp code using natural language instructions. Every modification the AI makes is presented as a diff comparison and only takes effect after you approve it item by item — keeping your character card firmly under your control.
+The Character Card Editor Assistant (CEA) is Taverncraft's built-in AI-assisted editing tool. It lets you modify character card settings, World Info entries, and CardApp code using natural language instructions. Every modification the AI makes is presented as a diff comparison and only takes effect after you approve it item by item — keeping your character card firmly under your control.
 
 The editor assistant automatically picks one of two modes based on whether the current character card contains a CardApp:
 

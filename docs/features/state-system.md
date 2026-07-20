@@ -1,6 +1,6 @@
 # State System
 
-Luker introduces a state system that allows character cards, chats, and presets to carry persistent state data. Extensions and CardApps can use this system to store and read custom data without modifying the character card or chat history itself.
+Taverncraft introduces a state system that allows character cards, chats, and presets to carry persistent state data. Extensions and CardApps can use this system to store and read custom data without modifying the character card or chat history itself.
 
 ## Character State
 
@@ -18,7 +18,7 @@ The lifecycle of character state is bound to the character itself — when a cha
 
 ## Chat State
 
-Each chat has its own state, isolated by namespace. Luker stores chat state in per-namespace files alongside the chat file, following the pattern `<chatFileBase>.luker-state.<namespace>.json`.
+Each chat has its own state, isolated by namespace. Taverncraft stores chat state in per-namespace files alongside the chat file, following the pattern `<chatFileBase>.luker-state.<namespace>.json`.
 
 ### State File Characteristics
 
@@ -36,12 +36,12 @@ Chat state can store various auxiliary information related to the chat, such as:
 - Other metadata not suitable for writing directly into chat history
 
 ::: tip
-Chat state is automatically managed by Luker — you typically don't need to edit it manually. If you're migrating data from SillyTavern, these files will be created automatically on first use.
+Chat state is automatically managed by Taverncraft — you typically don't need to edit it manually. If you're migrating data from SillyTavern, these files will be created automatically on first use.
 :::
 
 ## Preset State
 
-Luker also supports attaching state data to presets. Preset state allows extensions to store configuration or runtime information on specific presets. When users switch presets, the associated state data switches accordingly.
+Taverncraft also supports attaching state data to presets. Preset state allows extensions to store configuration or runtime information on specific presets. When users switch presets, the associated state data switches accordingly.
 
 ## Persistence and Lifecycle
 

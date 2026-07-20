@@ -2,7 +2,7 @@
 name: director-output-discipline-zh
 description: Output length / format discipline — concise reasoning, no idle rounds, parallel dispatch over sequential.
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 

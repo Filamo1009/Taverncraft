@@ -1,6 +1,6 @@
 # 更新日誌
 
-> 🚧 完整的更新日誌正在整理中。以下是 Luker 主要版本的功能概覽。
+> 🚧 完整的更新日誌正在整理中。以下是 Taverncraft 主要版本的功能概覽。
 
 ## 當前版本
 
@@ -8,7 +8,7 @@
 
 - **搜尋工具支援正則** —— `draft_search`（新增）以及既有的 `chat_search` / `lorebook_search` / `skill_search` 都接受 `pattern` 參數（JavaScript 正則表達式來源），並回傳 grep `-n` 風格輸出。批評者用它系統性地掃描詞彙模式，而不再仰賴肉眼通讀。
 - **執行階段世界書瀏覽工具** —— 編排執行階段 agent（loop / director 主 agent 與子 agent / agenda agent / spec 節點）新增 `world_book_list`（可見世界書概覽）與 `lorebook_list`（按書索引條目，grep 風格的 `uid name key` 行）；`lorebook_get` 現在也接受 `uid` 作為定位代號，與 `entry_key` 擇一傳入。同步重寫迭代工作台提示詞：編輯器視角與執行階段視角的世界書工具集不再混為一談；並在所有迭代模板中加入一條硬規則，禁止把「執行階段如何注入上下文」之類的元描述寫進執行階段 agent 的提示詞。
-- 自訂工具 —— 四個編排模式都能呼叫三種來源的工具：手寫工具、其他 Luker 擴充貢獻的工具，以及橋接進來的 SillyTavern function tool。
+- 自訂工具 —— 四個編排模式都能呼叫三種來源的工具：手寫工具、其他 Taverncraft 擴充貢獻的工具，以及橋接進來的 SillyTavern function tool。
 - 手寫工具跟隨編排走；角色卡覆寫裡的工具會隨角色卡一起匯出。
 - AI 迭代會看到這些自訂工具，並按編排開關。
 
@@ -53,7 +53,7 @@
 
 - **edits-lib 現在支援兩種整合方式**：套上 iteration-studio 外殼適配器適合彈窗形式的介面；直接用函式庫原語適合全屏 / 自定義 UI。CardApp Studio 是直接用法的倉庫內參考實作。
 
-- **CPA 基於迭代工作台外殼重構**（適配器遷移 SP-4，Plan 2 收官）。309 行的 `dialog-ui.js` 被刪除；CPA 既有的 IDE 風格業務輔助函式（`handleApplyDraft`、`handleRollbackToMessage`、`handleMessageDiff`）保持不變，現在執行於共享外殼之上。SP-4 落地後，Luker 中全部五個 AI 驅動的編輯面（編排器、記憶圖、CEA CardApp Studio、CEA 角色編輯器、CPA）共享同一個外殼、同一種儲存模型、同一套 edits-lib 與同一個衝突解決 UI。
+- **CPA 基於迭代工作台外殼重構**（適配器遷移 SP-4，Plan 2 收官）。309 行的 `dialog-ui.js` 被刪除；CPA 既有的 IDE 風格業務輔助函式（`handleApplyDraft`、`handleRollbackToMessage`、`handleMessageDiff`）保持不變，現在執行於共享外殼之上。SP-4 落地後，Taverncraft 中全部五個 AI 驅動的編輯面（編排器、記憶圖、CEA CardApp Studio、CEA 角色編輯器、CPA）共享同一個外殼、同一種儲存模型、同一套 edits-lib 與同一個衝突解決 UI。
 - **CEA 角色編輯器基於迭代工作台外殼重構**（適配器遷移 SP-3）。世界書同步分析彈窗被多輪迭代會話替代。一個適配器同時編輯角色卡與世界書；新增 3 個 CEA 自有的 edits-lib 自定義 op（`lorebook_entry_add / update / remove`），以條目 uid 為鍵。外殼現每次開啟時呼叫一次 `adapter.registerCustomOps(registry)`。舊的 `lorebookSyncHistory` 設定項會在首次開啟時被清除；磁碟上的角色卡與世界書資料不受影響。
 - **迭代工作台適配器合約 v2（IDE 風格）。** Shell 不再持有 `workingProfile` 快照；適配器的 `live()` 為唯一權威源。已遷移內建 orchestrator + memory-graph 適配器。外部適配器需要相應升級（參見 `docs/zh-TW/development/extension-api/iteration-studio.md`）。升級後首次打開時按適配器清空一次舊的迭代工作台會話數據；實時數據（預設文件、角色卡、設定）不受影響。CEA 與 CPA 適配器將在後續版本提供。
 

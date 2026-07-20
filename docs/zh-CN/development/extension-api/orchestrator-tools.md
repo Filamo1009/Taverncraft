@@ -10,7 +10,7 @@
 
 ## API 入口
 
-编排器扩展通过 Luker 的扩展注册表暴露 API。三种入口指向同一组函数引用——按你的代码情境挑一种：
+编排器扩展通过 Taverncraft 的扩展注册表暴露 API。三种入口指向同一组函数引用——按你的代码情境挑一种：
 
 ```js
 import { getExtensionApi } from '/scripts/extensions.js';
@@ -22,7 +22,7 @@ if (orch) orch.registerOrchestrationTool({ /* ... */ });
 // 2. 通过 SillyTavern context（扩展会收到这个对象）
 ctx.getExtensionApi('orchestrator')?.registerOrchestrationTool({ /* ... */ });
 
-// 3. 直接 ES module 导入（只在 Luker 树内合适）
+// 3. 直接 ES module 导入（只在 Taverncraft 树内合适）
 import { registerOrchestrationTool } from
     '/scripts/extensions/orchestrator/register-custom-tool.js';
 ```
@@ -52,7 +52,7 @@ import { registerOrchestrationTool } from
 
 ### ctx 参数
 
-`ctx` 原型链上继承 SillyTavern `getContext()` 的所有字段，外加编排运行时挂的几个内部字段。用法跟你在 Luker 任何其他地方用 context 一样。
+`ctx` 原型链上继承 SillyTavern `getContext()` 的所有字段，外加编排运行时挂的几个内部字段。用法跟你在 Taverncraft 任何其他地方用 context 一样。
 
 来自 SillyTavern:
 

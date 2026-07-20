@@ -2,7 +2,7 @@
 // Copyright (C) 2026 FunnyCups
 
 /**
- * Shared `ctx` introspection + Luker-docs lookup executors used by every
+ * Shared `ctx` introspection + Taverncraft-docs lookup executors used by every
  * iter-studio (CardApp Studio AI chat, orchestrator iter-studio, etc.).
  *
  * Each export is a pure async executor; callers pick their own tool name
@@ -15,25 +15,25 @@
  * system prompts that name them are already baked in. We export the
  * behavior, not the binding.
  *
- * IMPORTANT: every `Luker.getContext()` call must be deferred to runtime
+ * IMPORTANT: every `Taverncraft.getContext()` call must be deferred to runtime
  * (inside the exported async functions). This module is transitively
  * imported during the orchestrator extension's boot, which happens
- * BEFORE `Luker` is assigned on `window`. A module-top `Luker.getContext()`
- * here will throw `ReferenceError: Luker is not defined` and brick the
+ * BEFORE `Taverncraft` is assigned on `window`. A module-top `Taverncraft.getContext()`
+ * here will throw `ReferenceError: Taverncraft is not defined` and brick the
  * whole app boot — symptom is a stuck `#preloader` and "Failed to
- * initialize Luker application" in the console.
+ * initialize Taverncraft application" in the console.
  */
 
-// Defer every `Luker.getContext()` lookup to call time — see header note.
+// Defer every `Taverncraft.getContext()` lookup to call time — see header note.
 function getCtx() {
-    return Luker.getContext();
+    return Taverncraft.getContext();
 }
 function getHeaders() {
     return getCtx().getRequestHeaders();
 }
 
 /**
- * Enumerate top-level properties of the live SillyTavern/Luker context.
+ * Enumerate top-level properties of the live SillyTavern/Taverncraft context.
  *
  * @param {object} [opts]
  * @param {string} [opts.filter] Case-insensitive substring on the key.
@@ -124,7 +124,7 @@ export async function describeCtxPath({ path }) {
 }
 
 /**
- * List Luker doc markdown files served by the existing `/api/docs/list`
+ * List Taverncraft doc markdown files served by the existing `/api/docs/list`
  * endpoint (see src/endpoints/docs.js). zh-CN/zh-TW translations are
  * hidden by default because their content matches English line-for-line.
  *
@@ -160,7 +160,7 @@ export async function listLukerDocs({ filter = '', includeTranslations = false, 
 }
 
 /**
- * Read one Luker doc markdown file via the `/api/docs/file` endpoint.
+ * Read one Taverncraft doc markdown file via the `/api/docs/file` endpoint.
  *
  * @param {object} opts
  * @param {string} opts.path Doc path relative to docs/, e.g.

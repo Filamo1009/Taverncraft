@@ -1,14 +1,14 @@
 # Frontend Plugin Development
 
-Luker's plugin system is built on SillyTavern's extension architecture with additional enhancements. This document is intended for developers who want to build third-party plugins for Luker, covering file structure, lifecycle, event system, UI integration, and debugging tips.
+Taverncraft's plugin system is built on SillyTavern's extension architecture with additional enhancements. This document is intended for developers who want to build third-party plugins for Taverncraft, covering file structure, lifecycle, event system, UI integration, and debugging tips.
 
 ## Terminology
 
-In Luker, "plugin" and "extension" refer to the same concept. Built-in extensions are located in the `public/scripts/extensions/` directory, while third-party plugins are installed to `public/scripts/extensions/third-party/`.
+In Taverncraft, "plugin" and "extension" refer to the same concept. Built-in extensions are located in the `public/scripts/extensions/` directory, while third-party plugins are installed to `public/scripts/extensions/third-party/`.
 
 ## Plugin File Structure
 
-A standard Luker plugin contains the following files:
+A standard Taverncraft plugin contains the following files:
 
 ```
 third-party/my-plugin/
@@ -53,7 +53,7 @@ third-party/my-plugin/
 
 ### index.js
 
-The entry script is the core file of a plugin. Luker uses ES Module dynamic imports to load plugins, so the entry file should use `import`/`export` syntax.
+The entry script is the core file of a plugin. Taverncraft uses ES Module dynamic imports to load plugins, so the entry file should use `import`/`export` syntax.
 
 A minimal entry script structure:
 
@@ -93,7 +93,7 @@ jQuery(async () => {
 
 ### style.css
 
-The stylesheet is loaded automatically. It is recommended to use CSS class names prefixed with your plugin name to avoid conflicts with other plugins or Luker's core styles:
+The stylesheet is loaded automatically. It is recommended to use CSS class names prefixed with your plugin name to avoid conflicts with other plugins or Taverncraft's core styles:
 
 ```css
 .my-plugin-container {
@@ -128,16 +128,16 @@ An HTML fragment for the settings panel, which is injected into the extension se
 
 ## Global Objects
 
-### Luker.getContext()
+### Taverncraft.getContext()
 
-`Luker.getContext()` is the primary interface for plugins to interact with Luker. It returns a context object with a rich set of APIs:
+`Taverncraft.getContext()` is the primary interface for plugins to interact with Taverncraft. It returns a context object with a rich set of APIs:
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 ```
 
 > [!NOTE]
-> `SillyTavern.getContext()` and `st.getContext()` are compatibility aliases. New plugins should use `Luker.getContext()`.
+> `SillyTavern.getContext()` and `st.getContext()` are compatibility aliases. New plugins should use `Taverncraft.getContext()`.
 
 The context object includes APIs in the following major categories:
 
@@ -155,12 +155,12 @@ For the complete API list, see the [Extension API Reference](/development/extens
 
 ## Event System
 
-Luker's event system is the core mechanism for plugin development. Plugins respond to user actions and system state changes by listening to events.
+Taverncraft's event system is the core mechanism for plugin development. Plugins respond to user actions and system state changes by listening to events.
 
 ### Basic Usage
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 
 // Listen to an event
 context.eventSource.on(context.eventTypes.CHAT_CHANGED, (chatId) => {
@@ -177,7 +177,7 @@ context.eventSource.makeLast(context.eventTypes.CHAT_CHANGED, handler);
 
 ### Listener Execution Order
 
-Luker's event listeners execute **serially** in the following priority order (each listener is `await`ed):
+Taverncraft's event listeners execute **serially** in the following priority order (each listener is `await`ed):
 
 1. **Explicit plugin ordering** (`pluginOrder`) — configured via `eventSource.setOrderConfig()` or the built-in Hook Order extension
 2. **Listener priority** (`priority`) — the third argument to `eventSource.on()`; higher numbers execute first
@@ -336,12 +336,12 @@ This contract covers all backends routed through the built-in image-generation e
 
 ## Chat State
 
-Luker provides a chat state mechanism that allows plugins to bind data to a specific chat, rather than stuffing it into `chat_metadata`.
+Taverncraft provides a chat state mechanism that allows plugins to bind data to a specific chat, rather than stuffing it into `chat_metadata`.
 
 ### Basic Usage
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 const NAMESPACE = 'my-plugin';
 
 // Read state
@@ -411,7 +411,7 @@ jQuery(async () => {
 
 ### Popup Dialogs
 
-Luker provides popup APIs such as `callGenericPopup` for displaying custom dialogs:
+Taverncraft provides popup APIs such as `callGenericPopup` for displaying custom dialogs:
 
 ```js
 import { callGenericPopup, POPUP_TYPE } from '../../../popup.js';
@@ -449,7 +449,7 @@ Plugins can register named APIs via `registerExtensionApi`, allowing other plugi
 
 ```js
 // Provider side
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 context.registerExtensionApi('my-plugin', {
   doSomething: () => { /* ... */ },
   getData: () => myData,
@@ -466,13 +466,13 @@ if (myPluginApi) {
 
 ### Browser Developer Tools
 
-- Use `Luker.getContext()` in the browser console to directly inspect the context object
+- Use `Taverncraft.getContext()` in the browser console to directly inspect the context object
 - Use `context.eventSource.getListenersMeta(eventName)` to view all listener information for a given event
 - Plugin identity is inferred from the extension path during ordering/debugging, including third-party extensions (`third-party/<name>`)
 
 ### Frontend Log Manager
 
-Luker includes a built-in frontend log manager that intercepts `console` output and `fetch` requests. Use `getFrontendLogsSnapshot()` to obtain log snapshots, with support for filtering by time range and ID. See [Logging System](/features/logging) for details.
+Taverncraft includes a built-in frontend log manager that intercepts `console` output and `fetch` requests. Use `getFrontendLogsSnapshot()` to obtain log snapshots, with support for filtering by time range and ID. See [Logging System](/features/logging) for details.
 
 ### Common Troubleshooting
 
@@ -493,4 +493,4 @@ During development, you can trigger a reload by disabling/enabling the plugin th
 - [Server Plugin Development](/development/server-plugin) — Server-side plugin development guide (filesystem, API proxy, credential storage)
 - [Extension API Reference](/development/extension-api/) — Complete API list with detailed parameter descriptions
 - [Card Developer Guide](/development/card-developers) — Character card extension fields and CardApp development
-- [Contributing](/development/contributing) — How to submit code to Luker
+- [Contributing](/development/contributing) — How to submit code to Taverncraft

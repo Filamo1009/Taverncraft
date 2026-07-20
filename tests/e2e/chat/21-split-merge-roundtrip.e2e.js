@@ -68,14 +68,14 @@ test.describe('#21 — split then merge back yields byte-equal message body', ()
         await selectCharacterByName(page, 'Seraphina');
         await page.waitForFunction(() => document.querySelectorAll('#chat .mes').length >= 1, { timeout: 10_000 }).catch(() => {});
 
-        const sourceChatId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+        const sourceChatId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
         expect(sourceChatId).toBeTruthy();
         for (let j = 0; j < 3; j++) await sendMessageAndAwaitReply(page, `u${j}: hold the rail steady.`);
 
         // Capture the source body BEFORE splitting. The merged file's body
         // will be compared against this entry-by-entry.
         const avatarFolder = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.characters[ctx.characterId].avatar.replace(/\.png$/, '');
         });
         const chatsDir = resolve(server.dataRoot, 'default-user', 'chats', avatarFolder);
@@ -102,7 +102,7 @@ test.describe('#21 — split then merge back yields byte-equal message body', ()
         const mergedName = 'rt-merged';
         await submitMergeDialog(page, mergeDialog, mergedName);
         await page.waitForFunction(
-            (id) => window.Luker.getContext().getCurrentChatId() === id,
+            (id) => window.Taverncraft.getContext().getCurrentChatId() === id,
             mergedName,
             { timeout: 15_000 },
         );

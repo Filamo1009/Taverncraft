@@ -10,7 +10,7 @@
 
 ## API 入口
 
-編排器擴充透過 Luker 的擴充註冊表暴露 API。三種入口指向同一組函式參考——按你的程式碼情境挑一種：
+編排器擴充透過 Taverncraft 的擴充註冊表暴露 API。三種入口指向同一組函式參考——按你的程式碼情境挑一種：
 
 ```js
 import { getExtensionApi } from '/scripts/extensions.js';
@@ -22,7 +22,7 @@ if (orch) orch.registerOrchestrationTool({ /* ... */ });
 // 2. 透過 SillyTavern context（擴充會收到這個物件）
 ctx.getExtensionApi('orchestrator')?.registerOrchestrationTool({ /* ... */ });
 
-// 3. 直接 ES module 匯入（只在 Luker 樹內合適）
+// 3. 直接 ES module 匯入（只在 Taverncraft 樹內合適）
 import { registerOrchestrationTool } from
     '/scripts/extensions/orchestrator/register-custom-tool.js';
 ```
@@ -52,7 +52,7 @@ import { registerOrchestrationTool } from
 
 ### ctx 參數
 
-`ctx` 原型鏈上繼承 SillyTavern `getContext()` 的所有欄位，外加編排執行時掛的幾個內部欄位。用法跟你在 Luker 任何其他地方用 context 一樣。
+`ctx` 原型鏈上繼承 SillyTavern `getContext()` 的所有欄位，外加編排執行時掛的幾個內部欄位。用法跟你在 Taverncraft 任何其他地方用 context 一樣。
 
 來自 SillyTavern:
 

@@ -259,6 +259,122 @@
     border-top: 1px solid color-mix(in srgb, var(--SmartThemeBorderColor, #444) 30%, transparent);
 }
 
+/* ---- Prompt Assembly Layers ---- */
+
+.ri-prompt-layer-section h5 {
+    margin: 12px 0 6px;
+    color: var(--SmartThemeBodyColor, #ccc);
+    font-size: 0.85em;
+}
+
+.ri-prompt-layers {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ri-prompt-layer {
+    border: 1px solid color-mix(in srgb, var(--SmartThemeBorderColor, #444) 35%, transparent);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.ri-prompt-layer[open] {
+    border-color: color-mix(in srgb, var(--SmartThemeBorderColor, #444) 65%, transparent);
+}
+
+.ri-prompt-layer-summary {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 8px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.88em;
+}
+
+.ri-prompt-layer-summary:hover {
+    background: color-mix(in srgb, var(--SmartThemeQuoteColor, #335) 15%, transparent);
+}
+
+.ri-layer-category {
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: var(--monoFontFamily, monospace);
+    font-size: 0.72em;
+    opacity: 0.9;
+    background: color-mix(in srgb, var(--SmartThemeQuoteColor, #557) 30%, transparent);
+}
+
+.ri-layer-world_state {
+    color: #80cbc4;
+    background: color-mix(in srgb, #009688 28%, transparent);
+}
+
+.ri-layer-post_history {
+    color: #ffcc80;
+    background: color-mix(in srgb, #ff9800 25%, transparent);
+}
+
+.ri-layer-world_book {
+    color: #90caf9;
+    background: color-mix(in srgb, #2196f3 24%, transparent);
+}
+
+.ri-layer-memory {
+    color: #ce93d8;
+    background: color-mix(in srgb, #9c27b0 24%, transparent);
+}
+
+.ri-layer-title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ri-layer-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 4px 9px;
+    font-size: 0.75em;
+    opacity: 0.65;
+    border-top: 1px solid color-mix(in srgb, var(--SmartThemeBorderColor, #444) 25%, transparent);
+}
+
+.ri-layer-meta code {
+    overflow-wrap: anywhere;
+}
+
+.ri-layer-warning,
+.ri-layer-ok,
+.ri-layer-truncated {
+    margin-top: 7px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+}
+
+.ri-layer-warning {
+    color: #ffcc80;
+    background: color-mix(in srgb, #ff9800 14%, transparent);
+    border: 1px solid color-mix(in srgb, #ff9800 30%, transparent);
+}
+
+.ri-layer-ok {
+    color: #a5d6a7;
+    background: color-mix(in srgb, #4caf50 10%, transparent);
+    border: 1px solid color-mix(in srgb, #4caf50 24%, transparent);
+}
+
+.ri-layer-truncated {
+    margin: 0;
+    border-radius: 0;
+    opacity: 0.7;
+    border-top: 1px solid color-mix(in srgb, var(--SmartThemeBorderColor, #444) 25%, transparent);
+}
+
 /* ---- Filter Bar ---- */
 
 .ri-filter-bar {

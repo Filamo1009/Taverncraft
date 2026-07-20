@@ -14,7 +14,7 @@
  * validates fully on writeFile, so the client check is purely UX.
  *
  * v1 deliberately keeps the editor simple: plain styled textarea, no
- * markdown preview, no Codemirror, no monaco. Luker's character-editor-assistant
+ * markdown preview, no Codemirror, no monaco. Taverncraft's character-editor-assistant
  * studio loads codemirror.bundle.js but only for scripted use; pulling that
  * here would mean async loading for a feature that just needs typing
  * + saving. We leave the upgrade path open (the textarea selector is the
@@ -26,7 +26,7 @@
  * the tree; SKILL.md is excluded (the server enforces this too).
  *
  * Inline-tested helpers are exported alongside `openSkillEditor`,
- * `openCreateNewSkillFlow` for the test suite (Luker's Jest runs in node
+ * `openCreateNewSkillFlow` for the test suite (Taverncraft's Jest runs in node
  * without jsdom, so we test the DOM rendering by parsing the produced
  * HTML strings into stub elements).
  */
@@ -200,7 +200,7 @@ export function buildEditorHtml({ content, path, sha256, t, esc }) {
             <span>${esc(t('Select a file to edit, or click + New file.'))}</span>
         </div>`;
     }
-    // Encode the textarea body — same as Luker's other text-area renderings.
+    // Encode the textarea body — same as Taverncraft's other text-area renderings.
     // The sha256 is parked on a hidden data attribute so we can read it back
     // on save without juggling extra closures.
     const body = String(content || '');

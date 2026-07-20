@@ -1,12 +1,12 @@
 # Request Inspector
 
-The Request Inspector is one of Luker's core backend modules, used to track the complete lifecycle of each AI generation request from initiation to completion, and record detailed token usage data. It serves as the infrastructure for generation diagnostics.
+The Request Inspector is one of Taverncraft's core backend modules, used to track the complete lifecycle of each AI generation request from initiation to completion, and record detailed token usage data. It serves as the infrastructure for generation diagnostics.
 
 ## Problem Background
 
 In SillyTavern, after an AI generation request is sent, the backend does not systematically record the request's token consumption. Users cannot know how many tokens each generation actually cost, and administrators cannot track resource usage in multi-user scenarios.
 
-Luker implements a complete request lifecycle tracking system, covering both text generation and image generation requests.
+Taverncraft implements a complete request lifecycle tracking system, covering both text generation and image generation requests.
 
 ## Core Capabilities
 

@@ -22,7 +22,7 @@ const MODULE_NAME = 'orchestrator';
 // because the read is one line and editor-state owns the loader-side
 // initialization, not the live-read helper.
 function getSettings() {
-    return Luker.getContext().extensionSettings[MODULE_NAME];
+    return Taverncraft.getContext().extensionSettings[MODULE_NAME];
 }
 
 /**

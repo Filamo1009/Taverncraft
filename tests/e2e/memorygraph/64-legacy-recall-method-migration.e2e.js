@@ -12,7 +12,7 @@
 //   3. Read the dropdown <select>: must show value="rag".
 //   4. Read the Enable rerank checkbox: must be checked.
 //   5. Read the Enable query rewrite checkbox: must be unchecked.
-//   6. Read settings via window.Luker.getContext().extensionSettings — must
+//   6. Read settings via window.Taverncraft.getContext().extensionSettings — must
 //      no longer contain diffusionSteps.
 
 import { test, expect } from '@playwright/test';
@@ -117,7 +117,7 @@ test.describe('#64 — legacy hybrid_rerank settings migrate to RAG with rerank 
         // 6. In-memory settings reflect the normalized shape, and the legacy
         // diffusion / enableRerank fields are gone.
         const migrated = await page.evaluate(() => {
-            const s = window.Luker.getContext().extensionSettings?.memory_graph || {};
+            const s = window.Taverncraft.getContext().extensionSettings?.memory_graph || {};
             return {
                 recallMethod: s.recallMethod,
                 ragUseRerank: s.ragUseRerank,

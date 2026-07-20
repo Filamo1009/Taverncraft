@@ -2,7 +2,7 @@
  * Skill embed lifecycle.
  *
  * Wires `extensions.luker.embedded_skills_source` import/export + scope-skill
- * cleanup to the existing Luker character + preset lifecycle events. Follows
+ * cleanup to the existing Taverncraft character + preset lifecycle events. Follows
  * the same pattern as the regex extension's embedded-script flow (see
  * public/scripts/extensions/regex/index.js — `checkCharEmbeddedRegexScripts`,
  * `checkPresetEmbeddedRegexScripts`, `purgeEmbeddedRegexScripts`).
@@ -26,7 +26,7 @@
  * with its own payload, both go into character scope (they share the
  * character's lifecycle). Implemented in `extractCharacterPayloads`.
  *
- * The "have we already prompted for this asset?" memory uses Luker's
+ * The "have we already prompted for this asset?" memory uses Taverncraft's
  * `accountStorage` (the same store regex uses for `AlertRegex_*`). Keys:
  *   - `AlertSkills_<avatar>` — character-scope embedded skills prompt
  *   - `AlertSkills_preset_<presetName>` — preset-scope embedded skills prompt
@@ -49,7 +49,7 @@ const ORCH_PRESET_PROMPT_KEY = (mode, name) => `AlertSkills_orch_preset_${mode}_
  *     (per spec §3.3 the bound-preset payload materializes to character scope
  *     because it shares the character's lifecycle)
  *
- * The bound-preset path is a best-effort read — Luker's card-bound preset
+ * The bound-preset path is a best-effort read — Taverncraft's card-bound preset
  * shape isn't part of the v2/v3 card spec, so we accept either of two
  * plausible locations and skip silently if neither matches.
  *
@@ -61,7 +61,7 @@ export function extractCharacterPayloads(character) {
     const cardData = character?.data;
     const own = getEmbeddedSkillsSource(cardData);
     if (own) out.push(own);
-    // Card-bound preset (a Luker-specific concept) may live under a few
+    // Card-bound preset (a Taverncraft-specific concept) may live under a few
     // plausible paths; we try the canonical one first then a fallback.
     const candidates = [
         cardData?.extensions?.luker?.bound_preset,

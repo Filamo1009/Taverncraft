@@ -1,6 +1,6 @@
-# Luker Android App (Backend-in-App)
+# Taverncraft Android App (Backend-in-App)
 
-This directory contains an Android shell app that runs Luker backend locally on the phone and opens it in a WebView.
+This directory contains an Android shell app that runs Taverncraft backend locally on the phone and opens it in a WebView.
 
 ## Architecture
 

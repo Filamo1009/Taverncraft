@@ -1,6 +1,6 @@
 /**
  * Validates the data structure of character cards.
- * Supported specs: V1, V2
+ * Supported specs: V1, V2, V3
  * Up to: 8083fb3
  *
  * @link https://github.com/malfoyslastname/character-card-spec-v2
@@ -25,23 +25,24 @@ export class TavernCardValidator {
     }
 
     /**
-     * Validate against V1 or V2 spec.
+     * Validate against V1, V2, or V3 spec.
+     * Explicit modern specs take precedence over mirrored legacy V1 fields.
      *
      * @returns {number|boolean} - false when neither V1 nor V2 spec were matched. Specification version number otherwise.
      */
     validate() {
         this.#lastValidationError = null;
 
+        if (this.card?.spec === 'chara_card_v3') {
+            return this.validateV3() ? 3 : false;
+        }
+
+        if (this.card?.spec === 'chara_card_v2') {
+            return this.validateV2() ? 2 : false;
+        }
+
         if (this.validateV1()) {
             return 1;
-        }
-
-        if (this.validateV2()) {
-            return 2;
-        }
-
-        if (this.validateV3()) {
-            return 3;
         }
 
         return false;

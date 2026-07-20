@@ -35,13 +35,13 @@ if (!globalThis.DATA_ROOT) {
     globalThis.DATA_ROOT = scratchRoot;
 }
 
-if (typeof globalThis.Luker === 'undefined') {
+if (typeof globalThis.Taverncraft === 'undefined') {
     // ---------------------------------------------------------------------
-    // Luker / SillyTavern / st global stub.
+    // Taverncraft / SillyTavern / st global stub.
     //
     // Browser-side modules in public/scripts/extensions/** capture references
-    // at module-load time via `const x = Luker.getContext().y;`.
-    // public/script.js binds `globalThis.{Luker,st,SillyTavern}` to the same
+    // at module-load time via `const x = Taverncraft.getContext().y;`.
+    // public/script.js binds `globalThis.{Taverncraft,st,SillyTavern}` to the same
     // object so all three are user-facing aliases. Under jest (Node ESM) none
     // of those globals exist, so the import-time evaluation throws
     // ReferenceError and the entire test suite fails to load.
@@ -107,7 +107,7 @@ if (typeof globalThis.Luker === 'undefined') {
         // explicit identity / null defaults the fallback never fires and
         // tests get the Proxy stringified to "luker-stub" in
         // unexpected places (i18n strings, lib helpers, etc.). Override
-        // any of these in a test by assigning a new globalThis.Luker.
+        // any of these in a test by assigning a new globalThis.Taverncraft.
         const base = {
             getExtensionApi,
             // i18n helpers (e.g. orchestrator/i18n.js)
@@ -134,12 +134,12 @@ if (typeof globalThis.Luker === 'undefined') {
     const stub = {
         getContext: () => makeContextProxy(),
     };
-    // Mirror public/script.js:338-340 — Luker / st / SillyTavern are all
+    // Mirror public/script.js:338-340 — Taverncraft / st / SillyTavern are all
     // aliases for the same plugin-facing API object. Plugin and test code
-    // consumes `Luker.getContext()`; the SillyTavern / st aliases remain
+    // consumes `Taverncraft.getContext()`; the SillyTavern / st aliases remain
     // for compatibility with any third-party extension that still expects
     // them, so the stub installs all three.
-    globalThis.Luker = stub;
+    globalThis.Taverncraft = stub;
     globalThis.st = stub;
     globalThis.SillyTavern = stub;
 }

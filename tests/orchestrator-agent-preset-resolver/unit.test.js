@@ -5,7 +5,7 @@
  * Unit coverage for `resolveCardFirstPresetName` (the pure helper shared
  * by director-runtime / director-tools / agent-resolution). The helper
  * imports nothing beyond its own module, so this suite avoids the
- * `Luker` / `lib.js` shims other orchestrator suites need.
+ * `Taverncraft` / `lib.js` shims other orchestrator suites need.
  *
  * Stub shape note (feedback_test_stubs_match_prod_shape): the production
  * `resolveByName` (from `public/scripts/character/presets.js`,

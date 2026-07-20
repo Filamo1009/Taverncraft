@@ -9,7 +9,7 @@
 // What we port to Jest:
 //   The two unit-shaped cases that exercise the RunStateStore abort
 //   path directly. The third case in the e2e file drives the full
-//   director-runtime abort flow through a real Luker server with a
+//   director-runtime abort flow through a real Taverncraft server with a
 //   slow mock LLM and a live stop-button gesture; that one stays as
 //   e2e because it tests cross-module coordination (script.js
 //   stopGeneration → director-runtime's signal handler → store

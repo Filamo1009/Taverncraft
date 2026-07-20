@@ -75,7 +75,7 @@ test.afterAll(async () => {
 
 async function readCardBoundState(page) {
     return page.evaluate(() => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         const chid = ctx?.characterId ?? window.this_chid;
         const c = ctx?.characters?.[chid];
         const raw = c?.data?.extensions?.luker?.chat_completion_preset ?? null;
@@ -93,7 +93,7 @@ async function readCardBoundState(page) {
 
 async function readCharacterOrchestratorOverride(page) {
     return page.evaluate(() => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         const chid = ctx?.characterId ?? window.this_chid;
         const c = ctx?.characters?.[chid];
         return c?.data?.extensions?.orchestrator ?? null;

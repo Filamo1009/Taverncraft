@@ -120,7 +120,7 @@ test.describe('#39 — character-bound preset edits sync back to the card', () =
         // installed by the openai module re-snapshots oai_settings back into
         // the character card.
         const groupId = await page.evaluate(async (groupName) => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             const oai = ctx?.chatCompletionSettings;
             if (!oai) throw new Error('chatCompletionSettings unavailable');
             oai.extensions = oai.extensions || {};
@@ -137,7 +137,7 @@ test.describe('#39 — character-bound preset edits sync back to the card', () =
             if (typeof ctx.saveSettings === 'function') {
                 await ctx.saveSettings();
             } else {
-                throw new Error('Luker.getContext().saveSettings unavailable');
+                throw new Error('Taverncraft.getContext().saveSettings unavailable');
             }
             return id;
         }, GROUP_NAME);
@@ -169,7 +169,7 @@ test.describe('#39 — character-bound preset edits sync back to the card', () =
 
         await expect.poll(
             async () => page.evaluate((id) => {
-                const ctx = window.Luker?.getContext?.();
+                const ctx = window.Taverncraft?.getContext?.();
                 const groups = ctx?.chatCompletionSettings?.extensions?.luker?.prompt_groups;
                 if (!Array.isArray(groups)) return null;
                 return groups.find(g => g?.id === id)?.name ?? null;

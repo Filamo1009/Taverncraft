@@ -69,12 +69,12 @@ test.describe('#20 — split one chat into three via the per-message split icon'
         await page.waitForFunction(() => document.querySelectorAll('#chat .mes').length >= 1, { timeout: 10_000 }).catch(() => {});
 
         // Build a 7-entry chat: greeting + 3 user/reply pairs.
-        const sourceChatId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+        const sourceChatId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
         expect(sourceChatId).toBeTruthy();
         for (let j = 0; j < 3; j++) await sendMessageAndAwaitReply(page, `u${j}: stand by for the next mark.`);
 
         // Sanity: body should be exactly 7 entries before we split.
-        const preLen = await page.evaluate(() => window.Luker.getContext().chat.length);
+        const preLen = await page.evaluate(() => window.Taverncraft.getContext().chat.length);
         expect(preLen, `expected 7-entry body before split; got ${preLen}`).toBe(7);
 
         // Capture the source body BEFORE splitting so the post-split "source
@@ -82,7 +82,7 @@ test.describe('#20 — split one chat into three via the per-message split icon'
         // anything the test made up). Header create_date isn't part of the
         // body and is excluded from the comparison.
         const avatarFolder = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.characters[ctx.characterId].avatar.replace(/\.png$/, '');
         });
         const chatsDir = resolve(server.dataRoot, 'default-user', 'chats', avatarFolder);
@@ -107,7 +107,7 @@ test.describe('#20 — split one chat into three via the per-message split icon'
         // Source chat stays open after submit — split, unlike merge,
         // doesn't switch the UI to one of the new chats.
         await page.waitForFunction(
-            (id) => window.Luker.getContext().getCurrentChatId() === id,
+            (id) => window.Taverncraft.getContext().getCurrentChatId() === id,
             sourceChatId,
             { timeout: 10_000 },
         );

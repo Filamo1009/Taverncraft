@@ -1,18 +1,18 @@
 # 后端插件开发
 
-Luker 的插件系统不仅支持运行在浏览器中的前端扩展，还支持运行在 Node.js 服务端的后端插件（Server Plugin）。后端插件可以访问文件系统、调用 Node.js 原生模块、代理外部 API 请求——这些是前端扩展无法做到的事情。
+Taverncraft 的插件系统不仅支持运行在浏览器中的前端扩展，还支持运行在 Node.js 服务端的后端插件（Server Plugin）。后端插件可以访问文件系统、调用 Node.js 原生模块、代理外部 API 请求——这些是前端扩展无法做到的事情。
 
-本文档面向希望为 Luker 开发后端插件的开发者，涵盖启用方式、模块接口、路由注册、安全注意事项和实战示例。
+本文档面向希望为 Taverncraft 开发后端插件的开发者，涵盖启用方式、模块接口、路由注册、安全注意事项和实战示例。
 
 ## 什么是后端插件
 
-后端插件是运行在 Luker 服务器进程中的 Node.js 模块。与前端扩展（运行在浏览器中，通过 `manifest.json` + `index.js` 注入 UI）不同，后端插件：
+后端插件是运行在 Taverncraft 服务器进程中的 Node.js 模块。与前端扩展（运行在浏览器中，通过 `manifest.json` + `index.js` 注入 UI）不同，后端插件：
 
 - 运行在服务端，拥有完整的 Node.js 运行时能力
 - 通过 Express Router 注册 API 端点，路由自动挂载到 `/api/plugins/{插件ID}/` 路径下
 - 可以直接读写文件系统、使用 `crypto`、`child_process` 等 Node.js 内置模块
 - 可以安装和使用 npm 包
-- 没有沙箱隔离，与 Luker 服务器共享同一进程
+- 没有沙箱隔离，与 Taverncraft 服务器共享同一进程
 
 一个典型的后端插件 + 前端扩展组合的工作流：前端扩展通过 `fetch` 调用后端插件暴露的 API，后端插件执行需要服务端能力的操作（如文件读写、API 代理），再将结果返回给前端。
 
@@ -39,7 +39,7 @@ Luker 的插件系统不仅支持运行在浏览器中的前端扩展，还支�
 enableServerPlugins: true
 ```
 
-修改后重启 Luker 生效。插件加载时会在控制台输出日志：
+修改后重启 Taverncraft 生效。插件加载时会在控制台输出日志：
 
 ```
 [Plugin Loader] Loaded plugin: My Plugin (my-plugin)
@@ -101,7 +101,7 @@ module.exports = { init, exit, info };
 ```
 
 > [!TIP]
-> 如果 Luker 的根 `package.json` 设置了 `"type": "module"`，CommonJS 插件需要在插件目录下放置自己的 `package.json` 并设置 `"type": "commonjs"`，否则 Node.js 会将 `.js` 文件当作 ESM 处理。
+> 如果 Taverncraft 的根 `package.json` 设置了 `"type": "module"`，CommonJS 插件需要在插件目录下放置自己的 `package.json` 并设置 `"type": "commonjs"`，否则 Node.js 会将 `.js` 文件当作 ESM 处理。
 
 **ESM**（使用 `export`）：
 
@@ -204,7 +204,7 @@ router.put('/data/:id', handler);
 
 ### 关键细节：同步注册路由
 
-**路由必须在 `init` 函数的第一次 `await` 之前同步注册完成。** Luker 的插件加载器仅在 `router.stack.length > 0` 时才会将路由器挂载到应用上。如果路由注册出现在异步操作之后，可能导致路由器无法正确挂载。
+**路由必须在 `init` 函数的第一次 `await` 之前同步注册完成。** Taverncraft 的插件加载器仅在 `router.stack.length > 0` 时才会将路由器挂载到应用上。如果路由注册出现在异步操作之后，可能导致路由器无法正确挂载。
 
 ```js
 // ✅ 正确：路由在 await 之前注册
@@ -249,7 +249,7 @@ export async function init(router) {
 ```
 
 > [!NOTE]
-> 后端插件路由自动继承 Luker 的鉴权中间件（Basic Auth、CSRF、requireLogin 等），无需在插件中自行处理认证逻辑。插件中的中间件只需关注插件自身的业务逻辑即可。
+> 后端插件路由自动继承 Taverncraft 的鉴权中间件（Basic Auth、CSRF、requireLogin 等），无需在插件中自行处理认证逻辑。插件中的中间件只需关注插件自身的业务逻辑即可。
 
 ## 插件 ID 规则
 
@@ -275,18 +275,18 @@ id: 'my plugin'     // 包含空格
 
 ### 没有沙箱
 
-后端插件与 Luker 服务器运行在同一个进程中，**没有任何沙箱隔离**。插件可以：
+后端插件与 Taverncraft 服务器运行在同一个进程中，**没有任何沙箱隔离**。插件可以：
 
 - 访问整个文件系统
 - 调用 `child_process` 执行系统命令
-- 修改 Luker 的运行时状态
+- 修改 Taverncraft 的运行时状态
 - 访问其他插件的数据
 
 因此，**只安装你信任的插件**。
 
 ### 路径穿越防护
 
-Luker 的插件加载器会检测路径穿越攻击，防止插件通过 `../../` 等方式逃逸 `plugins/` 目录。但插件自身的路由处理器中如果接受用户输入作为文件路径，仍需自行做路径校验：
+Taverncraft 的插件加载器会检测路径穿越攻击，防止插件通过 `../../` 等方式逃逸 `plugins/` 目录。但插件自身的路由处理器中如果接受用户输入作为文件路径，仍需自行做路径校验：
 
 ```js
 import path from 'path';
@@ -385,11 +385,11 @@ res.status(500).json({ error: '描述错误原因的简短文字' });
 
 ### 手动安装
 
-将插件文件（或目录）放入 `plugins/` 文件夹，然后重启 Luker。
+将插件文件（或目录）放入 `plugins/` 文件夹，然后重启 Taverncraft。
 
 ### Git 自动更新
 
-如果插件是从 Git 仓库克隆的，Luker 在启动时会自动检查更新。加载器使用 `simple-git`（如未安装则回退到 `isomorphic-git`）执行 `git pull`，拉取最新的代码。
+如果插件是从 Git 仓库克隆的，Taverncraft 在启动时会自动检查更新。加载器使用 `simple-git`（如未安装则回退到 `isomorphic-git`）执行 `git pull`，拉取最新的代码。
 
 要启用自动更新，确保插件目录是一个 Git 仓库，且 `config.yaml` 中 `enableServerPlugins` 为 `true`。
 
@@ -402,7 +402,7 @@ cd plugins/my-plugin
 npm install
 ```
 
-插件可以引用 Luker 根目录的 `node_modules` 中的包，无需重复安装。只有在 Luker 未安装该依赖时，才需要在插件目录下单独安装。
+插件可以引用 Taverncraft 根目录的 `node_modules` 中的包，无需重复安装。只有在 Taverncraft 未安装该依赖时，才需要在插件目录下单独安装。
 
 ## 实战示例
 
@@ -432,7 +432,7 @@ export async function init(router) {
 }
 ```
 
-启动 Luker 后，访问 `/api/plugins/hello-world/hello` 即可看到返回的 JSON 响应。
+启动 Taverncraft 后，访问 `/api/plugins/hello-world/hello` 即可看到返回的 JSON 响应。
 
 ### API 代理插件
 
@@ -596,4 +596,4 @@ async function queryLLM(messages) {
 
 - [前端插件开发](/zh-CN/development/frontend-plugin) — 前端扩展开发指南
 - [Extension API 参考](/zh-CN/development/extension-api/) — 前端 API 完整列表
-- [贡献指南](/zh-CN/development/contributing) — 如何向 Luker 提交代码
+- [贡献指南](/zh-CN/development/contributing) — 如何向 Taverncraft 提交代码

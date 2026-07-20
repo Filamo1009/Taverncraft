@@ -7,7 +7,7 @@ import PNGtext from 'png-chunk-text';
 
 /**
  * Writes Character metadata to a PNG image buffer.
- * Writes only 'chara', 'ccv3' is not supported and removed not to create a mismatch.
+ * Writes both the legacy 'chara' chunk and a V3 'ccv3' chunk when the data is JSON.
  * @param {Buffer} image PNG image buffer
  * @param {string} data Character data to write
  * @returns {Buffer} PNG image buffer with metadata
@@ -95,4 +95,3 @@ export const parse = async (cardUrl, format) => {
 
     throw new Error('Unsupported format');
 };
-

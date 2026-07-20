@@ -41,7 +41,7 @@ import {
 const REPO_ROOT = resolve(import.meta.dirname, '../../..');
 
 /**
- * Embed a v2 character card into a PNG via tEXt chunks so Luker's
+ * Embed a v2 character card into a PNG via tEXt chunks so Taverncraft's
  * character-card-parser.read() finds it.
  */
 function writeProperCharacter(dataRoot, { handle = 'default-user', avatarFile, name, firstMes }) {
@@ -106,7 +106,7 @@ async function runSlashViaSendButton(page, pipeline, { expectsReply = false, tim
 
     if (expectsReply) {
         const replyPromise = page.evaluate((to) => new Promise((resolve, reject) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const t = setTimeout(() => reject(new Error('reply timeout')), to);
             const off = ctx.eventSource.on(ctx.eventTypes.GENERATION_ENDED, () => {
                 clearTimeout(t);
@@ -125,7 +125,7 @@ async function runSlashViaSendButton(page, pipeline, { expectsReply = false, tim
 
 async function chatSnapshot(page) {
     return await page.evaluate(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return {
             length: ctx.chat.length,
             messages: ctx.chat.map(m => ({
@@ -184,7 +184,7 @@ test.describe('#97 — Slash commands regression (real send-textarea + send-butt
     test('/send appends a user message without triggering generation', async ({ page }) => {
         await awaitMainUI(page, server.baseURL);
         await selectCharacterByName(page, 'Seraphina');
-        await page.waitForFunction(() => window.Luker.getContext().chat.length >= 1, { timeout: 10_000 });
+        await page.waitForFunction(() => window.Taverncraft.getContext().chat.length >= 1, { timeout: 10_000 });
         const before = await chatSnapshot(page);
         await runSlashViaSendButton(page, '/send The lantern wick is fraying again.');
         const after = await chatSnapshot(page);
@@ -197,10 +197,10 @@ test.describe('#97 — Slash commands regression (real send-textarea + send-butt
     test('/sysgen appends a system narrator message via the LLM', async ({ page }) => {
         await awaitMainUI(page, server.baseURL);
         await selectCharacterByName(page, 'Seraphina');
-        await page.waitForFunction(() => window.Luker.getContext().chat.length >= 1, { timeout: 10_000 });
+        await page.waitForFunction(() => window.Taverncraft.getContext().chat.length >= 1, { timeout: 10_000 });
         const before = await chatSnapshot(page);
         await runSlashViaSendButton(page, '/sysgen Describe what the wind is doing at this very moment.', { expectsReply: true });
-        await page.waitForFunction((n) => window.Luker.getContext().chat.length > n, before.length, { timeout: 30_000 });
+        await page.waitForFunction((n) => window.Taverncraft.getContext().chat.length > n, before.length, { timeout: 30_000 });
         const after = await chatSnapshot(page);
         const tail = after.messages[after.length - 1];
         expect(tail.isNarrator).toBe(true);
@@ -212,17 +212,17 @@ test.describe('#97 — Slash commands regression (real send-textarea + send-butt
         await awaitMainUI(page, server.baseURL);
         await selectCharacterByName(page, 'Seraphina');
         const startName = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.characters[ctx.characterId]?.name;
         });
         expect(startName).toBe('Seraphina');
         await runSlashViaSendButton(page, '/go Bryn the Keeper');
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.characters[ctx.characterId]?.name === 'Bryn the Keeper';
         }, { timeout: 15_000 });
         const newName = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.characters[ctx.characterId]?.name;
         });
         expect(newName).toBe('Bryn the Keeper');
@@ -231,7 +231,7 @@ test.describe('#97 — Slash commands regression (real send-textarea + send-butt
     test('/send + /trigger produces an assistant reply', async ({ page }) => {
         await awaitMainUI(page, server.baseURL);
         await selectCharacterByName(page, 'Seraphina');
-        await page.waitForFunction(() => window.Luker.getContext().chat.length >= 1, { timeout: 10_000 });
+        await page.waitForFunction(() => window.Taverncraft.getContext().chat.length >= 1, { timeout: 10_000 });
         const before = await chatSnapshot(page);
         await runSlashViaSendButton(page, '/send I will keep watch tonight. | /trigger await=true', { expectsReply: true });
         const after = await chatSnapshot(page);
@@ -249,7 +249,7 @@ test.describe('#97 — Slash commands regression (real send-textarea + send-butt
         // /swipe right.
         await awaitMainUI(page, server.baseURL);
         await selectCharacterByName(page, 'Seraphina');
-        await page.waitForFunction(() => window.Luker.getContext().chat.length >= 1, { timeout: 10_000 });
+        await page.waitForFunction(() => window.Taverncraft.getContext().chat.length >= 1, { timeout: 10_000 });
         // Generate a reply first.
         await sendMessageAndAwaitReply(page, 'Tell me about the gull rocks.');
         const before = await chatSnapshot(page);
@@ -261,7 +261,7 @@ test.describe('#97 — Slash commands regression (real send-textarea + send-butt
         // 2 swipes (the original mes + the new variant); with prior swipes,
         // the count grows by 1.
         await page.waitForFunction((startCount) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const m = ctx.chat[ctx.chat.length - 1];
             const len = Array.isArray(m?.swipes) ? m.swipes.length : 0;
             return len > startCount && len >= 1;
@@ -274,7 +274,7 @@ test.describe('#97 — Slash commands regression (real send-textarea + send-butt
         // The brief mentioned `/cut last`; the actual command takes a numeric id.
         await awaitMainUI(page, server.baseURL);
         await selectCharacterByName(page, 'Seraphina');
-        await page.waitForFunction(() => window.Luker.getContext().chat.length >= 1, { timeout: 10_000 });
+        await page.waitForFunction(() => window.Taverncraft.getContext().chat.length >= 1, { timeout: 10_000 });
         await runSlashViaSendButton(page, '/send sentinel-cut-target');
         const before = await chatSnapshot(page);
         const cutTargetId = before.length - 1;
@@ -291,7 +291,7 @@ test.describe('#97 — Slash commands regression (real send-textarea + send-butt
         // user-visible affordance still works.
         await awaitMainUI(page, server.baseURL);
         await selectCharacterByName(page, 'Seraphina');
-        await page.waitForFunction(() => window.Luker.getContext().chat.length >= 1, { timeout: 10_000 });
+        await page.waitForFunction(() => window.Taverncraft.getContext().chat.length >= 1, { timeout: 10_000 });
         await sendMessageAndAwaitReply(page, 'Walk me through what you see north of the headland.');
         const before = await chatSnapshot(page);
         const beforeText = before.messages[before.length - 1].mes;
@@ -304,7 +304,7 @@ test.describe('#97 — Slash commands regression (real send-textarea + send-butt
     test('regenerate via real options-menu Regenerate re-rolls the tail in place', async ({ page }) => {
         await awaitMainUI(page, server.baseURL);
         await selectCharacterByName(page, 'Seraphina');
-        await page.waitForFunction(() => window.Luker.getContext().chat.length >= 1, { timeout: 10_000 });
+        await page.waitForFunction(() => window.Taverncraft.getContext().chat.length >= 1, { timeout: 10_000 });
         await sendMessageAndAwaitReply(page, 'What is the wind doing right now?');
         const before = await chatSnapshot(page);
         await regenerateViaUI(page);
@@ -322,13 +322,13 @@ test.describe('#97 — Slash commands regression (real send-textarea + send-butt
         // /setvar after /abort never runs.
         await awaitMainUI(page, server.baseURL);
         await selectCharacterByName(page, 'Seraphina');
-        await page.waitForFunction(() => window.Luker.getContext().chat.length >= 1, { timeout: 10_000 });
+        await page.waitForFunction(() => window.Taverncraft.getContext().chat.length >= 1, { timeout: 10_000 });
         await runSlashViaSendButton(page, '/setvar key=abort_sentinel before');
         await runSlashViaSendButton(page, '/abort | /setvar key=abort_sentinel after');
         // Read the var via another typed pipeline. Use evaluate to get the
         // pipe value back since the send_textarea doesn't surface it.
         const v = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const res = await ctx.executeSlashCommandsWithOptions('/getvar abort_sentinel');
             return res?.pipe ?? '';
         });
@@ -338,13 +338,13 @@ test.describe('#97 — Slash commands regression (real send-textarea + send-butt
     test('branch-create via real .mes_create_branch forks the chat', async ({ page }) => {
         await awaitMainUI(page, server.baseURL);
         await selectCharacterByName(page, 'Seraphina');
-        await page.waitForFunction(() => window.Luker.getContext().chat.length >= 1, { timeout: 10_000 });
+        await page.waitForFunction(() => window.Taverncraft.getContext().chat.length >= 1, { timeout: 10_000 });
         await sendMessageAndAwaitReply(page, 'Branch off this turn.');
         const before = await chatSnapshot(page);
         const targetId = before.length - 1;
-        const beforeChatId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId?.());
+        const beforeChatId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId?.());
         await branchFromMessageViaUI(page, targetId);
-        const afterChatId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId?.());
+        const afterChatId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId?.());
         expect(afterChatId).not.toBe(beforeChatId);
     });
 
@@ -354,7 +354,7 @@ test.describe('#97 — Slash commands regression (real send-textarea + send-butt
         await runSlashViaSendButton(page, '/setvar key=foo bar | /getvar foo');
         // The pipeline doesn't echo to chat — read the var back inline.
         const v = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const res = await ctx.executeSlashCommandsWithOptions('/getvar foo');
             return res?.pipe ?? '';
         });
@@ -366,7 +366,7 @@ test.describe('#97 — Slash commands regression (real send-textarea + send-butt
         await selectCharacterByName(page, 'Seraphina');
         await runSlashViaSendButton(page, '/setvar key=counter 5 | /incvar counter');
         const v = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const res = await ctx.executeSlashCommandsWithOptions('/getvar counter');
             return res?.pipe ?? '';
         });

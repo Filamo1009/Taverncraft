@@ -429,7 +429,7 @@ describe('buildPostReplaceSeedMessage', () => {
         // disk yet — exactly the degenerate state we just fixed.
         //
         // Reach into the live import-time __ctx capture in main.js by
-        // overriding globalThis.Luker.getContext().convertCharacterBook.
+        // overriding globalThis.Taverncraft.getContext().convertCharacterBook.
         // The main.js module already imported __ctx at top of file, so
         // we override the stub at call time by replacing the proxy with
         // an object that exposes a real implementation. The
@@ -440,8 +440,8 @@ describe('buildPostReplaceSeedMessage', () => {
                 book.entries.map((e, i) => [String(i), { uid: i, content: e.content, comment: e.keys?.[0] || '' }]),
             ),
         });
-        const prevCtx = globalThis.Luker;
-        globalThis.Luker = {
+        const prevCtx = globalThis.Taverncraft;
+        globalThis.Taverncraft = {
             getContext: () => ({ convertCharacterBook: realConvert }),
         };
         try {
@@ -484,7 +484,7 @@ describe('buildPostReplaceSeedMessage', () => {
             expect(prevLine).toContain('old');
             expect(nextLine).toContain('new');
         } finally {
-            globalThis.Luker = prevCtx;
+            globalThis.Taverncraft = prevCtx;
         }
     });
 

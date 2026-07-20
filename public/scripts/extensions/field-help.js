@@ -4,7 +4,7 @@
  * Three layers:
  *   Layer 1 (direct):       import { renderFieldHelpButton } from '/scripts/extensions/field-help.js';
  *   Layer 2 (lukerContext): const { renderFieldHelpButton } = lukerContext;
- *   Layer 3 (getContext):   const { renderFieldHelpButton } = Luker.getContext();
+ *   Layer 3 (getContext):   const { renderFieldHelpButton } = Taverncraft.getContext();
  *
  * Similar visual to preset-help (fa-circle-question) but plain title+body popup;
  * no preset-import side action. Body must be HTML-safe (call site's responsibility).
@@ -36,7 +36,7 @@ if (typeof jQuery !== 'undefined') {
         const title = $btn.attr('data-luker-field-help-title') || '';
         const body = $btn.attr('data-luker-field-help-body') || '';
         try {
-            const ctx = (typeof Luker !== 'undefined') ? Luker.getContext() : null;
+            const ctx = (typeof Taverncraft !== 'undefined') ? Taverncraft.getContext() : null;
             if (!ctx || typeof ctx.callGenericPopup !== 'function') return;
             const POPUP_TYPE = ctx.POPUP_TYPE || { TEXT: 1 };
             const wrapper = `<h4>${escapeHtml(title)}</h4><div>${body}</div>`;

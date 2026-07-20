@@ -18,12 +18,12 @@
  * reimport — character-scope skills follow the character.
  *
  * The real PNG embedder (script.js's `writePngWithExtras`) is exercised by
- * Luker's existing card-app tests; reusing it from Playwright would require
+ * Taverncraft's existing card-app tests; reusing it from Playwright would require
  * driving a file-download dance plus a hostile-zip-safe re-read, neither of
  * which adds coverage over the payload-level roundtrip below.
  *
  * Prerequisites:
- *   - Luker dev server running.
+ *   - Taverncraft dev server running.
  *   - An active character loaded — without one, the source-scope can't be
  *     populated and the spec soft-skips.
  *
@@ -80,7 +80,7 @@ test.describe('Skills: character export with embedded skills (round-trip)', () =
             bodyTail: FIXTURE_BODY_ANCHOR,
         });
         await page.evaluate(async ({ scope, payload }) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             await ctx.skills.executeExtractEmbed({ payload, targetScope: scope, conflictStrategies: {} });
         }, { scope: sourceScope, payload });
 
@@ -96,7 +96,7 @@ test.describe('Skills: character export with embedded skills (round-trip)', () =
         // ── 2. Pack character-scope skills via the export helper ────────
         // Mirrors what the character-export hook does pre-PNG-embed.
         const exportedPayload = await page.evaluate(async (scope) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const mod = await import('/scripts/skills/embed-export-helper.js');
             return await mod.packSkillsForExport({ context: ctx, targetScope: scope });
         }, sourceScope);
@@ -112,7 +112,7 @@ test.describe('Skills: character export with embedded skills (round-trip)', () =
         //      that no real character owns; preview should classify the
         //      fixture as 'new' (no prior install in that scope). ────────
         const preview = await page.evaluate(async ({ payload, scope }) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return await ctx.skills.previewExtractEmbed({ payload, targetScope: scope });
         }, { payload: exportedPayload, scope: reimportScope });
         const fixturePreview = (preview?.items || []).find(it => it && it.name === FIXTURE_SKILL_NAME);
@@ -121,7 +121,7 @@ test.describe('Skills: character export with embedded skills (round-trip)', () =
 
         // ── 4. Execute the extract (the affirmative path of the import dialog) ─
         const extractResult = await page.evaluate(async ({ payload, scope }) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return await ctx.skills.executeExtractEmbed({
                 payload, targetScope: scope, conflictStrategies: {},
             });
@@ -130,7 +130,7 @@ test.describe('Skills: character export with embedded skills (round-trip)', () =
 
         // ── 5. Verify the round-tripped skill body matches verbatim ─────
         const roundTripped = await page.evaluate(async ({ scope, name }) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const all = await ctx.skills.list({ scope });
             const entry = (all || []).find(s => s.name === name);
             if (!entry) return null;

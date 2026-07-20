@@ -1,11 +1,11 @@
-# Migrating from Termux SillyTavern to the Luker APK
+# Migrating from Termux SillyTavern to the Taverncraft APK
 
-If you've been running original SillyTavern in Termux and want to switch to the Luker Android APK, this guide walks you through bringing your data along. Luker is fully data-compatible with SillyTavern, and the APK shows an import wizard on first launch — you usually don't need to touch the `Android/data` private directory.
+If you've been running original SillyTavern in Termux and want to switch to the Taverncraft Android APK, this guide walks you through bringing your data along. Taverncraft is fully data-compatible with SillyTavern, and the APK shows an import wizard on first launch — you usually don't need to touch the `Android/data` private directory.
 
 After migration, your character cards, chat logs, lorebooks, presets, personas, and extension settings will load normally.
 
 ::: tip Scope
-This guide covers **Termux SillyTavern → Luker APK**. For PC / Linux / Docker SillyTavern → Luker server, or Termux ↔ Termux migrations, see [Migrating from SillyTavern](/guide/migration).
+This guide covers **Termux SillyTavern → Taverncraft APK**. For PC / Linux / Docker SillyTavern → Taverncraft server, or Termux ↔ Termux migrations, see [Migrating from SillyTavern](/guide/migration).
 :::
 
 ## Recommended flow: the first-launch import wizard
@@ -54,14 +54,14 @@ cp ~/SillyTavern/config.yaml ~/storage/shared/Download/sillytavern-config.yaml
 ```
 
 ::: tip ZIP path prefixes are forgiving
-Luker's importer auto-recognizes subdirectories like `characters/`, `chats/`, `worlds/` regardless of whether they sit under `data/default-user/...`, `default-user/...`, or directly at the ZIP root — they all land in the right place.
+Taverncraft's importer auto-recognizes subdirectories like `characters/`, `chats/`, `worlds/` regardless of whether they sit under `data/default-user/...`, `default-user/...`, or directly at the ZIP root — they all land in the right place.
 :::
 
-### 2. Install the Luker APK and trigger the first-launch wizard
+### 2. Install the Taverncraft APK and trigger the first-launch wizard
 
-Download the latest APK from [GitHub Releases](https://github.com/funnycups/Luker/releases/latest).
+Download the latest APK from [GitHub Releases](https://github.com/Filamo1009/Taverncraft/releases/latest).
 
-The **first time you open** Luker, a **"Welcome to Luker!"** dialog appears. The top of the dialog has a Language selector. The middle has a **"Migrate from SillyTavern"** block with three side-by-side buttons:
+The **first time you open** Taverncraft, a **"Welcome to Taverncraft!"** dialog appears. The top of the dialog has a Language selector. The middle has a **"Migrate from SillyTavern"** block with three side-by-side buttons:
 
 | Button | Purpose | What to pick |
 | --- | --- | --- |
@@ -73,11 +73,11 @@ Tap each button you need, choose the file in the system picker, and wait for eac
 
 ### 3. Finish the wizard
 
-The wizard then asks for a username (used as your default persona name). Once that's set, Luker enters the main UI — your character list, chats, lorebooks, presets, and API keys should already be in place.
+The wizard then asks for a username (used as your default persona name). Once that's set, Taverncraft enters the main UI — your character list, chats, lorebooks, presets, and API keys should already be in place.
 
 ## What if I missed the first-launch wizard?
 
-If you closed the wizard, or have already used Luker for a while and now want to import, run the same import from the user-management panel:
+If you closed the wizard, or have already used Taverncraft for a while and now want to import, run the same import from the user-management panel:
 
 1. Open **User Settings** → click **Account**
 2. Find the **Backup and Restore** button on your user card
@@ -88,9 +88,9 @@ If you closed the wizard, or have already used Luker for a while and now want to
 
 The same panel also exposes LAN Migration, Download Backup ZIP, and per-category restore — see below.
 
-## LAN Migration (when both ends are Luker)
+## LAN Migration (when both ends are Taverncraft)
 
-If your source side is already running Luker (another Luker APK, or Luker server inside Termux) and the target is the Luker APK, you can skip ZIPs entirely with LAN Migration:
+If your source side is already running Taverncraft (another Taverncraft APK, or Taverncraft server inside Termux) and the target is the Taverncraft APK, you can skip ZIPs entirely with LAN Migration:
 
 1. On the source, open the **Backup and Restore** panel and click **Create Migration Link** to generate a one-shot link
 2. On the target, paste the link into **Migrate from Link** and click import
@@ -103,34 +103,34 @@ The link is single-use and expires quickly. Original SillyTavern lacks this UI, 
 You only need this path when:
 
 - The ZIP flow fails (import errors, the file picker can't see the ZIP, etc.)
-- You need to preserve files Luker's importer doesn't recognize
+- You need to preserve files Taverncraft's importer doesn't recognize
 - You want to surgically replace a specific file rather than do a bulk import
 
-Luker APK stores its data at `/storage/emulated/0/Android/data/com.luker.app/files/luker-data/`. The internal layout matches SillyTavern's `data/` directory. Android 11+ restricts access to this path, so most stock file managers can't enter it without authorization or a different tool.
+Taverncraft APK stores its data at `/storage/emulated/0/Android/data/com.luker.app/files/luker-data/`. The internal layout matches SillyTavern's `data/` directory. Android 11+ restricts access to this path, so most stock file managers can't enter it without authorization or a different tool.
 
 ### 1. Export your data to shared storage from Termux
 
 ```bash
-mkdir -p ~/storage/shared/Luker-migration
-cp -r ~/SillyTavern/data ~/storage/shared/Luker-migration/
+mkdir -p ~/storage/shared/Taverncraft-migration
+cp -r ~/SillyTavern/data ~/storage/shared/Taverncraft-migration/
 ```
 
 Bring third-party extensions along too if you have them:
 
 ```bash
 cp -r ~/SillyTavern/public/scripts/extensions/third-party \
-      ~/storage/shared/Luker-migration/
+      ~/storage/shared/Taverncraft-migration/
 ```
 
-### 2. Launch Luker once so the data directory is created
+### 2. Launch Taverncraft once so the data directory is created
 
 Open the APK once to let `luker-data/` get generated. Without this, the destination directory you'll be writing to doesn't exist yet.
 
-### 3. Force-stop Luker
+### 3. Force-stop Taverncraft
 
-System Settings → Apps → Luker → **Force stop**. You don't want Luker holding the directory open while you copy files in.
+System Settings → Apps → Taverncraft → **Force stop**. You don't want Taverncraft holding the directory open while you copy files in.
 
-### 4. Move data into the Luker data directory
+### 4. Move data into the Taverncraft data directory
 
 Open a file manager and navigate to:
 
@@ -152,10 +152,10 @@ If you have third-party extensions, place their contents under:
 ```
 
 ::: warning Don't overwrite `_runtime-persist`
-Luker APK maintains a `_runtime-persist/` directory inside `luker-data/` for runtime persistence artifacts. **Don't overwrite or delete it** — original SillyTavern doesn't produce this directory, so it won't appear in your export.
+Taverncraft APK maintains a `_runtime-persist/` directory inside `luker-data/` for runtime persistence artifacts. **Don't overwrite or delete it** — original SillyTavern doesn't produce this directory, so it won't appear in your export.
 :::
 
-### 5. Restart Luker and verify
+### 5. Restart Taverncraft and verify
 
 Reopen the APK. After loading, your characters, chats, lorebooks, presets, and API connections should all come back.
 
@@ -176,7 +176,7 @@ If your file manager can't enter `Android/data/com.luker.app/`, options:
 
 ## Path reference
 
-| What | Termux source | Luker APK target |
+| What | Termux source | Taverncraft APK target |
 | --- | --- | --- |
 | Data root | `~/SillyTavern/data/` | `…/com.luker.app/files/luker-data/` |
 | Characters | `data/<user>/characters/` | `luker-data/<user>/characters/` |
@@ -193,7 +193,7 @@ If your file manager can't enter `Android/data/com.luker.app/`, options:
 
 **No Welcome dialog on first launch**
 
-The wizard only appears the first time a fresh data directory is opened. If Luker has been opened before, use the **Backup and Restore** entry on the user-management panel to do the same import — click **Select All**, pick the ZIP, choose **Incremental Update**, and hit **Restore Backup**.
+The wizard only appears the first time a fresh data directory is opened. If Taverncraft has been opened before, use the **Backup and Restore** entry on the user-management panel to do the same import — click **Select All**, pick the ZIP, choose **Incremental Update**, and hit **Restore Backup**.
 
 **Restore says "Archive does not match selected restore categories"**
 
@@ -205,7 +205,7 @@ Check the copy depth: `luker-data/` should contain `default-user/` (or your user
 
 **White screen / errors after launch (manual-copy flow)**
 
-`_runtime-persist/` may have been overwritten or corrupted. Try (1) deleting `_runtime-persist/` so Luker can rebuild it; (2) if that doesn't help, App Info → Storage → Clear data and redo the migration.
+`_runtime-persist/` may have been overwritten or corrupted. Try (1) deleting `_runtime-persist/` so Taverncraft can rebuild it; (2) if that doesn't help, App Info → Storage → Clear data and redo the migration.
 
 **Third-party extension didn't load**
 
@@ -213,12 +213,12 @@ Confirm it's at `luker-data/extensions/third-party/<extension-name>/`. Each exte
 
 ## Bidirectional compatibility with SillyTavern
 
-After migration, Luker doesn't modify SillyTavern's original data formats — it only adds its own state files (e.g. `.luker-state.<chat_id>.json`) into `data/`. If you ever want to go back to SillyTavern in Termux, copy `luker-data/` contents back; SillyTavern ignores files it doesn't recognize.
+After migration, Taverncraft doesn't modify SillyTavern's original data formats — it only adds its own state files (e.g. `.luker-state.<chat_id>.json`) into `data/`. If you ever want to go back to SillyTavern in Termux, copy `luker-data/` contents back; SillyTavern ignores files it doesn't recognize.
 
 For full compatibility notes, see [Migrating from SillyTavern](/guide/migration#data-compatibility).
 
 ## Related pages
 
 - [Android App](/guide/android) — APK overview
-- [Getting Started](/guide/getting-started) — Luker installation overview
+- [Getting Started](/guide/getting-started) — Taverncraft installation overview
 - [Migrating from SillyTavern](/guide/migration) — server-version migration guide

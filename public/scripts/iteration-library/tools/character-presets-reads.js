@@ -102,7 +102,7 @@ function resolveCharacterByAvatar(context, avatar) {
  * @param {{id?: string, name: string, args?: object}} call
  *   Parsed tool-call object as delivered by the iteration-library runner.
  * @param {{context: object, avatar?: string}} env
- *   `context` = SillyTavern context (from `Luker.getContext()`),
+ *   `context` = SillyTavern context (from `Taverncraft.getContext()`),
  *   `avatar`  = character avatar; when omitted, falls back to
  *   `context.characterId`.
  * @returns {Promise<

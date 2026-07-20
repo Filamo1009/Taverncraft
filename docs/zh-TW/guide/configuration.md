@@ -1,6 +1,6 @@
 # 基礎設定
 
-Luker 的設定檔為專案根目錄下的 `config.yaml`。首次啟動時，如果該檔案不存在，Luker 會從 `default/config.yaml` 複製一份預設設定。
+Taverncraft 的設定檔為專案根目錄下的 `config.yaml`。首次啟動時，如果該檔案不存在，Taverncraft 會從 `default/config.yaml` 複製一份預設設定。
 
 ## 核心設定項
 
@@ -44,7 +44,7 @@ ssl:
 
 ### 代理設定
 
-SillyTavern 支援透過 HTTP、HTTPS 或 SOCKS 代理轉發出站請求（如 API 呼叫），Luker 繼承了這一功能：
+SillyTavern 支援透過 HTTP、HTTPS 或 SOCKS 代理轉發出站請求（如 API 呼叫），Taverncraft 繼承了這一功能：
 
 ```yaml
 requestProxy:
@@ -64,7 +64,7 @@ requestProxy:
 enableCorsProxy: false
 ```
 
-啟用後，Luker 會提供一個 CORS 代理端點，用於前端跨域請求轉發。
+啟用後，Taverncraft 會提供一個 CORS 代理端點，用於前端跨域請求轉發。
 
 ## 認證與多使用者
 
@@ -77,7 +77,7 @@ basicAuthUser:
   password: password
 ```
 
-啟用後，存取 Luker 需要輸入使用者名稱和密碼。適用於單一使用者場景。
+啟用後，存取 Taverncraft 需要輸入使用者名稱和密碼。適用於單一使用者場景。
 
 ### 多使用者模式
 
@@ -107,7 +107,7 @@ node recover.js default-user
 ```
 
 ::: tip
-此命令需要在 Luker 專案根目錄下執行，且服務無需處於執行狀態。
+此命令需要在 Taverncraft 專案根目錄下執行，且服務無需處於執行狀態。
 :::
 
 ### SSO 單點登入
@@ -118,7 +118,7 @@ sso:
   authentikAuth: false
 ```
 
-Luker 支援透過 Authelia 或 Authentik 等反向代理認證方案實現單點登入。詳細設定請參閱 [認證與配額](/zh-TW/improvements/auth-and-quota)。
+Taverncraft 支援透過 Authelia 或 Authentik 等反向代理認證方案實現單點登入。詳細設定請參閱 [認證與配額](/zh-TW/improvements/auth-and-quota)。
 
 ### 主機白名單
 
@@ -147,7 +147,7 @@ whitelistDockerHosts: true
 預設啟用白名單模式，僅允許本機存取。如需區域網路存取，將對應 IP 加入 `whitelist` 列表，或關閉 `whitelistMode`。
 
 ::: warning 關閉白名單可能導致行程結束
-設定 `whitelistMode: false` 後，Luker 要求至少存在另一種保護機制，否則啟動時會判定為不安全設定並直接終止行程（Docker 下表現為容器反覆重新啟動）。安全暴露服務時，請至少滿足以下任一條件：
+設定 `whitelistMode: false` 後，Taverncraft 要求至少存在另一種保護機制，否則啟動時會判定為不安全設定並直接終止行程（Docker 下表現為容器反覆重新啟動）。安全暴露服務時，請至少滿足以下任一條件：
 
 - 啟用 `basicAuthMode` 並設定 `basicAuthUser` —— 詳見 [認證](/zh-TW/guide/authentication)
 - 啟用多使用者模式（`enableUserAccounts: true`），**並且**透過 `node recover.js default-user <密碼>` 為所有 admin 使用者設定密碼 —— 詳見 [認證 › 密碼重設](/zh-TW/guide/authentication#密碼重設)。兩步缺一不可：只啟用多使用者但 admin 沒密碼仍會被攔下，只設密碼但沒啟用多使用者同樣會被攔下。
@@ -197,7 +197,7 @@ storage:
     poolSize: 10
 ```
 
-Luker 支援四種使用者資料持久化後端，由 `mode` 選擇；只有對應的子區塊會被讀取。
+Taverncraft 支援四種使用者資料持久化後端，由 `mode` 選擇；只有對應的子區塊會被讀取。
 
 - `fs`（預設）：每筆聊天/預設/世界書等都是 `<dataRoot>/<handle>/` 下的一個檔案。最適合單使用者安裝，也是最方便手動檢視的後端。
 - `sqlite`：每位使用者一個獨立的 `luker-storage.sqlite` 檔案，位於 `<dataRoot>/<handle>/`。適合希望使用單檔案交易式儲存、又不想額外運行資料庫服務的安裝。

@@ -62,14 +62,14 @@ test.describe('#66 — variable-op-log e2e (roster across turns; delete; persist
         await selectCharacterByName(page, 'Seraphina');
 
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
         // Disable delete-confirmation so deleteMessageViaUI does not need
         // to chase a second OK click.
         await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             if (ctx.powerUserSettings) ctx.powerUserSettings.confirm_message_delete = false;
         });
 
@@ -86,7 +86,7 @@ test.describe('#66 — variable-op-log e2e (roster across turns; delete; persist
         for (let i = 0; i < TURN_PROMPTS.length; i++) {
             const { replyId } = await sendMessageAndAwaitReply(page, TURN_PROMPTS[i]);
             await page.waitForFunction((id) => {
-                const ctx = window.Luker.getContext();
+                const ctx = window.Taverncraft.getContext();
                 const m = ctx.chat?.[id];
                 return Boolean(m && Array.isArray(m?.extra?.var_ops) && m.extra.var_ops.length > 0);
             }, replyId, { timeout: 15_000 });
@@ -102,7 +102,7 @@ test.describe('#66 — variable-op-log e2e (roster across turns; delete; persist
 
         // State should reflect every op forward-applied.
         const afterAll = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.chatMetadata?.variables?.roster ?? null;
         });
         expect(afterAll, 'roster persisted as JSON string').toBeTruthy();
@@ -115,7 +115,7 @@ test.describe('#66 — variable-op-log e2e (roster across turns; delete; persist
         const lastReplyId = replyIds[replyIds.length - 1];
         await deleteMessageViaUI(page, lastReplyId);
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const roster = ctx.chatMetadata?.variables?.roster;
             if (!roster) return false;
             try {
@@ -125,7 +125,7 @@ test.describe('#66 — variable-op-log e2e (roster across turns; delete; persist
         }, null, { timeout: 15_000 });
 
         const afterCut = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return JSON.parse(ctx.chatMetadata?.variables?.roster ?? 'null');
         });
         expect(afterCut).toEqual({
@@ -144,12 +144,12 @@ test.describe('#66 — variable-op-log e2e (roster across turns; delete; persist
         await selectCharacterByName(page, 'Seraphina');
 
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return Array.isArray(ctx?.chat) && ctx.chat.length > 0;
         }, { timeout: 15_000 });
 
         const afterRestart = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return JSON.parse(ctx.chatMetadata?.variables?.roster ?? 'null');
         });
         expect(afterRestart).toEqual({

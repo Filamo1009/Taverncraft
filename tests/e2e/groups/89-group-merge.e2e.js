@@ -135,14 +135,14 @@ test.describe('#89 — group chats merge in chosen order', () => {
         await sendUserAndAwaitGroupTurn(page, 'Turn A1: hold the lantern through the first watch.');
         await sendUserAndAwaitGroupTurn(page, 'Turn A2: what shall we mark for the second bell?');
 
-        const aLen = await page.evaluate(() => window.Luker.getContext().chat?.length || 0);
+        const aLen = await page.evaluate(() => window.Taverncraft.getContext().chat?.length || 0);
         expect(aLen, `chat A should hold greetings+user+replies; got ${aLen}`).toBe(8);
 
         // Chat B via option_start_new_chat. Works for both characters
         // and groups; the option handler in public/script.js routes to
         // doNewChat → createNewGroupChat when selected_group is set.
         await createNewChatViaUI(page);
-        const chatBId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+        const chatBId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
         expect(chatBId, 'chat B should have a fresh chat id').toBeTruthy();
         expect(chatBId).not.toBe(chatAId);
         await page.waitForFunction(
@@ -154,7 +154,7 @@ test.describe('#89 — group chats merge in chosen order', () => {
         await sendUserAndAwaitGroupTurn(page, 'Turn B1: read the south flares while I trim the wick.');
         await sendUserAndAwaitGroupTurn(page, 'Turn B2: log the skiffs north of the gull rocks.');
 
-        const bLen = await page.evaluate(() => window.Luker.getContext().chat?.length || 0);
+        const bLen = await page.evaluate(() => window.Taverncraft.getContext().chat?.length || 0);
         expect(bLen, `chat B should hold greetings+user+replies; got ${bLen}`).toBe(8);
         await takeStepScreenshot(page, '20-group-two-chats-ready');
 
@@ -174,7 +174,7 @@ test.describe('#89 — group chats merge in chosen order', () => {
         // canonical "merge happened" signal for downstream listeners
         // regardless of whether the dialog also opens the new chat.
         await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             window.__mergedSignal = { resolved: false, payload: null };
             const handler = (data) => {
                 try { ctx.eventSource.removeListener(ctx.eventTypes.CHAT_MERGED, handler); } catch {}

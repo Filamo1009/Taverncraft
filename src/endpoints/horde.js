@@ -15,7 +15,7 @@ export const router = express.Router();
  */
 async function getClientAgent() {
     const version = await getVersion();
-    return version?.agent || 'Luker:UNKNOWN:Cohee#1207';
+    return version?.agent || 'Taverncraft:UNKNOWN:Cohee#1207';
 }
 
 /**

@@ -2280,10 +2280,10 @@
     "Example: username:password": "例：用户名：密码",
     "Important:": "重要：",
     "sd_auto_auth_warning_1": "使用",
-    "sd_auto_auth_warning_2": "注意！服务器必须可从 Luker 主机访问。",
+    "sd_auto_auth_warning_2": "注意！服务器必须可从 Taverncraft 主机访问。",
     "The server must be accessible from the SillyTavern host machine.": "必须能够从 SillyTavern 主机访问该服务器。",
     "sd_drawthings_url": "例如：{{drawthings_url}}",
-    "sd_drawthings_auth_txt": "运行 DrawThings 应用程序并在 UI 中启用 HTTP API 开关！必须可以从 Luker 主机访问服务器。",
+    "sd_drawthings_auth_txt": "运行 DrawThings 应用程序并在 UI 中启用 HTTP API 开关！必须可以从 Taverncraft 主机访问服务器。",
     "Hint: Save an API key in the Hugging Face (Text Completion) API settings to use it here.": "提示：在 Hugging Face（文本补全）API 设置中保存 API 密钥后，才可在此使用。",
     "Model ID": "Model ID",
     "e.g. black-forest-labs/FLUX.1-dev": "例如：black-forest-labs/FLUX.1-dev",
@@ -3349,7 +3349,7 @@
     "help_4": "热键",
     "help_5": "{{宏}}",
     "help_6": "还有其他问题吗？",
-    "help_7": "Luker 官方文档网站",
+    "help_7": "Taverncraft 官方文档网站",
     "help_8": "有更多信息！",
     "Characters and groups hidden by filters or closed folders": "因筛选条件或关闭的文件夹隐藏的角色和群组",
     "help_hotkeys_0": "热键/按键绑定",
@@ -3891,12 +3891,12 @@
     "Folder Name": "输出文件夹名称",
     "Use alphabetical sorting": "按字母顺序排列",
     "tags_sorting_desc": "启用后，标签在创建或重命名时会自动按字母顺序排序。\n禁用后，新标签会追加到末尾。\n\n如果通过拖动手动重新排列标签，则自动排序将被禁用。",
-    "Welcome to Luker!": "欢迎来到 Luker！",
-    "Luker is aimed at advanced users.": "Luker 面向高级用户。",
-    "The server must be accessible from the Luker host machine.": "必须能够从 Luker 主机访问该服务器。",
-    "To enable multi-account features, restart the Luker server with": "要启用多帐户功能，请使用以下命令重新启动 Luker 服务器",
-    "Luker Documentation Site": "访问 Luker 帮助文档",
-    "Join the Luker Discord": "加入 Luker 的 Discord群组",
+    "Welcome to Taverncraft!": "欢迎来到 Taverncraft！",
+    "Taverncraft is aimed at advanced users.": "Taverncraft 面向高级用户。",
+    "The server must be accessible from the Taverncraft host machine.": "必须能够从 Taverncraft 主机访问该服务器。",
+    "To enable multi-account features, restart the Taverncraft server with": "要启用多帐户功能，请使用以下命令重新启动 Taverncraft 服务器",
+    "Taverncraft Documentation Site": "访问 Taverncraft 帮助文档",
+    "Join the Taverncraft Discord": "加入 Taverncraft 的 Discord群组",
     "Trace activation source": "追踪激活来源",
     "Lorebook Activation Trace": "世界书激活追踪",
     "No activation trace yet": "暂无激活追踪",
@@ -4035,12 +4035,12 @@
     "Failed to fetch frontend logs": "获取前端日志失败",
     "Failed to clear frontend logs": "清空前端日志失败",
     "Update Available": "发现更新",
-    "A Luker update is available for this Docker deployment. Pull the latest image and recreate the container to update.": "检测到 Docker 部署有新版本。请拉取最新镜像并重建容器完成更新。",
+    "A Taverncraft update is available for this Docker deployment. Pull the latest image and recreate the container to update.": "检测到 Docker 部署有新版本。请拉取最新镜像并重建容器完成更新。",
     "Update failed.": "更新失败。",
     "Updating repository...": "正在更新仓库…",
     "Update completed.": "更新完成。",
     "Preparing update...": "正在准备更新…",
-    "Luker Update": "Luker 更新",
+    "Taverncraft Update": "Taverncraft 更新",
     "Submitting update request...": "正在提交更新请求…",
     "Update task started.": "更新任务已启动。",
     "An update task is already running. Attaching to the current task...": "已有更新任务在运行，正在附加到当前任务…",
@@ -4048,9 +4048,9 @@
     "Update finished without status.": "更新结束但未返回有效状态。",
     "Manual Restart Required": "需要手动重启",
     "The update has been applied. Please restart your backend process manually to use the new version.": "更新已应用。请手动重启后端进程以使用新版本。",
-    "Luker update completed.": "Luker 更新完成。",
-    "Luker is already up to date.": "Luker 已是最新版本。",
-    "Luker App Update": "Luker App 更新",
+    "Taverncraft update completed.": "Taverncraft 更新完成。",
+    "Taverncraft is already up to date.": "Taverncraft 已是最新版本。",
+    "Taverncraft App Update": "Taverncraft App 更新",
     "Android update bridge is unavailable.": "Android 更新桥接不可用。",
     "Fetching latest APK release...": "正在获取最新 APK 发布信息…",
     "Latest release does not include a valid APK asset.": "最新发布中不包含有效的 APK 资源。",
@@ -4063,7 +4063,7 @@
     "This instance is running inside the Android app.": "当前实例运行在 Android App 内。",
     "This instance is running in Node.js server mode.": "当前实例运行在 Node.js 服务模式。",
     "unknown branch": "未知分支",
-    "A Luker update is available.": "检测到 Luker 有可用更新。",
+    "A Taverncraft update is available.": "检测到 Taverncraft 有可用更新。",
     "Current source": "当前来源",
     "Download Update": "下载更新",
     "Update Now": "立即更新",
@@ -4116,7 +4116,7 @@
     "Notification Detail": "通知内容",
     "Status only": "仅状态",
     "Include message content": "包含消息内容",
-    "Show a notification when message generation finishes while Luker is in the background.": "当 Luker 在后台时，消息生成完成后显示通知。",
+    "Show a notification when message generation finishes while Taverncraft is in the background.": "当 Taverncraft 在后台时，消息生成完成后显示通知。",
     "A new assistant reply is ready.": "助手新回复已就绪。",
     "Message generation is complete.": "回复生成已完成。",
     "Message generation is in progress...": "回复生成进行中...",
@@ -4155,12 +4155,12 @@
     "Search prompts...": "搜索提示词...",
     "No prompts match your search.": "没有匹配的提示词。",
     "LAN Migration": "局域网迁移",
-    "A Luker instance on one device can be accessed by all devices on the same LAN. Repeated LAN migration is not recommended when your goal is multi-device sharing.": "一台设备上的Luker实例可被同一局域网下的所有设备访问。不建议出于多设备共用目的多次进行局域网内迁移。",
+    "A Taverncraft instance on one device can be accessed by all devices on the same LAN. Repeated LAN migration is not recommended when your goal is multi-device sharing.": "一台设备上的Taverncraft实例可被同一局域网下的所有设备访问。不建议出于多设备共用目的多次进行局域网内迁移。",
     "LAN migration is intended for device moves. Migration links expire quickly and can only be used once.": "局域网迁移适用于设备迁移。迁移链接会很快过期，且只能使用一次。",
     "Create Migration Link": "创建迁移链接",
     "Copy Link": "复制链接",
     "Create a one-time migration link on the source instance.": "在源实例上创建一次性迁移链接。",
-    "Paste a one-time migration link from another Luker instance.": "粘贴来自另一台 Luker 实例的一次性迁移链接。",
+    "Paste a one-time migration link from another Taverncraft instance.": "粘贴来自另一台 Taverncraft 实例的一次性迁移链接。",
     "Migrate from Link": "从链接迁移",
     "The selected restore mode still applies when importing from a migration link.": "从迁移链接导入时，当前选择的恢复模式仍然生效。",
     "Migration link copied to clipboard.": "迁移链接已复制到剪贴板。",
@@ -4285,7 +4285,7 @@
     "Secret with ID: ${id} has been deleted for the key: ${key}": "键 ${key} 下 ID 为 ${id} 的密钥已删除",
     "Secret with ID: ${id} has been renamed to \"${newLabel}\" for the key: ${key}": "键 ${key} 下 ID 为 ${id} 的密钥已重命名为 \"${newLabel}\"",
     "Secret with ID: ${id} is now active for the key: ${key}": "键 ${key} 下 ID 为 ${id} 的密钥现已激活",
-    "To view your API keys here, set the value of allowKeysExposure to true in config.yaml file and restart the Luker server.": "若要在此查看你的 API 密钥，请在 config.yaml 中将 allowKeysExposure 设为 true，然后重启 Luker 服务器。",
+    "To view your API keys here, set the value of allowKeysExposure to true in config.yaml file and restart the Taverncraft server.": "若要在此查看你的 API 密钥，请在 config.yaml 中将 allowKeysExposure 设为 true，然后重启 Taverncraft 服务器。",
     "${cost} + $${webSearchCost}": "${cost} + $${webSearchCost}",
     "Bind current chat completion preset '${currentPreset}' to character '${character.name}'?": "将当前聊天补全预设 '${currentPreset}' 绑定到角色 '${character.name}'？",
     "Bound chat completion preset '${embeddedPayload.name}' was not found.": "未找到已绑定的聊天补全预设 '${embeddedPayload.name}'。",
@@ -4355,7 +4355,7 @@
     "Importing ${label}...": "正在导入 ${label}...",
     "Invalid swipe ID: ${swipeId + 1}": "无效的 swipe ID：${swipeId + 1}",
     "Lorebook could not be deleted.": "无法删除世界书。",
-    "Only Luker's own format is supported for group chat imports. Sorry!": "群聊导入仅支持 Luker 自有格式。抱歉！",
+    "Only Taverncraft's own format is supported for group chat imports. Sorry!": "群聊导入仅支持 Taverncraft 自有格式。抱歉！",
     "Past chat could not be updated: ${file_name}": "无法更新过往聊天：${file_name}",
     "Persisting generation on server": "正在将生成结果持久化到服务器",
     "Successfully imported ${importedFileNames.length} chat(s).": "已成功导入 ${importedFileNames.length} 个聊天。",
@@ -4409,10 +4409,10 @@
     "Bound ${online_status} to ${bound.join(', ')}.": "已将 ${online_status} 绑定到 ${bound.join(', ')}。",
     "Context preset for ${online_status} will use defaults when loaded the next time.": "${online_status} 的上下文预设将在下次加载时使用默认值。",
     "Macro Documentation": "宏文档",
-    "Luker": "Luker",
+    "Taverncraft": "Taverncraft",
     "...": "...",
     "Tag ${tagName} not found.": "未找到标签 ${tagName}。",
-    "Toggle on to force the samplers selected in this menu to be shown when switching to the current API Type (API Connections Panel). By default, Luker automatically selects samplers used or needed by the selected API Type.": "开启后，在切换到当前 API 类型（API Connections 面板）时，将强制显示此菜单中选中的采样器。默认情况下，Luker 会自动选择当前 API 类型所使用或所需的采样器。",
+    "Toggle on to force the samplers selected in this menu to be shown when switching to the current API Type (API Connections Panel). By default, Taverncraft automatically selects samplers used or needed by the selected API Type.": "开启后，在切换到当前 API 类型（API Connections 面板）时，将强制显示此菜单中选中的采样器。默认情况下，Taverncraft 会自动选择当前 API 类型所使用或所需的采样器。",
     "Search prompts or placeholders...": "搜索提示词或占位符...",
     "Enable advanced prompt search syntax such as quotes, OR, -, name:, content:, placeholder:, id:, source:, and role:.": "启用高级提示词搜索语法，例如引号、OR、-、name:、content:、placeholder:、id:、source: 和 role:。",
     "Prompt Search Syntax": "提示词搜索语法",
@@ -4585,8 +4585,8 @@
     "Helpful tip coming soon.": "更多有用提示消息即将推出。",
     "Hide Sheld": "隐藏聊天字段（#Sheld）",
     "Hide Sheld (Message Box)": "隐藏聊天消息字段",
-    "Hide the message box (sheld) in the ST UI.": "在 Luker 界面中隐藏消息框（sheld）。",
-    "Hide/Show Luker's Sheld (Message Box)": "隐藏/显示 Luker 的聊天消息字段",
+    "Hide the message box (sheld) in the ST UI.": "在 Taverncraft 界面中隐藏消息框（sheld）。",
+    "Hide/Show Taverncraft's Sheld (Message Box)": "隐藏/显示 Taverncraft 的聊天消息字段",
     "Hint": "提示",
     "Hint: Save an API key in Horde KoboldAI API settings to use it here.": "提示：请于 Horde KoboldAI API 设置中保存 API 密钥以进行使用。",
     "Horizontal Letterbox": "水平遮罩",
@@ -4618,7 +4618,7 @@
     "Letterbox Configuration*": "遮罩设置 *",
     "Letterbox Mode": "遮罩模式",
     "Letterbox Size": "遮罩大小",
-    "Luker Settings": "Luker 设置",
+    "Taverncraft Settings": "Taverncraft 设置",
     "Make animated backgrounds static in the selection menu. This will reduce UI and network lag if you have a large amount. This is only a change for the selection menu.": "将选择菜单中的动态背景静态化。如果背景很多，这可以减少界面和网络卡顿。此更改仅影响选择菜单。",
     "Makes the character black and white.": "使角色使用灰阶效果。",
     "Makes the character warmer in color.": "使角色色调更暖。",
@@ -4762,8 +4762,8 @@
     "Toggles world/character tint on the VN UI": "切换视觉小说模式中的世界/角色色调",
     "Trigger a summary update right now.": "立即更新摘要内容。",
     "Type the folder name of the theme you want to apply.": "输入您想套用的主题文件夹名称。",
-    "Type the name of the sprite set to use for your persona. (Place your sprites in the 'characters' folder in Luker).": "输入您想用于个人立绘的立绘集名称。（请将立绘放置在 Luker 的「characters」文件夹中）。",
-    "Type the name of the sprite set to use for your pe…rites in the 'characters' folder in Luker).": "输入您要使用的个人角色立绘集名称（需将立绘存放于 Luker 中的「characters」文件夹内）。",
+    "Type the name of the sprite set to use for your persona. (Place your sprites in the 'characters' folder in Taverncraft).": "输入您想用于个人立绘的立绘集名称。（请将立绘放置在 Taverncraft 的「characters」文件夹中）。",
+    "Type the name of the sprite set to use for your pe…rites in the 'characters' folder in Taverncraft).": "输入您要使用的个人角色立绘集名称（需将立绘存放于 Taverncraft 中的「characters」文件夹内）。",
     "Uncheck to hide the extensions messages in chat prompts.": "取消勾选可隐藏聊天提示词中的扩展消息。",
     "Unsure where to start? Type ": "不确定如何开始？输入：",
     "Update customCSS": "更新 customCSS",
@@ -4777,8 +4777,8 @@
     "Use extension settings": "使用扩展设置",
     "Use the appropriate tokenizer for Google models via their API. Slower prompt processing, but offers much more accurate token counting.": "通过 Google 模型的 API 使用适当的分词器。提示词处理速度较慢，但提供更准确的符元计数。",
     "Use the appropriate tokenizer for Jurassic models, which is more efficient than GPT's.": "对于 Jurassic 模型使用适当的分词器，比 GPT 的更高效",
-    "Use the colors of the ST GUI theme, instead of the colors configured in Color Settings specifically for this extension.": "使用 Luker GUI 主题的颜色，而不是在“颜色设置”中专门为此扩展配置的颜色。",
-    "Use the colors of the ST GUI theme, instead…n Color Settings specifically for this extension.": "使用 Luker GUI 主题的颜色，而不是在“颜色设置”中专门为此扩展配置的颜色。",
+    "Use the colors of the ST GUI theme, instead of the colors configured in Color Settings specifically for this extension.": "使用 Taverncraft GUI 主题的颜色，而不是在“颜色设置”中专门为此扩展配置的颜色。",
+    "Use the colors of the ST GUI theme, instead…n Color Settings specifically for this extension.": "使用 Taverncraft GUI 主题的颜色，而不是在“颜色设置”中专门为此扩展配置的颜色。",
     "Use the default quote color except for characters with a specified override color.": "除非角色有指定的覆盖颜色，否则使用默认的引号文本颜色。",
     "User Message Prefix": "用户消息前缀",
     "User Message Suffix": "用户消息后缀",
@@ -5514,8 +5514,8 @@
     ,"🧠 Update memory-graph advanced": "🧠 更新记忆图谱高级设置"
     ,"⌨️ List slash commands": "⌨️ 列出斜杠命令"
     ,"❓ Slash command help": "❓ 斜杠命令帮助"
-    ,"🧭 List Luker context keys": "🧭 列出 Luker 上下文键"
-    ,"🧭 Describe Luker context": "🧭 描述 Luker 上下文"
+    ,"🧭 List Taverncraft context keys": "🧭 列出 Taverncraft 上下文键"
+    ,"🧭 Describe Taverncraft context": "🧭 描述 Taverncraft 上下文"
     ,"📑 List docs": "📑 列出文档"
     ,"📖 Read doc": "📖 读取文档"
     ,"🔌 Toggle CardApp": "🔌 启用/停用 CardApp"
@@ -5807,7 +5807,7 @@
     ,"A clean preset works best here: one that contains only jailbreak / general unblock prompts, with no RP style instructions, character voice, or narrative format requirements.": "这里最适合挂一份干净预设：只保留越狱/通用破限提示词，不含 RP 文风指令、角色语态、叙事格式要求。"
     ,"Why? RP presets often force an output format (mandatory schema blocks, forced thinking chains) that conflicts with the structured tool calls these plugins use. Style instructions can also leak into config edits and produce odd results.": "原因：日常 RP 预设常常会强制输出格式（强制 schema 块、强制思维链），与这些插件用的结构化 tool call 互相打架；文风指令也容易渗进配置改写里，结果稀奇古怪。"
     ,"Two ways to get a clean preset:": "两种拿到干净预设的方式："
-    ,"Click \"Import plugin-only preset\" below — imports a pre-built clean preset bundled with Luker, then selects it here.": "点下面的「导入 plugin-only 预设」——一键导入 Luker 内置的现成干净预设，并自动选中。"
+    ,"Click \"Import plugin-only preset\" below — imports a pre-built clean preset bundled with Taverncraft, then selects it here.": "点下面的「导入 plugin-only 预设」——一键导入 Taverncraft 内置的现成干净预设，并自动选中。"
     ,"Open the Completion Preset Assistant and start a new session in \"Jailbreak-only\" mode — it will derive a clean version from your existing RP preset. Your original preset stays untouched.": "打开「聊天补全预设助手」，新开一个「仅保留破限」模式的会话——它会从你现有的 RP 预设派生一份干净版本，原预设保持不动。"
     ,"This selector is for the preset an Agent uses to draft content. Unlike iteration-AI presets, the Agent SHOULD use your RP-style instructions — jailbreak, NSFW guidance, style/voice rules, anti-cliché instructions, etc.": "这一栏选的是 Agent 起草正文时用的预设。和插件迭代 AI 不一样，Agent 这里需要你的 RP 类指令——越狱、NSFW 指导、文风/语态规则、反八股指令等等。"
     ,"But a raw daily RP preset is also not the right fit: instructions that force an output schema or a fixed thinking-chain format will block the agent's tool calls, and character/world-info that the agent framework already injects will get duplicated.": "但是直接挂日常 RP 预设也不合适：强制输出 schema、固定思维链格式之类的指令会顶坏 Agent 的 tool call；角色卡描述、世界书等占位符在 Agent 框架里已经会被注入一次，原样保留会被重复注入。"
@@ -5815,7 +5815,7 @@
     ,"For the full multi-Agent setup walkthrough, see the multi-Agent onboarding recipe in the documentation.": "完整的多 Agent 配置流程请见文档中的「多 Agent 上手指南」。"
     ,"Preset manager unavailable.": "预设管理器不可用。"
     ,"Failed to save the \"{name}\" preset.": "保存「{name}」预设失败。"
-    ,"A preset named \"{name}\" already exists. Overwrite it with the bundled version, or keep your existing copy and just select it?": "已存在名为「{name}」的预设。要用 Luker 内置版本覆盖，还是保留你现有的版本并直接选中？"
+    ,"A preset named \"{name}\" already exists. Overwrite it with the bundled version, or keep your existing copy and just select it?": "已存在名为「{name}」的预设。要用 Taverncraft 内置版本覆盖，还是保留你现有的版本并直接选中？"
     ,"Overwrite with bundled version": "用内置版本覆盖"
     ,"Keep existing": "保留现有"
     ,"Overwrote preset: {name}": "已覆盖预设：{name}"
@@ -5826,13 +5826,13 @@
     ,"This selector is for the preset a Director-mode Agent uses (main agent or a sub-agent). Director already injects the full RP context (character card, persona, world info, chat history) inside a <story_context> envelope before the agent runs — so the agent's own preset does NOT need any character / world / persona placeholders. Adding them would only re-inject the same content twice and burn tokens.": "这一栏选的是 Director 模式 Agent（主 Agent 或 sub-agent）用的预设。Director 在 Agent 运行前已经把完整 RP 上下文（角色卡、persona、世界书、聊天记录）整段塞进 <story_context> 信封里——所以 Agent 自己这份预设不需要任何角色卡/世界书/persona 占位符，加了只会把同样的内容重复注入一次，白烧 token。"
     ,"What this slot SHOULD carry: jailbreak / content-permission instructions that wrap the <story_context> block, plus the chatHistory marker so the envelope lands in the right place. Style / voice / anti-cliché rules normally belong in the agent's system prompt, not here.": "这一栏该装的是什么：包在 <story_context> 块外面的越狱/内容许可指令，加上 chatHistory 占位符让信封落到合适的位置。文风/语态/反八股规则正常应该写在 Agent 的系统提示词里，不属于这里。"
     ,"Two ways to get a Director-friendly preset:": "两种拿到 Director 友好预设的方式："
-    ,"Click \"Import agent-director preset\" below — imports a minimal Luker-bundled preset (marker-free, permission text only) and selects it here. Good as a quick start.": "点下面的「导入 agent-director 预设」——一键导入 Luker 内置的极简预设（不含占位符，只保留许可文本），并自动选中。适合快速起步。"
+    ,"Click \"Import agent-director preset\" below — imports a minimal Taverncraft-bundled preset (marker-free, permission text only) and selects it here. Good as a quick start.": "点下面的「导入 agent-director 预设」——一键导入 Taverncraft 内置的极简预设（不含占位符，只保留许可文本），并自动选中。适合快速起步。"
     ,"Open the Completion Preset Assistant and start a new session in \"Adapt for orchestrator\" mode — it will derive a Director-ready version from your existing RP preset, keeping your jailbreak / style / anti-cliché instructions while stripping format-forcing prompts and duplicate injections. Your original preset stays untouched.": "打开「聊天补全预设助手」，新开一个「编排器适配」模式的会话——它会从你现有的 RP 预设派生一份适配 Director 的版本，保留越狱/文风/反八股指令，同时剥掉强制格式的提示词和重复注入。原预设保持不动。"
     ,"Import agent-director preset": "导入 agent-director 预设"
     ,"This selector is for the preset a non-Director Agent uses (Single / Spec / Agenda planner / Loop). Unlike Director, these modes do NOT inject the RP context for the agent — so the agent's preset is the only path through which character card, persona, and world info reach the model. Markers (charDescription / personaDescription / worldInfoBefore / worldInfoAfter / chatHistory) must stay enabled, and the RP material should be visibly separated from the runtime task instructions so the agent does not mistake them for narrative continuation.": "这一栏选的是非 Director 模式 Agent（Single / Spec / Agenda planner / Loop）用的预设。和 Director 不同，这些模式不会主动给 Agent 注入 RP 上下文——所以 Agent 这份预设是角色卡、persona、世界书到达模型的唯一通道。占位符（charDescription / personaDescription / worldInfoBefore / worldInfoAfter / chatHistory）必须保持启用；RP 素材要和运行时下发的任务指令明确隔开，免得 Agent 把它读成叙事延续。"
     ,"This is the same shape iteration-AI plugins (CPA iter / Memory Graph / CardApp Studio iter) need, just placed in an Agent slot. The bundled preset offered below is identical in structure to the iter-AI plugin-only preset.": "这和插件迭代 AI（预设助手迭代、记忆图、卡片应用工作台迭代等）需要的形态是一样的，只是装在 Agent 的槽位里。下面提供的内置预设结构上和插件迭代 AI 用的 plugin-only 预设一致。"
     ,"Two ways to get a non-Director-friendly preset:": "两种拿到非 Director 友好预设的方式："
-    ,"Click \"Import agent-non-director preset\" below — imports a Luker-bundled preset (markers enabled, story / user-request envelopes wrap the context) and selects it here. Good as a quick start.": "点下面的「导入 agent-non-director 预设」——一键导入 Luker 内置的预设（占位符启用，story / user-request 信封把上下文包好），并自动选中。适合快速起步。"
+    ,"Click \"Import agent-non-director preset\" below — imports a Taverncraft-bundled preset (markers enabled, story / user-request envelopes wrap the context) and selects it here. Good as a quick start.": "点下面的「导入 agent-non-director 预设」——一键导入 Taverncraft 内置的预设（占位符启用，story / user-request 信封把上下文包好），并自动选中。适合快速起步。"
     ,"Open the Completion Preset Assistant and start a new session in \"Adapt for orchestrator\" mode — it will derive a version from your existing RP preset that preserves your jailbreak / style / anti-cliché instructions while stripping format-forcing prompts. Your original preset stays untouched.": "打开「聊天补全预设助手」，新开一个「编排器适配」模式的会话——它会从你现有的 RP 预设派生一份版本，保留越狱/文风/反八股指令，同时剥掉强制格式的提示词。原预设保持不动。"
     ,"Import agent-non-director preset": "导入 agent-non-director 预设"
 
@@ -5987,7 +5987,7 @@
     ,"sync.category.stats": "角色统计"
     ,"sync.category.stats.desc": "stats.json，由聊天记录派生；冲突时可在本地重新计算。"
     ,"sync.category.settings": "设置"
-    ,"sync.category.settings.desc": "settings.json，完整的 Luker 配置。"
+    ,"sync.category.settings.desc": "settings.json，完整的 Taverncraft 配置。"
     ,"sync.category.secrets": "API 密钥与凭据"
     ,"sync.category.secrets.desc": "secrets.json，API 密钥、令牌与密码。"
     ,"sync.category.extensions": "扩展插件"
@@ -5999,7 +5999,7 @@
     ,"Open LAN Sync": "打开局域网同步"
     ,"Recommended for two devices in regular use. Repeated, two-way, incremental — only changed data crosses the wire.": "推荐两台经常使用的设备使用。重复、双向、增量——只有变更的数据会通过网络传输。"
     ,"One-shot full-data transfer for moving to a brand-new device. For ongoing two-way sync use LAN Sync above.": "一次性全量数据传输，适用于迁移到全新设备。如需持续双向同步，请使用上方的局域网同步。"
-    ,"Sync two Luker devices on the same network. Only changed data crosses the wire; full re-uploads aren't needed.": "同步同一网络下的两台 Luker 设备。只有变更的数据会通过网络传输，无需重新上传全量数据。"
+    ,"Sync two Taverncraft devices on the same network. Only changed data crosses the wire; full re-uploads aren't needed.": "同步同一网络下的两台 Taverncraft 设备。只有变更的数据会通过网络传输，无需重新上传全量数据。"
     ,"My devices": "我的设备"
     ,"Pair new device": "配对新设备"
     ,"Pair with existing device": "与已有设备配对"

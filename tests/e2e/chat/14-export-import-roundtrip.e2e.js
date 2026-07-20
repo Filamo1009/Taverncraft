@@ -131,7 +131,7 @@ test.describe('#14 — export/import roundtrip', () => {
         // /api/characters/all scan should have picked her up — wait for
         // the ctx.characters list to include her before we try to switch.
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.characters.some(c => c?.name === 'Iyana the Watchwoman');
         }, { timeout: 10_000 });
 
@@ -140,7 +140,7 @@ test.describe('#14 — export/import roundtrip', () => {
         await sendMessageAndAwaitReply(page, 'Roundtrip turn B.');
         await sendMessageAndAwaitReply(page, 'Roundtrip turn C.');
 
-        const chatId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId?.());
+        const chatId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId?.());
         expect(chatId).toBeTruthy();
 
         // Real user gesture: open Manage Chat Files, click the JSONL
@@ -213,7 +213,7 @@ test.describe('#14 — export/import roundtrip', () => {
         }).first();
         await importedRow.locator('.select_chat_block').click();
         await page.waitForFunction((wantId) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.getCurrentChatId?.() === wantId;
         }, importedFile, { timeout: 15_000 });
 
@@ -243,7 +243,7 @@ test.describe('#14 — export/import roundtrip', () => {
         }).first();
         await reopenRow.locator('.select_chat_block').click();
         await page.waitForFunction((wantId) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.getCurrentChatId?.() === wantId;
         }, importedFile, { timeout: 15_000 });
 

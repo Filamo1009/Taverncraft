@@ -109,7 +109,7 @@ test.describe('#95 — Stable Diffusion /imagine via real send textarea + send b
         await selectCharacterByName(page, 'Seraphina');
 
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -117,7 +117,7 @@ test.describe('#95 — Stable Diffusion /imagine via real send textarea + send b
         // setup — same as opening the SD drawer and configuring it by hand,
         // but headless). The ACT below is the real slash gesture.
         await page.evaluate((sdBaseURL) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             ctx.extensionSettings.sd = ctx.extensionSettings.sd || {};
             const sd = ctx.extensionSettings.sd;
             sd.source = 'auto';
@@ -143,7 +143,7 @@ test.describe('#95 — Stable Diffusion /imagine via real send textarea + send b
         }, sdMock.baseURL);
 
         const before = sdMock.requests.length;
-        const chatLenBefore = await page.evaluate(() => window.Luker.getContext().chat.length);
+        const chatLenBefore = await page.evaluate(() => window.Taverncraft.getContext().chat.length);
 
         // REAL gesture: type the slash into #send_textarea, click #send_but.
         const textarea = page.locator('#send_textarea');
@@ -153,7 +153,7 @@ test.describe('#95 — Stable Diffusion /imagine via real send textarea + send b
 
         // Image generation is async — wait for the new chat message to land.
         await page.waitForFunction((targetLen) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.chat.length > targetLen;
         }, chatLenBefore, { timeout: 60_000 });
 
@@ -165,11 +165,11 @@ test.describe('#95 — Stable Diffusion /imagine via real send textarea + send b
         expect(txt2imgCall.body.prompt).toMatch(/spyglass/);
 
         const optionsCall = newSdReqs.find(r => r.url === '/sdapi/v1/options');
-        expect(optionsCall, 'Luker proxy should probe /sdapi/v1/options before /txt2img').toBeTruthy();
+        expect(optionsCall, 'Taverncraft proxy should probe /sdapi/v1/options before /txt2img').toBeTruthy();
 
         // ===== Assert the chat message has the expected attachment. =====
         const tail = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const m = ctx.chat[ctx.chat.length - 1];
             return {
                 name: m?.name,

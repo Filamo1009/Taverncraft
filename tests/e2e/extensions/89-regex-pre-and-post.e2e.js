@@ -100,7 +100,7 @@ test.describe('#89 — Regex pre+post process applied via real UI', () => {
 
         // Wait for greeting so MESSAGE_RECEIVED later is the real reply.
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -138,7 +138,7 @@ test.describe('#89 — Regex pre+post process applied via real UI', () => {
 
         // Sanity: extensionSettings.regex now lists both entries.
         const regexCount = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const r = ctx.extensionSettings?.regex;
             return Array.isArray(r) ? r.length : 0;
         });

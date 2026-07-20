@@ -1,6 +1,6 @@
 # World Info Activation Trace
 
-World Info Activation Trace is a debugging feature introduced by Luker that helps you understand why a World Info entry was activated (or not activated).
+World Info Activation Trace is a debugging feature introduced by Taverncraft that helps you understand why a World Info entry was activated (or not activated).
 
 ## Problem It Solves
 

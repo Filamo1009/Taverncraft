@@ -1,7 +1,7 @@
 services:
-  luker:
-    image: ghcr.io/funnycups/luker:latest
-    container_name: luker
+  taverncraft:
+    build: .
+    container_name: taverncraft
     ports:
       - 127.0.0.1:8000:8000
     volumes:

@@ -84,7 +84,7 @@ getCharaFilename(
 返回角色头像文件名（**不带扩展名**）。省略 `chid` 时回退到当前角色。当你只有头像 key 字符串时（例如来自角色状态条目），传入 `manualAvatarKey`。无法解析头像时返回 `null`。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const filename = ctx.getCharaFilename();  // 例如 'tavernkeeper'
 ```
 
@@ -145,7 +145,7 @@ writeExtensionField(
 传 `value: context.constants.unset`（即 `UNSET_VALUE` 哨兵值）可彻底删除该 key。传裸 `null` 写入的是字面量 `null`（key 仍然保留）。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 // 把 data.extensions.my_plugin_state 整体替换为 { level: 5 }。
 // my_plugin_state 之前的任何其他子键都会被清除。
@@ -195,7 +195,7 @@ updateCharacterData(
 更新某张卡 `data` 对象上的一个或多个**表单层**字段，**不依赖**角色编辑器弹窗打开。patch 形态是 `character.data` 的 dot-path 映射，用于表单层字段（`description`、`name`、`personality`……）。中间对象会自动按需创建。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 // 更新一个顶层字段
 await ctx.updateCharacterData(ctx.characterId, { description: '新的描述。' });
 ```
@@ -241,7 +241,7 @@ persistCharacterDataDebounced(charId: number | string): void
 `updateCharacterData` mutate `characters[charId].data` 之后、持久化完成之前触发。监听器接收 `{ charId, keys }`，`keys` 是 patch 里的 dot-path 数组。用它来 sync view（弹窗表单、CardApp 面板）而无需轮询。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 ctx.eventSource.on(ctx.eventTypes.CHARACTER_FIELDS_UPDATED, ({ charId, keys }) => {
     if (charId === ctx.characterId && keys.includes('description')) {
         // 从 characters[charId].data.description 刷新你的 UI
@@ -318,7 +318,7 @@ setCharacterState(avatar: string, namespace: string, data: any): Promise<void>
 写入角色状态。传 `data: null` 删除该命名空间的状态。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const character = ctx.characters[ctx.characterId];
 
 await ctx.setCharacterState(character.avatar, 'my-plugin', {

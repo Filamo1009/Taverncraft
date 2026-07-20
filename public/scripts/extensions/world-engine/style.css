@@ -1,0 +1,84 @@
+#world_engine_settings .world_engine_panel,
+#world_engine_settings .world_engine_section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#world_engine_settings .world_engine_section {
+    border: 1px solid var(--SmartThemeBorderColor, rgba(130, 130, 130, 0.35));
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 8px;
+}
+
+#world_engine_settings textarea {
+    width: 100%;
+    box-sizing: border-box;
+    resize: vertical;
+    font-family: var(--monoFontFamily, ui-monospace, monospace);
+    line-height: 1.4;
+}
+
+#world_engine_state_summary {
+    opacity: 0.8;
+    overflow-wrap: anywhere;
+}
+
+#world_engine_settings .world_engine_locations,
+#world_engine_location_list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#world_engine_location_list {
+    max-height: 180px;
+    overflow: auto;
+}
+
+#world_engine_settings .world_engine_location_row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 7px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--SmartThemeBlurTintColor, #222) 78%, transparent);
+}
+
+#world_engine_settings .world_engine_location_name {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+#world_engine_settings .world_engine_location_badge {
+    flex: none;
+    border: 1px solid var(--SmartThemeBorderColor, rgba(130, 130, 130, 0.35));
+    border-radius: 999px;
+    padding: 1px 6px;
+    font-size: 0.82em;
+    opacity: 0.88;
+}
+
+#world_engine_settings select.text_pole {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#world_engine_settings .world_engine_effective_prompt {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--SmartThemeBorderColor, rgba(130, 130, 130, 0.35));
+}
+
+#world_engine_settings .world_engine_effective_prompt small,
+#world_engine_post_history_selected_source {
+    overflow-wrap: anywhere;
+}
+
+#world_engine_post_history_effective_prompt[readonly] {
+    opacity: 0.82;
+}

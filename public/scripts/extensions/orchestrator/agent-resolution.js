@@ -48,7 +48,7 @@
  * shared `html-utils.js` helper if/when more modules want it.
  */
 
-const extension_settings = Luker.getContext().extensionSettings;
+const extension_settings = Taverncraft.getContext().extensionSettings;
 import { getChatCompletionConnectionProfiles } from '../connection-manager/profile-resolver.js';
 import { throwIfAborted } from './abort-utils.js';
 import { i18n } from './i18n.js';
@@ -61,7 +61,7 @@ import {
 } from './world-info.js';
 
 // Character-bound preset access is routed through the ctx layer
-// (`Luker.getContext().character.presets.*`, wired in st-context.js).
+// (`Taverncraft.getContext().character.presets.*`, wired in st-context.js).
 // Direct imports from `/scripts/character/presets.js` cannot be used
 // here — that module pulls in `/scripts/st-context.js` →
 // `RossAscends-mods.js` → Bowser, which is absent from the Jest lib
@@ -71,7 +71,7 @@ import {
 // third-party extensions (per feedback_api_layered_exposure), so
 // consuming it here also proves the surface out.
 function getLukerContext() {
-    return (typeof Luker !== 'undefined') ? Luker.getContext() : null;
+    return (typeof Taverncraft !== 'undefined') ? Taverncraft.getContext() : null;
 }
 function getActiveCharacter(override = null) {
     if (override) return override;
@@ -223,7 +223,7 @@ export function sanitizeConnectionProfilesForAiPrompt(profiles = getConnectionPr
  * mirrors the split used by `renderOpenAIPresetOptions` and the
  * `getLocalPresetNames` helper in manage-bound-presets-dialog.js.
  *
- * @param {object} context Luker context
+ * @param {object} context Taverncraft context
  * @returns {{local_global: string[], card_bound: string[]}}
  */
 export function sanitizeOpenAIPresetNamesForAiPrompt(context) {

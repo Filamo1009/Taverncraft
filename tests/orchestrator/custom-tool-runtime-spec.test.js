@@ -13,13 +13,13 @@
 import { describe, test, expect, jest, beforeAll, beforeEach } from '@jest/globals';
 
 // spec-runtime.js + defaults.js consume core symbols via
-// `Luker.getContext()` after upstream commit 571c529c2. Provide a
+// `Taverncraft.getContext()` after upstream commit 571c529c2. Provide a
 // shim with the constants + the shared `extensionSettings` binding the
 // runtime captures at module-load time.
 const __sillyTavernSettings = {
     orchestrator: { nodeIterationMaxRounds: 3 },
 };
-globalThis.Luker = {
+globalThis.Taverncraft = {
     getContext: () => ({
         constants: {
             promptRoles: { SYSTEM: 0, USER: 1, ASSISTANT: 2 },

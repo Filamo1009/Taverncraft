@@ -60,7 +60,7 @@ test.describe('#80 — MG Schema iter-studio Apply → settings persists across 
 
         // Baseline: confirm the new node type is not present.
         const baseline = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const arr = Array.isArray(ctx.extensionSettings?.memory_graph?.nodeTypeSchema)
                 ? ctx.extensionSettings.memory_graph.nodeTypeSchema
                 : [];
@@ -89,7 +89,7 @@ test.describe('#80 — MG Schema iter-studio Apply → settings persists across 
         // In-memory: the new id is present.
         await expect.poll(async () => {
             return await page.evaluate(() => {
-                const ctx = window.Luker.getContext();
+                const ctx = window.Taverncraft.getContext();
                 const arr = ctx.extensionSettings?.memory_graph?.nodeTypeSchema || [];
                 return arr.map(t => t?.id);
             });
@@ -101,7 +101,7 @@ test.describe('#80 — MG Schema iter-studio Apply → settings persists across 
 
         // After reload, the schema list still carries the new id.
         const afterRestart = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const arr = ctx.extensionSettings?.memory_graph?.nodeTypeSchema || [];
             return arr.find(t => t?.id === 'ash_journal') || null;
         });

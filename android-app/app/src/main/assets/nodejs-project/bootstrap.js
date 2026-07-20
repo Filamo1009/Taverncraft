@@ -93,7 +93,7 @@ appendArg('--port', '8000');
 appendArg('--dataRoot', dataRoot);
 appendLog('BOOT', `argv(after append)=${JSON.stringify(process.argv)}`);
 
-// Run Luker server entry.
+// Run Taverncraft server entry.
 const serverEntryUrl = pathToFileURL(path.join(runtimeRoot, 'server.js')).href;
 appendLog('BOOT', `importing ${serverEntryUrl}`);
 await import(serverEntryUrl);

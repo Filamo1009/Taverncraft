@@ -61,7 +61,7 @@ test.describe('#106 — announcements broadcast and dismiss flow', () => {
             // Create a regular user "alice" who will see the announcement.
             const create = await admin.post('/api/users/create', { handle: 'alice', name: 'Alice', password: 'pw' });
             expect(create.ok(), `create alice failed (${create.status()})`).toBe(true);
-            // Mark alice as onboarded so the "Welcome to Luker" modal doesn't
+            // Mark alice as onboarded so the "Welcome to Taverncraft" modal doesn't
             // block the boot chain (which is where initAnnouncements runs).
             markOnboarded({ dataRoot: server.dataRoot, handle: 'alice' });
 
@@ -114,7 +114,7 @@ test.describe('#106 — announcements broadcast and dismiss flow', () => {
         // can't accidentally pick the wrong user.
         await page.goto(server.baseURL + '/');
         await page.waitForFunction('document.getElementById("preloader") === null', { timeout: 60_000 });
-        await page.waitForFunction(() => !!window.Luker?.getContext, { timeout: 30_000 });
+        await page.waitForFunction(() => !!window.Taverncraft?.getContext, { timeout: 30_000 });
 
         // Wait for the banner to appear (it is created async after fetch).
         const banner = page.locator('#announcement-banner');
@@ -129,7 +129,7 @@ test.describe('#106 — announcements broadcast and dismiss flow', () => {
         // Reload: banner must NOT reappear (mark-read is persistent).
         await page.goto(server.baseURL + '/');
         await page.waitForFunction('document.getElementById("preloader") === null', { timeout: 60_000 });
-        await page.waitForFunction(() => !!window.Luker?.getContext, { timeout: 30_000 });
+        await page.waitForFunction(() => !!window.Taverncraft?.getContext, { timeout: 30_000 });
 
         // Give announcements init a chance to run (it's fire-and-forget).
         await page.waitForTimeout(2_000);

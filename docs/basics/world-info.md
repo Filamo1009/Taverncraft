@@ -95,29 +95,29 @@ World Info can be associated with characters and chats in several ways:
 
 A character can use character-bound, global, and chat world info simultaneously; entries from all of them participate in matching together.
 
-## Luker's World Info Improvements
+## Taverncraft's World Info Improvements
 
 ### Activation Chain Tracing
 
-When debugging complex world info setups, you might wonder "why was this entry activated?" Luker provides **activation chain tracing**, letting you clearly see which keyword triggered each entry and in which message.
+When debugging complex world info setups, you might wonder "why was this entry activated?" Taverncraft provides **activation chain tracing**, letting you clearly see which keyword triggered each entry and in which message.
 
 If recursive scanning is used, you can also see the complete activation chain — for example, "keyword A in the message activated Entry 1, and keyword B in Entry 1's content then activated Entry 2."
 
 ### Search Plugin Auto-Created Entries
 
-Luker's search plugin can automatically search the web during the pre-request phase and organize search results into World Info entries written to a dedicated shared lorebook (`__SEARCH_TOOLS__`). These entries are automatically assigned appropriate keywords and activation methods based on the nature of the information, serving as reference material injected into context during subsequent conversations.
+Taverncraft's search plugin can automatically search the web during the pre-request phase and organize search results into World Info entries written to a dedicated shared lorebook (`__SEARCH_TOOLS__`). These entries are automatically assigned appropriate keywords and activation methods based on the nature of the information, serving as reference material injected into context during subsequent conversations.
 
 ### Memory Graph Auto-Created Entries
 
-Luker's [Memory Graph](/features/memory-graph) plugin uses [World Info Projection](/features/memory-graph#world-info-projection) to automatically project Memory Graph nodes as World Info entries. These entries are automatically created and managed by the Memory Graph — no manual maintenance required — allowing long-term memories to participate in prompt construction through the World Info activation mechanism.
+Taverncraft's [Memory Graph](/features/memory-graph) plugin uses [World Info Projection](/features/memory-graph#world-info-projection) to automatically project Memory Graph nodes as World Info entries. These entries are automatically created and managed by the Memory Graph — no manual maintenance required — allowing long-term memories to participate in prompt construction through the World Info activation mechanism.
 
 ### Preset-Associated World Info
 
-Luker supports associating World Info with presets. When switching presets, the associated World Info is automatically activated. This is very convenient when different usage scenarios require different World Info configurations.
+Taverncraft supports associating World Info with presets. When switching presets, the associated World Info is automatically activated. This is very convenient when different usage scenarios require different World Info configurations.
 
 ### Undo Support
 
-In Luker, deleting a World Info entry triggers an Undo Toast, allowing you to undo accidental deletions within a short time window.
+In Taverncraft, deleting a World Info entry triggers an Undo Toast, allowing you to undo accidental deletions within a short time window.
 
 ## Next Steps
 

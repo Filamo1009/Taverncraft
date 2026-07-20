@@ -1,6 +1,6 @@
 # 認證與配額
 
-Luker 內建了多使用者認證和配額管理系統，適用於團隊共享實例或公開部署的場景。管理員可以透過 OAuth 登入、儲存配額和日誌系統全面管控使用者的存取和資源消耗。
+Taverncraft 內建了多使用者認證和配額管理系統，適用於團隊共享實例或公開部署的場景。管理員可以透過 OAuth 登入、儲存配額和日誌系統全面管控使用者的存取和資源消耗。
 
 ## 認證系統
 
@@ -20,7 +20,7 @@ Luker 內建了多使用者認證和配額管理系統，適用於團隊共享�
 
 ### GitHub OAuth 登入
 
-Luker 支援透過 GitHub OAuth 進行使用者認證。使用者點擊登入後，會被重新導向到 GitHub 授權頁面，授權完成後自動建立或關聯本地使用者帳戶。
+Taverncraft 支援透過 GitHub OAuth 進行使用者認證。使用者點擊登入後，會被重新導向到 GitHub 授權頁面，授權完成後自動建立或關聯本地使用者帳戶。
 
 配置方式：在前端管理員面板中配置 GitHub OAuth App 的憑證（儲存在 `admin-settings.json` 的 `oauth` 配置段中）：
 
@@ -39,7 +39,7 @@ Luker 支援透過 GitHub OAuth 進行使用者認證。使用者點擊登入後
 
 ### Discord OAuth 登入
 
-Luker 同樣支援 Discord OAuth 登入，並提供更細粒度的存取控制——可以校驗使用者是否為指定 Discord 伺服器的成員，以及是否擁有特定身分組（Role）。
+Taverncraft 同樣支援 Discord OAuth 登入，並提供更細粒度的存取控制——可以校驗使用者是否為指定 Discord 伺服器的成員，以及是否擁有特定身分組（Role）。
 
 ```json
 {
@@ -60,7 +60,7 @@ Luker 同樣支援 Discord OAuth 登入，並提供更細粒度的存取控制�
 OAuth 回呼位址由系統根據當前請求自動產生（格式為 `{protocol}://{host}/api/users/oauth/callback/{provider}`），無需手動配置。
 
 ::: tip
-如果不需要 OAuth 登入，無需配置 `oauth` 段。Luker 仍然支援 SillyTavern 原有的使用者認證方式。OAuth 配置建議在前端管理員面板中進行。
+如果不需要 OAuth 登入，無需配置 `oauth` 段。Taverncraft 仍然支援 SillyTavern 原有的使用者認證方式。OAuth 配置建議在前端管理員面板中進行。
 :::
 
 ## 使用者配額管理
@@ -79,9 +79,9 @@ OAuth 回呼位址由系統根據當前請求自動產生（格式為 `{protocol
 
 ## 日誌系統
 
-Luker 實現了伺服端日誌擷取系統，供管理員遠端查看伺服器運行狀態。
+Taverncraft 實現了伺服端日誌擷取系統，供管理員遠端查看伺服器運行狀態。
 
-Luker 的日誌系統涵蓋後端和前端，幫助管理員遠端排查問題。詳見[日誌系統](/zh-TW/features/logging)。
+Taverncraft 的日誌系統涵蓋後端和前端，幫助管理員遠端排查問題。詳見[日誌系統](/zh-TW/features/logging)。
 
 ## 配置參考
 

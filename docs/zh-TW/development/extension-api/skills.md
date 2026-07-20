@@ -1,6 +1,6 @@
 # Skills
 
-`context.skills.*` 是用於安裝、讀取、編輯、打包 Skills 的 JavaScript 介面。擴充透過 `Luker.getContext()` 拿到它；CardApp 在自己的 `ctx.skills` 上拿到同樣的形狀。
+`context.skills.*` 是用於安裝、讀取、編輯、打包 Skills 的 JavaScript 介面。擴充透過 `Taverncraft.getContext()` 拿到它；CardApp 在自己的 `ctx.skills` 上拿到同樣的形狀。
 
 Skill 是編排器使用的[知識包](/zh-TW/features/skills/)；這套 API 是支撐 Skill 管理子面板、內嵌編輯器、迭代工作台 17 個 Skill 工具的讀寫傳輸層。
 
@@ -11,7 +11,7 @@ Skill 是編排器使用的[知識包](/zh-TW/features/skills/)；這套 API 是
 ## 入口
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 const skills = context.skills;
 
 // 或者透過 CardApp ctx（同樣形狀）:
@@ -20,7 +20,7 @@ async function init(ctx) {
 }
 ```
 
-CardApp ctx 介面是底層同一組函式的薄包裝 —— 呼叫簽名與返回形狀相同（遵循 Luker 的 [API 對等約定](https://github.com/funnycups/Luker/blob/release/CLAUDE.md)）。
+CardApp ctx 介面是底層同一組函式的薄包裝 —— 呼叫簽名與返回形狀相同（遵循 Taverncraft 的 API 對等約定）。
 
 ## scope 形狀
 

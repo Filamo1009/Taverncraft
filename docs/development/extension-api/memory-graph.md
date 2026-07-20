@@ -9,7 +9,7 @@
 
 ## Session API (recommended entry)
 
-Open a chat-scoped session through Luker's extension registry:
+Open a chat-scoped session through Taverncraft's extension registry:
 
 ```js
 import { getExtensionApi } from '/scripts/extensions.js';
@@ -37,7 +37,7 @@ await session.deleteLinks({ source: { id }, target: { id: 'bob_node' }, relation
 await session.compactNodes({ type: 'event', childIds: [...], summary: '...' });
 ```
 
-The `'memory-graph'` extension api is published via Luker's `registerExtensionApi(name, api)` mechanism — the same one `card-app` and other Luker extensions use. Third-party extensions that integrate with memory-graph should always go through `getExtensionApi('memory-graph')`, never import `memory-graph/*.js` directly.
+The `'memory-graph'` extension api is published via Taverncraft's `registerExtensionApi(name, api)` mechanism — the same one `card-app` and other Taverncraft extensions use. Third-party extensions that integrate with memory-graph should always go through `getExtensionApi('memory-graph')`, never import `memory-graph/*.js` directly.
 
 ### Lifetime
 
@@ -82,7 +82,7 @@ For full signatures of each method, see the **Read API** and **Write API** secti
 
 ### Lower-level access
 
-`getMemoryGraphReadApi(store, context)` and `getMemoryGraphWriteApi(store, context)` remain exported for internal callers that already hold a store reference (e.g. the native `chooseRecallRoute` pipeline). Third-party extensions should prefer `openSession` — the session facade handles store loading, fresh-chat fallback, and registration through Luker's standard extension api in one place.
+`getMemoryGraphReadApi(store, context)` and `getMemoryGraphWriteApi(store, context)` remain exported for internal callers that already hold a store reference (e.g. the native `chooseRecallRoute` pipeline). Third-party extensions should prefer `openSession` — the session facade handles store loading, fresh-chat fallback, and registration through Taverncraft's standard extension api in one place.
 
 ## Per-character override accessors
 
@@ -180,7 +180,7 @@ Listener errors are caught and logged; one bad subscriber cannot block the other
 
 ## Overview
 
-The memory-graph extension drives Luker's long-term recall by feeding a curated pool of nodes (`character_sheet`, `event`, `relationship`, ...) plus a per-node `edge_summary` to a "route" LLM that picks which memories to inject into the next turn. The native pipeline (`chooseRecallRoute` / `collectRootCandidates` in `main.js`) constructs that LLM input from internal helpers — `buildProjectedEdges`, `getNearestVisibleAncestorId`, `formatNodeBrief`, etc.
+The memory-graph extension drives Taverncraft's long-term recall by feeding a curated pool of nodes (`character_sheet`, `event`, `relationship`, ...) plus a per-node `edge_summary` to a "route" LLM that picks which memories to inject into the next turn. The native pipeline (`chooseRecallRoute` / `collectRootCandidates` in `main.js`) constructs that LLM input from internal helpers — `buildProjectedEdges`, `getNearestVisibleAncestorId`, `formatNodeBrief`, etc.
 
 `getMemoryGraphReadApi(store, context)` exposes the same data, topology, and recall primitives as a frozen, caller-safe API surface. The intended consumer is an agent-style plugin that wants to run its own LLM-driven recall — for example the orchestrator's `memory_scout` sub-agent — with whatever model / preset its operator prefers, against the exact same candidate pool and field projection the native router sees.
 
@@ -197,7 +197,7 @@ The read surface is strictly read-only:
 ```js
 import { getExtensionApi } from '/scripts/extensions.js';
 
-const session = await getExtensionApi('memory-graph')?.openSession?.(Luker.getContext());
+const session = await getExtensionApi('memory-graph')?.openSession?.(Taverncraft.getContext());
 if (!session) return;
 
 // Enumerate the visible candidate pool the native recall LLM sees.
@@ -805,7 +805,7 @@ The two LLM-input blocks that `chooseRecallRoute` constructs are `schema_overvie
 ```js
 import { getExtensionApi } from '/scripts/extensions.js';
 
-const api = await getExtensionApi('memory-graph')?.openSession?.(Luker.getContext());
+const api = await getExtensionApi('memory-graph')?.openSession?.(Taverncraft.getContext());
 if (!api) return;
 
 // schema_overview block (the LLM prompt segment that describes each node type).

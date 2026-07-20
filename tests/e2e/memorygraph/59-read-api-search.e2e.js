@@ -165,7 +165,7 @@ test.describe('#59 — MG seeded corpus surfaces in real recall flow (real send)
         // the recall path picks from. The 10 imported nodes should all
         // be visible.
         const visible = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const mg = ctx.getExtensionApi?.('memory-graph');
             const session = await mg?.openSession?.(ctx);
             if (!session) return [];
@@ -188,7 +188,7 @@ test.describe('#59 — MG seeded corpus surfaces in real recall flow (real send)
 
         // Type filter — listVisibleCandidates({types}) should narrow.
         const characters = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const mg = ctx.getExtensionApi?.('memory-graph');
             const session = await mg?.openSession?.(ctx);
             const items = session ? session.listVisibleCandidates({ types: ['character_sheet'] }) : [];
@@ -198,7 +198,7 @@ test.describe('#59 — MG seeded corpus surfaces in real recall flow (real send)
 
         // Sanity check: keyword search hits an aliased character.
         const kwHits = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const mg = ctx.getExtensionApi?.('memory-graph');
             const session = await mg?.openSession?.(ctx);
             const results = session ? await session.keywordSearch({ query: 'drifter', k: 5 }) : [];

@@ -11,7 +11,7 @@
 核心 `Generate()` 流程在 LLM 載荷完全裝配完成、但還沒分派之前，會觸發 `event_types.GENERATE_TAKEOVER_DISPATCH`。訂閱方透過填入 `eventData.takeoverHandle` 宣告接管：
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 
 context.eventSource.on(context.eventTypes.GENERATE_TAKEOVER_DISPATCH, async (eventData) => {
     if (!shouldTakeover(eventData)) return;
@@ -191,5 +191,5 @@ interface MessageEditorHandle {
 | 層 | 存取方式 |
 |----|----------|
 | Layer 1 | `import { createMessageEditorHandle, GENERATE_TAKEOVER_DISPATCH, TakeoverError } from 'public/scripts/message-takeover.js'` |
-| `getContext()` | `Luker.getContext().createMessageEditorHandle(...)` + `Luker.getContext().eventTypes.GENERATE_TAKEOVER_DISPATCH` |
+| `getContext()` | `Taverncraft.getContext().createMessageEditorHandle(...)` + `Taverncraft.getContext().eventTypes.GENERATE_TAKEOVER_DISPATCH` |
 | 擴充 `ctx` | `ctx.lukerContext.createMessageEditorHandle(...)` + `ctx.lukerContext.eventTypes.GENERATE_TAKEOVER_DISPATCH` |

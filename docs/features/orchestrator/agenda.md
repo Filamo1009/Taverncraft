@@ -125,7 +125,7 @@ The orchestration editor has **Copy Spec Agents to Agenda** / **Copy Agenda Agen
 
 ## Function Call Runtime dependency
 
-Agenda's Planner dispatch is implemented via OpenAI tool calls and depends on Luker's [Function Call Runtime](/improvements/function-call-runtime). That means:
+Agenda's Planner dispatch is implemented via OpenAI tool calls and depends on Taverncraft's [Function Call Runtime](/improvements/function-call-runtime). That means:
 
 - The Planner's connection profile must support function calling (OpenAI / Claude / Gemini all do)
 - Tool-call retry on failure is handled by Function Call Runtime (see that page for details)

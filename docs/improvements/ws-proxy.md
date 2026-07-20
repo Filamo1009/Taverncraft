@@ -1,6 +1,6 @@
 # WebSocket Proxy
 
-Luker provides a WebSocket (WS) proxy feature that transmits AI generation requests through a persistent WebSocket tunnel, replacing the traditional HTTP request approach. This is especially useful in environments with unstable or restricted networks.
+Taverncraft provides a WebSocket (WS) proxy feature that transmits AI generation requests through a persistent WebSocket tunnel, replacing the traditional HTTP request approach. This is especially useful in environments with unstable or restricted networks.
 
 ## What is WS Proxy
 
@@ -149,15 +149,15 @@ Native browser `WebSocket` does not let JavaScript set HTTP headers, so the upgr
 The following scenarios are particularly suitable for using the WS proxy:
 
 - **Mobile device usage** — Maintaining uninterrupted generation when switching between networks (Wi-Fi ↔ cellular)
-- **Remote server deployment** — Accessing Luker deployed on a remote server through an unstable network
+- **Remote server deployment** — Accessing Taverncraft deployed on a remote server through an unstable network
 - **Long text generation** — Reducing failures caused by timeouts when generating longer responses
 - **Enterprise network environments** — Bypassing network devices that may interfere with long connections
 
 ::: tip
-The WS proxy is Luker's internal transport optimization, transparent to users — you don't need any additional configuration, Luker will automatically use it when appropriate.
+The WS proxy is Taverncraft's internal transport optimization, transparent to users — you don't need any additional configuration, Taverncraft will automatically use it when appropriate.
 :::
 
 ## Related Pages
 
 - [Performance Optimization](/improvements/performance) — Other performance improvements
-- [Generation Layer](/improvements/generation-layer) — Luker's unified generation architecture
+- [Generation Layer](/improvements/generation-layer) — Taverncraft's unified generation architecture

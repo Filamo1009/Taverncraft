@@ -15,7 +15,7 @@ export const ENGINE_DUMP_ENTRY = '_engine_dump.bin';
 /**
  * Reserved handle prefix the cross-mode restore orchestrator uses for the
  * transient source engine's scratch handle. The leading underscore
- * guarantees no collision with real user handles (Luker handle validation
+ * guarantees no collision with real user handles (Taverncraft handle validation
  * rejects names beginning with `_` or `.`).
  *
  * Used in three places that MUST agree on the same prefix:

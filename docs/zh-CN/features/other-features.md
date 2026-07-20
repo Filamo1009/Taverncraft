@@ -1,10 +1,10 @@
 # 其他功能
 
-本页列出 Luker 中其他用户可见的独有功能。这些功能虽然规模较小，但在日常使用中能显著提升体验。
+本页列出 Taverncraft 中其他用户可见的独有功能。这些功能虽然规模较小，但在日常使用中能显著提升体验。
 
 ## 世界书激活链路追踪
 
-Luker 会记录世界书条目从匹配到注入的完整链路，帮助你调试复杂的世界书配置。详见[世界书激活链路追踪](/zh-CN/features/world-info-trace)。
+Taverncraft 会记录世界书条目从匹配到注入的完整链路，帮助你调试复杂的世界书配置。详见[世界书激活链路追踪](/zh-CN/features/world-info-trace)。
 
 ## 聊天人设锁定（Chat Persona Lock）
 
@@ -22,7 +22,7 @@ Luker 会记录世界书条目从匹配到注入的完整链路，帮助你调�
 
 ## 图像生成增强
 
-Luker 对图像生成的改进为 ComfyUI WebSocket 连接支持——使用 WebSocket 替代频繁的 HTTP 轮询端点与 ComfyUI 通信，提升生成效率和实时性，支持智能回退和断线重连重试。
+Taverncraft 对图像生成的改进为 ComfyUI WebSocket 连接支持——使用 WebSocket 替代频繁的 HTTP 轮询端点与 ComfyUI 通信，提升生成效率和实时性，支持智能回退和断线重连重试。
 
 
 ## 插件注册正则

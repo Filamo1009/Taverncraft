@@ -1,18 +1,18 @@
 # 後端外掛開發
 
-Luker 的外掛系統不僅支援執行在瀏覽器中的前端擴展，還支援執行在 Node.js 伺服端的後端外掛（Server Plugin）。後端外掛可以存取檔案系統、呼叫 Node.js 原生模組、代理外部 API 請求——這些是前端擴展無法做到的事情。
+Taverncraft 的外掛系統不僅支援執行在瀏覽器中的前端擴展，還支援執行在 Node.js 伺服端的後端外掛（Server Plugin）。後端外掛可以存取檔案系統、呼叫 Node.js 原生模組、代理外部 API 請求——這些是前端擴展無法做到的事情。
 
-本文件面向希望為 Luker 開發後端外掛的開發者，涵蓋啟用方式、模組介面、路由註冊、安全注意事項和實戰範例。
+本文件面向希望為 Taverncraft 開發後端外掛的開發者，涵蓋啟用方式、模組介面、路由註冊、安全注意事項和實戰範例。
 
 ## 什麼是後端外掛
 
-後端外掛是執行在 Luker 伺服器行程中的 Node.js 模組。與前端擴展（執行在瀏覽器中，透過 `manifest.json` + `index.js` 注入 UI）不同，後端外掛：
+後端外掛是執行在 Taverncraft 伺服器行程中的 Node.js 模組。與前端擴展（執行在瀏覽器中，透過 `manifest.json` + `index.js` 注入 UI）不同，後端外掛：
 
 - 執行在伺服端，擁有完整的 Node.js 執行時能力
 - 透過 Express Router 註冊 API 端點，路由自動掛載到 `/api/plugins/{外掛ID}/` 路徑下
 - 可以直接讀寫檔案系統、使用 `crypto`、`child_process` 等 Node.js 內建模組
 - 可以安裝和使用 npm 套件
-- 沒有沙箱隔離，與 Luker 伺服器共享同一行程
+- 沒有沙箱隔離，與 Taverncraft 伺服器共享同一行程
 
 一個典型的後端外掛 + 前端擴展組合的工作流：前端擴展透過 `fetch` 呼叫後端外掛暴露的 API，後端外掛執行需要伺服端能力的操作（如檔案讀寫、API 代理），再將結果回傳給前端。
 
@@ -39,7 +39,7 @@ Luker 的外掛系統不僅支援執行在瀏覽器中的前端擴展，還支�
 enableServerPlugins: true
 ```
 
-修改後重啟 Luker 生效。外掛載入時會在控制台輸出日誌：
+修改後重啟 Taverncraft 生效。外掛載入時會在控制台輸出日誌：
 
 ```
 [Plugin Loader] Loaded plugin: My Plugin (my-plugin)
@@ -99,7 +99,7 @@ module.exports = { init, exit, info };
 ```
 
 > [!TIP]
-> 如果 Luker 的根 `package.json` 設定了 `"type": "module"`，CommonJS 外掛需要在外掛目錄下放置自己的 `package.json` 並設定 `"type": "commonjs"`，否則 Node.js 會將 `.js` 檔案當作 ESM 處理。
+> 如果 Taverncraft 的根 `package.json` 設定了 `"type": "module"`，CommonJS 外掛需要在外掛目錄下放置自己的 `package.json` 並設定 `"type": "commonjs"`，否則 Node.js 會將 `.js` 檔案當作 ESM 處理。
 
 **ESM**（使用 `export`）：
 
@@ -202,7 +202,7 @@ router.put('/data/:id', handler);
 
 ### 關鍵細節：同步註冊路由
 
-**路由必須在 `init` 函式的第一次 `await` 之前同步註冊完成。** Luker 的外掛載入器僅在 `router.stack.length > 0` 時才會將路由器掛載到應用上。如果路由註冊出現在非同步操作之後，可能導致路由器無法正確掛載。
+**路由必須在 `init` 函式的第一次 `await` 之前同步註冊完成。** Taverncraft 的外掛載入器僅在 `router.stack.length > 0` 時才會將路由器掛載到應用上。如果路由註冊出現在非同步操作之後，可能導致路由器無法正確掛載。
 
 ```js
 // ✅ 正確：路由在 await 之前註冊
@@ -247,7 +247,7 @@ export async function init(router) {
 ```
 
 > [!NOTE]
-> 後端外掛路由自動繼承 Luker 的鑑權中介軟體（Basic Auth、CSRF、requireLogin 等），無需在外掛中自行處理認證邏輯。外掛中的中介軟體只需關注外掛自身的業務邏輯即可。
+> 後端外掛路由自動繼承 Taverncraft 的鑑權中介軟體（Basic Auth、CSRF、requireLogin 等），無需在外掛中自行處理認證邏輯。外掛中的中介軟體只需關注外掛自身的業務邏輯即可。
 
 ## 外掛 ID 規則
 
@@ -273,18 +273,18 @@ id: 'my plugin'     // 包含空格
 
 ### 沒有沙箱
 
-後端外掛與 Luker 伺服器執行在同一個行程中，**沒有任何沙箱隔離**。外掛可以：
+後端外掛與 Taverncraft 伺服器執行在同一個行程中，**沒有任何沙箱隔離**。外掛可以：
 
 - 存取整個檔案系統
 - 呼叫 `child_process` 執行系統命令
-- 修改 Luker 的執行時狀態
+- 修改 Taverncraft 的執行時狀態
 - 存取其他外掛的資料
 
 因此，**只安裝你信任的外掛**。
 
 ### 路徑穿越防護
 
-Luker 的外掛載入器會偵測路徑穿越攻擊，防止外掛透過 `../../` 等方式逃逸 `plugins/` 目錄。但外掛自身的路由處理器中如果接受使用者輸入作為檔案路徑，仍需自行做路徑校驗：
+Taverncraft 的外掛載入器會偵測路徑穿越攻擊，防止外掛透過 `../../` 等方式逃逸 `plugins/` 目錄。但外掛自身的路由處理器中如果接受使用者輸入作為檔案路徑，仍需自行做路徑校驗：
 
 ```js
 import path from 'path';
@@ -383,11 +383,11 @@ res.status(500).json({ error: '描述錯誤原因的簡短文字' });
 
 ### 手動安裝
 
-將外掛檔案（或目錄）放入 `plugins/` 資料夾，然後重啟 Luker。
+將外掛檔案（或目錄）放入 `plugins/` 資料夾，然後重啟 Taverncraft。
 
 ### Git 自動更新
 
-如果外掛是從 Git 儲存庫克隆的，Luker 在啟動時會自動檢查更新。載入器使用 `simple-git`（如未安裝則回退到 `isomorphic-git`）執行 `git pull`，拉取最新的程式碼。
+如果外掛是從 Git 儲存庫克隆的，Taverncraft 在啟動時會自動檢查更新。載入器使用 `simple-git`（如未安裝則回退到 `isomorphic-git`）執行 `git pull`，拉取最新的程式碼。
 
 要啟用自動更新，確保外掛目錄是一個 Git 儲存庫，且 `config.yaml` 中 `enableServerPlugins` 為 `true`。
 
@@ -400,7 +400,7 @@ cd plugins/my-plugin
 npm install
 ```
 
-外掛可以引用 Luker 根目錄的 `node_modules` 中的套件，無需重複安裝。只有在 Luker 未安裝該相依時，才需要在外掛目錄下單獨安裝。
+外掛可以引用 Taverncraft 根目錄的 `node_modules` 中的套件，無需重複安裝。只有在 Taverncraft 未安裝該相依時，才需要在外掛目錄下單獨安裝。
 
 ## 實戰範例
 
@@ -430,7 +430,7 @@ export async function init(router) {
 }
 ```
 
-啟動 Luker 後，造訪 `/api/plugins/hello-world/hello` 即可看到回傳的 JSON 回應。
+啟動 Taverncraft 後，造訪 `/api/plugins/hello-world/hello` 即可看到回傳的 JSON 回應。
 
 ### API 代理外掛
 
@@ -594,4 +594,4 @@ async function queryLLM(messages) {
 
 - [前端外掛開發](/zh-TW/development/frontend-plugin) — 前端擴展開發指南
 - [Extension API 參考](/zh-TW/development/extension-api/) — 前端 API 完整列表
-- [貢獻指南](/zh-TW/development/contributing) — 如何向 Luker 提交程式碼
+- [貢獻指南](/zh-TW/development/contributing) — 如何向 Taverncraft 提交程式碼

@@ -73,7 +73,7 @@ test.describe('#101 — persona avatar upload persists to disk and is served', (
             fd.append('avatar', blob, 'source.png');
             fd.append('overwrite_name', overwriteName);
 
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const headers = ctx.getRequestHeaders();
             // Drop Content-Type so the browser fills in the multipart boundary.
             delete headers['Content-Type'];

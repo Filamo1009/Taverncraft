@@ -44,7 +44,7 @@ export async function selectPresetByName(page, name) {
         await new Promise(r => setTimeout(r, 50));
     }, name);
     await page.waitForFunction((target) => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         return ctx?.chatCompletionSettings?.preset_settings_openai === target;
     }, name, { timeout: 10_000 });
 }
@@ -83,7 +83,7 @@ export async function savePresetAsViaButton(page, name) {
     // event but doesn't await its async listener, so preset_settings_openai
     // can lag behind the dropdown's selected option by a few hundred ms.
     await page.waitForFunction((n) => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         return ctx?.chatCompletionSettings?.preset_settings_openai === n;
     }, name, { timeout: 10_000 });
 }

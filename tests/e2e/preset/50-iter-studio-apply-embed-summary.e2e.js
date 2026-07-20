@@ -91,7 +91,7 @@ test.afterAll(async () => {
 
 async function readCardBoundState(page) {
     return page.evaluate(() => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         const chid = ctx?.characterId ?? window.this_chid;
         const c = ctx?.characters?.[chid];
         const raw = c?.data?.extensions?.luker?.chat_completion_preset ?? null;
@@ -109,7 +109,7 @@ async function readCardBoundState(page) {
 
 async function readCharacterOrchestratorOverride(page) {
     return page.evaluate(() => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         const chid = ctx?.characterId ?? window.this_chid;
         const c = ctx?.characters?.[chid];
         return c?.data?.extensions?.orchestrator ?? null;
@@ -304,7 +304,7 @@ test.describe('#50 — iter-studio Apply to Character embed-summary popup', () =
         // Embed-all button in the popup would drive, so this seeds the
         // card exactly as production would.
         await page.evaluate(async ({ name, temperature }) => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             const chid = ctx?.characterId ?? window.this_chid;
             const character = ctx?.characters?.[chid];
             const body = ctx.getPresetManager('openai').getStoredPreset(name)

@@ -21,7 +21,7 @@ The whole setup is just 2 rounds of natural-language conversation — Studio pro
 
 ## Prerequisites
 
-- A working Luker instance
+- A working Taverncraft instance
 - A configured LLM API; a tool-use-strong model (Claude / GPT-5 etc.) is recommended — Studio's tool flow leans on the model being willing to call tools
 - The Character Editor Assistant section has "Model request LLM preset" / "Model request API preset" options; that's what Studio uses for its own AI calls
 

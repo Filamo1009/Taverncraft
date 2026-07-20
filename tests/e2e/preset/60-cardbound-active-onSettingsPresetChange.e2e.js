@@ -10,7 +10,7 @@
 // REAL USER-GESTURE flow:
 //   1. Seed a card with one embedded card-bound preset (default set → auto-
 //      applies on card selection, so the ghost option is DOM-selected).
-//   2. Load Luker; select the card via the visible list.
+//   2. Load Taverncraft; select the card via the visible list.
 //   3. Assert (a): ghost option is selected AND
 //                  window.__characterBoundPresetState.active === true AND
 //                  previousPreset is non-empty (was stashed from the initial

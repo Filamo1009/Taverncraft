@@ -163,14 +163,14 @@ async function enterAudio() {
     if ('mediaSession' in navigator) {
         try {
             navigator.mediaSession.metadata = new MediaMetadata({
-                title: 'Luker',
+                title: 'Taverncraft',
                 artist: 'Background keep-alive',
             });
             navigator.mediaSession.setActionHandler('play',  () => audioEl?.play().catch(() => {}));
             navigator.mediaSession.setActionHandler('pause', () => audioEl?.play().catch(() => {}));
             navigator.mediaSession.playbackState = 'playing';
         } catch (error) {
-            console.warn('[Luker] MediaSession setup failed', error);
+            console.warn('[Taverncraft] MediaSession setup failed', error);
         }
     }
 }
@@ -306,7 +306,7 @@ export async function setKeepAliveMode(desired) {
         try {
             window.LukerAndroid.setBackgroundKeepAliveEnabled(false);
         } catch (error) {
-            console.warn('[Luker] Failed to disable Android background keep-alive', error);
+            console.warn('[Taverncraft] Failed to disable Android background keep-alive', error);
         }
     }
 
@@ -331,7 +331,7 @@ export async function setKeepAliveMode(desired) {
             activeMode = 'android';
             return 'android';
         } catch (error) {
-            console.warn('[Luker] Failed to enable Android background keep-alive', error);
+            console.warn('[Taverncraft] Failed to enable Android background keep-alive', error);
             activeMode = 'off';
             return 'off';
         }
@@ -348,7 +348,7 @@ export async function setKeepAliveMode(desired) {
             attachPageLifecycleListeners();
             return 'pip';
         } catch (error) {
-            console.warn('[Luker] Failed to enter PiP for keep-alive', error);
+            console.warn('[Taverncraft] Failed to enter PiP for keep-alive', error);
             detachPipListeners();
             activeMode = 'off';
             throw error;
@@ -366,7 +366,7 @@ export async function setKeepAliveMode(desired) {
             attachPageLifecycleListeners();
             return 'audio';
         } catch (error) {
-            console.warn('[Luker] Failed to enter audio keep-alive', error);
+            console.warn('[Taverncraft] Failed to enter audio keep-alive', error);
             try { await exitAudio(); } catch (_) { /* noop */ }
             activeMode = 'off';
             throw error;

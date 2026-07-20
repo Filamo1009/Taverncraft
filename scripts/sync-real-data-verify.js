@@ -2,7 +2,7 @@
 /**
  * Manual real-data verification.
  *
- * Drives two real Luker servers on loopback (real http.Server listeners,
+ * Drives two real Taverncraft servers on loopback (real http.Server listeners,
  * real Express stack, real sync router) against a copy of the
  * developer's real `data/default-user` (219 MB / 1004 files) and a
  * fresh empty test data root. Validates every acceptance

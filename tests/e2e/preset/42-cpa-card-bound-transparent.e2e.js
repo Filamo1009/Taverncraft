@@ -146,7 +146,7 @@ test.describe('#42 — CPA iter-studio on card-bound preset: opens, iterates, Ap
         // to APPLIED_TEMPERATURE. Runtime state is the ground truth here
         // (CPA calls saveOpenAIPreset which writes both runtime + disk).
         const globalBodyTemperature = await page.evaluate((n) => {
-            const openai = window.Luker?.getContext?.()?.openai;
+            const openai = window.Taverncraft?.getContext?.()?.openai;
             const settings = openai?.settings;
             const names = openai?.settingNames;
             if (!Array.isArray(settings) || !names) return null;

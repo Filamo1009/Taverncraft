@@ -1,26 +1,26 @@
-# What is Luker
+# What is Taverncraft
 
-Luker is a deeply refactored roleplay chat platform based on [SillyTavern](https://github.com/SillyTavern/SillyTavern). It retains SillyTavern's mature character card ecosystem and data format compatibility while introducing extensive innovations in data transfer architecture, extensibility, and built-in tooling to deliver a more efficient and powerful roleplay experience.
+Taverncraft is a deeply refactored world-simulation and roleplay platform based on [Luker](https://github.com/funnycups/Luker), which is derived from [SillyTavern](https://github.com/SillyTavern/SillyTavern). It retains SillyTavern's mature character card ecosystem and data format compatibility while introducing extensive innovations in authoritative world state, data transfer architecture, extensibility, and built-in tooling.
 
-Luker is fully compatible with SillyTavern data — character cards, world info, and presets can be used directly with zero migration cost. If you decide to stop using Luker, you can downgrade back to SillyTavern at any time without data loss.
+Taverncraft is fully compatible with SillyTavern data — character cards, world info, and presets can be used directly with zero migration cost. If you decide to stop using Taverncraft, you can downgrade back to SillyTavern at any time without data loss.
 
-## Why Luker
+## Why Taverncraft
 
-SillyTavern is an excellent roleplay frontend with an active community and a rich character card ecosystem. Building on that foundation, Luker introduces systematic improvements in the following areas:
+SillyTavern is an excellent roleplay frontend with an active community and a rich character card ecosystem. Building on that foundation, Taverncraft introduces systematic improvements in the following areas:
 
 ### More Efficient Data Transfer
 
 Most save operations in SillyTavern use full-payload transfers — every message edit, settings toggle, or world info change sends the complete data to the backend. For cloud-deployed users, this means significant bandwidth consumption.
 
-Luker introduces an incremental sync mechanism that uniformly uses patch endpoints compliant with the [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902) standard. Toggling a plugin setting that previously transferred 3 MB of data now takes less than 200 bytes. Save operations also support debounced triggering and conflict detection, fundamentally preventing data corruption caused by concurrent writes.
+Taverncraft introduces an incremental sync mechanism that uniformly uses patch endpoints compliant with the [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902) standard. Toggling a plugin setting that previously transferred 3 MB of data now takes less than 200 bytes. Save operations also support debounced triggering and conflict detection, fundamentally preventing data corruption caused by concurrent writes.
 
 ### Stronger Extensibility
 
-Luker provides richer infrastructure for plugin developers: character/preset state APIs, managed regex providers, unified extension injection settings, a function call runtime, and more. Plugins can conveniently reuse the user's existing API and chat completion presets without redundant configuration.
+Taverncraft provides richer infrastructure for plugin developers: character/preset state APIs, managed regex providers, unified extension injection settings, a function call runtime, and more. Plugins can conveniently reuse the user's existing API and chat completion presets without redundant configuration.
 
 ### Built-in Professional Tooling
 
-Luker ships with several professional tools designed for roleplay scenarios — Memory Graph, multi-agent orchestration, character card editing assistant, search plugins, and more — all ready to use out of the box without installing third-party extensions.
+Taverncraft ships with several professional tools designed for roleplay scenarios — Memory Graph, multi-agent orchestration, character card editing assistant, search plugins, and more — all ready to use out of the box without installing third-party extensions.
 
 ## Core Features Overview
 
@@ -50,7 +50,7 @@ Provides web search capabilities for AI, supporting search engine backends like 
 
 ### Preset Decoupling
 
-In SillyTavern, API presets and chat completion presets are switched together. Luker decouples them — switching API connections no longer changes the chat completion preset, allowing you to freely mix and match different LLM backends with different prompt presets.
+In SillyTavern, API presets and chat completion presets are switched together. Taverncraft decouples them — switching API connections no longer changes the chat completion preset, allowing you to freely mix and match different LLM backends with different prompt presets.
 
 ### Incremental Sync
 
@@ -84,12 +84,12 @@ A per-user generation request diagnostic tool that can trace request details for
 Supports GitHub / Discord OAuth login. Administrators can configure storage quotas for each user. Discord login can additionally require users to be members of a specific server or hold specific roles.
 
 ::: tip More Features
-Luker includes many other improvements: Undo Toast system, Chat Persona Lock, dynamic model lists, World Info activation chain tracing, preset-associated world info, extensive mobile / Android optimizations, startup performance improvements, and more. These features are covered in detail on their respective pages.
+Taverncraft includes many other improvements: Undo Toast system, Chat Persona Lock, dynamic model lists, World Info activation chain tracing, preset-associated world info, extensive mobile / Android optimizations, startup performance improvements, and more. These features are covered in detail on their respective pages.
 :::
 
 ## Compatibility
 
-Luker maintains full data format compatibility with SillyTavern:
+Taverncraft maintains full data format compatibility with SillyTavern:
 
 | Data Type | Compatibility |
 |---------|--------|
@@ -101,11 +101,11 @@ Luker maintains full data format compatibility with SillyTavern:
 | User Settings | ✅ Fully compatible |
 
 ::: info Bidirectional Migration
-You can migrate from SillyTavern to Luker at any time, and vice versa. Data generated by Luker-exclusive features (such as Memory Graph, orchestration configs, etc.) is stored in separate state files and won't affect SillyTavern's core data structures. However, it's still recommended to back up your data before migrating.
+You can migrate from SillyTavern to Taverncraft at any time, and vice versa. Data generated by Taverncraft-exclusive features (such as Memory Graph, orchestration configs, etc.) is stored in separate state files and won't affect SillyTavern's core data structures. However, it's still recommended to back up your data before migrating.
 :::
 
 ## Next Steps
 
 Ready to get started?
 
-→ [Getting Started](/guide/getting-started) — Install and deploy Luker
+→ [Getting Started](/guide/getting-started) — Install and deploy Taverncraft

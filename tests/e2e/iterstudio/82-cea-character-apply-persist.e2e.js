@@ -56,7 +56,7 @@ test.describe('#82 — CEA character iter-studio Apply → description persists 
         await selectCharacterByName(page, 'Seraphina');
 
         const beforeAvatar = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.characters?.[ctx.characterId]?.avatar || '';
         });
         expect(beforeAvatar).toBeTruthy();
@@ -85,7 +85,7 @@ test.describe('#82 — CEA character iter-studio Apply → description persists 
         // In-memory: character now carries the new description.
         await expect.poll(async () => {
             return await page.evaluate(() => {
-                const ctx = window.Luker.getContext();
+                const ctx = window.Taverncraft.getContext();
                 const c = ctx.characters?.[ctx.characterId] || null;
                 return c?.data?.description || c?.description || '';
             });
@@ -93,7 +93,7 @@ test.describe('#82 — CEA character iter-studio Apply → description persists 
 
         // Disk-side check via API (proves the persistence path).
         const fromApi = await page.evaluate(async (avatar) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const resp = await fetch('/api/characters/get', {
                 method: 'POST',
                 headers: ctx.getRequestHeaders(),

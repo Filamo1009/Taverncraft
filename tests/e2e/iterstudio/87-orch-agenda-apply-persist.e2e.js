@@ -82,7 +82,7 @@ test.describe('#87 — Orchestrator iter-studio AGENDA mode Apply persists acros
 
         await expect.poll(async () => {
             return await page.evaluate(() => {
-                const ctx = window.Luker.getContext();
+                const ctx = window.Taverncraft.getContext();
                 const s = ctx.extensionSettings.orchestrator;
                 const activeId = s?.activePresetIds?.agenda || '';
                 return s?.presetLibraries?.agenda?.[activeId]?.planner?.systemPrompt || '';
@@ -99,7 +99,7 @@ test.describe('#87 — Orchestrator iter-studio AGENDA mode Apply persists acros
         expect(afterRestart.planner?.systemPrompt).toBe(NEW_PLANNER_PROMPT);
 
         const inMem = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const s = ctx.extensionSettings.orchestrator;
             const activeId = s?.activePresetIds?.agenda || '';
             return s?.presetLibraries?.agenda?.[activeId]?.planner?.systemPrompt || '';

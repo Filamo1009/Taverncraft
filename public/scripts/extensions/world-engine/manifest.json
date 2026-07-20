@@ -1,0 +1,9 @@
+{
+    "display_name": "World Engine",
+    "loading_order": 112,
+    "js": "index.js",
+    "css": "style.css",
+    "author": "Taverncraft World Engine",
+    "version": "0.1.0",
+    "homePage": "https://github.com/Filamo1009/Taverncraft"
+}

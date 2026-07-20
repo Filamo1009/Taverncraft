@@ -9,7 +9,7 @@ The current entry point is `SlashCommandParser.addCommandObject()`, accepting a 
 ### Basic registration
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 ctx.SlashCommandParser.addCommandObject(ctx.SlashCommand.fromProps({
     name: 'mygreet',
@@ -233,7 +233,7 @@ Legacy registration helper. Migrate to `SlashCommandParser.addCommandObject(Slas
 ## Example: registering a command, then calling it programmatically
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 // Register
 ctx.SlashCommandParser.addCommandObject(ctx.SlashCommand.fromProps({

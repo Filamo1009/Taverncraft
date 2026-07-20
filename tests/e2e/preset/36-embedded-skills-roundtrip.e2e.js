@@ -141,14 +141,14 @@ async function installSkillInPresetScope(page, presetName, skillName, bodyAnchor
         }],
     };
     await page.evaluate(async ({ scope, payload }) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         await ctx.skills.executeExtractEmbed({ payload, targetScope: scope, conflictStrategies: {} });
     }, { scope: { kind: 'preset', name: presetName }, payload });
 }
 
 async function listSkillsInPresetScope(page, presetName) {
     return page.evaluate(async ({ scope }) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const list = await ctx.skills.list({ scope });
         return (list || []).map(s => s.name);
     }, { scope: { kind: 'preset', name: presetName } });
@@ -163,7 +163,7 @@ test.describe('#36 — preset with embedded skills round-trips (real UI)', () =>
         // OAI_PRESET_EXPORT_READY listener — without it, the export click
         // skips the skill-bundling popup and writes a stripped preset.
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             // The listener registration is guarded behind `eventTypes` and
             // mounted inside `jQuery(() => { ... })`. Once that block runs,
             // `extension_settings.orchestrator` is hydrated by `ensureSettings`.

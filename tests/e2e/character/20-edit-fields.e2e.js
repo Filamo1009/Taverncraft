@@ -59,7 +59,7 @@ test.describe('#20 — Edit existing character fields via UI', () => {
         // /api/characters/edit round-trip has actually completed before
         // restarting — no need to poke any internal save function.
         const editedPromise = page.evaluate(() => new Promise((resolve, reject) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const t = setTimeout(() => reject(new Error('character edit timeout')), 30_000);
             const off = ctx.eventSource.on(ctx.eventTypes.CHARACTER_EDITED, () => {
                 clearTimeout(t);

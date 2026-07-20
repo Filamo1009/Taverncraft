@@ -88,7 +88,7 @@ test.describe('#88 — Orchestrator iter-studio SPEC mode Apply persists across 
 
         await expect.poll(async () => {
             return await page.evaluate((presetId) => {
-                const ctx = window.Luker.getContext();
+                const ctx = window.Taverncraft.getContext();
                 const s = ctx.extensionSettings.orchestrator;
                 const activeId = s?.activePresetIds?.spec || '';
                 return s?.presetLibraries?.spec?.[activeId]?.presets?.[presetId]?.systemPrompt || '';
@@ -105,7 +105,7 @@ test.describe('#88 — Orchestrator iter-studio SPEC mode Apply persists across 
         expect(afterRestart.presets?.[PRESET_ID]?.systemPrompt).toBe(NEW_PRESET_SYSTEM_PROMPT);
 
         const inMem = await page.evaluate((presetId) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const s = ctx.extensionSettings.orchestrator;
             const activeId = s?.activePresetIds?.spec || '';
             return s?.presetLibraries?.spec?.[activeId]?.presets?.[presetId]?.systemPrompt || '';

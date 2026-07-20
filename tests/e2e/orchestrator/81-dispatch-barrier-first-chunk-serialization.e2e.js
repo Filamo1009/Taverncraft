@@ -146,7 +146,7 @@ async function runFanOutTurn(page, { agentApiPresetName }) {
     // pass trivially with `streamEnabled=false, barrierKey=''` and
     // hide any barrier regressions.
     await page.evaluate(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         if (ctx?.chatCompletionSettings) ctx.chatCompletionSettings.stream_openai = true;
     });
 

@@ -11,17 +11,17 @@ A preset is a saved set of configurations containing two major categories of inf
 
 You can create multiple presets and quickly switch between them for different use cases. For example, one preset for serious narrative writing and another for casual everyday conversation.
 
-## Luker's Preset Decoupling
+## Taverncraft's Preset Decoupling
 
-This is one of Luker's most important improvements over SillyTavern.
+This is one of Taverncraft's most important improvements over SillyTavern.
 
 ### The Problem
 
 In SillyTavern, "API connection settings" and "chat completion presets" are **coupled** together. Switching presets also changes the API address, key, model selection, and other connection parameters. This means if you want to switch prompt sets while keeping the same API, or switch APIs while keeping the same prompts, it's quite inconvenient.
 
-### Luker's Approach
+### Taverncraft's Approach
 
-Luker splits presets into two independent concepts:
+Taverncraft splits presets into two independent concepts:
 
 - **Connection Profile**: Manages API address, key, model selection, proxy, and other connection parameters
 - **Chat Completion Preset**: Manages prompt content, arrangement order, and sampling parameters
@@ -31,7 +31,7 @@ The two can be **freely combined**. You can use the same API connection with dif
 For detailed information, see [Preset Decoupling](/improvements/preset-decoupling).
 
 ::: tip
-If you're migrating from SillyTavern to Luker, your existing presets will be automatically adapted. Connection-related fields are separated into connection profiles, and presets retain only generation-related settings.
+If you're migrating from SillyTavern to Taverncraft, your existing presets will be automatically adapted. Connection-related fields are separated into connection profiles, and presets retain only generation-related settings.
 :::
 
 ## Prompt Manager
@@ -66,7 +66,7 @@ Each entry shows a token count and an enable/disable toggle on the right. Entrie
 
 ### Prompt Groups
 
-Luker adds a prompt grouping feature. You can organize multiple related prompt entries into a named group, displayed as a collapsible section in the interface. This effectively reduces visual clutter when you have many prompt entries.
+Taverncraft adds a prompt grouping feature. You can organize multiple related prompt entries into a named group, displayed as a collapsible section in the interface. This effectively reduces visual clutter when you have many prompt entries.
 
 ## Sampling Parameters
 
@@ -82,7 +82,7 @@ Sampling parameters control the AI's text generation behavior:
 | **Presence Penalty** | Encourages the AI to use new words and topics |
 
 ::: info
-Different API providers support different parameters. Luker automatically displays available parameters based on the currently connected API. Additionally, Claude does not support custom temperature parameters in Extended Thinking mode.
+Different API providers support different parameters. Taverncraft automatically displays available parameters based on the currently connected API. Additionally, Claude does not support custom temperature parameters in Extended Thinking mode.
 :::
 
 ## Preset Import, Export, and Sharing
@@ -97,11 +97,11 @@ Import presets from JSON files. Imported presets appear in the preset list for s
 
 ### Preset Groups
 
-Luker supports organizing presets into named groups, displayed as groups in the dropdown selector. When you've accumulated many presets, grouping helps you quickly find the one you need.
+Taverncraft supports organizing presets into named groups, displayed as groups in the dropdown selector. When you've accumulated many presets, grouping helps you quickly find the one you need.
 
 ## Card-Bound Presets
 
-Character cards can bind one or more dedicated chat completion presets. When you open a chat with a character that carries embedded presets, Luker adds a **Card-bound** group to the top of the preset selector listing every preset the card ships with, and auto-selects the card's default.
+Character cards can bind one or more dedicated chat completion presets. When you open a chat with a character that carries embedded presets, Taverncraft adds a **Card-bound** group to the top of the preset selector listing every preset the card ships with, and auto-selects the card's default.
 
 Card-bound presets are runtime-only — they don't appear in your global preset list, don't overwrite same-named local presets, and are removed from the selector when you leave the character. When exporting a character card, the embedded preset set travels with it.
 
@@ -111,13 +111,13 @@ See [Character Card Basics](/basics/character-cards) and [Card-Bound Presets and
 
 ## Preset-Associated World Info
 
-Luker supports associating World Info (Lorebook) with presets. When switching presets, the associated World Info is automatically activated — no manual switching needed. This is particularly useful when you have different preset + World Info combinations for different scenarios — for example, a roleplay preset associated with character lore, or a writing preset associated with writing guidelines.
+Taverncraft supports associating World Info (Lorebook) with presets. When switching presets, the associated World Info is automatically activated — no manual switching needed. This is particularly useful when you have different preset + World Info combinations for different scenarios — for example, a roleplay preset associated with character lore, or a writing preset associated with writing guidelines.
 
 See [Preset-Associated World Info](/improvements/preset-world-info) for details.
 
 ## Preset Completion Assistant
 
-Luker includes a built-in AI-powered **Preset Completion Assistant**. It not only helps you understand what each preset parameter means and provides tuning suggestions, but can also directly modify prompt entries in your preset — for example, optimizing system prompt wording or adjusting prompt structure and content. You can describe your needs through conversation, and it will generate modification suggestions displayed as diffs for you to approve item by item.
+Taverncraft includes a built-in AI-powered **Preset Completion Assistant**. It not only helps you understand what each preset parameter means and provides tuning suggestions, but can also directly modify prompt entries in your preset — for example, optimizing system prompt wording or adjusting prompt structure and content. You can describe your needs through conversation, and it will generate modification suggestions displayed as diffs for you to approve item by item.
 
 See [Preset Completion Assistant](/features/preset-assistant) for details.
 

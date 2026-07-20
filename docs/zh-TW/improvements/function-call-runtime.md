@@ -1,6 +1,6 @@
 # 函數呼叫執行時
 
-Luker 內建了統一的函數呼叫（Function Calling）執行時，讓 AI 角色能夠執行結構化的操作——搜尋資訊、管理記憶、操作狀態——而不僅僅是生成文字。無論底層模型是否原生支援 tool call，Luker 都提供一致的呼叫體驗。
+Taverncraft 內建了統一的函數呼叫（Function Calling）執行時，讓 AI 角色能夠執行結構化的操作——搜尋資訊、管理記憶、操作狀態——而不僅僅是生成文字。無論底層模型是否原生支援 tool call，Taverncraft 都提供一致的呼叫體驗。
 
 ## 統一的函數呼叫框架
 
@@ -47,7 +47,7 @@ TEXT.T_EXEC -> INJECT
 
 ## 原生模式
 
-當連線的模型原生支援 Function Calling 時（如 OpenAI、Claude、Gemini），Luker 使用模型的原生 tool call 格式。執行時會：
+當連線的模型原生支援 Function Calling 時（如 OpenAI、Claude、Gemini），Taverncraft 使用模型的原生 tool call 格式。執行時會：
 
 1. 將註冊的工具轉換為模型要求的 schema 格式
 2. 在請求中附加工具定義
@@ -59,7 +59,7 @@ TEXT.T_EXEC -> INJECT
 
 ## 純文字模式
 
-對於不支援原生 Function Calling 的模型，Luker 提供了純文字協議作為降級方案。執行時會在 System Prompt 中自動注入工具使用說明，引導模型以特定的文字格式輸出工具呼叫請求。
+對於不支援原生 Function Calling 的模型，Taverncraft 提供了純文字協議作為降級方案。執行時會在 System Prompt 中自動注入工具使用說明，引導模型以特定的文字格式輸出工具呼叫請求。
 
 純文字模式的工作流程：
 

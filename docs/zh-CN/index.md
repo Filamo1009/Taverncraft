@@ -2,16 +2,16 @@
 layout: home
 
 hero:
-  name: Luker
-  text: 下一代角色扮演聊天平台
-  tagline: 基于 SillyTavern 深度重构，融合知识图谱记忆、多Agent编排、AI辅助角色创作等前沿技术
+  name: Taverncraft 酒馆工坊
+  text: 世界模拟与互动叙事引擎
+  tagline: 基于 Luker 内核并兼容 SillyTavern 生态，融合权威世界状态、长期记忆、提示词检查和可扩展 Mod 运行时
   actions:
     - theme: brand
       text: 快速开始
       link: /zh-CN/guide/getting-started
     - theme: alt
       text: GitHub
-      link: https://github.com/funnycups/Luker
+      link: https://github.com/Filamo1009/Taverncraft
 
 features:
   - icon: 🧠

@@ -60,14 +60,14 @@ test.describe('#15 — merge two chats via Past Chats Merge UI', () => {
         await page.waitForFunction(() => document.querySelectorAll('#chat .mes').length >= 1, { timeout: 10_000 }).catch(() => {});
 
         // Chat A: greeting + 2 user/assistant turns.
-        const chatAId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+        const chatAId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
         expect(chatAId).toBeTruthy();
         await sendMessageAndAwaitReply(page, 'Turn A1: do you hear that wind?');
         await sendMessageAndAwaitReply(page, 'Turn A2: how long this watch?');
 
         // Chat B via the real options dropdown → option_start_new_chat.
         await createNewChatViaUI(page);
-        const chatBId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+        const chatBId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
         expect(chatBId).toBeTruthy();
         expect(chatBId).not.toBe(chatAId);
         await sendMessageAndAwaitReply(page, 'Turn B1: any sign of the reef?');
@@ -86,7 +86,7 @@ test.describe('#15 — merge two chats via Past Chats Merge UI', () => {
         // expect(messageBubbles).toHaveCount(10) auto-retries until the
         // post-flip render lands, so no extra sleep is needed.
         await page.waitForFunction(
-            (id) => window.Luker.getContext().getCurrentChatId() === id,
+            (id) => window.Taverncraft.getContext().getCurrentChatId() === id,
             mergedName,
             { timeout: 15_000 },
         );
@@ -109,7 +109,7 @@ test.describe('#15 — merge two chats via Past Chats Merge UI', () => {
 
         // Disk side: source chats still present, merged file written.
         const avatarFolder = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.characters[ctx.characterId].avatar.replace(/\.png$/, '');
         });
         const chatsDir = resolve(server.dataRoot, 'default-user', 'chats', avatarFolder);

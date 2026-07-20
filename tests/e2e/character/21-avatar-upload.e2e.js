@@ -1,5 +1,5 @@
 // #21 — Avatar upload for the selected character via the real
-// #add_avatar_button file input (Luker bug: the shared
+// #add_avatar_button file input (Taverncraft bug: the shared
 // `uploadAvatarForSelected` helper in _lib/ui-character.js targets
 // #avatar_upload_file which is the PERSONA input, not the character
 // avatar input — see public/index.html:6111 vs :6292. Inlined here.)

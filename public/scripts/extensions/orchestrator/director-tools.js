@@ -77,7 +77,7 @@ async function loadSkillResolution() {
  * this module stays Jest-clean.
  */
 function resolveAgentApiPresetName(settings, agentConfig) {
-    const ctx = (typeof Luker !== 'undefined') ? Luker.getContext() : null;
+    const ctx = (typeof Taverncraft !== 'undefined') ? Taverncraft.getContext() : null;
     const character = ctx?.characters?.[ctx?.characterId] ?? null;
     const resolveByName = ctx?.character?.presets?.resolveByName;
     const resolved = resolveCardFirstPresetName({
@@ -96,7 +96,7 @@ function resolveAgentApiPresetName(settings, agentConfig) {
  * `resolveCardFirstPresetName`.
  */
 function resolveAgentPromptPresetName(settings, agentConfig) {
-    const ctx = (typeof Luker !== 'undefined') ? Luker.getContext() : null;
+    const ctx = (typeof Taverncraft !== 'undefined') ? Taverncraft.getContext() : null;
     const character = ctx?.characters?.[ctx?.characterId] ?? null;
     const resolveByName = ctx?.character?.presets?.resolveByName;
     const resolved = resolveCardFirstPresetName({

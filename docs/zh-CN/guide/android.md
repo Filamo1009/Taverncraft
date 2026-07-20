@@ -1,16 +1,16 @@
 # Android App
 
-Luker 提供了 Android APK 版本，让你可以直接在手机上运行 Luker，无需依赖云服务器或 Termux 等终端工具。
+Taverncraft 提供了 Android APK 版本，让你可以直接在手机上运行 Taverncraft，无需依赖云服务器或 Termux 等终端工具。
 
 ## 概述
 
-安装 APK 后，打开 App 即可直接显示完整的 Luker 界面，不需要另外使用浏览器访问地址。App 内置了完整的 Luker 服务端和前端，是一个独立运行的应用。
+安装 APK 后，打开 App 即可直接显示完整的 Taverncraft 界面，不需要另外使用浏览器访问地址。App 内置了完整的 Taverncraft 服务端和前端，是一个独立运行的应用。
 
 ## 下载方式
 
 前往 GitHub Releases 页面下载最新版 APK：
 
-👉 [https://github.com/funnycups/Luker/releases/latest](https://github.com/funnycups/Luker/releases/latest)
+👉 [https://github.com/Filamo1009/Taverncraft/releases/latest](https://github.com/Filamo1009/Taverncraft/releases/latest)
 
 下载 `.apk` 文件后，在手机上打开并按照系统提示完成安装。
 
@@ -20,10 +20,10 @@ Luker 提供了 Android APK 版本，让你可以直接在手机上运行 Luker�
 
 ## 使用方式
 
-安装完成后，打开 Luker App：
+安装完成后，打开 Taverncraft App：
 
-1. App 会自动启动内置的 Luker 服务
-2. 界面加载完成后，你会看到与桌面版完全相同的 Luker 界面
+1. App 会自动启动内置的 Taverncraft 服务
+2. 界面加载完成后，你会看到与桌面版完全相同的 Taverncraft 界面
 3. 配置 API 连接、导入角色卡、开始对话——所有操作与桌面版一致
 
 你不需要手动输入任何地址或端口，App 会自动处理一切。
@@ -36,7 +36,7 @@ Android 版本与桌面版在功能上基本一致，你可以使用所有核心
 
 ## 移动端适配优化
 
-Luker 针对移动端进行了多项适配优化：
+Taverncraft 针对移动端进行了多项适配优化：
 
 - **虚拟键盘处理** — 防止键盘弹出时界面异常跳动
 - **输入法兼容** — 正确处理中文等 IME 组合输入

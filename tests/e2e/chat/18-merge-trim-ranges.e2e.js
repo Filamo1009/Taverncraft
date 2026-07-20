@@ -62,7 +62,7 @@ test.describe('#18 — merge dialog per-segment trim slices each source', () => 
         const counts = [4, 3, 5];
         for (let i = 0; i < labels.length; i++) {
             if (i > 0) await createNewChatViaUI(page);
-            const id = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+            const id = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
             expect(id).toBeTruthy();
             ids.push(id);
             for (let j = 0; j < counts[i]; j++) {
@@ -100,14 +100,14 @@ test.describe('#18 — merge dialog per-segment trim slices each source', () => 
         const mergedName = 'merged-trimmed';
         await submitMergeDialog(page, dialog, mergedName);
         await page.waitForFunction(
-            (id) => window.Luker.getContext().getCurrentChatId() === id,
+            (id) => window.Taverncraft.getContext().getCurrentChatId() === id,
             mergedName,
             { timeout: 15_000 },
         );
 
         // Disk side: 1 header line + 15 body lines = 16 total.
         const avatarFolder = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.characters[ctx.characterId].avatar.replace(/\.png$/, '');
         });
         const mergedPath = resolve(server.dataRoot, 'default-user', 'chats', avatarFolder, `${mergedName}.jsonl`);

@@ -205,7 +205,7 @@ class EdgeTtsProvider {
 
     async throwIfModuleMissing() {
         if (!this.isPluginAvailable()) {
-            const message = 'Edge TTS Server plugin not loaded. Install it from https://github.com/SillyTavern/SillyTavern-EdgeTTS-Plugin and restart the Luker server.';
+            const message = 'Edge TTS Server plugin not loaded. Install it from https://github.com/SillyTavern/SillyTavern-EdgeTTS-Plugin and restart the Taverncraft server.';
             // toastr.error(message)
             throw new Error(message);
         }

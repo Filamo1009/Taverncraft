@@ -120,7 +120,7 @@ async function selectCharacterCard(page, name) {
     }
 
     // Dismiss any onboarding modal that might flash on first load.
-    const onboardingHeader = page.locator('.popup', { hasText: /Welcome to Luker|歡迎使用|欢迎使用/ }).first();
+    const onboardingHeader = page.locator('.popup', { hasText: /Welcome to Taverncraft|歡迎使用|欢迎使用/ }).first();
     if (await onboardingHeader.isVisible().catch(() => false)) {
         await page.locator('.popup .popup-button-cancel, .popup .popup-button-ok').first().click().catch(() => {});
     }
@@ -173,7 +173,7 @@ async function selectCharacterCard(page, name) {
 
     // Wait for ctx.characterId to point at the new selection.
     await page.waitForFunction((wantName) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const cid = Number(ctx.characterId);
         return Number.isFinite(cid) && ctx.characters[cid]?.name === wantName;
     }, name, { timeout: 10_000 });
@@ -223,24 +223,24 @@ test.describe('#100 — persona auto-switches with character + bindings persist'
 
         // ── Sanity: switch back to Char1 — persona auto-flips to A ──
         await selectCharacterCard(page, 'Char1Ash');
-        await page.waitForFunction(() => window.Luker.getContext().name1 === 'PersonaA', { timeout: 10_000 });
-        expect(await page.evaluate(() => window.Luker.getContext().name1)).toBe('PersonaA');
+        await page.waitForFunction(() => window.Taverncraft.getContext().name1 === 'PersonaA', { timeout: 10_000 });
+        expect(await page.evaluate(() => window.Taverncraft.getContext().name1)).toBe('PersonaA');
 
         // ── Switch to Char2 → auto-flip to B ──
         await selectCharacterCard(page, 'Char2Bryn');
-        await page.waitForFunction(() => window.Luker.getContext().name1 === 'PersonaB', { timeout: 10_000 });
-        expect(await page.evaluate(() => window.Luker.getContext().name1)).toBe('PersonaB');
+        await page.waitForFunction(() => window.Taverncraft.getContext().name1 === 'PersonaB', { timeout: 10_000 });
+        expect(await page.evaluate(() => window.Taverncraft.getContext().name1)).toBe('PersonaB');
 
         // ── Restart + reload — bindings persist ──
         await server.restart();
         await reloadAndAwait(page, server.baseURL);
 
         await selectCharacterCard(page, 'Char1Ash');
-        await page.waitForFunction(() => window.Luker.getContext().name1 === 'PersonaA', { timeout: 15_000 });
-        expect(await page.evaluate(() => window.Luker.getContext().name1)).toBe('PersonaA');
+        await page.waitForFunction(() => window.Taverncraft.getContext().name1 === 'PersonaA', { timeout: 15_000 });
+        expect(await page.evaluate(() => window.Taverncraft.getContext().name1)).toBe('PersonaA');
 
         await selectCharacterCard(page, 'Char2Bryn');
-        await page.waitForFunction(() => window.Luker.getContext().name1 === 'PersonaB', { timeout: 15_000 });
-        expect(await page.evaluate(() => window.Luker.getContext().name1)).toBe('PersonaB');
+        await page.waitForFunction(() => window.Taverncraft.getContext().name1 === 'PersonaB', { timeout: 15_000 });
+        expect(await page.evaluate(() => window.Taverncraft.getContext().name1)).toBe('PersonaB');
     });
 });

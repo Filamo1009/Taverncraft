@@ -9,7 +9,7 @@
 //   2. Preseed a colliding global preset with the same name but a distinct
 //      body (temperature=0.99). Asserts export does not silently substitute
 //      the global body for the card slot body.
-//   3. Load Luker → select the card → ghost auto-apply.
+//   3. Load Taverncraft → select the card → ghost auto-apply.
 //   4. Open AI Response Configuration drawer → click #export_button (real
 //      visible gesture) → capture the Playwright download event.
 //   5. Assert:
@@ -104,7 +104,7 @@ async function installFixtureSkillInPresetScope(page, presetName, skillName, bod
         }],
     };
     await page.evaluate(async ({ scope, payload }) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         await ctx.skills.executeExtractEmbed({ payload, targetScope: scope, conflictStrategies: {} });
     }, { scope: { kind: 'preset', name: presetName }, payload });
 }
@@ -168,7 +168,7 @@ test.describe('#51 — card-bound preset export uses slot body + slot name', () 
         // hydrate). Without it the popup never appears, assertion (c)
         // fails for the wrong reason.
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return !!ctx?.extensionSettings?.orchestrator;
         }, { timeout: 20_000 });
 

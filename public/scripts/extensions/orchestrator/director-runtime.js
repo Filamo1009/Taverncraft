@@ -35,7 +35,7 @@ import { resolveAgentToolFlags } from './persistence.js';
 // can import this module without first installing a SillyTavern global —
 // the loop body (`runMainAgentLoop`) and pure helpers do not need it.
 function getCreateMessageEditorHandle() {
-    return Luker.getContext().createMessageEditorHandle;
+    return Taverncraft.getContext().createMessageEditorHandle;
 }
 import {
     buildMainAgentToolSchemas,
@@ -87,7 +87,7 @@ async function loadSkillResolution() {
  * import it transitively.
  */
 function resolveAgentApiPresetName(settings, agentConfig) {
-    const ctx = (typeof Luker !== 'undefined') ? Luker.getContext() : null;
+    const ctx = (typeof Taverncraft !== 'undefined') ? Taverncraft.getContext() : null;
     const character = ctx?.characters?.[ctx?.characterId] ?? null;
     const resolveByName = ctx?.character?.presets?.resolveByName;
     const resolved = resolveCardFirstPresetName({
@@ -106,7 +106,7 @@ function resolveAgentApiPresetName(settings, agentConfig) {
  * `resolveCardFirstPresetName`.
  */
 function resolveAgentPromptPresetName(settings, agentConfig) {
-    const ctx = (typeof Luker !== 'undefined') ? Luker.getContext() : null;
+    const ctx = (typeof Taverncraft !== 'undefined') ? Taverncraft.getContext() : null;
     const character = ctx?.characters?.[ctx?.characterId] ?? null;
     const resolveByName = ctx?.character?.presets?.resolveByName;
     const resolved = resolveCardFirstPresetName({

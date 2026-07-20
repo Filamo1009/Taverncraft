@@ -1,4 +1,4 @@
-// #24 — Luker-only CardApp.replaceWorldBookEntries dynamic world book.
+// #24 — Taverncraft-only CardApp.replaceWorldBookEntries dynamic world book.
 //
 // Per memory `dynamic_worldbook_decision`, the team chose
 // `ctx.replaceWorldBookEntries` as the supported path for CardApps that
@@ -68,7 +68,7 @@ test.afterAll(async () => {
     await mock?.stop();
 });
 
-test.describe('#24 — CardApp.replaceWorldBookEntries (Luker-only dynamic world book)', () => {
+test.describe('#24 — CardApp.replaceWorldBookEntries (Taverncraft-only dynamic world book)', () => {
     test('replace wipes baseline + writes new entries; new entries surface in the WI editor; survives restart', async ({ page }) => {
         await awaitMainUI(page, server.baseURL);
 
@@ -92,7 +92,7 @@ test.describe('#24 — CardApp.replaceWorldBookEntries (Luker-only dynamic world
         //    ignored — that's the documented contract).
         const replaceResult = await page.evaluate(async ({ bookName, entries }) => {
             const mod = await import('/scripts/extensions/card-app/context.js');
-            const ctx0 = window.Luker.getContext();
+            const ctx0 = window.Taverncraft.getContext();
             const charId = String(ctx0.characterId);
             const container = document.createElement('div');
             const cardAppCtx = mod.buildContext(container, charId, {});

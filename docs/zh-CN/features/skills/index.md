@@ -2,7 +2,7 @@
 
 **Skill** 是一个紧凑、自包含的知识包，agent 可以按需读取。把每条写作规则、每条口吻约定、每份反八股清单全塞进一份巨型系统提示词里是常见痛点；Skill 让你把它们拆成命名的包，由 agent 在真正需要的时候去拉。
 
-Luker 的 Skill 格式与 [Anthropic Claude Skills](https://www.anthropic.com/news/skills) 兼容 —— 同样的 `SKILL.md` + frontmatter + 可选子文件结构 —— 所以 Claude Code 里写的 Skill 放进 Luker 能直接用，Luker 里写的 Skill 放进 Claude Code 也不用转换。
+Taverncraft 的 Skill 格式与 [Anthropic Claude Skills](https://www.anthropic.com/news/skills) 兼容 —— 同样的 `SKILL.md` + frontmatter + 可选子文件结构 —— 所以 Claude Code 里写的 Skill 放进 Taverncraft 能直接用，Taverncraft 里写的 Skill 放进 Claude Code 也不用转换。
 
 编排器自带的默认 director profile 就是建立在 Skill 之上的：一段极薄的主代理身份提示词 + 24 份出厂 Skill，agent 按名字读取。你也可以把自己的 profile 调成同样的样子。
 
@@ -32,7 +32,7 @@ name: director-anti-cliche-zh
 description: 叙事写作的反八股模式。
 license: MIT
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
   tags: [writing-rules, zh, director]
 ---
@@ -43,14 +43,14 @@ metadata:
 ```
 
 - `name` 和 `description` 是必需的。
-- `license` 和 `metadata.*` 是可选的，遵循 Anthropic 标准。Luker 不引入私有命名空间。
+- `license` 和 `metadata.*` 是可选的，遵循 Anthropic 标准。Taverncraft 不引入私有命名空间。
 - 正文就是「契约」—— agent 读取这个 Skill 时，正文就是它消费的内容。要写得直接、命令式；把「什么时候用」「怎么用」「优先使用哪些工具」等指导都放进正文。
 
 完整的写作手册见 [创作 Skill](/zh-CN/features/skills/authoring)。
 
 ## 三种作用域
 
-Skill 物理上存放在 `data/<user>/skills/<scope>/`。Luker 有三种作用域：
+Skill 物理上存放在 `data/<user>/skills/<scope>/`。Taverncraft 有三种作用域：
 
 | 作用域 | 存放位置 | 何时生效 | 用途 |
 |---|---|---|---|
@@ -95,7 +95,7 @@ user: "用户安装 / 自创" {
   fs: "data/<user>/skills/\n  global / preset / character" { style.fill: "#fffde7" }
 }
 
-bundled: "Luker 出厂自带" {
+bundled: "Taverncraft 出厂自带" {
   style.fill: "#fff3e0"
   pop: "default/skills/global/*\n（首次安装时落到 global 作用域）" { style.fill: "#fffde7" }
 }
@@ -140,7 +140,7 @@ agent 只能通过三个函数工具**读取**Skill，无法修改。这是有�
 
 ## 24 个出厂 Skill
 
-全新的 Luker 安装会把 `data/<user>/skills/global/` 填入 24 个出厂默认 Skill，全部由 director profile 原先的内联 prompt 拆解而来。它们分三类：
+全新的 Taverncraft 安装会把 `data/<user>/skills/global/` 填入 24 个出厂默认 Skill，全部由 director profile 原先的内联 prompt 拆解而来。它们分三类：
 
 - **共享类（5 个）**—— `director-anti-cliche-zh`、`director-character-voice-zh`、`director-no-meta-zh`、`director-output-discipline-zh`、`director-zh-style-baseline`。所有默认 director 子代理都可见。
 - **主代理类（2 个）**—— `director-turn-workflow-zh`、`director-dispatch-protocol-zh`。仅主代理可见。

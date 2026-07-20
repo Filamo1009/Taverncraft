@@ -1,6 +1,6 @@
 # 提示詞分組
 
-提示詞分組是 Luker 在 SillyTavern 原有 PromptManager 基礎上新增的組織功能。它允許使用者將多個提示詞條目歸入命名分組，在提示詞管理器的列表中以可折疊的分組形式展示，幫助管理複雜的提示詞結構。
+提示詞分組是 Taverncraft 在 SillyTavern 原有 PromptManager 基礎上新增的組織功能。它允許使用者將多個提示詞條目歸入命名分組，在提示詞管理器的列表中以可折疊的分組形式展示，幫助管理複雜的提示詞結構。
 
 ![提示詞分組](/images/presets/prompt-groups.png)
 

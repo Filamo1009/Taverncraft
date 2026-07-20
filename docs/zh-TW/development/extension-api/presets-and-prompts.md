@@ -312,7 +312,7 @@ resolveWorldInfoForMessages(
 
 ```js
 import { sendOpenAIRequest } from '../../../openai.js';
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 
 // 1. 解析世界書啟動結果
 const wi = await context.resolveWorldInfoForMessages(myCustomMessages, {
@@ -358,7 +358,7 @@ getActivePromptPresetEnvelope(options?: {
 - `mainApi` / `completionApi` —— 活躍的 API 識別碼
 - `presetRefs` —— 已解析的 completion / context / instruct / sysprompt / reasoning 預設名稱
 - `promptCore` —— 每個預設中提取出的 prompt 相關欄位
-- `promptLayout` —— 合併後的 Luker 排版（來自 `extensions.luker.prompt_layout`）
+- `promptLayout` —— 合併後的 Taverncraft 排版（來自 `extensions.luker.prompt_layout`）
 - `promptCatalog` —— `prompt.identifier` → `{ name, role, content, marker, systemPrompt }` 的映射
 - `characterCard` —— 當前角色欄位（當 `includeCharacterCard !== false` 時）
 
@@ -381,7 +381,7 @@ formatPromptPresetEnvelope(envelope?: object, options?: { label?: string }): str
 把信封格式化成 `[[LABEL]]\n<json>` 形式以嵌入到另一個 prompt 中（例如委派給需要對使用者 prompt 設定進行推理的 meta-LLM）。未提供時預設取當前信封。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const envelope = ctx.getActivePromptPresetEnvelope({ includeCharacterCard: true });
 const serialized = ctx.formatPromptPresetEnvelope(envelope);
 console.log(serialized);
@@ -427,7 +427,7 @@ updateReasoningUI(
 觸發某條訊息推理區塊的 UI 重新整理。可傳聊天索引、原始 DOM 元素或 JQuery 包裝物件。`reset: true` 會跳過讀取訊息當前的推理狀態——在 swipe 期間新推理還沒寫入時用得到。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const parsed = ctx.parseReasoningFromString(modelOutput);
 if (parsed) {
     console.log('Reasoning:', parsed.reasoning);
@@ -482,7 +482,7 @@ context.openai: {
 處理 chat completion 連線狀態的輔助集合。`proxies` 是使用者設定的反向代理實時清單；`ZAI_ENDPOINT` 列出已知的智譜 / Z.AI 端點 URL;`stripPresetConnectionFields` 回傳去掉連線相關欄位（API source、模型、proxy 等）的預設複本——匯出「不同使用者環境也能用」的預設時使用。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const portable = ctx.openai.stripPresetConnectionFields(preset);
 const json = JSON.stringify(portable, null, 2);
 ```

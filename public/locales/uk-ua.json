@@ -1288,9 +1288,9 @@
     "Example: username:password": "Приклад: ім'я користувача: пароль",
     "Important:": "Важливо:",
     "sd_auto_auth_warning_1": "запустіть SD Web UI за допомогою",
-    "sd_auto_auth_warning_2": "прапор! Сервер має бути доступним із хост-машини Luker.",
+    "sd_auto_auth_warning_2": "прапор! Сервер має бути доступним із хост-машини Taverncraft.",
     "sd_drawthings_url": "Приклад: {{drawthings_url}}",
-    "sd_drawthings_auth_txt": "запустіть програму DrawThings із увімкненим перемикачем HTTP API в інтерфейсі користувача! Сервер має бути доступним із хост-машини Luker.",
+    "sd_drawthings_auth_txt": "запустіть програму DrawThings із увімкненим перемикачем HTTP API в інтерфейсі користувача! Сервер має бути доступним із хост-машини Taverncraft.",
     "sd_vlad_url": "Приклад: {{vlad_url}}",
     "The server must be accessible from the SillyTavern host machine.": "Сервер має бути доступним із хост-машини SillyTavern.",
     "Hint: Save an API key in AI Horde API settings to use it here.": "Підказка: збережіть ключ API в налаштуваннях AI Horde API, щоб використовувати його тут.",
@@ -1453,10 +1453,10 @@
     "Loading chat…": "Завантаження чату…",
     "Bulk Delete": "Масове видалення",
     "Deleting ${0} character(s)…": "Видалення ${0} персонажа(ів)…",
-    "Welcome to Luker!": "Ласкаво просимо до Luker!",
-    "Luker is aimed at advanced users.": "Luker орієнтована на досвідчених користувачів.",
-    "The server must be accessible from the Luker host machine.": "Сервер має бути доступним із хост-машини Luker.",
-    "To enable multi-account features, restart the Luker server with": "Щоб увімкнути функції кількох облікових записів, перезапустіть сервер Luker за допомогою",
-    "Luker Documentation Site": "Сайт документації Luker",
-    "Join the Luker Discord": "Приєднуйтесь до Luker Discord"
+    "Welcome to Taverncraft!": "Ласкаво просимо до Taverncraft!",
+    "Taverncraft is aimed at advanced users.": "Taverncraft орієнтована на досвідчених користувачів.",
+    "The server must be accessible from the Taverncraft host machine.": "Сервер має бути доступним із хост-машини Taverncraft.",
+    "To enable multi-account features, restart the Taverncraft server with": "Щоб увімкнути функції кількох облікових записів, перезапустіть сервер Taverncraft за допомогою",
+    "Taverncraft Documentation Site": "Сайт документації Taverncraft",
+    "Join the Taverncraft Discord": "Приєднуйтесь до Taverncraft Discord"
 }

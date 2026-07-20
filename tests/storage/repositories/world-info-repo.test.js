@@ -171,7 +171,7 @@ describe('WorldInfoRepo + normalizeWorldInfoFile — read-time repair (FS only)'
         sparse[66] = { uid: 66, content: 'survivor' };
         // Bypass `repo.save` (it rejects array `entries`) to mimic legacy disk
         // state. Writing through the raw FS keeps the test honest about what
-        // an upgrade from an older Luker/SillyTavern build could leave behind.
+        // an upgrade from an older Taverncraft/SillyTavern build could leave behind.
         fs.writeFileSync(
             path.join(h.dirs.worlds, 'Poisoned.json'),
             JSON.stringify({ entries: sparse, name: 'Poisoned' }),

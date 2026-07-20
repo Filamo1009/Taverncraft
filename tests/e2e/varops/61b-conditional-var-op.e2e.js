@@ -65,7 +65,7 @@ test.describe('#61b — Conditional var op (if-wrapper) end-to-end through the f
         await selectCharacterByName(page, 'Seraphina');
 
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -76,7 +76,7 @@ test.describe('#61b — Conditional var op (if-wrapper) end-to-end through the f
         );
 
         await page.waitForFunction((id) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const m = ctx.chat?.[id];
             return Boolean(m && Array.isArray(m?.extra?.var_ops) && m.extra.var_ops.length >= 2);
         }, id1, { timeout: 15_000 });
@@ -89,13 +89,13 @@ test.describe('#61b — Conditional var op (if-wrapper) end-to-end through the f
         await page.locator('.popup-button-cancel').first().click().catch(() => {});
 
         const windAfterTurn1 = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.chatMetadata?.variables?.wind ?? null;
         });
         expect(windAfterTurn1, 'apply order means later op wins').toBe('northerly');
 
         const mesAfterTurn1 = await page.evaluate((id) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.chat?.[id]?.mes ?? '';
         }, id1);
         expect(mesAfterTurn1).toContain('{{if 0}}');
@@ -106,7 +106,7 @@ test.describe('#61b — Conditional var op (if-wrapper) end-to-end through the f
         const { replyId: id2 } = await sendMessageAndAwaitReply(page, 'And now? Has it shifted?');
 
         await page.waitForFunction((id) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const m = ctx.chat?.[id];
             return Boolean(m && Array.isArray(m?.extra?.var_ops) && m.extra.var_ops.length >= 1);
         }, id2, { timeout: 15_000 });
@@ -119,7 +119,7 @@ test.describe('#61b — Conditional var op (if-wrapper) end-to-end through the f
         await page.locator('.popup-button-cancel').first().click().catch(() => {});
 
         const windAfterTurn2 = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.chatMetadata?.variables?.wind ?? null;
         });
         expect(windAfterTurn2).toBe('northerly');

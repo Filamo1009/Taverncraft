@@ -522,7 +522,7 @@ function audioActivationSync() {
         }
         if (getActiveKeepAliveMode() !== 'audio') {
             setKeepAliveMode('audio').catch((error) => {
-                console.warn('[Luker] Failed to enter audio keep-alive', error);
+                console.warn('[Taverncraft] Failed to enter audio keep-alive', error);
             });
         }
     } else if (!audioDeactivateTimer) {
@@ -531,7 +531,7 @@ function audioActivationSync() {
             if (audioActivationCount > 0) return;
             if (getActiveKeepAliveMode() === 'audio') {
                 setKeepAliveMode('off').catch((error) => {
-                    console.warn('[Luker] Failed to exit audio keep-alive', error);
+                    console.warn('[Taverncraft] Failed to exit audio keep-alive', error);
                 });
             }
         }, AUDIO_DEACTIVATE_GRACE_MS);
@@ -628,7 +628,7 @@ function syncMobileKeepAliveUi() {
         setKeepAliveMode('android')
             .then(syncMobileKeepAliveCheckbox)
             .catch((error) => {
-                console.warn('[Luker] Failed to restore Android background keep-alive', error);
+                console.warn('[Taverncraft] Failed to restore Android background keep-alive', error);
             });
     }
 }
@@ -685,7 +685,7 @@ async function applyMobileKeepAliveFromUser(checked) {
             power_user.luker_mobile_keep_alive_android_enabled = true;
             saveSettingsDebounced();
         } catch (error) {
-            console.warn('[Luker] Failed to enable Android keep-alive', error);
+            console.warn('[Taverncraft] Failed to enable Android keep-alive', error);
             power_user.luker_mobile_keep_alive_android_enabled = false;
             saveSettingsDebounced();
         }
@@ -841,7 +841,7 @@ function maybeShowMessageProgressNotification() {
         return;
     }
 
-    const title = t`Luker`;
+    const title = t`Taverncraft`;
     const body = buildMessageProgressNotificationBody();
     const speakerName = resolveNotificationSpeakerName(messageProgressSpeakerHint);
     const bodyWithSpeaker = speakerName ? `${speakerName}: ${body}` : body;
@@ -897,7 +897,7 @@ export function notifyMessageComplete(messageText = '', assistantName = '') {
         return;
     }
 
-    const title = t`Luker`;
+    const title = t`Taverncraft`;
     const body = buildMessageNotificationBody(messageText);
     const speakerName = resolveNotificationSpeakerName(assistantName);
     const bodyWithSpeaker = speakerName ? `${speakerName}: ${body}` : body;
@@ -936,7 +936,7 @@ export function notifyMessageFailure(errorText = '', assistantName = '') {
         return;
     }
 
-    const title = t`Luker`;
+    const title = t`Taverncraft`;
     const body = buildMessageFailureNotificationBody(errorText);
     const speakerName = resolveNotificationSpeakerName(assistantName);
     const bodyWithSpeaker = speakerName ? `${speakerName}: ${body}` : body;

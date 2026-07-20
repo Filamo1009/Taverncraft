@@ -47,7 +47,7 @@ test.describe('#49 — chat attachment via real paperclip → referenced in prom
         await awaitMainUI(page, server.baseURL);
         await selectCharacterByName(page, 'Seraphina');
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -95,7 +95,7 @@ test.describe('#49 — chat attachment via real paperclip → referenced in prom
         // real onFileAttach + populateFileAttachment chain, not a side
         // injection.
         const lastUserFiles = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const last = [...ctx.chat].reverse().find(m => m.is_user);
             return last?.extra?.files || null;
         });

@@ -114,7 +114,7 @@ test.describe('#80 — Director mode lorebookFilter blocks context injection and
         // roundtrip before any character is selected.
         await page.evaluate(async ({ publicBook }) => {
             const worldInfoMod = await import('/scripts/world-info.js');
-            const ctx = Luker.getContext();
+            const ctx = Taverncraft.getContext();
             const avatarFile = ctx.characters?.[ctx.characterId]?.avatar || '';
             const fileNameNoExt = avatarFile.replace(/\.[^/.]+$/, '');
             const wi = worldInfoMod.world_info;
@@ -160,7 +160,7 @@ test.describe('#80 — Director mode lorebookFilter blocks context injection and
         });
 
         await page.evaluate(async ({ privateBook }) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const settings = ctx.extensionSettings.orchestrator;
             const [presetLib, dirDefaults] = await Promise.all([
                 import('/scripts/extensions/orchestrator/preset-library.js'),

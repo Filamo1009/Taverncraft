@@ -1,13 +1,13 @@
 /**
- * One-stop request API for Luker extensions. Encapsulates profile resolution,
+ * One-stop request API for Taverncraft extensions. Encapsulates profile resolution,
  * prompt assembly, sender dispatch, and response normalization so extensions
  * never directly touch sendOpenAIRequest / buildPresetAwarePromptMessages /
  * resolveChatCompletionRequestProfile.
  */
 
 function getDefaultResolver() {
-    const ctx = typeof globalThis.Luker?.getContext === 'function'
-        ? globalThis.Luker.getContext()
+    const ctx = typeof globalThis.Taverncraft?.getContext === 'function'
+        ? globalThis.Taverncraft.getContext()
         : null;
     return ctx?.connectionProfiles?.resolve || null;
 }
@@ -15,37 +15,37 @@ function getDefaultResolver() {
 const SUPPORTED_APIS = new Set(['openai', 'kobold', 'koboldhorde', 'novel', 'textgenerationwebui']);
 
 function getDefaultRawPromptBuilder() {
-    const ctx = typeof globalThis.Luker?.getContext === 'function'
-        ? globalThis.Luker.getContext()
+    const ctx = typeof globalThis.Taverncraft?.getContext === 'function'
+        ? globalThis.Taverncraft.getContext()
         : null;
     return typeof ctx?.createRawPrompt === 'function' ? ctx.createRawPrompt : null;
 }
 
 function getDefaultBuilder() {
-    const ctx = typeof globalThis.Luker?.getContext === 'function'
-        ? globalThis.Luker.getContext()
+    const ctx = typeof globalThis.Taverncraft?.getContext === 'function'
+        ? globalThis.Taverncraft.getContext()
         : null;
     return typeof ctx?.buildPresetAwarePromptMessages === 'function' ? ctx.buildPresetAwarePromptMessages : null;
 }
 
 function getDefaultWorldInfoResolver() {
-    const ctx = typeof globalThis.Luker?.getContext === 'function'
-        ? globalThis.Luker.getContext()
+    const ctx = typeof globalThis.Taverncraft?.getContext === 'function'
+        ? globalThis.Taverncraft.getContext()
         : null;
     return typeof ctx?.resolveWorldInfoForMessages === 'function' ? ctx.resolveWorldInfoForMessages : null;
 }
 
 function getDefaultSenders() {
-    const ctx = typeof globalThis.Luker?.getContext === 'function'
-        ? globalThis.Luker.getContext()
+    const ctx = typeof globalThis.Taverncraft?.getContext === 'function'
+        ? globalThis.Taverncraft.getContext()
         : null;
     if (!ctx) return null;
     return ctx.generateTaskSenders || null;
 }
 
 function getDefaultSubstituteParams() {
-    const ctx = typeof globalThis.Luker?.getContext === 'function'
-        ? globalThis.Luker.getContext()
+    const ctx = typeof globalThis.Taverncraft?.getContext === 'function'
+        ? globalThis.Taverncraft.getContext()
         : null;
     return typeof ctx?.substituteParams === 'function' ? ctx.substituteParams : null;
 }
@@ -202,7 +202,7 @@ export class GenerateTaskError extends Error {
  * injection seam so tests can mock the resolver without setting up live settings.
  *
  * Fully synchronous: when `options.resolver` is omitted, the default resolver is
- * looked up at call time via `globalThis.Luker.getContext().connectionProfiles.resolve`.
+ * looked up at call time via `globalThis.Taverncraft.getContext().connectionProfiles.resolve`.
  *
  * @param {string} apiPresetName
  * @param {object} [options]
@@ -220,7 +220,7 @@ export function resolveProfile(apiPresetName, {
     if (typeof effectiveResolver !== 'function') {
         throw new GenerateTaskError(
             'unknown',
-            'No connection-profile resolver available (Luker.getContext().connectionProfiles.resolve missing). Inject `resolver` or call generateTask after Luker boot.',
+            'No connection-profile resolver available (Taverncraft.getContext().connectionProfiles.resolve missing). Inject `resolver` or call generateTask after Taverncraft boot.',
         );
     }
     const resolution = effectiveResolver({
@@ -359,7 +359,7 @@ export function assembleMessages({
  * - any other requestApi: throws unsupported_api
  *
  * The default rawPromptBuilder is looked up at runtime via
- * globalThis.Luker.getContext().createRawPrompt (wired in Task 0.9).
+ * globalThis.Taverncraft.getContext().createRawPrompt (wired in Task 0.9).
  * Tests must inject `rawPromptBuilder`.
  *
  * @param {string} requestApi
@@ -384,7 +384,7 @@ export function renderForApi(requestApi, messages, { rawPromptBuilder = null } =
     if (typeof builder !== 'function') {
         throw new GenerateTaskError(
             'unsupported_api',
-            `requestApi '${requestApi}' folding requires a rawPromptBuilder (createRawPrompt). Inject one or expose it via Luker.getContext().createRawPrompt.`,
+            `requestApi '${requestApi}' folding requires a rawPromptBuilder (createRawPrompt). Inject one or expose it via Taverncraft.getContext().createRawPrompt.`,
         );
     }
     return builder(messages, requestApi, false, false, '', '');
@@ -903,7 +903,7 @@ function _wrapSenderError(error, abortSignal) {
 const RESPONSE_MODES = { TEXT: 'text', TOOL: 'tool', JSON: 'json' };
 
 /**
- * Luker.context.generateTask — one-stop extension request API.
+ * Taverncraft.context.generateTask — one-stop extension request API.
  *
  * Encapsulates: profile resolution, prompt envelope assembly, multi-family
  * sender dispatch, and unified response normalization. Extensions should
@@ -928,7 +928,7 @@ const RESPONSE_MODES = { TEXT: 'text', TOOL: 'tool', JSON: 'json' };
  * @param {AbortSignal} [params.abortSignal]
  * @param {boolean} [params.substituteMacros=true] - Apply `substituteParams` (with
  *   `skipSideEffects:true`) to each task message's string `content` before
- *   assembly so registered macros — Luker built-ins (`{{user}}`, `{{char}}`,
+ *   assembly so registered macros — Taverncraft built-ins (`{{user}}`, `{{char}}`,
  *   `{{datetime}}`, `{{random:a,b}}`, …) and any extension-registered macros
  *   that flow through the same engine (e.g. MagVarUpdate's `{{getvar::}}`) —
  *   resolve in plugin requests just like in the main chat path. Set to `false`
