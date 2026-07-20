@@ -78,7 +78,7 @@ jobs:
         run: npm ci --ignore-scripts
 
       - name: Rebuild native SQLite dependency
-        run: npm rebuild better-sqlite3
+        run: npm rebuild better-sqlite3 --ignore-scripts=false
 
       - name: Install test dependencies
         run: npm ci --ignore-scripts --prefix tests
