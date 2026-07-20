@@ -32,6 +32,7 @@ module.exports = {
                 '**/skills-ui/playwright/**/*.spec.js',
                 '**/skills-ui/playwright/helpers.js',
                 'e2e/_lib/*.js',
+                'e2e/**/_helpers.js',
             ],
             env: {
                 browser: true,

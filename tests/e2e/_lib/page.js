@@ -18,8 +18,6 @@
 // invariant (rate-limit, queueing, persistence under load) rather than the
 // UI. They are NOT the default and must be named explicitly.
 
-import { expect } from '@playwright/test';
-
 /**
  * Navigate to baseURL and wait for ST to leave the preloader. Clicks the
  * user-select gate if present (multi-user dev configs). Also kicks the
@@ -332,7 +330,7 @@ export async function sendMessageProgrammatic(page, text, { timeoutMs = 120_000 
         const t = setTimeout(() => reject(new Error('reply timeout')), to);
         const off = ctx.eventSource.on(ctx.eventTypes.MESSAGE_RECEIVED, (id) => {
             clearTimeout(t);
-            try { ctx.eventSource.removeListener(ctx.eventTypes.MESSAGE_RECEIVED, off); } catch {}
+            try { ctx.eventSource.removeListener(ctx.eventTypes.MESSAGE_RECEIVED, off); } catch { /* listener may already be removed */ }
             resolve(id);
         });
     }), timeoutMs);
@@ -412,7 +410,7 @@ export async function swipeLeftOnLatest(page, { timeoutMs = 120_000 } = {}) {
         const t = setTimeout(() => reject(new Error('swipe timeout')), to);
         const off = ctx.eventSource.on(ctx.eventTypes.MESSAGE_SWIPED, (id) => {
             clearTimeout(t);
-            try { ctx.eventSource.removeListener(ctx.eventTypes.MESSAGE_SWIPED, off); } catch {}
+            try { ctx.eventSource.removeListener(ctx.eventTypes.MESSAGE_SWIPED, off); } catch { /* listener may already be removed */ }
             resolve(id);
         });
     }), timeoutMs);
@@ -460,7 +458,7 @@ export async function editMessageViaUI(page, mesid, newText) {
         const t = setTimeout(() => reject(new Error('edit timeout')), 15_000);
         const off = ctx.eventSource.on(ctx.eventTypes.MESSAGE_EDITED, (id) => {
             clearTimeout(t);
-            try { ctx.eventSource.removeListener(ctx.eventTypes.MESSAGE_EDITED, off); } catch {}
+            try { ctx.eventSource.removeListener(ctx.eventTypes.MESSAGE_EDITED, off); } catch { /* listener may already be removed */ }
             resolve(id);
         });
     }));
@@ -507,7 +505,7 @@ export async function deleteMessageViaUI(page, mesid) {
         const ctx = window.Taverncraft.getContext();
         window.__deleteSignal = { resolved: false, id: null };
         const off = (id) => {
-            try { ctx.eventSource.removeListener(ctx.eventTypes.MESSAGE_DELETED, off); } catch {}
+            try { ctx.eventSource.removeListener(ctx.eventTypes.MESSAGE_DELETED, off); } catch { /* listener may already be removed */ }
             window.__deleteSignal.resolved = true;
             window.__deleteSignal.id = id;
         };
@@ -566,7 +564,7 @@ export async function continueViaUI(page, { timeoutMs = 120_000 } = {}) {
         const t = setTimeout(() => reject(new Error('continue timeout')), to);
         const off = ctx.eventSource.on(ctx.eventTypes.MESSAGE_RECEIVED, (id) => {
             clearTimeout(t);
-            try { ctx.eventSource.removeListener(ctx.eventTypes.MESSAGE_RECEIVED, off); } catch {}
+            try { ctx.eventSource.removeListener(ctx.eventTypes.MESSAGE_RECEIVED, off); } catch { /* listener may already be removed */ }
             resolve(id);
         });
     }), timeoutMs);
@@ -630,7 +628,7 @@ export async function branchFromMessageViaUI(page, mesid, { timeoutMs = 30_000 }
         const t = setTimeout(() => reject(new Error('branch timeout')), to);
         const off = ctx.eventSource.on(ctx.eventTypes.CHAT_CHANGED, (id) => {
             clearTimeout(t);
-            try { ctx.eventSource.removeListener(ctx.eventTypes.CHAT_CHANGED, off); } catch {}
+            try { ctx.eventSource.removeListener(ctx.eventTypes.CHAT_CHANGED, off); } catch { /* listener may already be removed */ }
             resolve(id);
         });
     }), timeoutMs);
@@ -653,7 +651,7 @@ export async function createNewChatViaUI(page, { timeoutMs = 30_000 } = {}) {
         const t = setTimeout(() => reject(new Error('new-chat timeout')), to);
         const off = ctx.eventSource.on(ctx.eventTypes.CHAT_CHANGED, (id) => {
             clearTimeout(t);
-            try { ctx.eventSource.removeListener(ctx.eventTypes.CHAT_CHANGED, off); } catch {}
+            try { ctx.eventSource.removeListener(ctx.eventTypes.CHAT_CHANGED, off); } catch { /* listener may already be removed */ }
             resolve(id);
         });
     }), timeoutMs);

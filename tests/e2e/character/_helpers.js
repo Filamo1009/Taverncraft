@@ -82,8 +82,10 @@ export async function openCharacterEditPanel(page, { timeoutMs = 10_000 } = {}) 
  * Pass `name` as a plain string to match display name, or as
  * `{ avatar: '<avatar.png>' }` to match by file path — useful when
  * two cards share the same display name (e.g. a duplicate).
+ * Set `waitForEditor` to false when the caller expects a modal that
+ * intentionally hides the editor, such as the embedded-world prompt.
  */
-export async function clickCharacterCard(page, nameOrSpec, { timeoutMs = 10_000 } = {}) {
+export async function clickCharacterCard(page, nameOrSpec, { timeoutMs = 10_000, waitForEditor = true } = {}) {
     const modernUi = await page.locator('#tc-modern-shell').count();
     if (modernUi) {
         await page.locator('[data-tc-route="library"]').first().click();
@@ -141,6 +143,7 @@ export async function clickCharacterCard(page, nameOrSpec, { timeoutMs = 10_000 
         await page.waitForTimeout(300);
         await page.evaluate(() => window.Taverncraft.ui.editCurrentCharacter());
     }
+    if (!waitForEditor) return;
     await page.locator('#rm_ch_create_block').waitFor({ state: 'visible', timeout: timeoutMs });
     await page.locator('#description_textarea').waitFor({ state: 'visible', timeout: timeoutMs });
 }
