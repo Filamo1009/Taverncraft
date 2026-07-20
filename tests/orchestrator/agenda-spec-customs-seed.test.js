@@ -17,11 +17,11 @@
 import { describe, test, expect, jest, beforeAll } from '@jest/globals';
 
 // defaults.js (transitively imported by the sanitizers) reads
-// `Luker.getContext().constants.{promptRoles,wiPosition}` at module
+// `Taverncraft.getContext().constants.{promptRoles,wiPosition}` at module
 // load time after upstream commit 571c529c2. Provide a minimal shim so
 // module evaluation succeeds. public/lib.js is a build-time bundle that
 // jest cannot resolve — short-circuit it as well.
-globalThis.Luker = {
+globalThis.Taverncraft = {
     getContext: () => ({
         constants: {
             promptRoles: { SYSTEM: 0, USER: 1, ASSISTANT: 2 },

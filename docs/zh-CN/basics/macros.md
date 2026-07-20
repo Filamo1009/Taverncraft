@@ -4,7 +4,7 @@
 
 ## Macros 2.0 / 实验性宏引擎
 
-本页的特性跑在 chevrotain 实现的新宏引擎上——也就是 SillyTavern 引入的 **Macros 2.0**。Luker 预设启用它，可以在「**用户设置 → 聊天/消息处理 → 实验性宏引擎**」切换。
+本页的特性跑在 chevrotain 实现的新宏引擎上——也就是 SillyTavern 引入的 **Macros 2.0**。Taverncraft 预设启用它，可以在「**用户设置 → 聊天/消息处理 → 实验性宏引擎**」切换。
 
 实验性引擎**关掉**时，宏仍然能用，但下面这些特性会退化到老的正则管线、不再可用：
 
@@ -108,7 +108,7 @@
 
 ## 变量简写
 
-除了完整的 <code v-pre>{{getvar::name}}</code> / <code v-pre>{{setvar::name::value}}</code>，Luker 还提供一套**变量表达式**简写，读起来跟赋值语句一样：
+除了完整的 <code v-pre>{{getvar::name}}</code> / <code v-pre>{{setvar::name::value}}</code>，Taverncraft 还提供一套**变量表达式**简写，读起来跟赋值语句一样：
 
 | 写法 | 含义 | 返回 |
 |---|---|---|
@@ -293,7 +293,7 @@ body 里：
 
 原生 SillyTavern 里，副作用宏 <code v-pre>{{setvar::hp::50}}</code> 只在 *prompt 范本* 里（预设、世界书、首楼）才会运行。AI 在回复里写同样的字面量什么都不会发生，还会原样显示出来污染叙事。
 
-Luker 用**逐楼层变量提取**解决这个问题。一条消息（AI 回复、用户消息、swipe、续写）保存时，Luker 会：
+Taverncraft 用**逐楼层变量提取**解决这个问题。一条消息（AI 回复、用户消息、swipe、续写）保存时，Taverncraft 会：
 
 1. 扫描文本里的 <code v-pre>{{setvar}}</code>、<code v-pre>{{addvar}}</code>、<code v-pre>{{incvar}}</code>、<code v-pre>{{decvar}}</code>、<code v-pre>{{deletevar}}</code>。
 2. 把里面嵌套的展示宏（<code v-pre>{{user}}</code>、<code v-pre>{{getvar::other}}</code>、<code v-pre>{{time}}</code>……）对当前状态求值。
@@ -301,7 +301,7 @@ Luker 用**逐楼层变量提取**解决这个问题。一条消息（AI 回复�
 4. 在 `message.extra.var_ops` 上追加一条结构化记录。
 5. 从可见文本里把字面量删掉。
 
-当你删消息、切 swipe、重新生成、编辑时，Luker 会**重播剩余的 op log**，让变量状态跟可见的时间线保持一致。
+当你删消息、切 swipe、重新生成、编辑时，Taverncraft 会**重播剩余的 op log**，让变量状态跟可见的时间线保持一致。
 
 这就是「**逐楼层变量**」面板背后的机制——每条带 op 的消息按钮栏会出现一个烧瓶图标，点开可以查看 / 编辑 / 删除 / 添加 op。结果就是 AI 能直接在自己回复里拥有和修改状态，而这个状态能扛住用户惯常的所有结构性操作。
 
@@ -554,7 +554,7 @@ STscript 里的 `\|` 是命令管道符，那是命令解析器的特性，不�
 扩展可以注册自己的宏：
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 ctx.macros.register('myStatus', {
     description: '返回插件状态字符串。',

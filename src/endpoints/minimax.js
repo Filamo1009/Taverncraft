@@ -76,7 +76,7 @@ router.post('/generate-voice', async (request, response) => {
             headers: {
                 'Authorization': `Bearer ${apiKey}`,
                 'Content-Type': 'application/json',
-                'MM-API-Source': 'Luker-TTS',
+                'MM-API-Source': 'Taverncraft-TTS',
             },
             body: JSON.stringify(requestBody),
         });

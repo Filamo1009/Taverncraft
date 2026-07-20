@@ -40,6 +40,7 @@ import { isTrueBoolean } from './utils.js';
  * @property {function} action - The action to perform when the tool is invoked.
  * @property {function} [formatMessage] - A function to format the tool call message.
  * @property {function} [shouldRegister] - A function to determine if the tool should be registered.
+ * @property {function} [getToolChoice] - Optional per-request OpenAI tool_choice override.
  * @property {boolean} [stealth] - A tool call result will not be shown in the chat. No follow-up generation will be performed.
  */
 
@@ -156,6 +157,12 @@ class ToolDefinition {
     #shouldRegister;
 
     /**
+     * Optional per-request OpenAI tool_choice override.
+     * @type {function}
+     */
+    #getToolChoice;
+
+    /**
      * A tool call result will not be shown in the chat. No follow-up generation will be performed.
      * @type {boolean}
      */
@@ -170,9 +177,10 @@ class ToolDefinition {
      * @param {function} action A function that will be called when the tool is executed.
      * @param {function} formatMessage A function that will be called to format the tool call toast.
      * @param {function} shouldRegister A function that will be called to determine if the tool should be registered.
+     * @param {function} getToolChoice Optional per-request OpenAI tool_choice override.
      * @param {boolean} stealth A tool call result will not be shown in the chat. No follow-up generation will be performed.
      */
-    constructor(name, displayName, description, parameters, action, formatMessage, shouldRegister, stealth) {
+    constructor(name, displayName, description, parameters, action, formatMessage, shouldRegister, getToolChoice, stealth) {
         this.#name = name;
         this.#displayName = displayName;
         this.#description = description;
@@ -180,6 +188,7 @@ class ToolDefinition {
         this.#action = action;
         this.#formatMessage = formatMessage;
         this.#shouldRegister = shouldRegister;
+        this.#getToolChoice = getToolChoice;
         this.#stealth = stealth;
     }
 
@@ -222,6 +231,12 @@ class ToolDefinition {
         return typeof this.#shouldRegister === 'function'
             ? await this.#shouldRegister()
             : true;
+    }
+
+    async getToolChoice(data) {
+        return typeof this.#getToolChoice === 'function'
+            ? await this.#getToolChoice(data)
+            : null;
     }
 
     get displayName() {
@@ -280,7 +295,7 @@ export class ToolManager {
      * Registers a new tool with the tool registry.
      * @param {ToolRegistration} tool The tool to register.
      */
-    static registerFunctionTool({ name, displayName, description, parameters, action, formatMessage, shouldRegister, stealth }) {
+    static registerFunctionTool({ name, displayName, description, parameters, action, formatMessage, shouldRegister, getToolChoice, stealth }) {
         // Convert WIP arguments
         if (typeof arguments[0] !== 'object') {
             [name, description, parameters, action] = arguments;
@@ -298,6 +313,7 @@ export class ToolManager {
             action,
             formatMessage,
             shouldRegister,
+            getToolChoice,
             stealth,
         );
         this.#tools.set(name, definition);
@@ -413,6 +429,7 @@ export class ToolManager {
      */
     static async registerFunctionToolsOpenAI(data) {
         const tools = [];
+        const requestedChoices = [];
 
         for (const tool of ToolManager.tools) {
             const register = await tool.shouldRegister();
@@ -421,13 +438,21 @@ export class ToolManager {
                 continue;
             }
             tools.push(tool.toFunctionOpenAI());
+            const requestedChoice = await tool.getToolChoice(data);
+            if (requestedChoice !== null && requestedChoice !== undefined && requestedChoice !== 'auto') {
+                requestedChoices.push(requestedChoice);
+            }
         }
 
         if (tools.length) {
             console.log('[ToolManager] Registered function tools:', tools);
 
             data.tools = tools;
-            data.tool_choice = 'auto';
+            const uniqueChoices = [...new Map(requestedChoices.map(choice => [JSON.stringify(choice), choice])).values()];
+            if (uniqueChoices.length > 1) {
+                console.warn('[ToolManager] Conflicting per-request tool choices; using auto.', uniqueChoices);
+            }
+            data.tool_choice = uniqueChoices.length === 1 ? uniqueChoices[0] : 'auto';
         }
     }
 
@@ -566,8 +591,9 @@ export class ToolManager {
                     // append on top.
                     const seed = parsed.content_block.input;
                     if (seed && typeof seed === 'object' && Object.keys(seed).length > 0) {
-                        try { targetToolCall.function.arguments = JSON.stringify(seed); }
-                        catch (_) { targetToolCall.function.arguments = ''; }
+                        try { targetToolCall.function.arguments = JSON.stringify(seed); } catch (_) {
+                            targetToolCall.function.arguments = '';
+                        }
                     } else {
                         targetToolCall.function.arguments = '';
                     }

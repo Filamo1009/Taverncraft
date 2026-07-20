@@ -1,6 +1,6 @@
 # 认证与配额
 
-Luker 内置了多用户认证和配额管理系统，适用于团队共享实例或公开部署的场景。管理员可以通过 OAuth 登录、存储配额和日志系统全面管控用户的访问和资源消耗。
+Taverncraft 内置了多用户认证和配额管理系统，适用于团队共享实例或公开部署的场景。管理员可以通过 OAuth 登录、存储配额和日志系统全面管控用户的访问和资源消耗。
 
 ## 认证系统
 
@@ -20,7 +20,7 @@ Luker 内置了多用户认证和配额管理系统，适用于团队共享实�
 
 ### GitHub OAuth 登录
 
-Luker 支持通过 GitHub OAuth 进行用户认证。用户点击登录后，会被重定向到 GitHub 授权页面，授权完成后自动创建或关联本地用户账户。
+Taverncraft 支持通过 GitHub OAuth 进行用户认证。用户点击登录后，会被重定向到 GitHub 授权页面，授权完成后自动创建或关联本地用户账户。
 
 配置方式：在前端管理员面板中配置 GitHub OAuth App 的凭据（存储在 `admin-settings.json` 的 `oauth` 配置段中）：
 
@@ -39,7 +39,7 @@ Luker 支持通过 GitHub OAuth 进行用户认证。用户点击登录后，会
 
 ### Discord OAuth 登录
 
-Luker 同样支持 Discord OAuth 登录，并提供更细粒度的访问控制——可以校验用户是否为指定 Discord 服务器的成员，以及是否拥有特定身份组（Role）。
+Taverncraft 同样支持 Discord OAuth 登录，并提供更细粒度的访问控制——可以校验用户是否为指定 Discord 服务器的成员，以及是否拥有特定身份组（Role）。
 
 ```json
 {
@@ -60,7 +60,7 @@ Luker 同样支持 Discord OAuth 登录，并提供更细粒度的访问控制�
 OAuth 回调地址由系统根据当前请求自动生成（格式为 `{protocol}://{host}/api/users/oauth/callback/{provider}`），无需手动配置。
 
 ::: tip
-如果不需要 OAuth 登录，无需配置 `oauth` 段。Luker 仍然支持 SillyTavern 原有的用户认证方式。OAuth 配置推荐在前端管理员面板中进行。
+如果不需要 OAuth 登录，无需配置 `oauth` 段。Taverncraft 仍然支持 SillyTavern 原有的用户认证方式。OAuth 配置推荐在前端管理员面板中进行。
 :::
 
 ## 用户配额管理
@@ -79,9 +79,9 @@ OAuth 回调地址由系统根据当前请求自动生成（格式为 `{protocol
 
 ## 日志系统
 
-Luker 实现了服务端日志捕获系统，供管理员远程查看服务器运行状态。
+Taverncraft 实现了服务端日志捕获系统，供管理员远程查看服务器运行状态。
 
-Luker 的日志系统覆盖后端和前端，帮助管理员远程排查问题。详见[日志系统](/zh-CN/features/logging)。
+Taverncraft 的日志系统覆盖后端和前端，帮助管理员远程排查问题。详见[日志系统](/zh-CN/features/logging)。
 
 ## 配置参考
 

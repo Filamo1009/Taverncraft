@@ -1,16 +1,16 @@
 # Logging System
 
-Luker has a built-in comprehensive log capture and management system covering both the backend server and the frontend browser. When you encounter issues that need troubleshooting, the logging system helps you quickly identify the cause.
+Taverncraft has a built-in comprehensive log capture and management system covering both the backend server and the frontend browser. When you encounter issues that need troubleshooting, the logging system helps you quickly identify the cause.
 
-The logging system is a standalone feature module that does not depend on other Luker features (such as Memory Graph, CardApp, etc.) and works out of the box.
+The logging system is a standalone feature module that does not depend on other Taverncraft features (such as Memory Graph, CardApp, etc.) and works out of the box.
 
 ## Backend Logs
 
-Luker's backend logging system automatically intercepts all console output from the server and stores logs in memory for viewing.
+Taverncraft's backend logging system automatically intercepts all console output from the server and stores logs in memory for viewing.
 
 ### How It Works
 
-- **Auto-interception**: On server startup, Luker automatically intercepts `console.log`, `console.warn`, `console.error`, and other outputs
+- **Auto-interception**: On server startup, Taverncraft automatically intercepts `console.log`, `console.warn`, `console.error`, and other outputs
 - **Ring buffer**: Logs are stored in a fixed-size memory buffer. When the buffer is full, the oldest logs are automatically discarded, ensuring memory usage stays bounded
 - **Timestamps and levels**: Each log entry records a precise timestamp and log level (info, warn, error), making it easy to filter by time and severity
 
@@ -19,12 +19,12 @@ Luker's backend logging system automatically intercepts all console output from 
 Administrators can remotely view server logs through the frontend admin panel without needing to log into the server to check the console. The log buffer can also be cleared with one click.
 
 ::: tip
-Backend logs are only kept in memory and are cleared on server restart. If you need persistent log records, it is recommended to redirect Luker's console output to a file.
+Backend logs are only kept in memory and are cleared on server restart. If you need persistent log records, it is recommended to redirect Taverncraft's console output to a file.
 :::
 
 ## Frontend Log Manager
 
-Luker also includes a built-in log manager on the browser side for capturing various runtime information from the frontend.
+Taverncraft also includes a built-in log manager on the browser side for capturing various runtime information from the frontend.
 
 ### Console Interception
 
@@ -54,7 +54,7 @@ Regardless of whether debug mode is enabled, all log levels are written to the i
 
 ### Debugging Issues
 
-When Luker exhibits abnormal behavior, the logging system is the most direct troubleshooting tool:
+When Taverncraft exhibits abnormal behavior, the logging system is the most direct troubleshooting tool:
 
 - **API connection failures** — Check error messages in the backend logs to confirm whether the API address and key are correct
 - **Generation interruptions** — Check Fetch request records in the frontend logs to understand whether requests timed out or were rejected

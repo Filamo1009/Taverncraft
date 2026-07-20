@@ -7,7 +7,7 @@ import { parseSkillFrontmatter } from './frontmatter-parser.js';
 /**
  * Bundled-skill mirror logic.
  *
- * Luker ships a set of default global skills under default/skills/global/.
+ * Taverncraft ships a set of default global skills under default/skills/global/.
  * On fresh install we copy them into the user's data root; users can also
  * trigger a re-import explicitly (which overwrites same-named skills).
  */

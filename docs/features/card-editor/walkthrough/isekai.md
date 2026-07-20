@@ -21,7 +21,7 @@ The whole process only requires you to describe what you want in natural languag
 
 ## Prerequisites
 
-- A working Luker / SillyTavern instance
+- A working Taverncraft / SillyTavern instance
 - A configured LLM API; a model with strong tool-call support is recommended (Claude / GPT-5 etc.)
 - (For the advanced section) A working Stable Diffusion / ComfyUI backend
 
@@ -85,7 +85,7 @@ Each tool call **prompts you for approval** with a diff — usually safe to "App
 ![AI working: tool calls + diff approvals](/images/walkthrough/isekai/step-04-first-round-work.png)
 
 ::: tip "AI content goes into World Info, not system_prompt"
-Notice the AI doesn't touch `system_prompt` — this is [Luker's CardApp authoring convention](/development/card-developers#cardapp-content-placement-convention): a card's `system_prompt` overrides the system section your chat-completion preset already designed, so card content needs to live in World Info entries to coexist with the preset. Studio AI follows this by default.
+Notice the AI doesn't touch `system_prompt` — this is [Taverncraft's CardApp authoring convention](/development/card-developers#cardapp-content-placement-convention): a card's `system_prompt` overrides the system section your chat-completion preset already designed, so card content needs to live in World Info entries to coexist with the preset. Studio AI follows this by default.
 :::
 
 ::: tip Don't be surprised to see <code v-pre>\{{...}}</code> in entries

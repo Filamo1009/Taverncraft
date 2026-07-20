@@ -1,10 +1,10 @@
 # 自定义工具
 
-自定义工具让你给编排器的 agent 加新能力——超出 Luker 内置的 chat / lorebook / note / memory 工具范围。一共支持三条来源通道，四种编排模式（loop / spec / agenda / director）看到它们的方式完全一致。
+自定义工具让你给编排器的 agent 加新能力——超出 Taverncraft 内置的 chat / lorebook / note / memory 工具范围。一共支持三条来源通道，四种编排模式（loop / spec / agenda / director）看到它们的方式完全一致。
 
 ## 自定义工具的来源
 
-**来自其他 Luker 扩展。** 像 memory-graph、search-tools 这类扩展在启动时注册自己的工具。你什么都不用做——这些工具会出现在编排编辑器的「自定义工具 → 扩展（来自其他插件）」里，新建编排时默认启用。
+**来自其他 Taverncraft 扩展。** 像 memory-graph、search-tools 这类扩展在启动时注册自己的工具。你什么都不用做——这些工具会出现在编排编辑器的「自定义工具 → 扩展（来自其他插件）」里，新建编排时默认启用。
 
 **来自 SillyTavern。** SillyTavern 自身也有 function tool 系统，其他插件会用它注册工具。要把这些工具暴露给编排器 agent，打开编排编辑器，点「桥接 SillyTavern 工具……」——挑你想要的工具，给每个工具选「读」或「写」模式，保存。它们会出现在「自定义工具 → 来自 SillyTavern」分组里。
 
@@ -73,9 +73,9 @@ if (ctx.__lukerRun?.abortSignal?.aborted) {
 
 ### 安全提示
 
-函数体跑在页面 context 里，权限和任何 Luker 模块一样大。它可以发起任意 URL 请求、改全局状态、读你的私聊内容。**只粘贴你信任的代码。**
+函数体跑在页面 context 里，权限和任何 Taverncraft 模块一样大。它可以发起任意 URL 请求、改全局状态、读你的私聊内容。**只粘贴你信任的代码。**
 
-当你正在导入的角色卡带了自定义工具，Luker 会先弹一个审查对话框，把每个工具的名字、描述、模式、完整代码都列出来再问你要不要导入。你可以点「导入并应用工具」全盘接收，「导入但不应用工具」只导入角色卡本身丢掉这些工具，或者展开每一项先把代码看一遍。
+当你正在导入的角色卡带了自定义工具，Taverncraft 会先弹一个审查对话框，把每个工具的名字、描述、模式、完整代码都列出来再问你要不要导入。你可以点「导入并应用工具」全盘接收，「导入但不应用工具」只导入角色卡本身丢掉这些工具，或者展开每一项先把代码看一遍。
 
 ## 启用与禁用
 
@@ -96,7 +96,7 @@ AI 迭代工作台直接在工作 profile 上读写自定义工具的 Layer-3 �
 - `luker_orch_list_custom_tools` —— 列出 profile 上的工具，带模式 / 描述 / 是否有模拟体 / 一行参数 schema 摘要。
 - `luker_orch_get_custom_tool` —— 按名字返回某个工具的完整内容（含函数体）。
 - `luker_orch_dry_run_custom_tool` —— 在沙箱里编译 + 执行函数体（可传入实参），返回 `{ok, result, error, logs, durationMs}`；硬墙时长 3 秒；`console.log/warn/error` 会被捕获。`name`（跑 profile 上现存工具）或 `body`（编译内联函数体）二选一。
-- `luker_ctx_list_keys` / `luker_ctx_describe` —— 枚举 / 钻入运行时 `ctx`（就是 SillyTavern/Luker 扩展通过 `getContext()` 拿到的那个对象）。返回类型 / 函数 arity / 源码预览 / 子键。
+- `luker_ctx_list_keys` / `luker_ctx_describe` —— 枚举 / 钻入运行时 `ctx`（就是 SillyTavern/Taverncraft 扩展通过 `getContext()` 拿到的那个对象）。返回类型 / 函数 arity / 源码预览 / 子键。
 - `luker_docs_list` / `luker_docs_read` —— 列出和读取 `docs/` 下的 markdown 文档（默认隐藏 zh-CN / zh-TW 翻译）。推荐起步：`features/orchestrator/custom-tools.md`、`development/extension-api/chat-and-state.md`、`development/extension-api/generation.md`、`development/extension-api/world-info.md`、`development/extension-api/orchestrator-tools.md`。
 
 写工具（在迭代工作台的 ProposalBus 上挂一张待审 card；你不点同意就什么都不会落到 profile）：

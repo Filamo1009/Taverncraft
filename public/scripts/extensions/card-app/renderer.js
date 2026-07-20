@@ -1,12 +1,12 @@
 /**
- * CardApp Renderer Bridge - connects Luker's message pipeline to CardApp's renderer.
+ * CardApp Renderer Bridge - connects Taverncraft's message pipeline to CardApp's renderer.
  *
  * Listens to message events and pushes rendered HTML to the CardApp's registered renderer.
  * Uses messageFormatting() directly instead of a hidden container approach,
  * since the formatting pipeline is a pure function.
  */
 
-const __ctx = Luker.getContext();
+const __ctx = Taverncraft.getContext();
 const eventSource = __ctx.eventSource;
 const event_types = __ctx.eventTypes;
 const chat = __ctx.chat;

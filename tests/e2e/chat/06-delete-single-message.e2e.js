@@ -51,7 +51,7 @@ async function deleteMessageRealUI(page, mesid) {
     await mes.locator('.mes_edit_delete').first().waitFor({ state: 'visible', timeout: 5000 });
 
     const deletePromise = page.evaluate(() => new Promise((resolve, reject) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const t = setTimeout(() => reject(new Error('delete timeout')), 20_000);
         const off = ctx.eventSource.on(ctx.eventTypes.MESSAGE_DELETED, (id) => {
             clearTimeout(t);

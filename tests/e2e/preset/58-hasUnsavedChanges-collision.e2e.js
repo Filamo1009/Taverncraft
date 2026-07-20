@@ -25,7 +25,7 @@
 //   2. Seed a global preset with the SAME name and a DIFFERENT temperature
 //      (`0.9`) by writing to `default-user/OpenAI Settings/MyPreset.json`
 //      before server start.
-//   3. Load Luker → the card auto-applies its default slot → live
+//   3. Load Taverncraft → the card auto-applies its default slot → live
 //      oai_settings.temperature = 0.5 (matches card, not global).
 //   4. Call `ctx.openai.hasUnsavedChanges('MyPreset')` through the real
 //      wiring (st-context.js:2851). Origin-aware helper must return
@@ -126,7 +126,7 @@ test.describe('#58 — hasUnsavedChanges under card / global name collision rout
         // in-memory library — this is the setup precondition for the
         // origin-awareness assertion below to be meaningful.
         const globalSideCheck = await page.evaluate((name) => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             const settingNames = ctx?.openai?.settingNames;
             const settings = ctx?.openai?.settings;
             const idx = settingNames?.[name];
@@ -143,7 +143,7 @@ test.describe('#58 — hasUnsavedChanges under card / global name collision rout
         // Origin-aware code sees ghost origin → compares live vs card
         // slot body (0.5 vs 0.5) → false.
         const unsavedUnderGhost = await page.evaluate((name) => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return ctx?.openai?.hasUnsavedChanges?.(name);
         }, COLLIDING_NAME);
         expect(unsavedUnderGhost).toBe(false);
@@ -182,7 +182,7 @@ test.describe('#58 — hasUnsavedChanges under card / global name collision rout
             .toBeCloseTo(CARD_TEMPERATURE, 5);
 
         const unsavedAfterFlipBack = await page.evaluate((name) => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return ctx?.openai?.hasUnsavedChanges?.(name);
         }, COLLIDING_NAME);
         expect(unsavedAfterFlipBack).toBe(false);

@@ -1,6 +1,6 @@
 # Preset Groups
 
-Preset Groups is a grouping display feature introduced by Luker for the preset selector. When you've accumulated a large number of presets, a flat dropdown list becomes difficult to manage. Preset Groups allow you to organize presets into named groups, displayed in the dropdown selector with a hierarchical structure of group headers and members.
+Preset Groups is a grouping display feature introduced by Taverncraft for the preset selector. When you've accumulated a large number of presets, a flat dropdown list becomes difficult to manage. Preset Groups allow you to organize presets into named groups, displayed in the dropdown selector with a hierarchical structure of group headers and members.
 
 ![Preset groups in the dropdown](/images/presets/preset-groups.png)
 
@@ -58,7 +58,7 @@ The group system automatically responds to preset lifecycle events:
 
 ## Select2 Adapter
 
-Luker implements a custom Select2 adapter for rendering group structures and action buttons in the dropdown selector:
+Taverncraft implements a custom Select2 adapter for rendering group structures and action buttons in the dropdown selector:
 
 1. Collects all real option elements (skipping group headers)
 2. Preserves custom attributes (e.g., `data-luker-char-bound`)

@@ -1,6 +1,6 @@
 # 統一生成層
 
-統一生成層（Unified Generation Layer）是 Luker 引入的後端架構改進，將分散在各個 API 端點中的生成邏輯收斂到一個共享模組中，實現多後端的統一封裝。
+統一生成層（Unified Generation Layer）是 Taverncraft 引入的後端架構改進，將分散在各個 API 端點中的生成邏輯收斂到一個共享模組中，實現多後端的統一封裝。
 
 ## 問題背景
 
@@ -13,7 +13,7 @@
 
 ## 解決方案
 
-Luker 新增了統一生成層端點（`/api/backends/luker-generation`），作為前端發起 AI 生成請求的主要路徑。該端點接收前端的生成請求，根據當前的 Chat Completion Source 轉發到對應的上游 API，並在統一的處理管線中完成串流回應、Token 計量、生成確認和持久化。
+Taverncraft 新增了統一生成層端點（`/api/backends/luker-generation`），作為前端發起 AI 生成請求的主要路徑。該端點接收前端的生成請求，根據當前的 Chat Completion Source 轉發到對應的上游 API，並在統一的處理管線中完成串流回應、Token 計量、生成確認和持久化。
 
 ### 多後端統一封裝
 

@@ -65,7 +65,7 @@ test.describe('#33b — per-character default preset (name-match autoSelect) (re
             await mod.getCharacters();
         });
         await page.waitForFunction(({ a, b }) => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return ctx && [a, b].every(n => ctx.characters?.some(c => c?.name === n));
         }, { a: ASH_NAME, b: IYANA_NAME }, { timeout: 15_000 });
 

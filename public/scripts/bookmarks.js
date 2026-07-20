@@ -746,9 +746,10 @@ export function initBookmarks() {
             return;
         }
 
-        const fileName = $(this).hasClass('mes_bookmark')
+        const rawFileName = $(this).hasClass('mes_bookmark')
             ? $(this).closest('.mes').attr('bookmark_link')
             : $(this).attr('file_name');
+        const fileName = String(rawFileName || '').replace(/\.jsonl$/i, '');
 
         if (!fileName) {
             return;

@@ -59,7 +59,7 @@ function parseArgs(argv) {
 }
 
 function printHelp() {
-    console.log(`storage-migrate — migrate Luker user data between storage backends
+    console.log(`storage-migrate — migrate Taverncraft user data between storage backends
 
 Usage:
   node scripts/storage-migrate.js --from <mode> --to <mode> [options]

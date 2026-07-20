@@ -1,6 +1,6 @@
 # 基础配置
 
-Luker 的配置文件为项目根目录下的 `config.yaml`。首次启动时，如果该文件不存在，Luker 会从 `default/config.yaml` 复制一份默认配置。
+Taverncraft 的配置文件为项目根目录下的 `config.yaml`。首次启动时，如果该文件不存在，Taverncraft 会从 `default/config.yaml` 复制一份默认配置。
 
 ## 核心配置项
 
@@ -44,7 +44,7 @@ ssl:
 
 ### 代理设置
 
-SillyTavern 支持通过 HTTP、HTTPS 或 SOCKS 代理转发出站请求（如 API 调用），Luker 继承了这一功能：
+SillyTavern 支持通过 HTTP、HTTPS 或 SOCKS 代理转发出站请求（如 API 调用），Taverncraft 继承了这一功能：
 
 ```yaml
 requestProxy:
@@ -64,7 +64,7 @@ requestProxy:
 enableCorsProxy: false
 ```
 
-启用后，Luker 会提供一个 CORS 代理端点，用于前端跨域请求转发。
+启用后，Taverncraft 会提供一个 CORS 代理端点，用于前端跨域请求转发。
 
 ## 认证与多用户
 
@@ -77,7 +77,7 @@ basicAuthUser:
   password: password
 ```
 
-启用后，访问 Luker 需要输入用户名和密码。适用于单用户场景。
+启用后，访问 Taverncraft 需要输入用户名和密码。适用于单用户场景。
 
 ### 多用户模式
 
@@ -107,7 +107,7 @@ node recover.js default-user
 ```
 
 ::: tip
-此命令需要在 Luker 项目根目录下执行，且服务无需处于运行状态。
+此命令需要在 Taverncraft 项目根目录下执行，且服务无需处于运行状态。
 :::
 
 ### SSO 单点登录
@@ -118,7 +118,7 @@ sso:
   authentikAuth: false
 ```
 
-Luker 支持通过 Authelia 或 Authentik 等反向代理认证方案实现单点登录。详细配置请参阅 [认证与配额](/zh-CN/improvements/auth-and-quota)。
+Taverncraft 支持通过 Authelia 或 Authentik 等反向代理认证方案实现单点登录。详细配置请参阅 [认证与配额](/zh-CN/improvements/auth-and-quota)。
 
 ### 主机白名单
 
@@ -147,7 +147,7 @@ whitelistDockerHosts: true
 默认启用白名单模式，仅允许本机访问。如需局域网访问，将对应 IP 加入 `whitelist` 列表，或关闭 `whitelistMode`。
 
 ::: warning 关闭白名单可能导致进程退出
-设置 `whitelistMode: false` 后，Luker 要求至少存在另一种保护机制，否则启动时会判定为不安全配置并直接终止进程（Docker 下表现为容器反复重启）。安全暴露服务时，请至少满足以下任一条件：
+设置 `whitelistMode: false` 后，Taverncraft 要求至少存在另一种保护机制，否则启动时会判定为不安全配置并直接终止进程（Docker 下表现为容器反复重启）。安全暴露服务时，请至少满足以下任一条件：
 
 - 启用 `basicAuthMode` 并配置 `basicAuthUser` —— 详见 [鉴权](/zh-CN/guide/authentication)
 - 启用多用户模式（`enableUserAccounts: true`），**并且**通过 `node recover.js default-user <密码>` 给所有 admin 用户设置密码 —— 详见 [鉴权 › 密码重置](/zh-CN/guide/authentication#密码重置)。两步缺一不可：只开多用户但 admin 没密码仍会被拦下，只设密码但没开多用户同样会被拦下。
@@ -197,7 +197,7 @@ storage:
     poolSize: 10
 ```
 
-Luker 支持四种用户数据持久化后端，由 `mode` 选择；只有匹配的子块会被读取。
+Taverncraft 支持四种用户数据持久化后端，由 `mode` 选择；只有匹配的子块会被读取。
 
 - `fs`（默认）：每条聊天/预设/世界书等都是 `<dataRoot>/<handle>/` 下的一个文件。最适合单用户安装，也是最方便手动查看的后端。
 - `sqlite`：每个用户一个独立的 `luker-storage.sqlite` 文件，位于 `<dataRoot>/<handle>/`。适合希望使用单文件事务存储、又不想运行独立数据库服务的安装。

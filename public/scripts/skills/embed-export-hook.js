@@ -1,10 +1,10 @@
 /**
  * Skill embed export hook.
  *
- * Wires the export-side of the embed flow into Luker's existing preset
+ * Wires the export-side of the embed flow into Taverncraft's existing preset
  * export event (OAI_PRESET_EXPORT_READY). The event fires from openai.js
  * with the preset body just before download; listeners can mutate the body
- * in place to attach extra fields (Luker's regex extension uses this same
+ * in place to attach extra fields (Taverncraft's regex extension uses this same
  * pattern).
  *
  * UX: if the active preset has any preset-scope skills, surface a yes/no
@@ -12,7 +12,7 @@
  * `extensions.luker.embedded_skills_source`. If no skills exist for the
  * scope, this hook is a no-op (no spurious dialog).
  *
- * Character export goes through Luker's image-card serialization, which
+ * Character export goes through Taverncraft's image-card serialization, which
  * doesn't currently emit a similar event. Until a CHARACTER_EXPORT_READY
  * hook lands, character-scope skills export piggybacks on the manual
  * "Pack to embed" path in the skill manager subpanel.

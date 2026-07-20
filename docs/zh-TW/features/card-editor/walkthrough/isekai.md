@@ -21,7 +21,7 @@
 
 ## 前置條件
 
-- 一個能跑的 Luker / SillyTavern 執行個體
+- 一個能跑的 Taverncraft / SillyTavern 執行個體
 - 已配通的 LLM API，推薦有工具呼叫能力的模型（Claude / GPT-5 等）
 - （進階段需要）已配通 Stable Diffusion / ComfyUI 後端
 
@@ -81,7 +81,7 @@ AI 擔任環境和敘事者(第三人稱視角描寫主角看到 / 感受到什�
 ![AI 工作過程：工具呼叫 + diff 審批](/images/walkthrough/isekai/step-04-first-round-work.png)
 
 ::: tip "AI 內容放世界書，不動 system_prompt"
-你會注意到 AI 沒碰 `system_prompt` — 這是 [Luker 的 CardApp 創作約定](/zh-TW/development/card-developers#cardapp-內容存放約定)：角色卡的 `system_prompt` 會蓋掉聊天補全預設原本設計好的 system 部分，把卡片內容塞進世界書 entry 才能跟預設和平共存。Studio AI 預設遵守。
+你會注意到 AI 沒碰 `system_prompt` — 這是 [Taverncraft 的 CardApp 創作約定](/zh-TW/development/card-developers#cardapp-內容存放約定)：角色卡的 `system_prompt` 會蓋掉聊天補全預設原本設計好的 system 部分，把卡片內容塞進世界書 entry 才能跟預設和平共存。Studio AI 預設遵守。
 :::
 
 ::: tip 看到 AI 在世界書條目裡寫 <code v-pre>\{{...}}</code> 別奇怪

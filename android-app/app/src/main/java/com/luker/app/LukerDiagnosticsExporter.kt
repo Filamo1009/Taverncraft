@@ -26,7 +26,7 @@ object LukerDiagnosticsExporter {
     data class ExportResult(val zip: File, val shareUri: Uri, val intent: Intent)
 
     /**
-     * Bundles every diagnostic artifact Luker knows how to find into one zip
+     * Bundles every diagnostic artifact Taverncraft knows how to find into one zip
      * under `externalFilesDir/diagnostics/`, then returns a share Intent.
      *
      * Contents:
@@ -88,7 +88,7 @@ object LukerDiagnosticsExporter {
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = "application/zip"
             putExtra(Intent.EXTRA_STREAM, shareUri)
-            putExtra(Intent.EXTRA_SUBJECT, "Luker diagnostics ($timestamp)")
+            putExtra(Intent.EXTRA_SUBJECT, "Taverncraft diagnostics ($timestamp)")
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
         return ExportResult(zip = zipFile, shareUri = shareUri, intent = intent)
@@ -96,7 +96,7 @@ object LukerDiagnosticsExporter {
 
     private fun buildSummary(context: Context): String {
         val sb = StringBuilder()
-        sb.append("Luker diagnostics bundle\n")
+        sb.append("Taverncraft diagnostics bundle\n")
         sb.append("generatedAt=").append(
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US).format(Date())
         ).append('\n')

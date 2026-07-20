@@ -112,7 +112,7 @@ async function selectConnectionProfile(page, profileName) {
     // apply chain up to 5s — that's enough for the slash-command sequence
     // /api custom + /api-url custom <url> + /model <model> + status probe.
     await page.waitForFunction((name) => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         const cm = ctx?.extensionSettings?.connectionManager;
         if (!cm) return false;
         const sel = cm.profiles?.find(p => p.id === cm.selectedProfile);
@@ -129,7 +129,7 @@ test.describe('#39 — connection profile switching routes per backend (real dro
 
         // Wait for greeting to settle.
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -157,7 +157,7 @@ test.describe('#39 — connection profile switching routes per backend (real dro
         await server.restart();
         await reloadAndAwait(page, server.baseURL);
         const persisted = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const cm = ctx.extensionSettings?.connectionManager;
             return {
                 count: cm?.profiles?.length || 0,

@@ -107,7 +107,7 @@ function buildIterationHelpHtml() {
             <p>${escapeAttr(t('Why? RP presets often force an output format (mandatory schema blocks, forced thinking chains) that conflicts with the structured tool calls these plugins use. Style instructions can also leak into config edits and produce odd results.'))}</p>
             <p><strong>${escapeAttr(t('Two ways to get a clean preset:'))}</strong></p>
             <ul>
-                <li>${escapeAttr(t('Click "Import plugin-only preset" below — imports a pre-built clean preset bundled with Luker, then selects it here.'))}</li>
+                <li>${escapeAttr(t('Click "Import plugin-only preset" below — imports a pre-built clean preset bundled with Taverncraft, then selects it here.'))}</li>
                 <li>${escapeAttr(t('Open the Completion Preset Assistant and start a new session in "Jailbreak-only" mode — it will derive a clean version from your existing RP preset. Your original preset stays untouched.'))}</li>
             </ul>
         </div>`;
@@ -121,7 +121,7 @@ function buildAgentDirectorHelpHtml() {
             <p>${escapeAttr(t('What this slot SHOULD carry: jailbreak / content-permission instructions that wrap the <story_context> block, plus the chatHistory marker so the envelope lands in the right place. Style / voice / anti-cliché rules normally belong in the agent\'s system prompt, not here.'))}</p>
             <p><strong>${escapeAttr(t('Two ways to get a Director-friendly preset:'))}</strong></p>
             <ul>
-                <li>${escapeAttr(t('Click "Import agent-director preset" below — imports a minimal Luker-bundled preset (marker-free, permission text only) and selects it here. Good as a quick start.'))}</li>
+                <li>${escapeAttr(t('Click "Import agent-director preset" below — imports a minimal Taverncraft-bundled preset (marker-free, permission text only) and selects it here. Good as a quick start.'))}</li>
                 <li>${escapeAttr(t('Open the Completion Preset Assistant and start a new session in "Adapt for orchestrator" mode — it will derive a Director-ready version from your existing RP preset, keeping your jailbreak / style / anti-cliché instructions while stripping format-forcing prompts and duplicate injections. Your original preset stays untouched.'))}</li>
             </ul>
             <p><a href="${escapeAttr(recipeUrl)}" target="_blank" rel="noopener noreferrer">${escapeAttr(t('For the full multi-Agent setup walkthrough, see the multi-Agent onboarding recipe in the documentation.'))}</a></p>
@@ -136,7 +136,7 @@ function buildAgentNonDirectorHelpHtml() {
             <p>${escapeAttr(t('This is the same shape iteration-AI plugins (CPA iter / Memory Graph / CardApp Studio iter) need, just placed in an Agent slot. The bundled preset offered below is identical in structure to the iter-AI plugin-only preset.'))}</p>
             <p><strong>${escapeAttr(t('Two ways to get a non-Director-friendly preset:'))}</strong></p>
             <ul>
-                <li>${escapeAttr(t('Click "Import agent-non-director preset" below — imports a Luker-bundled preset (markers enabled, story / user-request envelopes wrap the context) and selects it here. Good as a quick start.'))}</li>
+                <li>${escapeAttr(t('Click "Import agent-non-director preset" below — imports a Taverncraft-bundled preset (markers enabled, story / user-request envelopes wrap the context) and selects it here. Good as a quick start.'))}</li>
                 <li>${escapeAttr(t('Open the Completion Preset Assistant and start a new session in "Adapt for orchestrator" mode — it will derive a version from your existing RP preset that preserves your jailbreak / style / anti-cliché instructions while stripping format-forcing prompts. Your original preset stays untouched.'))}</li>
             </ul>
             <p><a href="${escapeAttr(recipeUrl)}" target="_blank" rel="noopener noreferrer">${escapeAttr(t('For the full multi-Agent setup walkthrough, see the multi-Agent onboarding recipe in the documentation.'))}</a></p>

@@ -66,7 +66,7 @@ test.describe('#22 — merge does not carry over the source memory-graph sidecar
         await selectCharacterByName(page, 'Seraphina');
         await page.waitForFunction(() => document.querySelectorAll('#chat .mes').length >= 1, { timeout: 10_000 }).catch(() => {});
 
-        const idA = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+        const idA = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
         expect(idA).toBeTruthy();
         await sendMessageAndAwaitReply(page, 'hello A');
 
@@ -80,7 +80,7 @@ test.describe('#22 — merge does not carry over the source memory-graph sidecar
         // We don't mock anything; this is a legitimate product write
         // path that any plugin (or test) is allowed to invoke.
         const sidecarWriteResult = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const fs = await ctx.createFloorState({ namespace: 'memory_graph' });
             const result = await fs.patch([{ op: 'add', path: '/e2e_test_marker', value: 'iso' }]);
             return result;
@@ -90,13 +90,13 @@ test.describe('#22 — merge does not carry over the source memory-graph sidecar
 
         // Chat B via the real options dropdown.
         await createNewChatViaUI(page);
-        const idB = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+        const idB = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
         expect(idB).toBeTruthy();
         expect(idB).not.toBe(idA);
         await sendMessageAndAwaitReply(page, 'hello B');
 
         const avatarFolder = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.characters[ctx.characterId].avatar.replace(/\.png$/, '');
         });
         const chatsDir = resolve(server.dataRoot, 'default-user', 'chats', avatarFolder);
@@ -114,7 +114,7 @@ test.describe('#22 — merge does not carry over the source memory-graph sidecar
         const mergedName = 'merged-iso';
         await submitMergeDialog(page, dialog, mergedName);
         await page.waitForFunction(
-            (id) => window.Luker.getContext().getCurrentChatId() === id,
+            (id) => window.Taverncraft.getContext().getCurrentChatId() === id,
             mergedName,
             { timeout: 15_000 },
         );

@@ -1,6 +1,6 @@
 # 快速開始
 
-本指南將幫助你在幾分鐘內啟動並執行 Luker。
+本指南將幫助你在幾分鐘內啟動並執行 Taverncraft。
 
 ## 前置條件
 
@@ -19,8 +19,8 @@
 ### 1. 複製儲存庫
 
 ```bash
-git clone https://github.com/funnycups/Luker.git
-cd Luker
+git clone https://github.com/Filamo1009/Taverncraft.git
+cd Taverncraft
 ```
 
 ### 2. 安裝依賴
@@ -42,7 +42,7 @@ bash start.sh
 ```
 
 ::: tip 其他執行環境
-Luker 也支援透過 Deno 或 Bun 啟動：
+Taverncraft 也支援透過 Deno 或 Bun 啟動：
 ```bash
 # Deno
 npm run start:deno
@@ -61,7 +61,7 @@ npm install
 
 ## 安裝方式二：Docker
 
-適合伺服器部署或希望開箱即用的使用者。Luker 提供了預建置的 Docker 映像檔。
+適合伺服器部署或希望開箱即用的使用者。Taverncraft 提供了預建置的 Docker 映像檔。
 
 ### 1. 建立 `docker-compose.yml`
 
@@ -69,9 +69,9 @@ npm install
 
 ```yaml
 services:
-  luker:
-    image: ghcr.io/funnycups/luker:latest
-    container_name: luker
+  taverncraft:
+    image: ghcr.io/filamo1009/taverncraft:latest
+    container_name: taverncraft
     ports:
       - 127.0.0.1:8000:8000
     volumes:
@@ -104,17 +104,17 @@ docker compose up -d
 
 ## 安裝方式三：Android APK
 
-Luker 提供 Android APP，你可以直接在手機上執行 Luker，無需依賴雲端伺服器或 Termux。
+Taverncraft 提供 Android APP，你可以直接在手機上執行 Taverncraft，無需依賴雲端伺服器或 Termux。
 
 前往 GitHub Release 頁面下載最新版 APK：
 
-👉 [https://github.com/funnycups/Luker/releases/latest](https://github.com/funnycups/Luker/releases/latest)
+👉 [https://github.com/Filamo1009/Taverncraft/releases/latest](https://github.com/Filamo1009/Taverncraft/releases/latest)
 
 下載並安裝 APK 後，開啟應用即可直接使用。
 
 ## 首次設定
 
-### 存取 Luker
+### 存取 Taverncraft
 
 啟動成功後，在瀏覽器中存取：
 
@@ -128,7 +128,7 @@ APK 版本是一個獨立的 App，開啟後直接顯示完整介面，不需要
 
 ### 設定 API 連線
 
-首次進入 Luker 後，你需要設定至少一個 LLM API 才能開始對話：
+首次進入 Taverncraft 後，你需要設定至少一個 LLM API 才能開始對話：
 
 1. 點擊頂部的 **API 連線** 圖示
 2. 選擇你的 API 類型（如 OpenAI、Claude 等）
@@ -148,10 +148,10 @@ APK 版本是一個獨立的 App，開啟後直接顯示完整介面，不需要
 
 ## 從 SillyTavern 遷移
 
-Luker 完全相容 SillyTavern 的資料。如果你是 SillyTavern 使用者，可以直接將 `data` 目錄複製到 Luker 中使用。如果之後不想用 Luker 了，也可以隨時降級回 SillyTavern，資料不會被破壞。
+Taverncraft 完全相容 SillyTavern 的資料。如果你是 SillyTavern 使用者，可以直接將 `data` 目錄複製到 Taverncraft 中使用。如果之後不想用 Taverncraft 了，也可以隨時降級回 SillyTavern，資料不會被破壞。
 
 ::: warning 備份提醒
-雖然 Luker 相容 SillyTavern 資料，但在遷移前仍建議做好備份。
+雖然 Taverncraft 相容 SillyTavern 資料，但在遷移前仍建議做好備份。
 :::
 
 詳細遷移指南請參閱 [從 SillyTavern 遷移](/zh-TW/guide/migration)。

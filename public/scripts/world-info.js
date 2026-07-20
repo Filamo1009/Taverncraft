@@ -1839,6 +1839,9 @@ export async function getWorldInfoPrompt(chat, maxContext, isDryRun, globalScanD
         // consumers ignore this; new consumers (simulation-review popup)
         // read it via st-context.resolveWorldInfoForMessages.
         activatedEntries: activatedEntriesList,
+        diagnostics: {
+            loadError: lastWorldInfoLoadError,
+        },
     };
 }
 
@@ -8672,7 +8675,10 @@ async function getPersonaLore() {
     return entries;
 }
 
+let lastWorldInfoLoadError = null;
+
 export async function getSortedEntries() {
+    lastWorldInfoLoadError = null;
     try {
         const [
             globalLore,
@@ -8723,6 +8729,7 @@ export async function getSortedEntries() {
         // Need to deep clone the entries to avoid modifying the cached data
         return structuredClone(entries);
     } catch (e) {
+        lastWorldInfoLoadError = String(e?.message || e || 'Unknown World Info load error');
         console.error(e);
         return [];
     }
@@ -10254,7 +10261,7 @@ export function checkEmbeddedWorld(chid) {
  * Read-only view of the V2/V3 embedded character book on a character card.
  *
  * Cards distributed as PNGs may carry an embedded `data.character_book`
- * (per `chara_card_v2`/`v3` spec). Luker treats this field as IO-only:
+ * (per `chara_card_v2`/`v3` spec). Taverncraft treats this field as IO-only:
  * it is consumed when importing third-party cards (offered to the user as a
  * world book to import via `importEmbeddedWorldInfo`) and produced when
  * exporting cards for distribution. Runtime code should never *read* the

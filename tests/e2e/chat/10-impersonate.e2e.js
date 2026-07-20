@@ -2,7 +2,7 @@
 // in #send_textarea, NOT as a normal chat message.
 //
 // Real user gesture: open the options dropdown (#options_button), click
-// #option_impersonate. Luker's Generate('impersonate', ...) returns a
+// #option_impersonate. Taverncraft's Generate('impersonate', ...) returns a
 // proposed user line that fills #send_textarea — it does NOT append a
 // new message. We assert (a) the textarea contains the mock's text and
 // (b) the chat DOM count is unchanged.

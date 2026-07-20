@@ -77,7 +77,7 @@ const defaultSettings = Object.freeze({
  */
 function initSettings() {
     let shouldSave = false;
-    const context = Luker.getContext();
+    const context = Taverncraft.getContext();
     if (!context.extensionSettings.gallery) {
         context.extensionSettings.gallery = structuredClone(defaultSettings);
         shouldSave = true;
@@ -99,7 +99,7 @@ function initSettings() {
  * @returns {string} The gallery folder for the character
  */
 function getGalleryFolder(char) {
-    return Luker.getContext().extensionSettings.gallery.folders[char?.avatar] ?? char?.name;
+    return Taverncraft.getContext().extensionSettings.gallery.folders[char?.avatar] ?? char?.name;
 }
 
 /**
@@ -189,7 +189,7 @@ async function deleteGalleryItem(url) {
  * @param {string} order Sort order
  */
 function setSortOrder(order) {
-    const context = Luker.getContext();
+    const context = Taverncraft.getContext();
     context.extensionSettings.gallery.sort = order;
     context.saveSettingsDebounced();
 }
@@ -199,7 +199,7 @@ function setSortOrder(order) {
  * @returns {string} The current sort order for the gallery.
  */
 function getSortOrder() {
-    return Luker.getContext().extensionSettings.gallery.sort ?? defaultSettings.sort;
+    return Taverncraft.getContext().extensionSettings.gallery.sort ?? defaultSettings.sort;
 }
 
 /**
@@ -570,7 +570,7 @@ function updateGalleryFolder(newUrl) {
     if (!newUrl) {
         throw new Error('Folder name cannot be empty');
     }
-    const context = Luker.getContext();
+    const context = Taverncraft.getContext();
     if (context.groupId) {
         throw new Error('Cannot change gallery folder in group chat');
     }
@@ -596,7 +596,7 @@ function updateGalleryFolder(newUrl) {
  * Restores the gallery folder to the default value.
  */
 function restoreGalleryFolder() {
-    const context = Luker.getContext();
+    const context = Taverncraft.getContext();
     if (context.groupId) {
         throw new Error('Cannot change gallery folder in group chat');
     }
@@ -821,7 +821,7 @@ function addGalleryWandButton() {
 export async function init() {
     initSettings();
     eventSource.on(event_types.CHARACTER_RENAMED, (oldAvatar, newAvatar) => {
-        const context = Luker.getContext();
+        const context = Taverncraft.getContext();
         const galleryFolder = context.extensionSettings.gallery.folders[oldAvatar];
         if (galleryFolder) {
             context.extensionSettings.gallery.folders[newAvatar] = galleryFolder;
@@ -832,7 +832,7 @@ export async function init() {
     eventSource.on(event_types.CHARACTER_DELETED, (data) => {
         const avatar = data?.character?.avatar;
         if (!avatar) return;
-        const context = Luker.getContext();
+        const context = Taverncraft.getContext();
         delete context.extensionSettings.gallery.folders[avatar];
         context.saveSettingsDebounced();
     });

@@ -55,7 +55,7 @@ test.describe('#91 — Authors Note via real inputs, depth-2 injection', () => {
 
         // Wait for the greeting to land.
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -100,7 +100,7 @@ test.describe('#91 — Authors Note via real inputs, depth-2 injection', () => {
         // Sanity: chat_metadata reflects the inputs (this is what the AN
         // writer reads on each turn).
         const md = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return {
                 note_prompt: ctx.chatMetadata?.note_prompt,
                 note_depth: ctx.chatMetadata?.note_depth,

@@ -1,7 +1,7 @@
 # E2E Expansion — Agent Brief
 
 You are one of ~13 parallel agents writing Playwright e2e tests for the
-Luker (SillyTavern fork) repo. Each agent owns one **batch** of tests
+Taverncraft (SillyTavern fork) repo. Each agent owns one **batch** of tests
 covering one functional area. Other agents are writing other batches at
 the same time.
 
@@ -18,7 +18,7 @@ the same time.
    `../_lib/fixtures.js`. Read those files to learn the API.
 4. **Port range**: your batch already has a reserved port range in
    `_lib/ports.js`. Just pass your `batchKey` to `startServer()`.
-5. **No mocks where real is feasible** — real Luker server, real Playwright,
+5. **No mocks where real is feasible** — real Taverncraft server, real Playwright,
    real browser, real chat history on disk. Mock the LLM only (already
    provided). Per repo convention `e2e_real_user_flow`.
 6. **RP-immersive fixtures** — never use "say hi" placeholder content.

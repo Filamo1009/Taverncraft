@@ -1,10 +1,10 @@
 # 插件集成
 
-把插件接入 Luker 流水线、以及插件之间互通的 API：正则处理、搜索工具、跨插件 API 注册表、事件系统。
+把插件接入 Taverncraft 流水线、以及插件之间互通的 API：正则处理、搜索工具、跨插件 API 注册表、事件系统。
 
 ## 正则运行时 API
 
-插件可以通过 `registerManagedRegexProvider()` 注册托管的正则处理器，参与 Luker 的正则处理流程。该函数从正则引擎模块导出：
+插件可以通过 `registerManagedRegexProvider()` 注册托管的正则处理器，参与 Taverncraft 的正则处理流程。该函数从正则引擎模块导出：
 
 ```js
 import { registerManagedRegexProvider } from '../../extensions/regex/engine.js';
@@ -30,21 +30,21 @@ handle.unregister();
 
 ## 搜索工具 API
 
-搜索插件通过 `Luker.searchTools` 全局对象暴露 API，供其他插件调用搜索能力：
+搜索插件通过 `Taverncraft.searchTools` 全局对象暴露 API，供其他插件调用搜索能力：
 
 ```js
 // 检查搜索插件是否可用
-if (globalThis?.Luker?.searchTools) {
+if (globalThis?.Taverncraft?.searchTools) {
   // 获取可用的搜索工具名称列表
-  const toolNames = Luker.searchTools.toolNames;
+  const toolNames = Taverncraft.searchTools.toolNames;
   // 获取工具定义（用于函数调用）
-  const toolDefs = Luker.searchTools.getToolDefs();
+  const toolDefs = Taverncraft.searchTools.getToolDefs();
   // 检查某个工具名是否属于搜索工具
-  const isSearchTool = Luker.searchTools.isToolName('web_search');
+  const isSearchTool = Taverncraft.searchTools.isToolName('web_search');
 }
 ```
 
-`Luker.searchTools` 暴露的是工具定义元数据，实际的搜索执行通过内部的工具调用循环完成。详见[搜索插件](/zh-CN/features/search-tools)。
+`Taverncraft.searchTools` 暴露的是工具定义元数据，实际的搜索执行通过内部的工具调用循环完成。详见[搜索插件](/zh-CN/features/search-tools)。
 
 ## 扩展间通信
 
@@ -159,7 +159,7 @@ addLocaleData(localeId: string, data: Record<string, string>): void
 把插件提供的翻译合并到已加载的语言数据中。请在 i18n 系统启动后调用（例如在 `APP_READY` 时）。当 `localeId` 是主 locale 时条目始终覆盖；当它是回退 locale 时条目只填充缺失的 key。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 ctx.eventSource.on(ctx.eventTypes.APP_READY, () => {
     ctx.addLocaleData('zh-cn', {
@@ -184,7 +184,7 @@ context.extensionSettings: object
 全局的纯对象，扩展在这里存储自己的配置。每个扩展通常使用自己的命名空间 key：
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 if (!ctx.extensionSettings.my_extension) {
     ctx.extensionSettings.my_extension = { enabled: true, level: 1 };
@@ -248,7 +248,7 @@ context.accountStorage: {
 账户作用域的 key/value 存储。值会被强制为字符串。通过 `saveSettingsDebounced` 持久化。适合存储跨聊天保留、但不应随角色卡导出的用户专属设置。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 ctx.accountStorage.setItem('my-extension:last-seen', String(Date.now()));
 const lastSeen = ctx.accountStorage.getItem('my-extension:last-seen');
 ```
@@ -269,7 +269,7 @@ registerDebugFunction(
 在用户设置的调试菜单里加一个按钮。点击时调用 `func`。适合插件维护操作（清缓存、dump 状态、强制重载等）。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 ctx.registerDebugFunction(
     'my-plugin-clear-cache',
     'Clear my-plugin cache',
@@ -476,7 +476,7 @@ context.lib: {
 | `yaml` | YAML 解析/序列化（[yaml](https://eemeli.org/yaml/)） |
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const safe = ctx.lib.DOMPurify.sanitize(userHtml);
 const md = new ctx.lib.showdown.Converter().makeHtml(text);
 ```
@@ -502,7 +502,7 @@ context.secrets.state: Record<string, boolean>
 每个密钥槽当前是否已填的布尔实时映射。只读快照——直接修改不会持久化。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 if (!ctx.secrets.state[ctx.secrets.KEYS.OPENAI]) {
     toastr.warning('OpenAI API key 未设置。');
 }
@@ -554,7 +554,7 @@ context.constants.promptTypes: { NONE, IN_PROMPT, IN_CHAT, BEFORE_PROMPT }
 `setExtensionPrompt` 及相关注入路径用的数值枚举。`promptRoles` 选择被注入 prompt 的 message role;`promptTypes` 选择注入位置。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 ctx.setExtensionPrompt(
     'my-plugin-pre',
     '前置上下文备注。',

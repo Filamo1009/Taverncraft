@@ -175,7 +175,7 @@ test.describe('#57 — MG import never produces ID collisions', () => {
         // Step 1 — import the ORIG store (5 nodes at n_1..n_5).
         await importBindLatest(page, origPath);
         const afterOrig = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const mg = ctx.getExtensionApi?.('memory-graph');
             const session = await mg?.openSession?.(ctx);
             return session ? session.listVisibleCandidates({}).map(n => n.title).filter(t => /ORIG-/.test(t)).sort() : [];
@@ -186,7 +186,7 @@ test.describe('#57 — MG import never produces ID collisions', () => {
         // overlapping ids). Replace-mode wipes the originals.
         await importBindLatest(page, importedPath);
         const afterImport = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const mg = ctx.getExtensionApi?.('memory-graph');
             const session = await mg?.openSession?.(ctx);
             if (!session) return { importedTitles: [], originalsGone: false, maxNodeId: 0 };
@@ -217,7 +217,7 @@ test.describe('#57 — MG import never produces ID collisions', () => {
         // public extension internals. If `nodeSeq >= 3`, the next
         // session.createNode would generate n_4 — no collision.
         const runtimeNodeSeq = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const mod = await import('/scripts/extensions/memory-graph/main.js');
             const store = await mod.ensureMemoryStoreLoaded(ctx);
             return Number(store?.nodeSeq || 0);

@@ -18,14 +18,14 @@
 
 ---
 
-## Что добавляет Luker
+## Что добавляет Taverncraft
 
-Luker — это форк SillyTavern с упором на более аккуратный API-дизайн и расширяемость.
+Taverncraft — это форк SillyTavern с упором на более аккуратный API-дизайн и расширяемость.
 
 - Инкрементальные API сохранения чатов (`append` / `patch` / `meta/patch` / `state/patch`).
 - Восстановление генерации на стороне бэкенда при переподключении клиента.
 - Встроенные плагины: `Orchestrator` и `Memory`.
-- Документ по миграции API: [docs/luker-api-migration.md](https://github.com/funnycups/Luker/blob/release/docs/luker-api-migration.md)
+- Документ по миграции API: [docs/luker-api-migration.md](https://github.com/Filamo1009/Taverncraft/blob/release/docs/luker-api-migration.md)
 
 SillyTavern предоставляет единый интерфейс для многих LLM API (KoboldAI/CPP, Horde, NovelAI, Ooba, Tabby, OpenAI, OpenRouter, Claude, Mistral и других), мобайл-френдли макет, режим визуальной новеллы, интеграцию с генерацией изображений через API Automatic1111 и ComfyUI, TTS, WorldInfo (лорбуки), кастомизируемый UI, автоперевод, тончайшую настройку промптов, и возможность устанавливать расширения.
 

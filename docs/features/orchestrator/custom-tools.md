@@ -1,10 +1,10 @@
 # Custom Tools
 
-Custom tools let you give orchestrator agents new capabilities — beyond the builtin chat / lorebook / note / memory tools that ship with Luker. Three channels are supported, and all four orchestration modes (loop / spec / agenda / director) see them the same way.
+Custom tools let you give orchestrator agents new capabilities — beyond the builtin chat / lorebook / note / memory tools that ship with Taverncraft. Three channels are supported, and all four orchestration modes (loop / spec / agenda / director) see them the same way.
 
 ## Where custom tools come from
 
-**From other Luker extensions.** Extensions like memory-graph and search-tools register their tools at startup. You don't have to do anything — the tools appear in the orchestration editor under **Custom tools → Extension (from other plugins)**, and they're enabled by default for first-run profiles.
+**From other Taverncraft extensions.** Extensions like memory-graph and search-tools register their tools at startup. You don't have to do anything — the tools appear in the orchestration editor under **Custom tools → Extension (from other plugins)**, and they're enabled by default for first-run profiles.
 
 **From SillyTavern.** SillyTavern has a function-tool system that other plugins use. To make those visible to orchestrator agents, open the orchestration editor and click **Bridge SillyTavern tools…** — pick which ones you want, choose a read/write mode per tool, save. They appear under **Custom tools → From SillyTavern**.
 
@@ -73,9 +73,9 @@ if (ctx.__lukerRun?.abortSignal?.aborted) {
 
 ### Safety
 
-The function body runs in the page context with the same permissions as any Luker module. It can fetch arbitrary URLs, mutate global state, and read private chat content. **Only paste code from sources you trust.**
+The function body runs in the page context with the same permissions as any Taverncraft module. It can fetch arbitrary URLs, mutate global state, and read private chat content. **Only paste code from sources you trust.**
 
-When a character card you're importing carries custom tools, Luker shows a review dialog with each tool's name, description, mode, and full body before deciding whether to import them. You can choose **Apply with tools** to import everything, **Apply without tools** to import the card but drop the custom tools, or expand each entry to inspect the body first.
+When a character card you're importing carries custom tools, Taverncraft shows a review dialog with each tool's name, description, mode, and full body before deciding whether to import them. You can choose **Apply with tools** to import everything, **Apply without tools** to import the card but drop the custom tools, or expand each entry to inspect the body first.
 
 ## Enabling and disabling
 
@@ -96,7 +96,7 @@ Read tools (results returned immediately, no review):
 - `luker_orch_list_custom_tools` — list profile-owned entries with mode / description / hasSimulate / a one-line parameter-schema summary.
 - `luker_orch_get_custom_tool` — read one entry verbatim, including the full body.
 - `luker_orch_dry_run_custom_tool` — compile + execute a body in a sandbox with caller-supplied args. Returns `{ok, result, error, logs, durationMs}`; wall-clock cap is 3 seconds; `console.log/warn/error` are captured. Either `name` (run the live profile entry) or `body` (compile inline) is required.
-- `luker_ctx_list_keys` / `luker_ctx_describe` — enumerate / walk into the runtime `ctx` surface (the same object SillyTavern/Luker extensions get via `getContext()`). Returns type, function arity, source preview, sub-keys.
+- `luker_ctx_list_keys` / `luker_ctx_describe` — enumerate / walk into the runtime `ctx` surface (the same object SillyTavern/Taverncraft extensions get via `getContext()`). Returns type, function arity, source preview, sub-keys.
 - `luker_docs_list` / `luker_docs_read` — list and read authoritative markdown under `docs/` (default-hides zh-CN / zh-TW translations). Useful starting points: `features/orchestrator/custom-tools.md`, `development/extension-api/chat-and-state.md`, `development/extension-api/generation.md`, `development/extension-api/world-info.md`, `development/extension-api/orchestrator-tools.md`.
 
 Write tools (stage a proposal on the iter-studio's ProposalBus; nothing reaches the profile until you approve the card):

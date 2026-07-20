@@ -48,8 +48,8 @@ describe('resolveProfile', () => {
     test('throws GenerateTaskError when no resolver available and SillyTavern absent', () => {
         // jest.setup.js installs a SillyTavern stub by default; this test
         // needs the no-host fallback path, so clear it for the duration.
-        const prev = { Luker: globalThis.Luker, st: globalThis.st, SillyTavern: globalThis.SillyTavern };
-        delete globalThis.Luker; delete globalThis.st; delete globalThis.SillyTavern;
+        const prev = { Taverncraft: globalThis.Taverncraft, st: globalThis.st, SillyTavern: globalThis.SillyTavern };
+        delete globalThis.Taverncraft; delete globalThis.st; delete globalThis.SillyTavern;
         try {
             expect(() => resolveProfile('AnyName', { resolver: null }))
                 .toThrow(expect.objectContaining({ name: 'GenerateTaskError', code: 'unknown' }));
@@ -235,8 +235,8 @@ describe('renderForApi', () => {
     test('non-openai requestApi without rawPromptBuilder and no globalThis → throws unsupported_api', () => {
         // jest.setup.js installs a SillyTavern stub by default; this test
         // needs the no-host fallback path, so clear it for the duration.
-        const prev = { Luker: globalThis.Luker, st: globalThis.st, SillyTavern: globalThis.SillyTavern };
-        delete globalThis.Luker; delete globalThis.st; delete globalThis.SillyTavern;
+        const prev = { Taverncraft: globalThis.Taverncraft, st: globalThis.st, SillyTavern: globalThis.SillyTavern };
+        delete globalThis.Taverncraft; delete globalThis.st; delete globalThis.SillyTavern;
         try {
             expect(() => renderForApi('kobold', messages, { rawPromptBuilder: null }))
                 .toThrow(expect.objectContaining({ name: 'GenerateTaskError', code: 'unsupported_api' }));

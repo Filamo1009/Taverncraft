@@ -182,7 +182,7 @@ test.describe('CPA orchestrator-optimize: proactive skill extraction sweep', () 
         const activatedProfile = await activateConnectionProfile(page);
         expect(activatedProfile, 'spec needs a usable connection profile').toBeTruthy();
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             const v = ctx?.onlineStatus ?? null;
             return Boolean(v) && String(v) !== 'no_connection';
         }, null, { timeout: 30000 });
@@ -190,7 +190,7 @@ test.describe('CPA orchestrator-optimize: proactive skill extraction sweep', () 
         await page.locator('#rm_api_block').waitFor({ state: 'hidden', timeout: 5000 });
 
         let presetMeta = await page.evaluate(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             const ref = ctx?.presets?.getSelected?.('openai');
             return ref && typeof ref === 'object' ? { name: String(ref.name || '') } : null;
         });
@@ -198,7 +198,7 @@ test.describe('CPA orchestrator-optimize: proactive skill extraction sweep', () 
 
         if (!SAFE_SEGMENT.test(presetMeta.name)) {
             let candidate = await page.evaluate((re) => {
-                const ctx = window.Luker?.getContext?.();
+                const ctx = window.Taverncraft?.getContext?.();
                 const all = (ctx?.presets?.list?.('openai') || []).map(r => String(r?.name || '')).filter(Boolean);
                 const regex = new RegExp(re);
                 return all.find(n => regex.test(n)) || '';
@@ -211,7 +211,7 @@ test.describe('CPA orchestrator-optimize: proactive skill extraction sweep', () 
                 // contract this spec depends on).
                 candidate = `e2e-sweep-ascii-${Date.now()}`;
                 const cloned = await page.evaluate(async (name) => {
-                    const ctx = window.Luker?.getContext?.();
+                    const ctx = window.Taverncraft?.getContext?.();
                     const active = ctx?.presets?.getSelected?.('openai');
                     const stored = active ? ctx.presets.getStored(active) : null;
                     if (!stored?.body) return { ok: false, reason: 'active preset body unavailable' };
@@ -227,7 +227,7 @@ test.describe('CPA orchestrator-optimize: proactive skill extraction sweep', () 
                 window.jQuery?.(dropdown).val(opt.value).trigger('change');
             }, candidate);
             await page.waitForFunction((n) => {
-                const ctx = window.Luker?.getContext?.();
+                const ctx = window.Taverncraft?.getContext?.();
                 const ref = ctx?.presets?.getSelected?.('openai');
                 return ref && String(ref.name || '') === n;
             }, candidate, { timeout: 10000 });
@@ -277,7 +277,7 @@ test.describe('CPA orchestrator-optimize: proactive skill extraction sweep', () 
 
         // ── Step 3: inject the extractable block. ────────────────────────
         const injection = await page.evaluate(async ({ injectBlock, presetName }) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const ref = { collection: 'openai', name: presetName };
             const stored = ctx.presets.getStored(ref);
             if (!stored?.body) throw new Error('preset body unavailable');
@@ -397,7 +397,7 @@ test.describe('CPA orchestrator-optimize: proactive skill extraction sweep', () 
         } finally {
             // Restore preset body.
             await page.evaluate(async ({ presetName, body }) => {
-                const ctx = window.Luker.getContext();
+                const ctx = window.Taverncraft.getContext();
                 await ctx.presets.save({ collection: 'openai', name: presetName }, body, { select: true });
             }, { presetName: presetMeta.name, body: injection.originalBody });
 

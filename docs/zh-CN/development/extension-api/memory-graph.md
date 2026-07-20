@@ -9,7 +9,7 @@
 
 ## 会话 API（推荐入口）
 
-通过 Luker 的扩展注册表打开一个聊天作用域的会话：
+通过 Taverncraft 的扩展注册表打开一个聊天作用域的会话：
 
 ```js
 import { getExtensionApi } from '/scripts/extensions.js';
@@ -37,7 +37,7 @@ await session.deleteLinks({ source: { id }, target: { id: 'bob_node' }, relation
 await session.compactNodes({ type: 'event', childIds: [...], summary: '...' });
 ```
 
-`'memory-graph'` 这个 extension api 通过 Luker 的 `registerExtensionApi(name, api)` 机制发布 —— `card-app` 等其他 Luker 扩展用的是同一套。第三方扩展接入记忆图时应统一走 `getExtensionApi('memory-graph')`，不要直接 import `memory-graph/*.js`。
+`'memory-graph'` 这个 extension api 通过 Taverncraft 的 `registerExtensionApi(name, api)` 机制发布 —— `card-app` 等其他 Taverncraft 扩展用的是同一套。第三方扩展接入记忆图时应统一走 `getExtensionApi('memory-graph')`，不要直接 import `memory-graph/*.js`。
 
 ### 生命周期
 
@@ -82,7 +82,7 @@ orchestrator 的 `memory_*` loop 工具会把 `null` 会话翻译成 `ToolError(
 
 ### 底层访问
 
-`getMemoryGraphReadApi(store, context)` 与 `getMemoryGraphWriteApi(store, context)` 仍然导出，供已经持有 store 引用的内部调用方使用（例如原生 `chooseRecallRoute` 流水线）。第三方扩展应优先使用 `openSession` —— 会话外观把 store 加载、空聊天兜底、通过 Luker 标准 extension api 的注册都收在了一处。
+`getMemoryGraphReadApi(store, context)` 与 `getMemoryGraphWriteApi(store, context)` 仍然导出，供已经持有 store 引用的内部调用方使用（例如原生 `chooseRecallRoute` 流水线）。第三方扩展应优先使用 `openSession` —— 会话外观把 store 加载、空聊天兜底、通过 Taverncraft 标准 extension api 的注册都收在了一处。
 
 ## 角色级 override 访问器
 
@@ -180,7 +180,7 @@ mg.offStoreCommit(callback);
 
 ## 概览
 
-记忆图扩展驱动 Luker 的长期召回 —— 它把精选后的节点池（`character_sheet`、`event`、`relationship`、……）加上每个节点的 `edge_summary` 喂给一个"路由"LLM，由它挑出下一轮要注入哪些记忆。原生流水线（`main.js` 中的 `chooseRecallRoute` / `collectRootCandidates`）通过一组内部 helper —— `buildProjectedEdges`、`getNearestVisibleAncestorId`、`formatNodeBrief` 等等 —— 构造出 LLM 输入。
+记忆图扩展驱动 Taverncraft 的长期召回 —— 它把精选后的节点池（`character_sheet`、`event`、`relationship`、……）加上每个节点的 `edge_summary` 喂给一个"路由"LLM，由它挑出下一轮要注入哪些记忆。原生流水线（`main.js` 中的 `chooseRecallRoute` / `collectRootCandidates`）通过一组内部 helper —— `buildProjectedEdges`、`getNearestVisibleAncestorId`、`formatNodeBrief` 等等 —— 构造出 LLM 输入。
 
 `getMemoryGraphReadApi(store, context)` 把同一份数据、拓扑和召回原语暴露成一个深冻结、对调用方安全的 API 面。预期消费者是 agent 风格的插件，自己跑一遍 LLM 驱动的召回 —— 比如 orchestrator 的 `memory_scout` 子代理 —— 用操作者偏好的模型 / preset，对着原生路由器看到的完全一样的候选池和字段投影来工作。
 
@@ -197,7 +197,7 @@ mg.offStoreCommit(callback);
 ```js
 import { getExtensionApi } from '/scripts/extensions.js';
 
-const session = await getExtensionApi('memory-graph')?.openSession?.(Luker.getContext());
+const session = await getExtensionApi('memory-graph')?.openSession?.(Taverncraft.getContext());
 if (!session) return;
 
 // Enumerate the visible candidate pool the native recall LLM sees.
@@ -805,7 +805,7 @@ unsubscribe();
 ```js
 import { getExtensionApi } from '/scripts/extensions.js';
 
-const api = await getExtensionApi('memory-graph')?.openSession?.(Luker.getContext());
+const api = await getExtensionApi('memory-graph')?.openSession?.(Taverncraft.getContext());
 if (!api) return;
 
 // schema_overview block (the LLM prompt segment that describes each node type).

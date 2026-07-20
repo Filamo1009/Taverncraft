@@ -287,7 +287,7 @@ async function sendStudioPromptAndWait(page, prompt, { expect: expectKind, timeo
             // Best-effort: try to abort any in-flight round so the next
             // attempt can start clean.
             await page.evaluate(() => {
-                try { window.Luker?.__testAbortCurrentIterRound?.(); } catch { /* best effort */ }
+                try { window.Taverncraft?.__testAbortCurrentIterRound?.(); } catch { /* best effort */ }
             }).catch(() => {});
             await page.waitForTimeout(delayMs);
         }
@@ -356,7 +356,7 @@ test.describe('#28 — real-LLM post-replace world-book sweep', () => {
             // Await the new book showing up in the world-info list (the
             // materialize path is async).
             await page.waitForFunction(({ name }) => {
-                const ctx = window.Luker?.getContext?.();
+                const ctx = window.Taverncraft?.getContext?.();
                 const names = typeof ctx?.getWorldInfoNames === 'function' ? ctx.getWorldInfoNames() : [];
                 return Array.isArray(names) && names.includes(name);
             }, { name: CARD_B_BOOK }, { timeout: 15_000 });
@@ -473,7 +473,7 @@ test.describe('#28 — real-LLM post-replace world-book sweep', () => {
 
             // --- Assertion A: pre-materialize wrote the new book -----
             await page.waitForFunction(({ name }) => {
-                const ctx = window.Luker?.getContext?.();
+                const ctx = window.Taverncraft?.getContext?.();
                 const names = typeof ctx?.getWorldInfoNames === 'function' ? ctx.getWorldInfoNames() : [];
                 return Array.isArray(names) && names.includes(name);
             }, { name: CARD_B_BOOK }, { timeout: 15_000 });
@@ -603,7 +603,7 @@ test.describe('#28 — real-LLM post-replace world-book sweep', () => {
             // --- Assertion F: edit actually landed on disk -----------
             // Poll the book file for the migrated entry.
             await page.waitForFunction(async ({ bookName }) => {
-                const ctx = window.Luker?.getContext?.();
+                const ctx = window.Taverncraft?.getContext?.();
                 if (!ctx?.loadWorldInfo) return false;
                 try {
                     const book = await ctx.loadWorldInfo(bookName);
@@ -667,7 +667,7 @@ test.describe('#28 — real-LLM post-replace world-book sweep', () => {
             await studio.waitFor({ state: 'visible', timeout: 30_000 });
             // Pre-materialize completed.
             await page.waitForFunction(({ name }) => {
-                const ctx = window.Luker?.getContext?.();
+                const ctx = window.Taverncraft?.getContext?.();
                 const names = typeof ctx?.getWorldInfoNames === 'function' ? ctx.getWorldInfoNames() : [];
                 return Array.isArray(names) && names.includes(name);
             }, { name: CARD_B_BOOK }, { timeout: 15_000 });
@@ -710,7 +710,7 @@ test.describe('#28 — real-LLM post-replace world-book sweep', () => {
             // Rollback: new book file deleted, old book unchanged,
             // binding restored to card A book.
             await page.waitForFunction(({ name }) => {
-                const ctx = window.Luker?.getContext?.();
+                const ctx = window.Taverncraft?.getContext?.();
                 const names = typeof ctx?.getWorldInfoNames === 'function' ? ctx.getWorldInfoNames() : [];
                 return !(Array.isArray(names) && names.includes(name));
             }, { name: CARD_B_BOOK }, { timeout: 15_000 });

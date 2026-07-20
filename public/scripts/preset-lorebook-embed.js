@@ -1,5 +1,5 @@
 /**
- * Preset ↔ Lorebook embed helpers (Luker symmetry with character cards).
+ * Preset ↔ Lorebook embed helpers (Taverncraft symmetry with character cards).
  *
  * The preset binding mechanism stores a full lorebook payload inside the
  * preset body at `extensions.preset_lorebook`, shape:

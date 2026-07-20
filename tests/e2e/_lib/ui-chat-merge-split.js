@@ -109,7 +109,7 @@ export async function submitMergeDialog(page, dialog, targetName, { awaitNavigat
     const dialogElement = page.locator('dialog.popup[open]').last();
     if (awaitNavigation) {
         const navPromise = page.evaluate((to) => new Promise((resolve, reject) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const timer = setTimeout(() => reject(new Error('chat_changed timeout')), to);
             const off = ctx.eventSource.on(ctx.eventTypes.CHAT_CHANGED, (id) => {
                 clearTimeout(timer);

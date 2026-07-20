@@ -26,7 +26,7 @@ import {
     unregisterOrchestrationTool,
 } from './register-custom-tool.js';
 import { gatherGrepMatches } from './grep-tool.js';
-const skillsApi = Luker.getContext().skills;
+const skillsApi = Taverncraft.getContext().skills;
 
 const SKILL_TOOL_NAMES = ['skill_list', 'skill_read', 'skill_search'];
 

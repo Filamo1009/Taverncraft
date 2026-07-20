@@ -47,7 +47,7 @@ test('migrate sqlite -> fs via admin UI preserves a chat sent while in sqlite', 
     // from the sqlite source set during the reverse migration).
     await selectCharacterByName(page, 'Seraphina');
     await page.waitForFunction(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
     }, { timeout: 10_000 }).catch(() => {});
 
@@ -57,7 +57,7 @@ test('migrate sqlite -> fs via admin UI preserves a chat sent while in sqlite', 
     );
 
     const preChatSnapshot = await page.evaluate(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return ctx.chat.map(m => String(m.mes || ''));
     });
     expect(preChatSnapshot.some(m => /gulls turn|first hour past dawn/.test(m))).toBe(true);
@@ -73,12 +73,12 @@ test('migrate sqlite -> fs via admin UI preserves a chat sent while in sqlite', 
     await reloadAndAwait(page, server.baseURL);
     await selectCharacterByName(page, 'Seraphina');
     await page.waitForFunction(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return Array.isArray(ctx.chat) && ctx.chat.length >= 2;
     }, { timeout: 10_000 });
 
     const postChatSnapshot = await page.evaluate(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return ctx.chat.map(m => String(m.mes || ''));
     });
     expect(postChatSnapshot.some(m => /gulls turn|first hour past dawn/.test(m))).toBe(true);

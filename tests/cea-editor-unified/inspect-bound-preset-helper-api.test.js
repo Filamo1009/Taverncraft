@@ -124,7 +124,7 @@ jest.unstable_mockModule('../../public/scripts/iteration-library/markdown-escape
 // dispatches through the shared executor which asks the ctx surface, not
 // Layer 1 directly. Nothing to mock on the presets side.
 
-// Luker global — main.js runs `Luker.getContext()` at module load. Wire up
+// Taverncraft global — main.js runs `Taverncraft.getContext()` at module load. Wire up
 // the exact surface main.js expects at boot time (`lib`, `extensionSettings`,
 // worldInfoEntry, chatWorldInfo, popup constants, i18n, etc.).
 const bootLuker = {
@@ -150,7 +150,7 @@ const bootLuker = {
     generateQuietPrompt: async () => '',
     saveSettingsDebounced: () => {},
 };
-globalThis.Luker = { getContext: () => bootLuker };
+globalThis.Taverncraft = { getContext: () => bootLuker };
 
 const CEA = await import('../../public/scripts/extensions/character-editor-assistant/main.js');
 

@@ -34,7 +34,7 @@ export async function awaitMainUI(page, baseURL) {
         await gate.click();
     } catch { /* auto-login path */ }
     await page.waitForFunction('document.getElementById("preloader") === null', { timeout: 60_000 });
-    await page.waitForFunction(() => !!window.Luker?.getContext, { timeout: 30_000 });
+    await page.waitForFunction(() => !!window.Taverncraft?.getContext, { timeout: 30_000 });
     // Click the Connect button if present (canonical handshake entry).
     await page.evaluate(async () => {
         const btn = document.querySelector('#api_button_openai');
@@ -154,7 +154,7 @@ export async function openInlineDrawer(page, hostId) {
  */
 export async function selectCharacterByName(page, name) {
     // Dismiss onboarding modal if it ever flashes.
-    const onboardingHeader = page.locator('.popup', { hasText: /Welcome to Luker|歡迎使用|欢迎使用/ }).first();
+    const onboardingHeader = page.locator('.popup', { hasText: /Welcome to Taverncraft|歡迎使用|欢迎使用/ }).first();
     if (await onboardingHeader.isVisible().catch(() => false)) {
         await page.locator('.popup .popup-button-cancel, .popup .popup-button-ok').first().click().catch(() => {});
         await onboardingHeader.waitFor({ state: 'detached', timeout: 5000 }).catch(() => {});
@@ -188,7 +188,7 @@ export async function selectCharacterByName(page, name) {
     await card.click();
 
     await page.waitForFunction(() => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         return ctx && (typeof ctx.characterId === 'number' || typeof ctx.characterId === 'string');
     }, { timeout: 10_000 }).catch(() => { /* welcome panel ok */ });
 
@@ -233,7 +233,7 @@ export async function closeRightNavDrawer(page) {
  */
 export async function selectCharacterProgrammatic(page, name) {
     return page.evaluate((wantName) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const idx = ctx.characters.findIndex(c => c?.name === wantName);
         if (idx < 0) throw new Error(`character "${wantName}" not present`);
         const sel = document.querySelector(`#rm_print_characters_block .character_select[chid="${idx}"]`);
@@ -257,17 +257,28 @@ export async function selectCharacterProgrammatic(page, name) {
 export async function sendMessageAndAwaitReply(page, text, { timeoutMs = 120_000 } = {}) {
     // GENERATION_ENDED fires after streaming flushes ctx.chat[id].mes —
     // safer than MESSAGE_RECEIVED, which fires before the streamed reply
-    // content has fully replaced the "..." placeholder.
+    // content has fully replaced the "..." placeholder. A provider failure
+    // emits GENERATION_STOPPED so callers can recover without waiting for the
+    // full timeout.
     const generationPromise = page.evaluate((to) => new Promise((resolve, reject) => {
-        const ctx = window.Luker.getContext();
-        const t = setTimeout(() => reject(new Error('reply timeout')), to);
-        // GENERATION_ENDED's payload is chat.length (i.e. id+1) so we
-        // return chat.length-1 as the new assistant message id.
-        const off = ctx.eventSource.on(ctx.eventTypes.GENERATION_ENDED, (chatLength) => {
+        const ctx = window.Taverncraft.getContext();
+        const cleanup = () => {
             clearTimeout(t);
-            try { ctx.eventSource.removeListener(ctx.eventTypes.GENERATION_ENDED, off); } catch {}
+            try { ctx.eventSource.removeListener(ctx.eventTypes.GENERATION_ENDED, onEnded); } catch { /* detached */ }
+            try { ctx.eventSource.removeListener(ctx.eventTypes.GENERATION_STOPPED, onStopped); } catch { /* detached */ }
+        };
+        const fail = message => {
+            cleanup();
+            reject(new Error(message));
+        };
+        const onEnded = chatLength => {
+            cleanup();
             resolve(Math.max(0, Number(chatLength) - 1));
-        });
+        };
+        const onStopped = () => fail('generation stopped before a completed reply');
+        const t = setTimeout(() => fail('reply timeout'), to);
+        ctx.eventSource.on(ctx.eventTypes.GENERATION_ENDED, onEnded);
+        ctx.eventSource.on(ctx.eventTypes.GENERATION_STOPPED, onStopped);
     }), timeoutMs);
 
     const textarea = page.locator('#send_textarea');
@@ -307,7 +318,7 @@ export const sendMessageViaButtonAndAwaitReply = sendMessageAndAwaitReply;
  */
 export async function sendMessageProgrammatic(page, text, { timeoutMs = 120_000 } = {}) {
     const replyPromise = page.evaluate((to) => new Promise((resolve, reject) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const t = setTimeout(() => reject(new Error('reply timeout')), to);
         const off = ctx.eventSource.on(ctx.eventTypes.MESSAGE_RECEIVED, (id) => {
             clearTimeout(t);
@@ -316,12 +327,12 @@ export async function sendMessageProgrammatic(page, text, { timeoutMs = 120_000 
         });
     }), timeoutMs);
     await page.evaluate(async (msg) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         await ctx.executeSlashCommandsWithOptions(`/send ${msg.replace(/\n/g, ' ')} | /trigger`);
     }, text);
     const replyId = await replyPromise;
     const replyText = await page.evaluate((id) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return ctx.chat[id]?.mes || '';
     }, replyId);
     return { replyId, text: replyText };
@@ -332,20 +343,44 @@ export async function sendMessageProgrammatic(page, text, { timeoutMs = 120_000 
  * real .swipe_right button. Returns the new variant text from DOM.
  *
  * The .swipe_right element is normally invisible until the cursor hovers
- * the message — we use force:true to bypass the hover gate, which is
- * accurate enough since the user does see this control on mobile (always
- * visible) and via tab navigation. If you want to test the hover-reveal
- * specifically, write a separate test that hovers the message first.
+ * the message. The helper dispatches the element's native click and, when
+ * the swipe starts a regeneration, waits for GENERATION_ENDED so callers
+ * receive the completed variant rather than the temporary "..." bubble.
  */
 export async function swipeRightOnLatest(page, { timeoutMs = 120_000 } = {}) {
     const swipePromise = page.evaluate((to) => new Promise((resolve, reject) => {
-        const ctx = window.Luker.getContext();
-        const t = setTimeout(() => reject(new Error('swipe timeout')), to);
-        const off = ctx.eventSource.on(ctx.eventTypes.MESSAGE_SWIPED, (id) => {
-            clearTimeout(t);
-            try { ctx.eventSource.removeListener(ctx.eventTypes.MESSAGE_SWIPED, off); } catch {}
-            resolve(id);
-        });
+        const ctx = window.Taverncraft.getContext();
+        let swipedMessageId = null;
+        let pendingGeneration = false;
+        const cleanup = () => {
+            clearTimeout(timer);
+            try { ctx.eventSource.removeListener(ctx.eventTypes.MESSAGE_SWIPED, onSwiped); } catch { /* already detached */ }
+            try { ctx.eventSource.removeListener(ctx.eventTypes.GENERATION_ENDED, onGenerationEnded); } catch { /* already detached */ }
+            try { ctx.eventSource.removeListener(ctx.eventTypes.GENERATION_STOPPED, onGenerationStopped); } catch { /* already detached */ }
+        };
+        const finish = () => {
+            cleanup();
+            resolve(swipedMessageId);
+        };
+        const fail = (message) => {
+            cleanup();
+            reject(new Error(message));
+        };
+        const onSwiped = (id, meta = {}) => {
+            swipedMessageId = id;
+            pendingGeneration = Boolean(meta.pendingGeneration);
+            if (!pendingGeneration) finish();
+        };
+        const onGenerationEnded = () => {
+            if (swipedMessageId !== null && pendingGeneration) finish();
+        };
+        const onGenerationStopped = () => {
+            if (swipedMessageId !== null && pendingGeneration) fail('swipe generation stopped');
+        };
+        const timer = setTimeout(() => fail('swipe timeout'), to);
+        ctx.eventSource.on(ctx.eventTypes.MESSAGE_SWIPED, onSwiped);
+        ctx.eventSource.on(ctx.eventTypes.GENERATION_ENDED, onGenerationEnded);
+        ctx.eventSource.on(ctx.eventTypes.GENERATION_STOPPED, onGenerationStopped);
     }), timeoutMs);
     // The .swipe_right chevron has a .fade opacity transition that adds
     // visibility:hidden + pointer-events:none for ~200ms. Playwright's
@@ -363,7 +398,7 @@ export async function swipeRightOnLatest(page, { timeoutMs = 120_000 } = {}) {
 
 export async function swipeLeftOnLatest(page, { timeoutMs = 120_000 } = {}) {
     const swipePromise = page.evaluate((to) => new Promise((resolve, reject) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const t = setTimeout(() => reject(new Error('swipe timeout')), to);
         const off = ctx.eventSource.on(ctx.eventTypes.MESSAGE_SWIPED, (id) => {
             clearTimeout(t);
@@ -411,7 +446,7 @@ export async function editMessageViaUI(page, mesid, newText) {
     // Listen for MESSAGE_EDITED before clicking confirm so we don't race
     // the save → re-render cycle.
     const editPromise = page.evaluate(() => new Promise((resolve, reject) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const t = setTimeout(() => reject(new Error('edit timeout')), 15_000);
         const off = ctx.eventSource.on(ctx.eventTypes.MESSAGE_EDITED, (id) => {
             clearTimeout(t);
@@ -459,7 +494,7 @@ export async function deleteMessageViaUI(page, mesid) {
     // BEFORE dispatching the click so the listener is in place by the
     // time deleteMessage emits.
     await page.evaluate(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         window.__deleteSignal = { resolved: false, id: null };
         const off = (id) => {
             try { ctx.eventSource.removeListener(ctx.eventTypes.MESSAGE_DELETED, off); } catch {}
@@ -517,7 +552,7 @@ export async function openOptionsAndClick(page, optionId) {
  */
 export async function continueViaUI(page, { timeoutMs = 120_000 } = {}) {
     const continuePromise = page.evaluate((to) => new Promise((resolve, reject) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const t = setTimeout(() => reject(new Error('continue timeout')), to);
         const off = ctx.eventSource.on(ctx.eventTypes.MESSAGE_RECEIVED, (id) => {
             clearTimeout(t);
@@ -537,11 +572,11 @@ export async function continueViaUI(page, { timeoutMs = 120_000 } = {}) {
  */
 export async function regenerateViaUI(page, { timeoutMs = 120_000 } = {}) {
     const regenPromise = page.evaluate((to) => new Promise((resolve, reject) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const t = setTimeout(() => reject(new Error('regenerate timeout')), to);
         const off = ctx.eventSource.on(ctx.eventTypes.MESSAGE_RECEIVED, (id) => {
             clearTimeout(t);
-            try { ctx.eventSource.removeListener(ctx.eventTypes.MESSAGE_RECEIVED, off); } catch {}
+            try { ctx.eventSource.removeListener(ctx.eventTypes.MESSAGE_RECEIVED, off); } catch { /* detached */ }
             resolve(id);
         });
     }), timeoutMs);
@@ -581,7 +616,7 @@ export async function branchFromMessageViaUI(page, mesid, { timeoutMs = 30_000 }
     const branchBtn = mes.locator('.mes_create_branch').first();
     await branchBtn.waitFor({ state: 'visible', timeout: 5000 });
     const chatPromise = page.evaluate((to) => new Promise((resolve, reject) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const t = setTimeout(() => reject(new Error('branch timeout')), to);
         const off = ctx.eventSource.on(ctx.eventTypes.CHAT_CHANGED, (id) => {
             clearTimeout(t);
@@ -604,7 +639,7 @@ export async function branchFromMessageViaUI(page, mesid, { timeoutMs = 30_000 }
  */
 export async function createNewChatViaUI(page, { timeoutMs = 30_000 } = {}) {
     const chatPromise = page.evaluate((to) => new Promise((resolve, reject) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const t = setTimeout(() => reject(new Error('new-chat timeout')), to);
         const off = ctx.eventSource.on(ctx.eventTypes.CHAT_CHANGED, (id) => {
             clearTimeout(t);
@@ -639,7 +674,7 @@ export async function createNewChatViaUI(page, { timeoutMs = 30_000 } = {}) {
  * close it themselves.
  */
 export async function renameCurrentChatViaUI(page, newName) {
-    const originalChatId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+    const originalChatId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
     await openOptionsAndClick(page, 'option_select_chat');
     const row = page.locator('.select_chat_block_wrapper', { has: page.locator('.select_chat_block_filename', { hasText: originalChatId }) }).first();
     await row.waitFor({ state: 'visible', timeout: 10_000 });
@@ -650,7 +685,7 @@ export async function renameCurrentChatViaUI(page, newName) {
     await popupInput.fill(newName);
     await popup.locator('.popup-button-ok').click();
     await page.waitForFunction((expected) => {
-        return window.Luker.getContext().getCurrentChatId() === expected;
+        return window.Taverncraft.getContext().getCurrentChatId() === expected;
     }, newName, { timeout: 15_000 });
 }
 
@@ -683,7 +718,7 @@ export async function editMessageById(page, mesid, newText) {
  */
 export async function deleteLastMessage(page) {
     const lastMesId = await page.evaluate(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return ctx.chat.length - 1;
     });
     return deleteMessageViaUI(page, lastMesId);
@@ -697,7 +732,7 @@ export async function deleteLastMessage(page) {
  */
 export async function getChatSnapshot(page) {
     return page.evaluate(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return {
             chatId: ctx.getCurrentChatId?.(),
             length: ctx.chat?.length,
@@ -768,7 +803,7 @@ export async function installMinimalDirectorProfile(page, {
     tools = null,
 } = {}) {
     await page.evaluate(async ({ mainSystemPrompt, subAgents, tools }) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const settings = ctx.extensionSettings?.orchestrator;
         if (!settings) throw new Error('orchestrator settings missing — extension not loaded');
 

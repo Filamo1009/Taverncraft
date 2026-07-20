@@ -43,7 +43,7 @@
  * dispatch flows.
  */
 
-const __ctx = Luker.getContext();
+const __ctx = Taverncraft.getContext();
 const saveSettingsDebounced = __ctx.saveSettingsDebounced;
 const extension_settings = __ctx.extensionSettings;
 import {

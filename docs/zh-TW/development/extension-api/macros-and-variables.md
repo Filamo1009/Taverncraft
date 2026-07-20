@@ -4,7 +4,7 @@
 
 ## 巨集
 
-Luker 透過 `macros` 命名空間暴露巨集系統，並為了向後相容保留了傳統的 `MacrosParser`。<span v-pre>`{{user}}`</span>、<span v-pre>`{{char}}`</span>、<span v-pre>`{{lastMessage}}`</span>、<span v-pre>`{{getvar::name}}`</span> 之類的內建巨集由 core 註冊；外掛可以透過 `macros.register()` 加入自己的巨集。
+Taverncraft 透過 `macros` 命名空間暴露巨集系統，並為了向後相容保留了傳統的 `MacrosParser`。<span v-pre>`{{user}}`</span>、<span v-pre>`{{char}}`</span>、<span v-pre>`{{lastMessage}}`</span>、<span v-pre>`{{getvar::name}}`</span> 之類的內建巨集由 core 註冊；外掛可以透過 `macros.register()` 加入自己的巨集。
 
 ### macros.register
 
@@ -54,7 +54,7 @@ macros.register(name: string, options: {
 | `warn(message, error?)` | 記錄一條歸屬到此巨集的警告 |
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 ctx.macros.register('myStatus', {
     description: 'Returns the plugin status string.',
@@ -213,7 +213,7 @@ context.variables.global.get / set / add / inc / dec / del / has
 ### 使用範例
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 // 帶預設值讀取本地變數
 const turns = Number(ctx.variables.local.get('turns_taken')) || 0;
@@ -266,7 +266,7 @@ context.setVariable(
 - **點號路徑名同樣支援樓層級寫入**——`setVariable('roster.alice.hp', 50, { floor })` 會在第一個 `.` 處拆分，把 `path` 透傳進 op 記錄。`op.key` 仍然是頂層變數名，重播時把整個結構當成一個單位。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 // 立即寫,跟 ctx.variables.local.set 落到同一個桶
 await ctx.setVariable('quest_stage', 'intro');

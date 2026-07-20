@@ -15,7 +15,7 @@ import { jest } from '@jest/globals';
 // CHARACTER_IMPORTED wiring lives in main.js and is exercised
 // separately.
 
-globalThis.Luker = {
+globalThis.Taverncraft = {
     getContext: () => ({
         constants: {
             promptRoles: { SYSTEM: 0, USER: 1, ASSISTANT: 2 },

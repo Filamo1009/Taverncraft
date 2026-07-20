@@ -4,7 +4,7 @@
 
 ## Macros 2.0 / 實驗性巨集引擎
 
-本頁的特性跑在 chevrotain 實作的新巨集引擎上——也就是 SillyTavern 引入的 **Macros 2.0**。Luker 預設啟用它，可以在「**使用者設定 → 聊天／訊息處理 → 實驗性宏引擎**」切換。
+本頁的特性跑在 chevrotain 實作的新巨集引擎上——也就是 SillyTavern 引入的 **Macros 2.0**。Taverncraft 預設啟用它，可以在「**使用者設定 → 聊天／訊息處理 → 實驗性宏引擎**」切換。
 
 實驗性引擎**關掉**時，巨集仍然能用，但下面這些特性會退化到老的正則管線、不再可用：
 
@@ -108,7 +108,7 @@
 
 ## 變數簡寫
 
-除了完整的 <code v-pre>{{getvar::name}}</code> / <code v-pre>{{setvar::name::value}}</code>，Luker 還提供一套**變數運算式**簡寫，讀起來跟賦值語句一樣：
+除了完整的 <code v-pre>{{getvar::name}}</code> / <code v-pre>{{setvar::name::value}}</code>，Taverncraft 還提供一套**變數運算式**簡寫，讀起來跟賦值語句一樣：
 
 | 寫法 | 含義 | 回傳 |
 |---|---|---|
@@ -293,7 +293,7 @@ body 裡：
 
 原生 SillyTavern 裡，副作用巨集 <code v-pre>{{setvar::hp::50}}</code> 只在 *prompt 範本* 裡（預設、世界書、首樓）才會執行。AI 在回覆裡寫同樣的字面量什麼都不會發生，還會原樣顯示出來污染敘事。
 
-Luker 用**逐樓層變數提取**解決這個問題。一條訊息（AI 回覆、使用者訊息、swipe、續寫）儲存時，Luker 會：
+Taverncraft 用**逐樓層變數提取**解決這個問題。一條訊息（AI 回覆、使用者訊息、swipe、續寫）儲存時，Taverncraft 會：
 
 1. 掃描文字裡的 <code v-pre>{{setvar}}</code>、<code v-pre>{{addvar}}</code>、<code v-pre>{{incvar}}</code>、<code v-pre>{{decvar}}</code>、<code v-pre>{{deletevar}}</code>。
 2. 把裡面巢狀的展示巨集（<code v-pre>{{user}}</code>、<code v-pre>{{getvar::other}}</code>、<code v-pre>{{time}}</code>……）對目前狀態求值。
@@ -301,7 +301,7 @@ Luker 用**逐樓層變數提取**解決這個問題。一條訊息（AI 回覆�
 4. 在 `message.extra.var_ops` 上追加一條結構化記錄。
 5. 從可見文字裡把字面量刪掉。
 
-當你刪訊息、切 swipe、重新生成、編輯時，Luker 會**重播剩餘的 op log**，讓變數狀態跟可見的時間線保持一致。
+當你刪訊息、切 swipe、重新生成、編輯時，Taverncraft 會**重播剩餘的 op log**，讓變數狀態跟可見的時間線保持一致。
 
 這就是「**逐樓層變數**」面板背後的機制——每條帶 op 的訊息按鈕欄會出現一個燒瓶圖示，點開可以查看 / 編輯 / 刪除 / 新增 op。結果就是 AI 能直接在自己回覆裡擁有和修改狀態，而這個狀態能扛住使用者慣常的所有結構性操作。
 
@@ -554,7 +554,7 @@ STscript 裡的 `\|` 是指令管道符，那是指令解析器的特性，不�
 擴充可以註冊自己的巨集：
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 ctx.macros.register('myStatus', {
     description: '回傳外掛狀態字串。',

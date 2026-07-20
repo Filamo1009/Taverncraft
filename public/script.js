@@ -353,6 +353,8 @@ const lukerApi = {
     libs,
     getContext,
 };
+globalThis.Taverncraft = lukerApi;
+// Compatibility alias for existing Luker extensions and character-card apps.
 globalThis.Luker = lukerApi;
 globalThis.st = lukerApi;
 globalThis.SillyTavern = lukerApi;
@@ -466,7 +468,7 @@ export let converter;
 
 // array for prompt token calculations
 
-export const systemUserName = 'Luker System';
+export const systemUserName = 'Taverncraft System';
 export const neutralCharacterName = 'Assistant';
 let default_user_name = 'User';
 export let name1 = default_user_name;
@@ -895,7 +897,7 @@ export let isChatSaving = false;
 let firstRun = false;
 export let settingsReady = false;
 let currentVersion = '0.0.0';
-export let displayVersion = 'Luker';
+export let displayVersion = 'Taverncraft';
 
 let generation_started = new Date();
 /** @type {Character[]} */
@@ -911,8 +913,8 @@ export const default_avatar = 'img/ai4.png';
 export const system_avatar = 'img/logo.png';
 export const comment_avatar = 'img/quill.png';
 export const default_user_avatar = 'img/user-default.png';
-export let CLIENT_VERSION = 'Luker:UNKNOWN:Cohee#1207'; // For Horde header
-export let EXTENSIONS_CLIENT_VERSION = 'Luker:1.18.0:Cohee#1207';
+export let CLIENT_VERSION = 'Taverncraft:UNKNOWN:Cohee#1207'; // For Horde header
+export let EXTENSIONS_CLIENT_VERSION = 'Taverncraft:1.18.0:Cohee#1207';
 let optionsPopper = Popper.createPopper(document.getElementById('options_button'), document.getElementById('options'), {
     placement: 'top-start',
 });
@@ -1372,7 +1374,7 @@ async function getClientVersion() {
         const data = await response.json();
         CLIENT_VERSION = data.agent;
         EXTENSIONS_CLIENT_VERSION = data.compatAgent || data.agent || EXTENSIONS_CLIENT_VERSION;
-        displayVersion = `Luker ${data.pkgVersion}`;
+        displayVersion = `Taverncraft ${data.pkgVersion}`;
         currentVersion = data.pkgVersion;
 
         if (data.gitRevision && data.gitBranch) {
@@ -1415,7 +1417,7 @@ async function doLukerUpdateCheck(versionData) {
             }
             lukerUpdatePromptShown = true;
             toastr.info(
-                t`A Luker update is available for this Docker deployment. Pull the latest image and recreate the container to update.`,
+                t`A Taverncraft update is available for this Docker deployment. Pull the latest image and recreate the container to update.`,
                 t`Update Available`,
                 {
                     timeOut: 0,
@@ -1429,7 +1431,7 @@ async function doLukerUpdateCheck(versionData) {
 
         void showLukerUpdatePrompt(combinedData);
     } catch (err) {
-        console.error('Failed to check for Luker updates in background', err);
+        console.error('Failed to check for Taverncraft updates in background', err);
     }
 }
 
@@ -1548,7 +1550,7 @@ function getGitUpdateStatusLabel(status) {
 
 async function runServerGitUpdateFlow() {
     let finalState = null;
-    await showUpdateProgressPopup(t`Luker Update`, async ({ pushLog, setStatus }) => {
+    await showUpdateProgressPopup(t`Taverncraft Update`, async ({ pushLog, setStatus }) => {
         setStatus(t`Submitting update request...`);
         try {
             const startResult = await callLukerUpdateApi('start', {});
@@ -1610,8 +1612,8 @@ async function runServerGitUpdateFlow() {
     if (finalState.status === 'succeeded') {
         const updated = finalState.updated === true;
         toastr.success(
-            updated ? t`Luker update completed.` : t`Luker is already up to date.`,
-            t`Luker Update`,
+            updated ? t`Taverncraft update completed.` : t`Taverncraft is already up to date.`,
+            t`Taverncraft Update`,
         );
     }
 }
@@ -1621,7 +1623,7 @@ async function runAndroidApkUpdateFlow() {
         throw new Error(t`Android update bridge is unavailable.`);
     }
 
-    await showUpdateProgressPopup(t`Luker App Update`, async ({ pushLog, setStatus }) => {
+    await showUpdateProgressPopup(t`Taverncraft App Update`, async ({ pushLog, setStatus }) => {
         setStatus(t`Fetching latest APK release...`);
         const release = await callLukerUpdateApi('apk-latest', {});
         const apkName = String(release?.apk?.name || '');
@@ -1656,7 +1658,7 @@ async function showLukerUpdatePrompt(versionData) {
         const branchText = branch ? `${branch}${revision ? ` @ ${revision}` : ''}` : t`unknown branch`;
         const promptBody = `
             <div class="justifyLeft">
-                <div>${t`A Luker update is available.`}</div>
+                <div>${t`A Taverncraft update is available.`}</div>
                 <div class="menu_button_note">${environmentText}</div>
                 <div class="menu_button_note">${t`Current source`}: ${branchText}</div>
             </div>
@@ -1680,8 +1682,8 @@ async function showLukerUpdatePrompt(versionData) {
             await runServerGitUpdateFlow();
         }
     } catch (error) {
-        console.error('Luker update flow failed:', error);
-        toastr.error(String(error?.message || error), t`Luker Update`);
+        console.error('Taverncraft update flow failed:', error);
+        toastr.error(String(error?.message || error), t`Taverncraft Update`);
     }
 }
 
@@ -3756,6 +3758,7 @@ export async function sendTextareaMessage() {
         return;
     }
     const textareaText = textareaState.text;
+    const lastMessage = chat[chat.length - 1];
     if (power_user.continue_on_send &&
         !hasPendingFileAttachment() &&
         !textareaText &&
@@ -7158,6 +7161,8 @@ function normalizeWorldInfoResolutionData(worldInfoResolution) {
         outletEntries: safeResolution.outletEntries && typeof safeResolution.outletEntries === 'object' ? safeResolution.outletEntries : {},
         anBefore: Array.isArray(safeResolution.anBefore) ? safeResolution.anBefore : [],
         anAfter: Array.isArray(safeResolution.anAfter) ? safeResolution.anAfter : [],
+        activatedEntries: Array.isArray(safeResolution.activatedEntries) ? safeResolution.activatedEntries : [],
+        diagnostics: safeResolution.diagnostics && typeof safeResolution.diagnostics === 'object' ? safeResolution.diagnostics : {},
     };
 }
 
@@ -7207,7 +7212,7 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
     setGenerationProgress(0);
     generation_started = new Date();
     setActiveWorldInfoPromptSnapshot();
-    const generationEventParams = { automatic_trigger, force_name2, quiet_prompt, quietToLoud, skipWIAN, force_chid, signal, quietImage };
+    const generationEventParams = { automatic_trigger, force_name2, quiet_prompt, quietToLoud, skipWIAN, force_chid, signal, quietImage, depth };
 
     // Prevent generation from shallow characters
     await unshallowCharacter(this_chid);
@@ -7273,13 +7278,16 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
     // Re-sync before every generation so the final request body cannot drift from /inject state.
     processChatSlashCommands();
 
-    if (main_api == 'kobold' && kai_settings.streaming_kobold && !kai_flags.can_use_streaming) {
+    // A dry run only assembles the local prompt. Provider capability checks must
+    // not short-circuit it, otherwise offline users cannot inspect the exact
+    // World Info activation and request body before configuring a backend.
+    if (!dryRun && main_api == 'kobold' && kai_settings.streaming_kobold && !kai_flags.can_use_streaming) {
         toastr.error(t`Streaming is enabled, but the version of Kobold used does not support token streaming.`, undefined, { timeOut: 10000, preventDuplicates: true });
         unblockGeneration(type);
         return Promise.resolve();
     }
 
-    if (isHordeGenerationNotAllowed()) {
+    if (!dryRun && isHordeGenerationNotAllowed()) {
         unblockGeneration(type);
         return Promise.resolve();
     }
@@ -7586,7 +7594,7 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
 
     // Adjust token limit for Horde
     let adjustedParams;
-    if (main_api == 'koboldhorde' && (horde_settings.auto_adjust_context_length || horde_settings.auto_adjust_response_length)) {
+    if (!dryRun && main_api == 'koboldhorde' && (horde_settings.auto_adjust_context_length || horde_settings.auto_adjust_response_length)) {
         try {
             adjustedParams = await adjustHordeGenerationParams(max_context, amount_gen);
         } catch {
@@ -7772,6 +7780,8 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
         outletEntries,
         anBefore,
         anAfter,
+        activatedEntries,
+        diagnostics,
     } = normalizeWorldInfoResolutionData(worldInfoResolution);
 
     setActiveWorldInfoPromptSnapshot({
@@ -7793,6 +7803,8 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
         anBefore,
         anAfter,
         outletEntries,
+        activatedEntries,
+        diagnostics,
         worldInfoResolution,
         rescanned: worldInfoRescanned,
     };
@@ -7826,6 +7838,8 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
         outletEntries,
         anBefore,
         anAfter,
+        activatedEntries,
+        diagnostics,
     } = normalizeWorldInfoResolutionData({
         ...worldInfoResolution,
         ...wiFinalizedPayload,
@@ -8456,7 +8470,7 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
     switch (main_api) {
         case 'koboldhorde':
         case 'kobold':
-            if (main_api == 'koboldhorde' && horde_settings.auto_adjust_response_length) {
+            if (main_api == 'koboldhorde' && adjustedParams && horde_settings.auto_adjust_response_length) {
                 maxLength = Math.min(maxLength, adjustedParams.maxLength);
                 maxLength = Math.max(maxLength, MIN_LENGTH); // prevent validation errors
             }
@@ -9125,7 +9139,7 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
      * @param {Error|object} exception Error or response JSON
      * @throws {Error|object} Re-throws the exception
      */
-    function onError(exception) {
+    async function onError(exception) {
         clearMessageProgressNotification();
 
         const isAbortedError = abortController?.signal?.aborted
@@ -9139,6 +9153,26 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
 
         if (type !== 'quiet' && !isAbortedError) {
             notifyMessageFailure(errorMessage, String(name2 || chat?.[chat.length - 1]?.name || ''));
+        }
+
+        // A provider/transport failure must close the same lifecycle as a
+        // user-initiated stop. This is especially important after a native
+        // tool call: extensions may have staged data for the final assistant
+        // floor, and leaving it pending would let a later, unrelated reply
+        // commit stale operations. Emit only from the outer generation; a
+        // recursive tool request propagates its error back to depth 0.
+        if (type !== 'quiet' && depth === 0) {
+            const failedPlaceholder = chat.at(-1);
+            const isEmptyAssistantPlaceholder = failedPlaceholder
+                && !failedPlaceholder.is_user
+                && !failedPlaceholder.is_system
+                && !failedPlaceholder.extra?.tool_invocations?.length
+                && ['', '...'].includes(String(failedPlaceholder.mes || ''))
+                && !String(failedPlaceholder.extra?.reasoning || '').trim();
+            if (isEmptyAssistantPlaceholder) {
+                try { await deleteLastMessage(); } catch { /* preserve the visible failure if rollback itself fails */ }
+            }
+            try { await eventSource.emit(event_types.GENERATION_STOPPED); } catch { /* best-effort cleanup */ }
         }
 
         // if the response JSON was thrown (novel|textgenerationwebui|kobold), show the error message
@@ -14348,6 +14382,10 @@ export async function refreshFirstMessageOnEmptyCharacterChat() {
 }
 
 export async function openCharacterChat(file_name) {
+    const normalizedFileName = String(file_name || '').trim().replace(/\.jsonl$/i, '');
+    if (!normalizedFileName) {
+        return;
+    }
     if (!await waitForChatSwitchAvailability()) {
         return;
     }
@@ -14359,14 +14397,14 @@ export async function openCharacterChat(file_name) {
     if (this_chid !== chidSnapshot || !characters[chidSnapshot]) {
         return;
     }
-    characters[chidSnapshot].chat = file_name;
+    characters[chidSnapshot].chat = normalizedFileName;
     chat_metadata = {};
     chatServerState.nextOlderIndex = 0;
     chatServerState.totalMessages = 0;
     chatServerState.hasMore = false;
     await getChat();
-    $('#selected_chat_pole').val(file_name);
-    await updateRemoteChatName(chidSnapshot, file_name);
+    $('#selected_chat_pole').val(normalizedFileName);
+    await updateRemoteChatName(chidSnapshot, normalizedFileName);
 }
 
 ////////// OPTIMZED MAIN API CHANGE FUNCTION ////////////
@@ -15798,7 +15836,8 @@ async function displayChats(searchQuery, currentChat, displayName, avatarImg, se
         filteredData.sort((a, b) => sortMoments(timestampToMoment(a.last_mes), timestampToMoment(b.last_mes)));
 
         for (const chat of filteredData) {
-            const isSelected = currentChat === chat.file_name;
+            const normalizedChatId = String(chat.file_name || '').replace(/\.jsonl$/i, '');
+            const isSelected = String(currentChat || '').replace(/\.jsonl$/i, '') === normalizedChatId;
             const template = $('#past_chat_template .select_chat_block_wrapper').clone();
             template.find('.select_chat_block').attr('file_name', chat.file_name);
             template.find('.avatar img').attr('src', avatarImg);
@@ -18851,8 +18890,22 @@ jQuery(async function () {
     });
 
     const userInputGenerateMutex = new SimpleMutex(sendTextareaMessage);
+    let queuedSendButtonClick = false;
     $('#send_but').on('click', async function () {
-        await userInputGenerateMutex.update();
+        // A user stop unlocks the visible composer immediately, while the
+        // aborted fetch may still be unwinding inside the mutex callback. If
+        // the user sends again during that short window, preserve one latest
+        // click instead of silently dropping it. Repeated clicks coalesce and
+        // an empty composer never creates an accidental continuation.
+        if (userInputGenerateMutex.isBusy) {
+            queuedSendButtonClick = true;
+            return;
+        }
+
+        do {
+            queuedSendButtonClick = false;
+            await userInputGenerateMutex.update();
+        } while (queuedSendButtonClick && String($('#send_textarea').val() ?? '').length > 0);
     });
 
     //menu buttons setup
@@ -19224,7 +19277,8 @@ jQuery(async function () {
         e.stopPropagation();
         const format = $(this).data('format') || 'txt';
         await saveChatConditional();
-        const filename = $(this).closest('.select_chat_block_wrapper').find('.select_chat_block_filename').text();
+        const displayedFilename = $(this).closest('.select_chat_block_wrapper').find('.select_chat_block_filename').text();
+        const filename = String(displayedFilename || '').replace(/\.jsonl$/i, '');
         console.log(`exporting ${filename} in ${format} format`);
 
         const body = {
@@ -20644,7 +20698,8 @@ jQuery(async function () {
         });
 
         if (response.ok) {
-            const warningHeader = response.headers.get('X-Luker-Export-Warning');
+            const warningHeader = response.headers.get('X-Taverncraft-Export-Warning')
+                || response.headers.get('X-Luker-Export-Warning');
             if (warningHeader) {
                 try {
                     const decoded = JSON.parse(atob(warningHeader));
@@ -20697,7 +20752,7 @@ jQuery(async function () {
             }
 
             if (selected_group && format === 'json') {
-                toastr.warning(t`Only Luker's own format is supported for group chat imports. Sorry!`);
+                toastr.warning(t`Only Taverncraft's own format is supported for group chat imports. Sorry!`);
                 continue;
             }
 

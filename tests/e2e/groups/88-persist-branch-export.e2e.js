@@ -116,7 +116,7 @@ test.describe('#88 — group chat persistence + branch + export', () => {
         }
 
         const inMemoryBefore = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return {
                 chatId: ctx.getCurrentChatId?.(),
                 length: ctx.chat?.length,
@@ -162,12 +162,12 @@ test.describe('#88 — group chat persistence + branch + export', () => {
 
         await openGroupForChat(page, groupId);
         await page.waitForFunction((wantLen) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.chat?.length >= wantLen;
         }, inMemoryBefore.length, { timeout: 15_000 });
 
         const inMemoryAfter = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return {
                 chatId: ctx.getCurrentChatId?.(),
                 length: ctx.chat?.length,
@@ -214,7 +214,7 @@ test.describe('#88 — group chat persistence + branch + export', () => {
         // signal isn't dropped (branchChat fires it synchronously
         // before navigating). Park the result on window for waitFor.
         await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             window.__branchSignal = { resolved: false, payload: null };
             const handler = (data) => {
                 try { ctx.eventSource.removeListener(ctx.eventTypes.CHAT_BRANCH_CREATED, handler); } catch {}
@@ -232,14 +232,14 @@ test.describe('#88 — group chat persistence + branch + export', () => {
 
         // Wait for the chat to switch into the new branch.
         await page.waitForFunction((origChat) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const cur = ctx.getCurrentChatId?.();
             return cur && cur !== origChat;
         }, chatId, { timeout: 15_000 });
         await page.waitForTimeout(500);
 
         const branchSnap = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return {
                 chatId: ctx.getCurrentChatId?.(),
                 length: ctx.chat?.length,

@@ -12,10 +12,10 @@
 // independently functional.
 //
 // No session lifecycle: both tools are stateless adapters over
-// `Luker.searchTools` (installed by search-tools/main.js at init).
+// `Taverncraft.searchTools` (installed by search-tools/main.js at init).
 // Each call resolves an adapter on demand — preferring
 // `context.__searchAdapter` (test injection) and falling back to
-// `globalThis.Luker.searchTools` for production.
+// `globalThis.Taverncraft.searchTools` for production.
 
 // ---------------------------------------------------------------------------
 // ToolError shim
@@ -45,7 +45,7 @@ function resolveAdapter(context) {
         return context.__searchAdapter;
     }
     const root = typeof globalThis !== 'undefined' ? globalThis : null;
-    return root?.Luker?.searchTools || null;
+    return root?.Taverncraft?.searchTools || null;
 }
 
 function assertAdapterReady(adapter) {
@@ -215,7 +215,7 @@ export const SEARCH_TOOL_NAMES = Object.freeze(SCHEMAS.map(s => s.name));
  * can no-op without throwing.
  */
 function loadOrchestratorRegistrar() {
-    const orch = Luker.getContext().getExtensionApi('orchestrator');
+    const orch = Taverncraft.getContext().getExtensionApi('orchestrator');
     if (!orch || typeof orch.registerOrchestrationTool !== 'function') return null;
     return orch;
 }
@@ -223,7 +223,7 @@ function loadOrchestratorRegistrar() {
 /**
  * Publish search-tools' 2 read tools into the orchestrator's Layer-2
  * extension registry. Both tools are stateless adapters that resolve
- * `Luker.searchTools` (installed by main.js) at call time, so no per-ctx
+ * `Taverncraft.searchTools` (installed by main.js) at call time, so no per-ctx
  * session wrapping is needed.
  *
  * Silent no-op when orchestrator isn't loaded — search-tools remains

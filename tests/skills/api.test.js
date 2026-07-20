@@ -114,7 +114,7 @@ describe('public/scripts/skills/api.js — jsonFetch wrapper', () => {
     });
 
     test('sends X-CSRF-Token header on write calls', async () => {
-        // Luker enables csrfSyncProtection globally (server-main.js), so every
+        // Taverncraft enables csrfSyncProtection globally (server-main.js), so every
         // POST/DELETE must carry X-CSRF-Token. The wrapper must source this from
         // getRequestHeaders rather than hand-rolling 'Content-Type' alone.
         const { skillsApi } = await import('../../public/scripts/skills/api.js');

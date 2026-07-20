@@ -14,7 +14,7 @@
 // real DOM gestures.
 //
 // Setup note: Iyana is created via /api/characters/create rather than
-// the writeCharacter fixture because Luker reads character data from the
+// the writeCharacter fixture because Taverncraft reads character data from the
 // PNG's embedded tEXt chunk, not from sidecar JSON. Copying the
 // Seraphina PNG to "iyana-the-watchwoman.png" would still load as
 // Seraphina. The /api/characters/create endpoint properly writes a
@@ -100,7 +100,7 @@ test.afterAll(async () => {
  */
 async function fetchRecent(page) {
     return page.evaluate(async () => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const headers = ctx.getRequestHeaders?.() || { 'Content-Type': 'application/json' };
         const res = await fetch('/api/chats/recent', {
             method: 'POST',
@@ -128,7 +128,7 @@ test.describe('#13c — recent-chats index', () => {
         // drawer to pick her up.
         await navigateBackToCharacterList(page);
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.characters.some(c => c?.name === 'Iyana the Watchwoman');
         }, { timeout: 10_000 });
 

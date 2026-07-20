@@ -101,7 +101,7 @@ test.describe('#18 — Import byaf character card via UI file picker', () => {
         //    the saved card — read it via ctx so the test doesn't depend
         //    on the import-popup outcome.
         const embedded = await page.evaluate((name) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const ch = (ctx.characters || []).find(c => c?.name === name);
             const book = ch?.data?.character_book;
             return {

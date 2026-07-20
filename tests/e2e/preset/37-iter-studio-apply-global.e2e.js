@@ -83,7 +83,7 @@ test.describe('#37 — orchestrator iter-studio Apply → Global writes through 
         // Step 5: Verify the active preset slot carries the mutation, and
         // legacy flat fields were NOT written by Apply.
         const after = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const s = ctx.extensionSettings.orchestrator;
             const activeId = s?.activePresetIds?.director || '';
             return {
@@ -102,7 +102,7 @@ test.describe('#37 — orchestrator iter-studio Apply → Global writes through 
         await server.restart();
         await reloadAndAwait(page, server.baseURL);
         const afterRestart = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const s = ctx.extensionSettings.orchestrator;
             const activeId = s?.activePresetIds?.director || '';
             return s?.presetLibraries?.director?.[activeId]?.mainAgent?.systemPrompt || '';

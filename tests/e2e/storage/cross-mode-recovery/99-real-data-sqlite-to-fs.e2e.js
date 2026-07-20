@@ -7,7 +7,7 @@
 // extensions, embedded chats) round-trips intact.
 //
 // This spec clones the developer's actual `~/Desktop/projects/open-source/
-// Luker/data` (or `LUKER_REAL_DATA_ROOT`), boots a sqlite server against
+// Taverncraft/data` (or `LUKER_REAL_DATA_ROOT`), boots a sqlite server against
 // the clone, downloads a full backup ZIP via the Backup Manager UI, then
 // boots a fresh fs server, restores the ZIP, and runs a per-category
 // fingerprint diff that asserts EVERY backed-up engine row + fs file
@@ -47,7 +47,7 @@ test('cross-mode recovery: real sqlite data round-trips through fs restore with 
     const realDataRoot = resolveRealDataRoot();
     test.skip(
         !realDataRoot || !realDataLooksPopulated(realDataRoot),
-        `no real Luker dataRoot found (set LUKER_REAL_DATA_ROOT to point at one); resolved: ${realDataRoot}`,
+        `no real Taverncraft dataRoot found (set LUKER_REAL_DATA_ROOT to point at one); resolved: ${realDataRoot}`,
     );
 
     const tempDir = mkdtempSync(path.join(os.tmpdir(), `xmode-${SPEC_ID}-`));

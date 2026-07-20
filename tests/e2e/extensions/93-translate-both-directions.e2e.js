@@ -73,7 +73,7 @@ test.describe('#93 — Translate auto-mode "both" via real dropdowns', () => {
         await selectCharacterByName(page, 'Seraphina');
 
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -104,7 +104,7 @@ test.describe('#93 — Translate auto-mode "both" via real dropdowns', () => {
 
         // Sanity: settings reflect the dropdown choices.
         const persisted = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const t = ctx.extensionSettings?.translate || {};
             return { provider: t.provider, auto_mode: t.auto_mode, target_language: t.target_language };
         });
@@ -126,13 +126,13 @@ test.describe('#93 — Translate auto-mode "both" via real dropdowns', () => {
 
         // ===== Incoming assertion: assistant bubble carries zh translation. =====
         await page.waitForFunction((id) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const m = ctx.chat[id];
             return !!m?.extra?.display_text;
         }, replyId, { timeout: 15_000 });
 
         const msg = await page.evaluate((id) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const m = ctx.chat[id];
             return { mes: m?.mes, displayText: m?.extra?.display_text };
         }, replyId);
@@ -151,7 +151,7 @@ test.describe('#93 — Translate auto-mode "both" via real dropdowns', () => {
 
         // After the explicit click, display_text is still the zh translation.
         const afterClick = await page.evaluate((id) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const m = ctx.chat[id];
             return m?.extra?.display_text || '';
         }, replyId);

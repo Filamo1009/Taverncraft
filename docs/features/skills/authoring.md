@@ -2,7 +2,7 @@
 
 A skill is a directory with one required file (`SKILL.md`) and optional sub-folders. Authoring a skill means picking a name, writing frontmatter, and writing a body the agent can read. That's it.
 
-This page covers the conventions Luker (and Anthropic) expect, the choices you face along the way, and walks through two of the bundled skills as worked examples.
+This page covers the conventions Taverncraft (and Anthropic) expect, the choices you face along the way, and walks through two of the bundled skills as worked examples.
 
 ## Two ways to write a skill
 
@@ -28,7 +28,7 @@ my-skill-name/
 └── scripts/          # optional — present for forward-compat; v1 is no-op
 ```
 
-Only `SKILL.md` is required. The other folders are conventions — Luker doesn't enforce them, but they match Anthropic's layout, so a skill stays portable.
+Only `SKILL.md` is required. The other folders are conventions — Taverncraft doesn't enforce them, but they match Anthropic's layout, so a skill stays portable.
 
 ::: info Sub-folders use the same `skill_read` tool
 Agents don't get separate tools per sub-folder. They use `skill_read({ name, path })` with the relative path: `skill_read({ name: "my-skill", path: "references/checklist.md" })`. Sub-folders are purely organizational.
@@ -129,7 +129,7 @@ The frontmatter:
 name: director-anti-cliche-zh
 description: Anti-cliche patterns for narrative writing — banned phrasings, AI-自造 labels, contract-vocab, sublimation cliches.
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 ```
@@ -149,7 +149,7 @@ The frontmatter:
 name: event-summary-rules-zh
 description: Event summary writing rules (V10) for memory_curator — 7-step process, gate loop, anti-paraphrase discipline.
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 ```

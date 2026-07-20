@@ -29,7 +29,7 @@ import { describe, test, expect, jest, beforeAll } from '@jest/globals';
 // sanitizers we need to drive (sanitizeSpec / Agenda / Director) pull
 // the browser-only `public/lib.js` chain at module-eval time. Mock the
 // hot loaders so module init succeeds in the Node test runner.
-globalThis.Luker = {
+globalThis.Taverncraft = {
     getContext: () => ({
         constants: {
             promptRoles: { SYSTEM: 0, USER: 1, ASSISTANT: 2 },

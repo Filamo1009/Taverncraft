@@ -37,7 +37,7 @@ test.describe('#92 — Quick Reply triggers slash command via real button click'
 
         // Wait for greeting so MESSAGE_RECEIVED later is the QR reply.
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -69,7 +69,7 @@ test.describe('#92 — Quick Reply triggers slash command via real button click'
 
         // Subscribe to MESSAGE_RECEIVED before clicking.
         const replyHandle = page.evaluateHandle(() => new Promise((resolve, reject) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const t = setTimeout(() => reject(new Error('reply timeout')), 60_000);
             const off = ctx.eventSource.on(ctx.eventTypes.MESSAGE_RECEIVED, (id) => {
                 clearTimeout(t);
@@ -88,7 +88,7 @@ test.describe('#92 — Quick Reply triggers slash command via real button click'
         expect(typeof replyId === 'number' || typeof replyId === 'string').toBe(true);
 
         const lastUser = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const u = [...ctx.chat].reverse().find(m => m.is_user);
             return u?.mes || '';
         });

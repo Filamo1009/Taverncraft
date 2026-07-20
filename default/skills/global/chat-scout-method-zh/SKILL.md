@@ -2,7 +2,7 @@
 name: chat-scout-method-zh
 description: chat_scout method — recent chat scan for unresolved threads, in-flight setups, character states, with signal-vs-noise filtering.
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 

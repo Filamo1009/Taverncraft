@@ -9,7 +9,7 @@
 ### 基本註冊
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 ctx.SlashCommandParser.addCommandObject(ctx.SlashCommand.fromProps({
     name: 'mygreet',
@@ -233,7 +233,7 @@ registerSlashCommand(name, callback, aliases?, helpString?): void
 ## 範例：註冊指令後以程式呼叫
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 // 註冊
 ctx.SlashCommandParser.addCommandObject(ctx.SlashCommand.fromProps({

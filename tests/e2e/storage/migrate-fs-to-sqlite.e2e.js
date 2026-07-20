@@ -41,7 +41,7 @@ test('migrate fs -> sqlite via admin UI preserves an in-progress chat', async ({
     // Establish a chat under fs mode.
     await selectCharacterByName(page, 'Seraphina');
     await page.waitForFunction(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
     }, { timeout: 10_000 }).catch(() => {});
 
@@ -51,7 +51,7 @@ test('migrate fs -> sqlite via admin UI preserves an in-progress chat', async ({
     );
 
     const preChatSnapshot = await page.evaluate(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return ctx.chat.map(m => String(m.mes || ''));
     });
     expect(preChatSnapshot.some(m => /lantern is fluttering|north reef/.test(m))).toBe(true);
@@ -79,12 +79,12 @@ test('migrate fs -> sqlite via admin UI preserves an in-progress chat', async ({
 
     // Wait for the chat to populate post-reload.
     await page.waitForFunction(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return Array.isArray(ctx.chat) && ctx.chat.length >= 2;
     }, { timeout: 10_000 });
 
     const postChatSnapshot = await page.evaluate(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return ctx.chat.map(m => String(m.mes || ''));
     });
     expect(postChatSnapshot.some(m => /lantern is fluttering|north reef/.test(m))).toBe(true);

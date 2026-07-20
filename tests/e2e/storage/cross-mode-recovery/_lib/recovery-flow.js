@@ -122,7 +122,7 @@ export async function runCrossModeRecoveryFlow({ page, sourceMode, destMode, spe
                 await awaitMainUI(page, destServer.baseURL);
                 await selectCharacterByName(page, 'Seraphina');
                 const preChatSnapshot = await page.evaluate(() => {
-                    const ctx = window.Luker?.getContext?.();
+                    const ctx = window.Taverncraft?.getContext?.();
                     return (ctx?.chat || []).map(m => String(m.mes || ''));
                 });
                 expect(preChatSnapshot.some(m => m.includes('跨模式恢复'))).toBe(false);

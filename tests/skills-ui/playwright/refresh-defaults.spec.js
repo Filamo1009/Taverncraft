@@ -19,7 +19,7 @@
  * the recovered chips.
  *
  * Prerequisites:
- *   - Luker dev server running.
+ *   - Taverncraft dev server running.
  *   - `extension_settings.luker_orchestrator.directorProfile` exists. The
  *     test populates it from scratch if missing (the same path the loader
  *     takes on fresh install), so a freshly-spun user dir is acceptable.

@@ -66,7 +66,7 @@ test.describe('#1 — first-turn persistence', () => {
 
         // Avatar filename (minus .png) is the chat-folder name.
         const avatarFolder = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const c = ctx.characters[ctx.characterId];
             return (c?.avatar || '').replace(/\.png$/, '');
         });

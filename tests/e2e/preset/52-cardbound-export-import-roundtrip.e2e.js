@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 FunnyCups
 //
-// #52 — Card-bound preset export → import roundtrip on the same Luker.
+// #52 — Card-bound preset export → import roundtrip on the same Taverncraft.
 //
 // Semantics: a card-bound preset exported to disk and re-imported lands
 // as a plain global preset. The importer does NOT auto-rebind it to any
@@ -100,7 +100,7 @@ async function installFixtureSkillInPresetScope(page, presetName, skillName, bod
         }],
     };
     await page.evaluate(async ({ scope, payload }) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         await ctx.skills.executeExtractEmbed({ payload, targetScope: scope, conflictStrategies: {} });
     }, { scope: { kind: 'preset', name: presetName }, payload });
 }
@@ -120,7 +120,7 @@ async function importPresetFile(page, filePath, { expectedName }) {
     await input.setInputFiles(filePath);
     await page.waitForFunction((name) => {
         try {
-            const ctx = window.SillyTavern?.getContext?.() || window.Luker?.getContext?.();
+            const ctx = window.SillyTavern?.getContext?.() || window.Taverncraft?.getContext?.();
             return !!ctx?.openai?.settingNames && Number.isInteger(ctx.openai.settingNames[name]);
         } catch { return false; }
     }, expectedName, { timeout: 20_000 });
@@ -178,7 +178,7 @@ test.describe('#52 — card-bound export → import roundtrip lands as new globa
         await awaitMainUI(page, server.baseURL);
 
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return !!ctx?.extensionSettings?.orchestrator;
         }, { timeout: 20_000 });
 

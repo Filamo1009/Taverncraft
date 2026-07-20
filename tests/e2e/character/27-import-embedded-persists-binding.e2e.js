@@ -124,7 +124,7 @@ test.describe('#27 — import-embedded persists the binding', () => {
             // select — characters[chid].data.extensions.world stays empty,
             // and any subsequent state read (or reload) shows no binding.
             const afterImport = await page.evaluate(() => {
-                const ctx = window.Luker?.getContext?.();
+                const ctx = window.Taverncraft?.getContext?.();
                 const idx = ctx?.characterId;
                 const ch = idx !== undefined ? ctx.characters[idx] : null;
                 return {
@@ -154,7 +154,7 @@ test.describe('#27 — import-embedded persists the binding', () => {
             await openCharacterEditPanel(page);
             await page.waitForTimeout(500);
             const afterReload = await page.evaluate(() => {
-                const ctx = window.Luker?.getContext?.();
+                const ctx = window.Taverncraft?.getContext?.();
                 const idx = ctx?.characterId;
                 const ch = idx !== undefined ? ctx.characters[idx] : null;
                 return {
@@ -193,7 +193,7 @@ test.describe('#27 — import-embedded persists the binding', () => {
 
             // ── REGRESSION ASSERTION 4: replaced card retains book-a binding.
             await page.waitForFunction(() => {
-                const ctx = window.Luker?.getContext?.();
+                const ctx = window.Taverncraft?.getContext?.();
                 const idx = ctx?.characterId;
                 const ch = idx !== undefined ? ctx.characters[idx] : null;
                 return String(ch?.data?.extensions?.world || '').trim() === 'book-a';

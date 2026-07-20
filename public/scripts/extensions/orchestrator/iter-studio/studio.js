@@ -76,7 +76,7 @@
  *   - ORCH_EXECUTION_MODES                { SPEC, LOOP, AGENDA, DIRECTOR }
  */
 
-const __ctx = Luker.getContext();
+const __ctx = Taverncraft.getContext();
 const Popup = __ctx.Popup;
 const POPUP_TYPE = __ctx.POPUP_TYPE;
 import {
@@ -1743,7 +1743,7 @@ export async function openOrchestratorIterationStudio(deps) {
     function buildNoContentDuplicationHint() {
         return [
             '# No content duplication',
-            'Information that already lives elsewhere in the runtime is delivered at run time by Luker — never copy it into another prompt.',
+            'Information that already lives elsewhere in the runtime is delivered at run time by Taverncraft — never copy it into another prompt.',
             '- **Lorebook entries**: never paste an entry\'s body into an agent\'s systemPrompt. Reference the entry by book name + entry name (its comment or first key) instead. If you need to give the agent an explicit handle, point it at the entry name and instruct it to call `lorebook_get(entry_key=…)` or `lorebook_get(uid=…)` at run time. Never paste the body itself.',
             '- **Sibling / sub-agent prompts**: each agent\'s systemPrompt describes ONLY that agent\'s own responsibilities. Sub-agent task details belong in the sub-agent\'s own systemPrompt; the orchestrator dispatches each agent with its own prompt. Never copy a sibling agent\'s or sub-agent\'s prompt into another agent\'s prompt — that is dead weight that crowds the active agent\'s context and drifts when one prompt is later edited.',
             '- General rule: if you find yourself transcribing a body of text the runtime will provide (lorebook content, another agent\'s prompt, character description, preset content, etc.), STOP — replace the transcription with a one-line pointer naming the source. Verbatim duplication is always a smell.',

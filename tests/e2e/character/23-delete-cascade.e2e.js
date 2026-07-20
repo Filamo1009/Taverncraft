@@ -58,7 +58,7 @@ test.describe('#23 — Delete character via UI — embedded skill cascade + WI b
         // (there's no user-facing UI for "install a skill from arbitrary
         // payload" — that flow has its own e2e under skills-ui/).
         const installSummary = await page.evaluate(async ({ scope }) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             if (!ctx.skills?.executeExtractEmbed) return { ok: false, reason: 'skills API not exposed' };
             const payload = {
                 version: 1,
@@ -90,7 +90,7 @@ test.describe('#23 — Delete character via UI — embedded skill cascade + WI b
 
         // Confirm skill is present pre-delete.
         const beforeSkills = await page.evaluate(async (scope) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const list = await ctx.skills.list({ scope });
             return (list || []).map(s => s.name);
         }, charScope);
@@ -107,14 +107,14 @@ test.describe('#23 — Delete character via UI — embedded skill cascade + WI b
         // The shared helper handles the checkbox + OK click. Wait for
         // CHARACTER_DELETED to propagate.
         await page.waitForFunction((wantAvatar) => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return !(ctx?.characters || []).some(c => c?.avatar === wantAvatar);
         }, avatar, { timeout: 15_000 });
         await page.waitForTimeout(500);
 
         // ── DOM assertion: card gone from list. ─────────────────────
         const remainingCards = await page.evaluate((wantAvatar) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return (ctx.characters || []).filter(c => c?.avatar === wantAvatar).length;
         }, avatar);
         expect(remainingCards, 'Ash gone from ctx.characters').toBe(0);
@@ -133,7 +133,7 @@ test.describe('#23 — Delete character via UI — embedded skill cascade + WI b
         // After cascade: the character-scope list must NOT contain the
         // fixture skill.
         const afterSkills = await page.evaluate(async (scope) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             try {
                 const list = await ctx.skills.list({ scope });
                 return (list || []).map(s => s.name);

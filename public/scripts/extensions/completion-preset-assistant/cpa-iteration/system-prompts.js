@@ -14,7 +14,7 @@
  *   - buildJailbreakOnlyModeBlock:           mode-specific tail block
  *   - buildPresetStructureGuideText:         static structure description
  *
- * Pure string-building. No DOM, no lodash, no Luker globals.
+ * Pure string-building. No DOM, no lodash, no Taverncraft globals.
  *
  * Note (read-first refactor): the up-front live-preset outline builders
  * (`buildPresetSettingsOutlineText` / `buildPresetPromptOutlineText`)
@@ -24,7 +24,7 @@
  * pulls the fields it needs via `preset_read_live_fields` (lodash-path
  * read tool) on demand — matching the orch / MG-schema / CEA-card iter-
  * studios. If a future feature needs to render the live outline in a UI
- * pane (not the LLM prompt), re-add the helpers from Luker git history.
+ * pane (not the LLM prompt), re-add the helpers from Taverncraft git history.
  */
 
 /**
@@ -71,7 +71,7 @@ export function buildOrchestratorOptimizeModeBlock() {
         'Auxiliary, Jailbreak / Post-History Instructions, any user-authored',
         'custom entries with content). They take precedence over the A/B/C',
         'disposition framework below, because they catch content that has',
-        'mistakenly migrated INTO this preset from a different Luker layer the',
+        'mistakenly migrated INTO this preset from a different Taverncraft layer the',
         'user can\'t see from here. Surface findings to the user FIRST, before',
         'proposing any other edit on the affected entry.',
         '',
@@ -569,7 +569,7 @@ export function buildJailbreakOnlyModeBlock() {
 export function buildBaseSystemPrompt() {
     return [
         'You are the AI assistant for the Completion Preset Assistant.',
-        'You are editing one Luker chat completion preset (OpenAI-style).',
+        'You are editing one Taverncraft chat completion preset (OpenAI-style).',
         'Edit prompt-related preset content. The editable surface also covers tool / agent / generation toggles whose names sound transport-adjacent — function_calling, tool_call_recurse_limit, tool_reasoning_mode, stream_openai, show_thoughts, reasoning_effort, verbosity, enable_web_search, media_inlining, request_images. They shape prompt-time / response-shape behavior; set them freely via preset_set_field when the user\'s intent requires it.',
         '',
         buildPresetStructureGuideText(),

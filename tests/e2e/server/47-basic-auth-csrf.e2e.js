@@ -178,7 +178,7 @@ test.describe('#47 — basicAuth + CSRF full flow', () => {
         await ctx.close();
     });
 
-    test('CSRF (UI): real settings save via Luker.getContext().saveSettings succeeds (no 403 toast)', async ({ browser }) => {
+    test('CSRF (UI): real settings save via Taverncraft.getContext().saveSettings succeeds (no 403 toast)', async ({ browser }) => {
         // The SPA's settings save path runs through getRequestHeaders()
         // which auto-attaches X-CSRF-Token. This test confirms the full
         // round-trip via the same path a user gesture triggers — e.g.
@@ -190,7 +190,7 @@ test.describe('#47 — basicAuth + CSRF full flow', () => {
         const page = await ctx.newPage();
         await page.goto(`${server.baseURL}/`);
         await page.waitForFunction(() => document.getElementById('preloader') === null, { timeout: 60_000 });
-        await page.waitForFunction(() => !!window.Luker?.getContext, { timeout: 30_000 });
+        await page.waitForFunction(() => !!window.Taverncraft?.getContext, { timeout: 30_000 });
 
         // Watch for a toastr error (CSRF rejection would surface as a
         // 403-derived "Forbidden" or similar toast).
@@ -213,7 +213,7 @@ test.describe('#47 — basicAuth + CSRF full flow', () => {
         // Drive a real save via the production saveSettings API. The same
         // call is fired by every checkbox-flip in User Settings.
         const result = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             try {
                 await ctx.saveSettings();
                 return { ok: true };

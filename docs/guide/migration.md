@@ -1,11 +1,11 @@
 # Migrating from SillyTavern
 
-Luker is a downstream fork of SillyTavern and maintains full data compatibility. Migrating from SillyTavern to Luker takes just a few simple steps, and all your data can be used seamlessly.
+Taverncraft is a downstream fork of SillyTavern and maintains full data compatibility. Migrating from SillyTavern to Taverncraft takes just a few simple steps, and all your data can be used seamlessly.
 
 ::: tip Migrating from Termux on Android?
-This guide covers PC / Linux / Docker → Luker, and **Termux(SillyTavern) → Termux(Luker)** — both sides share the filesystem, so follow the steps below to copy `data/`.
+This guide covers PC / Linux / Docker → Taverncraft, and **Termux(SillyTavern) → Termux(Taverncraft)** — both sides share the filesystem, so follow the steps below to copy `data/`.
 
-Only **Termux → Luker APK** needs the mobile-specific flow because of Android's sandbox isolation (the data has to pass through `/sdcard`); see [Migrating from Termux to the Luker APK](/guide/migration-from-termux).
+Only **Termux → Taverncraft APK** needs the mobile-specific flow because of Android's sandbox isolation (the data has to pass through `/sdcard`); see [Migrating from Termux to the Taverncraft APK](/guide/migration-from-termux).
 :::
 
 ## Migration Steps
@@ -18,62 +18,62 @@ Before migrating, it's recommended to back up SillyTavern's `data/` directory:
 cp -r SillyTavern/data/ SillyTavern-data-backup/
 ```
 
-### 2. Install Luker
+### 2. Install Taverncraft
 
-Follow the steps in [Getting Started](/guide/getting-started) to install Luker.
+Follow the steps in [Getting Started](/guide/getting-started) to install Taverncraft.
 
 ### 3. Copy the Data Directory
 
-Copy SillyTavern's `data/` directory to Luker's data root (default: `./data`):
+Copy SillyTavern's `data/` directory to Taverncraft's data root (default: `./data`):
 
 ```bash
-cp -r SillyTavern/data/* Luker/data/
+cp -r SillyTavern/data/* Taverncraft/data/
 ```
 
 If you've customized `dataRoot` in `config.yaml`, copy to the corresponding path.
 
 ### 4. Migrate the Configuration File
 
-Migrate your customized settings from SillyTavern's `config.yaml` to Luker's `config.yaml`. It's recommended to start with Luker's default config file and migrate your custom values one by one, rather than overwriting the entire file.
+Migrate your customized settings from SillyTavern's `config.yaml` to Taverncraft's `config.yaml`. It's recommended to start with Taverncraft's default config file and migrate your custom values one by one, rather than overwriting the entire file.
 
 ### 5. Migrate Third-Party Extensions
 
-If you have third-party extensions installed, copy SillyTavern's global extensions directory to Luker:
+If you have third-party extensions installed, copy SillyTavern's global extensions directory to Taverncraft:
 
 ```bash
-cp -r SillyTavern/public/scripts/extensions/third-party/* Luker/public/scripts/extensions/third-party/
+cp -r SillyTavern/public/scripts/extensions/third-party/* Taverncraft/public/scripts/extensions/third-party/
 ```
 
 ### 6. Copy User Settings (Multi-User Mode)
 
 If you have multi-user mode enabled (`enableUserAccounts: true`), user data is stored in `data/<username>/` subdirectories. The directory structure is identical to SillyTavern's — just copy them over.
 
-### 7. Start Luker
+### 7. Start Taverncraft
 
 ```bash
 node server.js
 ```
 
-On first launch, Luker will automatically detect the existing data and load it normally.
+On first launch, Taverncraft will automatically detect the existing data and load it normally.
 
 ## Data Compatibility
 
-Luker is fully compatible with SillyTavern's data formats. The following data types can be used directly:
+Taverncraft is fully compatible with SillyTavern's data formats. The following data types can be used directly:
 
 | Data Type | Compatibility | Notes |
 | --- | --- | --- |
 | Character Cards (PNG/JSON) | ✅ Fully compatible | Supports V1/V2 specs |
 | Chat Logs (.jsonl) | ✅ Fully compatible | Incremental sync endpoints are backward compatible |
 | World Info | ✅ Fully compatible | Entry format unchanged |
-| Presets | ✅ Fully compatible | Luker automatically separates connection parameters |
+| Presets | ✅ Fully compatible | Taverncraft automatically separates connection parameters |
 | Personas | ✅ Fully compatible | — |
 | Extension Settings | ✅ Fully compatible | Third-party extensions work as before |
 | Group Chats | ✅ Fully compatible | — |
 | API Keys (secrets) | ✅ Fully compatible | `secrets.json` format unchanged |
 
-## Luker's Additional State Files
+## Taverncraft's Additional State Files
 
-During operation, Luker generates some additional **state files** in the data directory to store data for Luker-exclusive features:
+During operation, Taverncraft generates some additional **state files** in the data directory to store data for Taverncraft-exclusive features:
 
 - `.luker-state.<chat_id>.json` — Chat state files storing integrity checksums for incremental sync, etc.
 - Character card state files — Storing card-bound presets, Memory Graph data, editing assistant sessions, etc.
@@ -83,14 +83,14 @@ These files **do not affect SillyTavern's original data**. If you need to migrat
 
 ## Notes
 
-1. **Node.js Version**: Luker requires Node.js >= 20. Verify your Node.js version before migrating.
+1. **Node.js Version**: Taverncraft requires Node.js >= 20. Verify your Node.js version before migrating.
 
-2. **Third-Party Extensions**: SillyTavern's third-party extensions work normally in Luker. Luker uses the same extension loading mechanism, with extensions located in `public/scripts/extensions/third-party/`.
+2. **Third-Party Extensions**: SillyTavern's third-party extensions work normally in Taverncraft. Taverncraft uses the same extension loading mechanism, with extensions located in `public/scripts/extensions/third-party/`.
 
-3. **Configuration File**: SillyTavern's `config.yaml` is format-compatible with Luker's, but Luker adds some new configuration sections (such as `sso`, `hostWhitelist`, etc.). Settings like `requestProxy` already exist in SillyTavern and require no additional handling. It's recommended to start with Luker's default `config.yaml` and migrate your custom settings. See [Configuration](/guide/configuration) for details.
+3. **Configuration File**: SillyTavern's `config.yaml` is format-compatible with Taverncraft's, but Taverncraft adds some new configuration sections (such as `sso`, `hostWhitelist`, etc.). Settings like `requestProxy` already exist in SillyTavern and require no additional handling. It's recommended to start with Taverncraft's default `config.yaml` and migrate your custom settings. See [Configuration](/guide/configuration) for details.
 
-4. **Preset Decoupling**: Luker separates API connection parameters from presets. After migration, your presets still work normally — Luker automatically handles field classification during loading.
+4. **Preset Decoupling**: Taverncraft separates API connection parameters from presets. After migration, your presets still work normally — Taverncraft automatically handles field classification during loading.
 
-5. **Bidirectional Compatibility**: Since Luker doesn't modify SillyTavern's original data formats, you can switch between the two at any time. Just note that data generated by Luker-exclusive features (such as Memory Graph, Orchestrator) won't be available in SillyTavern.
+5. **Bidirectional Compatibility**: Since Taverncraft doesn't modify SillyTavern's original data formats, you can switch between the two at any time. Just note that data generated by Taverncraft-exclusive features (such as Memory Graph, Orchestrator) won't be available in SillyTavern.
 
-6. **Docker Deployment**: If you're using Docker, refer to Luker's provided `docker-compose.yml` reference configuration and mount the data directory as a volume.
+6. **Docker Deployment**: If you're using Docker, refer to Taverncraft's provided `docker-compose.yml` reference configuration and mount the data directory as a volume.

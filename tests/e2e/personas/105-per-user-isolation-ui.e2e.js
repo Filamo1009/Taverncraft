@@ -48,7 +48,7 @@ async function loginViaForm(page, baseURL, handle, password) {
     await page.waitForFunction(() => {
         // Auto-redirected to main UI.
         if (document.querySelector('#preloader') !== null) {
-            // Still loading the main UI; let the standard wait-for-Luker
+            // Still loading the main UI; let the standard wait-for-Taverncraft
             // path below pick it up.
             return /\/(login)?$/.test(location.pathname) || location.pathname === '/';
         }
@@ -94,7 +94,7 @@ async function loginViaForm(page, baseURL, handle, password) {
 
     // Settle on main UI.
     await page.waitForFunction(() => document.getElementById('preloader') === null, { timeout: 60_000 });
-    await page.waitForFunction(() => !!window.Luker?.getContext, { timeout: 30_000 });
+    await page.waitForFunction(() => !!window.Taverncraft?.getContext, { timeout: 30_000 });
 }
 
 function escapeRegex(s) {
@@ -111,9 +111,9 @@ function escapeRegex(s) {
 async function refreshCharactersList(page, { timeoutMs = 30_000 } = {}) {
     await page.reload({ waitUntil: 'domcontentloaded' });
     await page.waitForFunction(() => document.getElementById('preloader') === null, { timeout: timeoutMs });
-    await page.waitForFunction(() => !!window.Luker?.getContext, { timeout: timeoutMs });
+    await page.waitForFunction(() => !!window.Taverncraft?.getContext, { timeout: timeoutMs });
     await page.waitForFunction(() => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         return Array.isArray(ctx?.characters) && ctx.characters.length > 0;
     }, { timeout: timeoutMs });
 }
@@ -187,7 +187,7 @@ test.describe('#105-ui — UI sibling: two BrowserContexts log in via real form 
         // a definitive list rather than the racy boot snapshot.
         await refreshCharactersList(pageA);
         const aNames = await pageA.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return (ctx.characters || []).map(c => c?.name).filter(Boolean).sort();
         });
         expect(aNames, `user A character list via ctx.characters`).toContain('AshA');
@@ -201,7 +201,7 @@ test.describe('#105-ui — UI sibling: two BrowserContexts log in via real form 
 
         await refreshCharactersList(pageB);
         const bNames = await pageB.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return (ctx.characters || []).map(c => c?.name).filter(Boolean).sort();
         });
         expect(bNames).toContain('AshB');

@@ -166,7 +166,7 @@ test.describe('#55 — Branch chat keeps source MG intact (real branch UI)', () 
         await enableMgViaCheckbox(page);
 
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return Array.isArray(ctx?.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -186,7 +186,7 @@ test.describe('#55 — Branch chat keeps source MG intact (real branch UI)', () 
         await importMgGraphBindLatest(page, sourceImportPath);
 
         const sourceSnapshot = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const mg = ctx.getExtensionApi?.('memory-graph');
             const session = await mg?.openSession?.(ctx);
             const titles = session
@@ -215,7 +215,7 @@ test.describe('#55 — Branch chat keeps source MG intact (real branch UI)', () 
         // settle.
         await page.waitForTimeout(1500);
 
-        const branchChatId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId?.() || '');
+        const branchChatId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId?.() || '');
         expect(branchChatId, `branch chat id should differ from source (${sourceSnapshot.sourceChatId})`).not.toBe(sourceSnapshot.sourceChatId);
 
         // Send one turn in the branch so it has its own tail.
@@ -224,7 +224,7 @@ test.describe('#55 — Branch chat keeps source MG intact (real branch UI)', () 
         await importMgGraphBindLatest(page, branchImportPath);
 
         const branchSnapshot = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const mg = ctx.getExtensionApi?.('memory-graph');
             const session = await mg?.openSession?.(ctx);
             const cands = session ? session.listVisibleCandidates({}) : [];

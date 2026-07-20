@@ -2,16 +2,16 @@
 layout: home
 
 hero:
-  name: Luker
-  text: Next-gen Roleplay Chat Platform
-  tagline: A deep rebuild of SillyTavern, featuring knowledge-graph memory, multi-agent orchestration, AI-assisted character creation, and more
+  name: Taverncraft
+  text: World Simulation & Interactive Narrative Engine
+  tagline: Built on Luker and SillyTavern compatibility, with authoritative world state, long-term memory, inspectable prompts, and a moddable runtime
   actions:
     - theme: brand
       text: Quick Start
       link: /guide/getting-started
     - theme: alt
       text: GitHub
-      link: https://github.com/funnycups/Luker
+      link: https://github.com/Filamo1009/Taverncraft
 
 features:
   - icon: 🧠

@@ -31,13 +31,13 @@ import {
     runCharacterPresetReadTool,
 } from '../../iteration-library/tools/character-presets-reads.js';
 
-const __ctx = Luker.getContext();
+const __ctx = Taverncraft.getContext();
 const generateQuietPrompt = __ctx.generateQuietPrompt;
 const saveSettingsDebounced = __ctx.saveSettingsDebounced;
 const DOMPurify = __ctx.lib.DOMPurify;
 const lodash = __ctx.lib.lodash;
 const extension_settings = __ctx.extensionSettings;
-const getContext = Luker.getContext;
+const getContext = Taverncraft.getContext;
 const getCharacterState = __ctx.getCharacterState;
 const updateCharacterState = __ctx.updateCharacterState;
 const addLocaleData = __ctx.addLocaleData;
@@ -827,7 +827,7 @@ function clone(value) {
         try {
             return structuredClone(value);
         } catch {
-            // Fall back for Luker context proxy objects.
+            // Fall back for Taverncraft context proxy objects.
         }
     }
     const serialized = JSON.stringify(value);
@@ -2949,7 +2949,7 @@ function createCharacterEditorWorldBookListToolApi(context, { avatar = '' } = {}
                 type: 'function',
                 function: {
                     name: toolNames.LIST_WORLD_BOOKS,
-                    description: 'List world book names visible to the character being edited, tagged with their scope. Sources: \'character\' (the card\'s primary book at character.data.extensions.world), \'character_aux\' (auxiliary books bound via Luker\'s lorebook editor at world_info.charLore[].extraBooks), \'chat\' (chat-bound books from chat_metadata.world_info — only the active chat), and \'global\' (selected_world_info — books active for every chat). Returns { books: string[], sources: { [name]: scope } } so you can tell which scope owns each book without inspecting the card directly.',
+                    description: 'List world book names visible to the character being edited, tagged with their scope. Sources: \'character\' (the card\'s primary book at character.data.extensions.world), \'character_aux\' (auxiliary books bound via Taverncraft\'s lorebook editor at world_info.charLore[].extraBooks), \'chat\' (chat-bound books from chat_metadata.world_info — only the active chat), and \'global\' (selected_world_info — books active for every chat). Returns { books: string[], sources: { [name]: scope } } so you can tell which scope owns each book without inspecting the card directly.',
                     parameters: {
                         type: 'object',
                         properties: {},
@@ -3419,7 +3419,7 @@ function splitCharacterEditorToolCalls(rawCalls, helperToolApis = []) {
 }
 
 function getCharacterEditorSearchApi() {
-    const api = globalThis?.Luker?.searchTools;
+    const api = globalThis?.Taverncraft?.searchTools;
     if (!api || typeof api !== 'object') {
         return null;
     }
@@ -3465,7 +3465,7 @@ export async function runCharacterEditorHelperToolCall(call, helperToolApis = []
  *                                   world-book-list APIs to the right card.
  * @returns {Array<Object>} Helper-tool API objects (lorebook, simulate,
  *                          worldBookList, plus optional search when
- *                          `globalThis.Luker.searchTools` is wired).
+ *                          `globalThis.Taverncraft.searchTools` is wired).
  */
 export function buildCharacterEditorHelperApis(context, opts = {}) {
     const avatar = String(opts?.avatar || '').trim();

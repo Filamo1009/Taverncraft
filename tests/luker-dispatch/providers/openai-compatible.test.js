@@ -82,6 +82,25 @@ describe('dispatchOpenAICompatible', () => {
             expect(String(url)).toBe('https://proxy.example.com/v1/chat/completions');
             expect(init.headers['Authorization']).toBe('Bearer proxy-pw');
         });
+
+        test('never forwards local prompt-layer diagnostics upstream', async () => {
+            const ctx = fakeCtx({
+                body: {
+                    luker_prompt_layers: {
+                        version: 1,
+                        layers: [{ identifier: 'world_engine_post_history', preview: 'local only' }],
+                    },
+                },
+                secretMap: { api_key_openai: 'oa-key' },
+            });
+
+            await dispatchOpenAICompatible(ctx);
+
+            const [, init] = ctx.fetch.mock.calls[0];
+            const parsed = JSON.parse(init.body);
+            expect(parsed).not.toHaveProperty('luker_prompt_layers');
+            expect(JSON.stringify(parsed)).not.toContain('local only');
+        });
     });
 
     describe('resolveWorkersai', () => {

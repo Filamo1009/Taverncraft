@@ -1,6 +1,6 @@
 # Prompt Groups
 
-Prompt Groups is an organizational feature added by Luker on top of SillyTavern's existing PromptManager. It allows users to group multiple prompt entries into named groups, displayed as collapsible groups in the prompt manager list, helping manage complex prompt structures.
+Prompt Groups is an organizational feature added by Taverncraft on top of SillyTavern's existing PromptManager. It allows users to group multiple prompt entries into named groups, displayed as collapsible groups in the prompt manager list, helping manage complex prompt structures.
 
 ![Prompt groups in the manager](/images/presets/prompt-groups.png)
 

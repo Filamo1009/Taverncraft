@@ -1,14 +1,14 @@
 # 前端插件开发
 
-Luker 的插件系统基于 SillyTavern 的扩展架构，并在此基础上进行了增强。本文档面向希望为 Luker 开发第三方插件的开发者，涵盖插件的文件结构、生命周期、事件系统、UI 集成和调试技巧。
+Taverncraft 的插件系统基于 SillyTavern 的扩展架构，并在此基础上进行了增强。本文档面向希望为 Taverncraft 开发第三方插件的开发者，涵盖插件的文件结构、生命周期、事件系统、UI 集成和调试技巧。
 
 ## 术语说明
 
-Luker 中「插件」和「扩展」（Extension）指同一概念。内置扩展位于 `public/scripts/extensions/` 目录下，第三方插件安装到 `public/scripts/extensions/third-party/` 目录。
+Taverncraft 中「插件」和「扩展」（Extension）指同一概念。内置扩展位于 `public/scripts/extensions/` 目录下，第三方插件安装到 `public/scripts/extensions/third-party/` 目录。
 
 ## 插件文件结构
 
-一个标准的 Luker 插件包含以下文件：
+一个标准的 Taverncraft 插件包含以下文件：
 
 ```
 third-party/my-plugin/
@@ -53,7 +53,7 @@ third-party/my-plugin/
 
 ### index.js
 
-入口脚本是插件的核心文件。Luker 使用 ES Module 动态导入加载插件，因此入口文件应使用 `import`/`export` 语法。
+入口脚本是插件的核心文件。Taverncraft 使用 ES Module 动态导入加载插件，因此入口文件应使用 `import`/`export` 语法。
 
 一个最小的入口脚本结构：
 
@@ -93,7 +93,7 @@ jQuery(async () => {
 
 ### style.css
 
-样式文件会被自动加载。建议使用带有插件前缀的 CSS 类名，避免与其他插件或 Luker 核心样式冲突：
+样式文件会被自动加载。建议使用带有插件前缀的 CSS 类名，避免与其他插件或 Taverncraft 核心样式冲突：
 
 ```css
 .my-plugin-container {
@@ -128,16 +128,16 @@ jQuery(async () => {
 
 ## 全局对象
 
-### Luker.getContext()
+### Taverncraft.getContext()
 
-`Luker.getContext()` 是插件与 Luker 交互的主要接口。它返回一个包含丰富 API 的上下文对象：
+`Taverncraft.getContext()` 是插件与 Taverncraft 交互的主要接口。它返回一个包含丰富 API 的上下文对象：
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 ```
 
 > [!NOTE]
-> `SillyTavern.getContext()` 和 `st.getContext()` 是兼容别名，新插件应使用 `Luker.getContext()`。
+> `SillyTavern.getContext()` 和 `st.getContext()` 是兼容别名，新插件应使用 `Taverncraft.getContext()`。
 
 上下文对象包含以下主要类别的 API：
 
@@ -155,12 +155,12 @@ const context = Luker.getContext();
 
 ## 事件系统
 
-Luker 的事件系统是插件开发的核心机制。插件通过监听事件来响应用户操作和系统状态变化。
+Taverncraft 的事件系统是插件开发的核心机制。插件通过监听事件来响应用户操作和系统状态变化。
 
 ### 基本用法
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 
 // 监听事件
 context.eventSource.on(context.eventTypes.CHAT_CHANGED, (chatId) => {
@@ -177,7 +177,7 @@ context.eventSource.makeLast(context.eventTypes.CHAT_CHANGED, handler);
 
 ### 监听器执行顺序
 
-Luker 的事件监听器按以下优先级顺序**串行**执行（每个监听器会被 `await`）：
+Taverncraft 的事件监听器按以下优先级顺序**串行**执行（每个监听器会被 `await`）：
 
 1. **显式插件排序**（`pluginOrder`）— 通过 `eventSource.setOrderConfig()` 或内置的 Hook Order 扩展配置
 2. **监听器优先级**（`priority`）— `eventSource.on()` 的第三个参数，数字越大越先执行
@@ -330,12 +330,12 @@ GENERATION_ENDED / GENERATION_STOPPED
 
 ## 聊天状态
 
-Luker 提供了聊天状态机制，让插件可以将数据绑定到特定聊天，而不是塞进 `chat_metadata`。
+Taverncraft 提供了聊天状态机制，让插件可以将数据绑定到特定聊天，而不是塞进 `chat_metadata`。
 
 ### 基本用法
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 const NAMESPACE = 'my-plugin';
 
 // 读取状态
@@ -405,7 +405,7 @@ jQuery(async () => {
 
 ### 弹窗对话框
 
-Luker 提供了 `callGenericPopup` 等弹窗 API，用于显示自定义对话框：
+Taverncraft 提供了 `callGenericPopup` 等弹窗 API，用于显示自定义对话框：
 
 ```js
 import { callGenericPopup, POPUP_TYPE } from '../../../popup.js';
@@ -443,7 +443,7 @@ registerSlashCommand(
 
 ```js
 // 注册方
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 context.registerExtensionApi('my-plugin', {
   doSomething: () => { /* ... */ },
   getData: () => myData,
@@ -460,13 +460,13 @@ if (myPluginApi) {
 
 ### 浏览器开发者工具
 
-- 在浏览器控制台中使用 `Luker.getContext()` 直接检查上下文对象
+- 在浏览器控制台中使用 `Taverncraft.getContext()` 直接检查上下文对象
 - 使用 `context.eventSource.getListenersMeta(eventName)` 查看某个事件的所有监听器信息
 - 插件身份在排序/调试中通过扩展路径推断，包括第三方扩展（`third-party/<name>`）
 
 ### 前端日志管理器
 
-Luker 内置了前端日志管理器，会拦截 `console` 输出和 `fetch` 请求。通过 `getFrontendLogsSnapshot()` 获取日志快照，支持按时间范围和 ID 过滤。详见[日志系统](/zh-CN/features/logging)。
+Taverncraft 内置了前端日志管理器，会拦截 `console` 输出和 `fetch` 请求。通过 `getFrontendLogsSnapshot()` 获取日志快照，支持按时间范围和 ID 过滤。详见[日志系统](/zh-CN/features/logging)。
 
 ### 常见问题排查
 
@@ -487,4 +487,4 @@ Luker 内置了前端日志管理器，会拦截 `console` 输出和 `fetch` 请
 - [后端插件开发](/zh-CN/development/server-plugin) — 服务端插件开发指南（文件系统、API 代理、凭证存储）
 - [Extension API 参考](/zh-CN/development/extension-api/) — 完整的 API 列表和详细参数说明
 - [角色卡开发](/zh-CN/development/card-developers) — 角色卡扩展字段和 CardApp 开发
-- [贡献指南](/zh-CN/development/contributing) — 如何向 Luker 提交代码
+- [贡献指南](/zh-CN/development/contributing) — 如何向 Taverncraft 提交代码

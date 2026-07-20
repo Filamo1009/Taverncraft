@@ -98,7 +98,7 @@ test.describe('Skills RP demo (manual user path)', () => {
         // Poll for online_status to flip off no_connection — this is read-only
         // state inspection, not mutation.
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             const v = ctx?.onlineStatus ?? null;
             return Boolean(v) && String(v) !== 'no_connection';
         }, null, { timeout: 30000 });
@@ -130,7 +130,7 @@ test.describe('Skills RP demo (manual user path)', () => {
         await seraphinaTile.click();
         // Wait for ctx.characterId to flip — read-only assertion.
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return ctx?.characterId !== null && ctx?.characterId !== undefined
                 && ctx.characters?.[ctx.characterId]?.name === 'Seraphina';
         }, null, { timeout: 15000 });
@@ -188,7 +188,7 @@ test.describe('Skills RP demo (manual user path)', () => {
         const namePopupId = await namePopup.getAttribute('data-id');
         const namePopupById = page.locator(`dialog.popup[data-id="${namePopupId}"]`);
         // Wait for the popup to finish its opening transition before reaching
-        // for its input — Luker popups carry `opening` and `closing` HTML
+        // for its input — Taverncraft popups carry `opening` and `closing` HTML
         // attributes during animation; the input is CSS-hidden in those states.
         await page.waitForFunction((id) => {
             const d = document.querySelector(`dialog.popup[data-id="${id}"]`);
@@ -363,7 +363,7 @@ test.describe('Skills RP demo (manual user path)', () => {
         await page.locator('#rm_extensions_block').waitFor({ state: 'hidden', timeout: 5000 });
         // Sanity: the orchestrator mode is director.
         const executionMode = await page.evaluate(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return String(ctx?.extensionSettings?.orchestrator?.executionMode || '');
         });
         expect(executionMode, 'orchestrator must be in director mode for the demo').toBe('director');
@@ -387,7 +387,7 @@ test.describe('Skills RP demo (manual user path)', () => {
         const sendTextarea = page.locator('#send_textarea');
         await sendTextarea.waitFor({ state: 'visible', timeout: 10000 });
         await sendTextarea.fill(USER_RP_MESSAGE);
-        // The send button is `#send_but`. In some Luker UI states the top-bar
+        // The send button is `#send_but`. In some Taverncraft UI states the top-bar
         // widgets overlap the send region and intercept clicks; if a normal
         // click fails, fall back to the locator's dispatchEvent — that is
         // legitimate DOM-level interaction, not internal state mutation.

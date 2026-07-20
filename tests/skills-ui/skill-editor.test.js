@@ -9,7 +9,7 @@
  *     optimistic-lock conflict, frontmatter parse error blocks save,
  *     create-new-skill flow, file-tree refresh.
  *
- * Luker's Jest config runs in `testEnvironment: "node"` (no jsdom), so we
+ * Taverncraft's Jest config runs in `testEnvironment: "node"` (no jsdom), so we
  * install minimal DOM stubs on globalThis exactly as the manager-panel test
  * does. The editor module is imported lazily inside each test so the stubs
  * are in scope at module-evaluation time.

@@ -1,4 +1,4 @@
-// eslint-plugin-luker — registry of Luker-internal ESLint rules.
+// eslint-plugin-luker — registry of Taverncraft-internal ESLint rules.
 const noRawFsInEndpoint = require('./no-raw-fs-in-endpoint.cjs');
 
 module.exports = {

@@ -876,10 +876,28 @@ export function getMemoryGraphReadApi(store, context = null) {
 
     function tokenizeForKeyword(text) {
         if (!text) return [];
-        return String(text)
+        const segments = String(text)
             .toLowerCase()
             .split(/[^a-z0-9一-鿿]+/i)
             .filter(token => token.length >= 2);
+        const tokens = [];
+        for (const segment of segments) {
+            tokens.push(segment);
+            // A contiguous Han sentence is not a lexical word boundary.
+            // Keeping only the whole segment makes a query such as 青玉剑穗
+            // fail to match 沈慕微把青玉剑穗交给主角. Add compact 2/3-char
+            // n-grams for Han runs while preserving existing Latin/numeric
+            // token behavior and the full segment for exact matches.
+            const hanRuns = segment.match(/[一-鿿]+/gu) || [];
+            for (const run of hanRuns) {
+                for (const width of [2, 3]) {
+                    for (let index = 0; index + width <= run.length; index++) {
+                        tokens.push(run.slice(index, index + width));
+                    }
+                }
+            }
+        }
+        return tokens;
     }
 
     function buildKeywordCorpus(node, settings) {
@@ -923,6 +941,7 @@ export function getMemoryGraphReadApi(store, context = null) {
         const queryTokens = tokenizeForKeyword(queryText);
         const queryTokenCount = Math.max(1, queryTokens.length);
         const querySet = new Set(queryTokens);
+        const minScore = /[一-鿿]/u.test(queryText) && queryTokenCount >= 3 ? 0.5 : 0;
 
         const scored = [];
         for (const node of iterateStoreNodes(store)) {
@@ -940,8 +959,9 @@ export function getMemoryGraphReadApi(store, context = null) {
                     matches += 1;
                 }
             }
-            if (matches > 0) {
-                scored.push({ node, score: matches / queryTokenCount });
+            const score = matches / queryTokenCount;
+            if (matches > 0 && score >= minScore) {
+                scored.push({ node, score });
             }
         }
         scored.sort((a, b) => b.score - a.score);

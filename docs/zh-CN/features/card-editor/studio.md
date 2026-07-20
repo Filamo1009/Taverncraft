@@ -15,7 +15,7 @@ CardApp Studio 是角色卡编辑助手的完整开发环境，专为内嵌了 [
 
 ## 界面布局
 
-Studio 采用三栏布局，覆盖在 Luker 主界面之上：
+Studio 采用三栏布局，覆盖在 Taverncraft 主界面之上：
 
 ![Studio 三栏总览：左侧 AI 对话 / 中间实时预览 / 右侧代码编辑器](/images/cardapp-studio/studio-overview.png)
 
@@ -82,7 +82,7 @@ Studio 中的 AI 拥有比普通弹窗更丰富的工具集，分七大类：
 **发现 / 文档查询** — `slashcmd_list` + `slashcmd_help` 查斜杠命令，`luker_context_list_keys` + `luker_context_describe` 查运行时 API，`list_luker_docs` + `read_luker_doc` 直接读 Markdown 文档（和本站同源）。Studio AI 用这些工具在生成代码前核对名字和签名，而不是凭记忆猜。
 
 ::: tip CardApp 创作约定
-按 Luker 的 CardApp 创作约定，所有 AI 可见内容都应放在通过 `extensions.world` 绑定的世界书里，而非角色卡的 `system_prompt` / `post_history_instructions` 字段。Studio 默认遵守这一约定。详见[角色卡开发者指南](/zh-CN/development/card-developers)。
+按 Taverncraft 的 CardApp 创作约定，所有 AI 可见内容都应放在通过 `extensions.world` 绑定的世界书里，而非角色卡的 `system_prompt` / `post_history_instructions` 字段。Studio 默认遵守这一约定。详见[角色卡开发者指南](/zh-CN/development/card-developers)。
 :::
 
 ## 代码编辑器细节
@@ -114,7 +114,7 @@ Studio 通过 Git 自动记录文件的版本历史：
 - 与角色卡数据一起导出，分享后接收方仍可看到完整开发历程
 
 ::: info 与 SillyTavern 数据兼容
-Studio 的 Git 仓库存储在 Luker 的扩展数据区，不会污染角色卡 V2 标准字段。导回 SillyTavern 时仅丢失版本历史，CardApp 本体仍可正常运行。
+Studio 的 Git 仓库存储在 Taverncraft 的扩展数据区，不会污染角色卡 V2 标准字段。导回 SillyTavern 时仅丢失版本历史，CardApp 本体仍可正常运行。
 :::
 
 ## 与搜索插件集成

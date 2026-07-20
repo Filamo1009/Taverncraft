@@ -1,7 +1,7 @@
 # Multi-agent setup: presets, memory graph, web search
 
 ::: tip What this doc solves
-Luker's [multi-agent orchestrator](/features/orchestrator/), [memory graph](/features/memory-graph), and [search tools](/features/search-tools) each work standalone — but getting them to *collaborate* as one flow (an agent team that extracts memories, looks up canon, drafts the prose) takes a few configuration steps in order.
+Taverncraft's [multi-agent orchestrator](/features/orchestrator/), [memory graph](/features/memory-graph), and [search tools](/features/search-tools) each work standalone — but getting them to *collaborate* as one flow (an agent team that extracts memories, looks up canon, drafts the prose) takes a few configuration steps in order.
 
 This doc starts from an empty configuration and walks you through preset → director → memory → search end-to-end. It does not assume you have read the three deep-dive docs above. By the end you have a working default setup that you can keep tuning in the iteration studio.
 :::
@@ -42,7 +42,7 @@ The memory graph's own "Auto extraction / Auto compaction" no longer fires — t
 
 ## What you need first
 
-- A working Luker instance where the main chat already produces replies
+- A working Taverncraft instance where the main chat already produces replies
 - A working [RP preset](/basics/presets), ideally already tuned with style guidance, jailbreak, and NSFW direction
 
 ## Step 1 — Pick a starting preset
@@ -51,7 +51,7 @@ Any RP preset you'd normally use is fine. This step just confirms you have a wri
 
 ## Step 2 — Configure the Preset Assistant and derive the two presets Director needs
 
-LLM calls made by Luker's plugins fall into **two broad categories** with very different preset needs. One is **plugins producing RP content** — Director's agent team drafting the body, critic sub-agents reviewing, and so on — which wants a real RP preset with jailbreak / style / anti-cliché guidance. The other is the **iteration AI** that powers various plugins — the Preset Assistant, the Memory Graph schema studio, CardApp Studio, Director's Iteration Studio, and so on — which uses tool calls to edit configs or extract structured data; any RP instructions leaking in will interfere with the model executing the plugin's instructions, so these slots want a **stripped-down preset with only jailbreak left**.
+LLM calls made by Taverncraft's plugins fall into **two broad categories** with very different preset needs. One is **plugins producing RP content** — Director's agent team drafting the body, critic sub-agents reviewing, and so on — which wants a real RP preset with jailbreak / style / anti-cliché guidance. The other is the **iteration AI** that powers various plugins — the Preset Assistant, the Memory Graph schema studio, CardApp Studio, Director's Iteration Studio, and so on — which uses tool calls to edit configs or extract structured data; any RP instructions leaking in will interfere with the model executing the plugin's instructions, so these slots want a **stripped-down preset with only jailbreak left**.
 
 Director's flow touches both categories at once:
 
@@ -81,11 +81,11 @@ Open the Extensions drawer (`#extensions_settings2` — the same drawer that hol
 
 ![Preset Assistant settings panel — iteration AI preset (with ? button) + iteration AI API preset](/images/recipes/agent-onboarding/step-02a-preset-help-button.png)
 
-The **?** button opens an explainer popup with an **Import plugin-only preset** button at the bottom — one click imports Luker's bundled clean preset and auto-selects it here.
+The **?** button opens an explainer popup with an **Import plugin-only preset** button at the bottom — one click imports Taverncraft's bundled clean preset and auto-selects it here.
 
 ![? button popup — explains what preset belongs in this slot, one-click imports plugin-only](/images/recipes/agent-onboarding/step-02a-help-popup.png)
 
-Other Luker plugins with their own iteration AI (Director's Iteration Studio, Memory Graph schema studio, CardApp Studio, etc.) expose the same **?** button next to their preset selector — the same one-click import works there too.
+Other Taverncraft plugins with their own iteration AI (Director's Iteration Studio, Memory Graph schema studio, CardApp Studio, etc.) expose the same **?** button next to their preset selector — the same one-click import works there too.
 
 ### 2b — Derive the **agent** preset
 

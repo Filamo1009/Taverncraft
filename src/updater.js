@@ -371,7 +371,7 @@ export async function fetchLatestApkReleaseInfo() {
         method: 'GET',
         headers: {
             Accept: 'application/vnd.github+json',
-            'User-Agent': 'Luker-Updater',
+            'User-Agent': 'Taverncraft-Updater',
         },
     });
 

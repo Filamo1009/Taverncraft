@@ -11,7 +11,7 @@
  *
  * The "leave untouched" half is the whole point — chat_metadata.variables
  * also holds values written by world-info side effects, slash commands,
- * QR scripts, third-party extensions, and legacy pre-Luker chats. Wiping
+ * QR scripts, third-party extensions, and legacy pre-Taverncraft chats. Wiping
  * them on every rebuild would shred data we don't own.
  *
  * The tracked-key set is computed *fresh* every call from the surviving

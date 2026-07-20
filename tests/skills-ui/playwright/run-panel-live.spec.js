@@ -60,7 +60,7 @@ test.describe('Orchestrator Run Panel — live LLM', () => {
         page.on('pageerror', err => console.warn(`[browser:error] ${err.message}`));
 
         await awaitMainUI(page);
-        // First-run user dirs surface a blocking "Welcome to Luker!"
+        // First-run user dirs surface a blocking "Welcome to Taverncraft!"
         // dialog with a "Save" button that locks the persona name. Any
         // /profile slash command issued behind that dialog hangs because
         // the executor's parser is gated by the modal. Dismiss it once.
@@ -73,7 +73,7 @@ test.describe('Orchestrator Run Panel — live LLM', () => {
         expect(profile, 'no usable connection profile reachable as online (configure one in Connection Manager or set LUKER_PLAYWRIGHT_PROFILE)').toBeTruthy();
 
         const llmReady = await page.evaluate(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             const v = ctx?.onlineStatus ?? null;
             return Boolean(v) && String(v).toLowerCase() !== 'no_connection';
         });
@@ -247,7 +247,7 @@ test.describe('Orchestrator Run Panel — live LLM', () => {
             const profile = await activateConnectionProfile(page);
             expect(profile, 'no usable connection profile (setup integration env first)').toBeTruthy();
             const llmReady = await page.evaluate(() => {
-                const ctx = window.Luker?.getContext?.();
+                const ctx = window.Taverncraft?.getContext?.();
                 const v = ctx?.onlineStatus ?? null;
                 return Boolean(v) && String(v).toLowerCase() !== 'no_connection';
             });
@@ -304,7 +304,7 @@ test.describe('Orchestrator Run Panel — live LLM', () => {
 
 /**
  * Dismiss any toastr notifications that may overlay the chat region.
- * Luker's chat-sync watchdog occasionally fires an "integrity drift,
+ * Taverncraft's chat-sync watchdog occasionally fires an "integrity drift,
  * auto-recovering" toast when a test rapidly clobbers chat state across
  * runs — harmless but it occludes the panel in screenshots. Best-effort:
  * if toastr isn't loaded or the toasts already cleared, this is a no-op.
@@ -318,7 +318,7 @@ async function clearToasts(page) {
 
 
 /**
- * Dismiss the "Welcome to Luker!" first-run modal if it's present. The
+ * Dismiss the "Welcome to Taverncraft!" first-run modal if it's present. The
  * modal blocks pointer events for everything behind it AND the slash-
  * command parser, so /profile activation hangs until the user clicks
  * the Save button (or the dialog is removed from the DOM).
@@ -326,7 +326,7 @@ async function clearToasts(page) {
  * Idempotent: returns immediately if the dialog isn't there.
  */
 async function dismissWelcomeDialogIfPresent(page) {
-    const welcomeSave = page.locator('dialog:has(h3:has-text("Welcome to Luker!")) button:has-text("Save"), dialog:has(h3:has-text("Welcome to SillyTavern!")) button:has-text("Save")');
+    const welcomeSave = page.locator('dialog:has(h3:has-text("Welcome to Taverncraft!")) button:has-text("Save"), dialog:has(h3:has-text("Welcome to SillyTavern!")) button:has-text("Save")');
     try {
         await welcomeSave.first().waitFor({ state: 'visible', timeout: 2000 });
     } catch {
@@ -353,7 +353,7 @@ async function activateConnectionProfile(page) {
     // settings at all, the dropdown waitForFunction below will burn
     // 30s for nothing. Probe the settings shape first (no DOM access).
     const hasAnyProfile = await page.evaluate(() => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         const profiles = ctx?.extensionSettings?.connectionManager?.profiles;
         return Array.isArray(profiles) && profiles.length > 0;
     }).catch(() => false);
@@ -372,7 +372,7 @@ async function activateConnectionProfile(page) {
         // returns '' which the caller treats as "skip".
     }
     return await page.evaluate(async () => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         if (!ctx) return '';
         const profiles = ctx.extensionSettings?.connectionManager?.profiles;
         if (!Array.isArray(profiles) || !profiles.length) return '';
@@ -403,7 +403,7 @@ async function activateConnectionProfile(page) {
  */
 async function ensureCharacterLoaded(page) {
     return await page.evaluate(async () => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         if (!ctx) return '';
         const cur = ctx.characters?.[ctx.characterId];
         if (cur?.avatar) return String(cur.avatar);
@@ -438,7 +438,7 @@ async function ensureCharacterLoaded(page) {
  */
 async function ensureOrchestratorEnabledDirectorMode(page) {
     await page.evaluate(() => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         const settings = ctx?.extensionSettings?.orchestrator;
         if (!settings) throw new Error('orchestrator settings missing — extension not mounted (check that the extension is enabled in this build)');
         settings.enabled = true;

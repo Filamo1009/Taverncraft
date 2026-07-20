@@ -4,7 +4,7 @@
  * Three layers:
  *   Layer 1 (direct):       import { renderLukerTabs } from '/scripts/extensions/luker-tabs.js';
  *   Layer 2 (lukerContext): const { renderLukerTabs } = lukerContext;
- *   Layer 3 (getContext):   const { renderLukerTabs } = Luker.getContext();
+ *   Layer 3 (getContext):   const { renderLukerTabs } = Taverncraft.getContext();
  *
  * Persists tab selection to
  *   extension_settings[moduleName].tabState[scope] = tabKey

@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Copyright (C) 2026 FunnyCups
 
-const __ctx = Luker.getContext();
+const __ctx = Taverncraft.getContext();
 const saveSettingsDebounced = __ctx.saveSettingsDebounced;
 const extension_settings = __ctx.extensionSettings;
-const getContext = Luker.getContext;
+const getContext = Taverncraft.getContext;
 const addLocaleData = __ctx.addLocaleData;
 const translate = __ctx.translate;
 const Popup = __ctx.Popup;

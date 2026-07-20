@@ -58,7 +58,7 @@ test.describe('#104 — admin creates / alice changes password / admin deletes',
         // --- Admin session ---
         const admin = await newSession(server.baseURL);
         try {
-            // Default user in Luker is the admin "default-user" with no password.
+            // Default user in Taverncraft is the admin "default-user" with no password.
             const loginRes = await admin.post('/api/users/login', { handle: 'default-user', password: '' });
             expect(loginRes.ok(), `admin login failed (${loginRes.status()})`).toBe(true);
 

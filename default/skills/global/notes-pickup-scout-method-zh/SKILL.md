@@ -2,7 +2,7 @@
 name: notes-pickup-scout-method-zh
 description: notes_pickup_scout method — scan OPEN notes for trigger-ripe items this turn (planted setups paying off, pending promises being asked about).
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 

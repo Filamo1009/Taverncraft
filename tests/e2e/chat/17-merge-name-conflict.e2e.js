@@ -64,14 +64,14 @@ test.describe('#17 — merge name conflict resolves to (2) suffix', () => {
         // handler reopens on a 250ms delay. We'll come back to rename the
         // very first chat once both A and B exist.
         await sendMessageAndAwaitReply(page, 'occupy: hold the corner.');
-        const occupyChatId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+        const occupyChatId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
         expect(occupyChatId).toBeTruthy();
 
         await createNewChatViaUI(page);
-        const idA = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+        const idA = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
         await sendMessageAndAwaitReply(page, 'A1: south clean?');
         await createNewChatViaUI(page);
-        const idB = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+        const idB = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
         await sendMessageAndAwaitReply(page, 'B1: north shifting?');
         expect(idA).not.toBe(idB);
         expect(idA).not.toBe(occupyChatId);
@@ -86,7 +86,7 @@ test.describe('#17 — merge name conflict resolves to (2) suffix', () => {
         // This avoids the chat-switch path entirely, keeping the test
         // focused on the merge name-conflict contract.
         const avatarFolder = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.characters[ctx.characterId].avatar.replace(/\.png$/, '');
         });
         const chatsDir = resolve(server.dataRoot, 'default-user', 'chats', avatarFolder);
@@ -106,7 +106,7 @@ test.describe('#17 — merge name conflict resolves to (2) suffix', () => {
         // don't miss the event. This is observation-only — the Save
         // click is the real product-logic trigger.
         const renameDonePromise = page.evaluate(() => new Promise((resolve, reject) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const timer = setTimeout(() => reject(new Error('CHAT_RENAMED timeout')), 15000);
             const off = ctx.eventSource.on(ctx.eventTypes.CHAT_RENAMED, (data) => {
                 clearTimeout(timer);
@@ -129,11 +129,11 @@ test.describe('#17 — merge name conflict resolves to (2) suffix', () => {
         // "merged-conflict (2)" and open it.
         await submitMergeDialog(page, dialog, 'merged-conflict');
         await page.waitForFunction(() => {
-            const id = window.Luker.getContext().getCurrentChatId();
+            const id = window.Taverncraft.getContext().getCurrentChatId();
             return typeof id === 'string' && id.startsWith('merged-conflict');
         }, null, { timeout: 15_000 });
 
-        const openedId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+        const openedId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
         expect(openedId).toBe('merged-conflict (2)');
 
         // Both names co-exist on disk after the merge: the occupied chat

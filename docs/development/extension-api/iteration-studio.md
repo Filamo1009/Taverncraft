@@ -230,7 +230,7 @@ If nothing needs migrating, omit the hook.
 
 ## Three-layer API exposure
 
-Per the Luker API convention, every shell capability is exposed at three layers — same as `edits-lib`:
+Per the Taverncraft API convention, every shell capability is exposed at three layers — same as `edits-lib`:
 
 ```js
 // Layer 1 — direct ESM import (in-tree extensions)

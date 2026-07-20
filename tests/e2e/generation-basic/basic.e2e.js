@@ -86,11 +86,11 @@ test('generation-basic: HTTP 200 + x-luker-generation-id + ws-delivery stream + 
 
     // (4) chat.jsonl on disk contains both the user and assistant turns.
     const avatarFolder = await page.evaluate(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const c = ctx.characters[ctx.characterId];
         return (c?.avatar || '').replace(/\.png$/, '');
     });
-    const chatId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+    const chatId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
     const jsonlPath = resolve(server.dataRoot, 'default-user', 'chats', avatarFolder, `${chatId}.jsonl`);
     expect(existsSync(jsonlPath), `expected chat file at ${jsonlPath}`).toBe(true);
     const lines = readFileSync(jsonlPath, 'utf8').trim().split('\n').map(l => JSON.parse(l));

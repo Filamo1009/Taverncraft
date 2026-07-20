@@ -1,6 +1,6 @@
 # Incremental Sync
 
-Incremental Sync is Luker's fundamental improvement to SillyTavern's data transmission architecture, replacing full overwrites with incremental patches to dramatically reduce bandwidth consumption and eliminate concurrent write conflicts.
+Incremental Sync is Taverncraft's fundamental improvement to SillyTavern's data transmission architecture, replacing full overwrites with incremental patches to dramatically reduce bandwidth consumption and eliminate concurrent write conflicts.
 
 ## Problem Background
 
@@ -14,7 +14,7 @@ SillyTavern's data saving uses a full-transmission model: every modification (ev
 ```d2
 direction: right
 
-LK: "Luker: incremental patch" {
+LK: "Taverncraft: incremental patch" {
   style.fill: "#e8f5e9"
   edit: "User edits one char"
   diff: "Diff changed fields"
@@ -34,7 +34,7 @@ ST: "SillyTavern: full overwrite" {
 
 ## Incremental Endpoints
 
-Luker introduces three incremental endpoints covering different modification scenarios for chat data:
+Taverncraft introduces three incremental endpoints covering different modification scenarios for chat data:
 
 ### Append Messages (append)
 
@@ -98,7 +98,7 @@ The metadata update endpoint's design references the concepts of [RFC 6902](http
 
 ## Incremental Patch Saving for Settings Data
 
-Beyond chat data, Luker's settings data (user preferences, extension configurations, preset parameters, etc.) also supports incremental patch saving. Settings changes are applied to the server-side settings file through deep merge, also with integrity hash conflict detection, preventing settings loss from concurrent modifications.
+Beyond chat data, Taverncraft's settings data (user preferences, extension configurations, preset parameters, etc.) also supports incremental patch saving. Settings changes are applied to the server-side settings file through deep merge, also with integrity hash conflict detection, preventing settings loss from concurrent modifications.
 
 This means modifying a single sampling parameter no longer requires transmitting the entire settings object — only the changed fields need to be sent.
 
@@ -126,7 +126,7 @@ Incremental Sync works closely with [Backend Real-Time Storage](/improvements/ba
 This flow ensures a complete chain from frontend data changes to disk persistence, both efficient and safe.
 
 ::: tip Performance Benefits
-For a chat history with 500 messages, when editing one message: SillyTavern needs to transmit approximately 2-5 MB of full data, while Luker only needs to transmit approximately 1-2 KB of patch data. The difference is especially noticeable on mobile networks or in high-latency environments.
+For a chat history with 500 messages, when editing one message: SillyTavern needs to transmit approximately 2-5 MB of full data, while Taverncraft only needs to transmit approximately 1-2 KB of patch data. The difference is especially noticeable on mobile networks or in high-latency environments.
 :::
 
 ## Related Pages

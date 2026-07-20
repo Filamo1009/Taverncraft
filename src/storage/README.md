@@ -105,7 +105,7 @@ router.post('/something', async function (req, res) {
 
 - Chat: `<chats>/<charDir>/<name>.jsonl`
 - Group chat: `<groupChats>/<groupId|name>.jsonl`
-- Sidecar (chats + presets): `<dir>/<base>.luker-state.<namespace>.json` — uses the `SIDECAR_INFIX = '.luker-state.'` constant from `engines/sidecar-naming.js`; matches the existing Luker convention so vanilla SillyTavern and rsync / Syncthing setups stay compatible
+- Sidecar (chats + presets): `<dir>/<base>.luker-state.<namespace>.json` — uses the `SIDECAR_INFIX = '.luker-state.'` constant from `engines/sidecar-naming.js`; matches the existing Taverncraft convention so vanilla SillyTavern and rsync / Syncthing setups stay compatible
 - Integrity slug: stored in `chat_metadata.integrity` of the first JSONL line; rotated by every write through ChatRepo
 - Pretty-print convention: most resources (settings, presets, worlds, named-docs, groups) write `JSON.stringify(doc, null, 4)`. `StatsRepo` writes compact JSON to match legacy. `ChatRepo` writes JSONL.
 
@@ -182,7 +182,7 @@ One table per resource kind (`chats`, `chat_states`, `settings`, `presets`, `pre
   - FS reads `fs.statSync(...).mtimeMs` (real OS flush timestamp; reflects when the file system wrote the bytes).
   - SQLite stores `Date.now()` at save time (reflects when the Repo called `save`).
   - Both are millisecond-resolution numbers, but they answer slightly different questions. Don't compare timestamps across engines.
-- **PostgreSQL collation** — `worlds.name`, `presets.name`, `named_docs.name`, and `chats.name`/`char_dir`/`group_id` rely on byte-exact equality for primary-key lookups. Postgres' default collation is "deterministic" (`=` compares byte-for-byte regardless of locale), so this works out of the box. If the operator deploys the database with an ICU non-deterministic collation declared at the database, schema, or column level, equality on these columns starts honoring locale rules (e.g. case-insensitive or accent-insensitive), and `WorldInfoRepo.resolveName` may map two visually distinct names to the same row. Keep the cluster on its default collation (or explicitly `COLLATE "C"` / `"POSIX"` on these tables) for Luker installs.
+- **PostgreSQL collation** — `worlds.name`, `presets.name`, `named_docs.name`, and `chats.name`/`char_dir`/`group_id` rely on byte-exact equality for primary-key lookups. Postgres' default collation is "deterministic" (`=` compares byte-for-byte regardless of locale), so this works out of the box. If the operator deploys the database with an ICU non-deterministic collation declared at the database, schema, or column level, equality on these columns starts honoring locale rules (e.g. case-insensitive or accent-insensitive), and `WorldInfoRepo.resolveName` may map two visually distinct names to the same row. Keep the cluster on its default collation (or explicitly `COLLATE "C"` / `"POSIX"` on these tables) for Taverncraft installs.
 
 ## Dependencies and install gotchas
 
@@ -287,7 +287,7 @@ Reads `./config.yaml` from the CWD (so the script assumes you ran it from the re
 
 ### Multi-process safety
 
-The read-only flag lives in module-local state inside one Node process. If Luker is deployed as multiple Node processes behind a load balancer, the flag does **not** propagate between processes. Single-process Luker is the only supported deployment for migration; multi-process deployments must coordinate externally (admin downtime window) before triggering migration on one node.
+The read-only flag lives in module-local state inside one Node process. If Taverncraft is deployed as multiple Node processes behind a load balancer, the flag does **not** propagate between processes. Single-process Taverncraft is the only supported deployment for migration; multi-process deployments must coordinate externally (admin downtime window) before triggering migration on one node.
 
 ### Recovery
 

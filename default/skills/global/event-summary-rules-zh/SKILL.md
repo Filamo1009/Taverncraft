@@ -2,7 +2,7 @@
 name: event-summary-rules-zh
 description: Event summary writing rules — prose body + 三段可选 section (不可逆 / 未结 / 原文摘录) 格式; 心理 A/B/C 三分类 + §2.1 颗粒度准则 (default 一句过场 + 三类例外允许展开) + §2.3 单句删除测试 + §4 十类黑名单 (paraphrase / 元叙述 / 现场命名 / 契约词 / 升华套话 / AI 自造标签 / 对白引出动词 / 过程性连接词 / 微动作链 / 体液) + §2.6 NPC baseline 路由到 character_sheet。本规范同时为 leaf event 写作规范, 以及 rollup compress 必须遵守的*写作纪律*。
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
 ---
 
 # event-summary-rules-zh

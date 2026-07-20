@@ -65,7 +65,7 @@ test.describe('#11 — abort mid-stream', () => {
 
         // Real user gesture #2: click #mes_stop (no underlying-API fallback).
         const stoppedEvP = page.evaluate(() => new Promise((resolve) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const t = setTimeout(() => resolve('timeout'), 6000);
             const handler = () => {
                 clearTimeout(t);

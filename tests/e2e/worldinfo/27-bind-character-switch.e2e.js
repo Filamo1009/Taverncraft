@@ -187,7 +187,7 @@ test.describe('#27 — Bind WI to character → switch character', () => {
         // --- Ash turn: only OAKWOOD_LORE ---
         await openListAndSelect(page, 'Ash Cartographer');
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             if (!ctx) return false;
             const id = ctx.characterId;
             if (typeof id !== 'number' && typeof id !== 'string') return false;
@@ -195,7 +195,7 @@ test.describe('#27 — Bind WI to character → switch character', () => {
         }, { timeout: 10_000 });
         await expectWorldButtonBound(page, 'ash-private-book');
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -206,7 +206,7 @@ test.describe('#27 — Bind WI to character → switch character', () => {
         // --- Switch to Rhonin via another REAL card click ---
         await openListAndSelect(page, 'Rhonin Warden');
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             if (!ctx) return false;
             const id = ctx.characterId;
             if (typeof id !== 'number' && typeof id !== 'string') return false;
@@ -214,7 +214,7 @@ test.describe('#27 — Bind WI to character → switch character', () => {
         }, { timeout: 10_000 });
         await expectWorldButtonBound(page, 'rhonin-private-book');
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -231,7 +231,7 @@ test.describe('#27 — Bind WI to character → switch character', () => {
         // first test, no programmatic shortcut.
         await openListAndSelect(page, 'Ash Cartographer');
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             if (!ctx) return false;
             const id = ctx.characterId;
             if (typeof id !== 'number' && typeof id !== 'string') return false;
@@ -239,7 +239,7 @@ test.describe('#27 — Bind WI to character → switch character', () => {
         }, { timeout: 10_000 });
         await expectWorldButtonBound(page, 'ash-private-book');
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -249,7 +249,7 @@ test.describe('#27 — Bind WI to character → switch character', () => {
 
         await openListAndSelect(page, 'Rhonin Warden');
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             if (!ctx) return false;
             const id = ctx.characterId;
             if (typeof id !== 'number' && typeof id !== 'string') return false;
@@ -257,7 +257,7 @@ test.describe('#27 — Bind WI to character → switch character', () => {
         }, { timeout: 10_000 });
         await expectWorldButtonBound(page, 'rhonin-private-book');
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 

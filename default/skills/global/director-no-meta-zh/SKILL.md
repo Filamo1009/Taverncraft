@@ -2,7 +2,7 @@
 name: director-no-meta-zh
 description: Anti-meta-narration rules — no config-label leakage, no platform-frame leakage (turn / round / user / system prompt references).
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 

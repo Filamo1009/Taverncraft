@@ -16,7 +16,7 @@
  * The helper is intentionally kept free of `st-context.js` /
  * `/scripts/character/presets.js` imports so it stays Jest-clean.
  * Consumers inject `resolveByName` (normally
- * `Luker.getContext().character.presets.resolveByName`) and the target
+ * `Taverncraft.getContext().character.presets.resolveByName`) and the target
  * `character` themselves; adapter/executor lift pattern per
  * feedback_adapter_executor_lift_pattern.
  *

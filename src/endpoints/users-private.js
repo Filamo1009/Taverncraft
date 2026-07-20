@@ -184,7 +184,7 @@ async function resolveLanMigrationSourceUrl(input) {
 
     const normalizedPath = trimTrailingSlash(url.pathname);
     if (!LAN_MIGRATION_LINK_PATH_PATTERN.test(normalizedPath)) {
-        throw new Error('Migration link must be a one-time Luker migration link.');
+        throw new Error('Migration link must be a one-time Taverncraft migration link.');
     }
 
     const addresses = await resolveLanMigrationAddresses(url.hostname);

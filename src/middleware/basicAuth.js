@@ -148,7 +148,7 @@ const basicAuthMiddleware = async function (request, response, callback) {
     const unauthorizedResponse = (res, reason = 'no_credentials') => {
         console.warn(`[basicAuth] 401 rejected: ${reason} path=${res.req?.path} ip=${res.req?.ip}`);
         const unauthorizedWebpage = safeReadFileSync(path.join(globalThis.DATA_ROOT, '_errors', 'unauthorized.html')) ?? '';
-        res.set('WWW-Authenticate', 'Basic realm="Luker", charset="UTF-8"');
+        res.set('WWW-Authenticate', 'Basic realm="Taverncraft", charset="UTF-8"');
         return res.status(401).send(unauthorizedWebpage);
     };
 

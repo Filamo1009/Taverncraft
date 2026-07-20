@@ -1,4 +1,4 @@
-// Spawn a Luker server bound to a configurable port + dataRoot, with
+// Spawn a Taverncraft server bound to a configurable port + dataRoot, with
 // readiness probing, restart, and teardown.
 //
 // Each e2e spec calls `startServer({batchKey, scenarioId})` in a worker-
@@ -140,6 +140,28 @@ function scrubDevPromptPollution(settingsPath) {
             dirty = true;
         }
     }
+    // Core chat-flow specs must start from the same optional-extension
+    // boundary as a fresh install. The repository's developer data can
+    // legitimately have Memory Graph enabled, but cloning that preference
+    // makes every scripted chat reply race against extraction/recall calls.
+    // Memory-Graph-specific specs enable it through the real UI, so resetting
+    // these two flags here preserves their coverage while keeping unrelated
+    // E2E scenarios deterministic.
+    const extensions = json?.extension_settings;
+    if (extensions?.memory_graph?.enabled === true) {
+        extensions.memory_graph.enabled = false;
+        dirty = true;
+    }
+    if (extensions?.world_engine && typeof extensions.world_engine === 'object') {
+        if (extensions.world_engine.autoEnableMemoryGraph !== false) {
+            extensions.world_engine.autoEnableMemoryGraph = false;
+            dirty = true;
+        }
+        if (extensions.world_engine.memoryGraphConfigured !== false) {
+            extensions.world_engine.memoryGraphConfigured = false;
+            dirty = true;
+        }
+    }
     if (dirty) {
         writeFileSync(settingsPath, JSON.stringify(json, null, 4));
     }
@@ -237,7 +259,7 @@ async function probeReady(port, timeoutMs = READY_TIMEOUT_MS) {
  */
 
 /**
- * Spawn a Luker server bound to its own port + cloned data dir.
+ * Spawn a Taverncraft server bound to its own port + cloned data dir.
  *
  * @param {object} opts
  * @param {string} opts.batchKey  Key from ports.js (chat/character/...).

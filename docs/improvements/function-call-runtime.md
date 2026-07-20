@@ -1,6 +1,6 @@
 # Function Call Runtime
 
-Luker has a built-in unified Function Calling runtime that enables AI characters to perform structured operations — searching information, managing memory, manipulating state — rather than just generating text. Regardless of whether the underlying model natively supports tool calls, Luker provides a consistent calling experience.
+Taverncraft has a built-in unified Function Calling runtime that enables AI characters to perform structured operations — searching information, managing memory, manipulating state — rather than just generating text. Regardless of whether the underlying model natively supports tool calls, Taverncraft provides a consistent calling experience.
 
 ## Unified Function Calling Framework
 
@@ -47,7 +47,7 @@ TEXT.T_EXEC -> INJECT
 
 ## Native Mode
 
-When the connected model natively supports Function Calling (such as OpenAI, Claude, Gemini), Luker uses the model's native tool call format. The runtime will:
+When the connected model natively supports Function Calling (such as OpenAI, Claude, Gemini), Taverncraft uses the model's native tool call format. The runtime will:
 
 1. Convert registered tools to the schema format required by the model
 2. Attach tool definitions to the request
@@ -59,7 +59,7 @@ The advantage of native mode is leveraging the model's specifically trained tool
 
 ## Plain-Text Mode
 
-For models that don't support native Function Calling, Luker provides a plain-text protocol as a fallback. The runtime automatically injects tool usage instructions into the System Prompt, guiding the model to output tool call requests in a specific text format.
+For models that don't support native Function Calling, Taverncraft provides a plain-text protocol as a fallback. The runtime automatically injects tool usage instructions into the System Prompt, guiding the model to output tool call requests in a specific text format.
 
 The plain-text mode workflow:
 

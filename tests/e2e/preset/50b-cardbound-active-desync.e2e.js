@@ -7,7 +7,7 @@
 // Repro 场景(展示 old bug + 断言 new fix):
 //   1. Seed 一张卡携带 slot CardSlot(temperature=0.27,default)。
 //   2. 全局 preset 库预置 GlobalTarget(temperature=0.55)。
-//   3. Load Luker → 卡自动选中 → ghost 自动 apply → temp_counter 显示 0.27。
+//   3. Load Taverncraft → 卡自动选中 → ghost 自动 apply → temp_counter 显示 0.27。
 //   4. 用户手切到 GlobalTarget global option(而非 ghost)。此时:
 //        - DOM: #settings_preset_openai 选中项 data-luker-char-bound 不为 "1"
 //        - old code: characterBoundPresetState.active 可能仍为 true(未同步)
@@ -172,7 +172,7 @@ test.describe('#50b — #update_oai_preset guard 用 DOM signal 消除 desync �
         await expect
             .poll(async () => {
                 return await page.evaluate(() => {
-                    const s = window.Luker?.getContext?.()?.chatCompletionSettings;
+                    const s = window.Taverncraft?.getContext?.()?.chatCompletionSettings;
                     return Number(s?.temp_openai ?? NaN);
                 });
             }, { timeout: 5_000 })
@@ -209,7 +209,7 @@ test.describe('#50b — #update_oai_preset guard 用 DOM signal 消除 desync �
         await expect
             .poll(async () => {
                 return await page.evaluate((n) => {
-                    const openai = window.Luker?.getContext?.()?.openai;
+                    const openai = window.Taverncraft?.getContext?.()?.openai;
                     const settings = openai?.settings;
                     const names = openai?.settingNames;
                     if (!Array.isArray(settings) || !names) return null;

@@ -1,6 +1,6 @@
 # Completion Preset Assistant
 
-The Completion Preset Assistant is a Luker-exclusive AI-assisted preset management extension. Chat Completion API presets contain numerous parameters (such as temperature, top_p, frequency_penalty, etc.), and different models respond to these parameters with significant variation. The Completion Preset Assistant helps users understand parameter meanings, compare preset differences, and provides adjustment suggestions through conversational AI interaction.
+The Completion Preset Assistant is a Taverncraft-exclusive AI-assisted preset management extension. Chat Completion API presets contain numerous parameters (such as temperature, top_p, frequency_penalty, etc.), and different models respond to these parameters with significant variation. The Completion Preset Assistant helps users understand parameter meanings, compare preset differences, and provides adjustment suggestions through conversational AI interaction.
 
 This extension includes an AI conversation engine, parameter parser, and preset modification suggestion system, paired with a standalone dialog UI component for a complete interactive experience.
 
@@ -89,7 +89,7 @@ When the sweep is suppressed:
 - You said `no skills, just adapt the preset` — respected for the rest of the session.
 - You already rejected a candidate in an earlier round — it doesn't get re-proposed.
 
-::: warning Upgrading from a pre-skills Luker version?
+::: warning Upgrading from a pre-skills Taverncraft version?
 If you've customized the **Mode addition — orchestrator-optimize** textarea under the assistant settings panel's *Iteration System Prompts (advanced)* section, your custom content still wins over the new defaults — including the new third disposition that tells the assistant to extract reusable rules to skills. Click **Reset to default** under that textarea to pick up the skill-aware version. (Untouched defaults pick it up automatically on next page load.)
 :::
 

@@ -1,16 +1,16 @@
 # 贡献指南
 
-感谢你对 Luker 项目的关注！本文档介绍如何为 Luker 贡献代码、文档和其他改进。
+感谢你对 Taverncraft 项目的关注！本文档介绍如何为 Taverncraft 贡献代码、文档和其他改进。
 
 ## 开发环境准备
 
-1. **Fork 仓库**：在 GitHub 上 fork Luker 仓库到你的账户下。
+1. **Fork 仓库**：在 GitHub 上 fork Taverncraft 仓库到你的账户下。
 
 2. **克隆到本地**：
 
 ```bash
-git clone https://github.com/<your-username>/Luker.git
-cd Luker
+git clone https://github.com/<your-username>/Taverncraft.git
+cd Taverncraft
 ```
 
 3. **安装依赖**：
@@ -37,7 +37,7 @@ git checkout -b feat/my-new-feature release
 ```
 
 > [!IMPORTANT]
-Luker 的稳定分支是 `release`。
+Taverncraft 的稳定分支是 `release`。
 
 分支命名建议：
 
@@ -51,7 +51,7 @@ Luker 的稳定分支是 `release`。
 
 ## Commit 规范
 
-Luker 遵循 [Conventional Commits](https://www.conventionalcommits.org/) 规范：
+Taverncraft 遵循 [Conventional Commits](https://www.conventionalcommits.org/) 规范：
 
 ```
 <type>(<scope>): <description>
@@ -142,7 +142,7 @@ git push origin feat/my-new-feature
 ## 项目结构概览
 
 ```
-Luker/
+Taverncraft/
 ├── server.js              # 服务器入口
 ├── src/                   # 后端源码
 │   ├── endpoints/         # API 路由

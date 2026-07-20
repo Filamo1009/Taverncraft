@@ -1,10 +1,10 @@
 # Plugin Regex Provider
 
-Plugin Regex Provider is an extension mechanism introduced by Luker that allows plugins to dynamically register regex rules into SillyTavern's regex processing system.
+Plugin Regex Provider is an extension mechanism introduced by Taverncraft that allows plugins to dynamically register regex rules into SillyTavern's regex processing system.
 
 ## Overview
 
-SillyTavern's regex system allows users to define text replacement rules that process text before AI responses are displayed (e.g., formatting, filtering specific content, etc.). Luker extends this system by allowing plugins to act as regex rule "providers," dynamically registering and managing regex rules.
+SillyTavern's regex system allows users to define text replacement rules that process text before AI responses are displayed (e.g., formatting, filtering specific content, etc.). Taverncraft extends this system by allowing plugins to act as regex rule "providers," dynamically registering and managing regex rules.
 
 ## How It Works
 
@@ -26,4 +26,4 @@ If you are a plugin developer and want to register regex rules in your own plugi
 
 - [Memory Graph](/features/memory-graph) — The primary user of Plugin Regex Provider
 - [Extension API Reference](/development/extension-api/) — Complete extension API documentation
-- [Frontend Plugin Development](/development/frontend-plugin) — How to develop Luker plugins
+- [Frontend Plugin Development](/development/frontend-plugin) — How to develop Taverncraft plugins

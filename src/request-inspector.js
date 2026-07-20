@@ -5,9 +5,93 @@ import express from 'express';
 import { randomUUID } from 'node:crypto';
 
 const RING_BUFFER_SIZE = 200;
+const PROMPT_LAYER_LIMIT = 1024;
+const PROMPT_EXTENSION_LAYER_LIMIT = 512;
+const PROMPT_LAYER_PREVIEW_LIMIT = 4096;
 
 /** @type {Map<string, InspectorEntry[]>} handle -> entries */
 const buffers = new Map();
+
+function boundedString(value, maxLength = 256) {
+ const text = String(value ?? '');
+ return text.length > maxLength ? text.slice(0, maxLength) : text;
+}
+
+function boundedInteger(value, { min = 0, max = 1_000_000_000, fallback = 0 } = {}) {
+ const number = Number(value);
+ if (!Number.isFinite(number)) return fallback;
+ return Math.min(max, Math.max(min, Math.round(number)));
+}
+
+function sanitizePromptLayer(layer, index, { extension = false } = {}) {
+ if (!layer || typeof layer !== 'object' || Array.isArray(layer)) return null;
+ const rawPreview = String(layer.preview ?? '');
+ return {
+ order: boundedInteger(layer.order, { max: 100_000, fallback: index }),
+ messageIndex: boundedInteger(layer.messageIndex, { min: -1, max: 100_000, fallback: -1 }),
+ identifier: boundedString(layer.identifier, 256),
+ label: boundedString(layer.label, 256),
+ category: boundedString(layer.category, 64),
+ role: boundedString(layer.role, 32),
+ ...(extension ? {
+ position: boundedString(layer.position, 32),
+ depth: boundedInteger(layer.depth, { max: 100_000 }),
+ sourceScope: boundedString(layer.sourceScope, 64),
+ sourceLabel: boundedString(layer.sourceLabel, 256),
+ configurationMode: boundedString(layer.configurationMode, 32),
+ } : {
+ collection: boundedString(layer.collection, 256),
+ path: Array.isArray(layer.path) ? layer.path.slice(0, 16).map(value => boundedString(value, 256)) : [],
+ estimatedTokens: boundedInteger(layer.estimatedTokens),
+ }),
+ preview: rawPreview.slice(0, PROMPT_LAYER_PREVIEW_LIMIT),
+ previewTruncated: Boolean(layer.previewTruncated || rawPreview.length > PROMPT_LAYER_PREVIEW_LIMIT),
+ charLength: boundedInteger(layer.charLength),
+ };
+}
+
+/**
+ * Whitelist and cap the browser-only prompt assembly diagnostics. This data is
+ * untrusted request input and must never be retained verbatim in the ring
+ * buffer. Unknown fields are intentionally discarded.
+ * @param {unknown} raw
+ * @returns {object|null}
+ */
+export function sanitizePromptLayerSnapshot(raw) {
+ if (!raw || typeof raw !== 'object' || Array.isArray(raw) || Number(raw.version) !== 1) return null;
+ const assembly = raw.assembly && typeof raw.assembly === 'object' && !Array.isArray(raw.assembly) ? raw.assembly : {};
+ const truncation = raw.truncation && typeof raw.truncation === 'object' && !Array.isArray(raw.truncation) ? raw.truncation : {};
+ const layers = Array.isArray(raw.layers)
+ ? raw.layers.slice(0, PROMPT_LAYER_LIMIT).map((layer, index) => sanitizePromptLayer(layer, index)).filter(Boolean)
+ : [];
+ const inChatExtensions = Array.isArray(raw.inChatExtensions)
+ ? raw.inChatExtensions.slice(0, PROMPT_EXTENSION_LAYER_LIMIT).map((layer, index) => sanitizePromptLayer(layer, index, { extension: true })).filter(Boolean)
+ : [];
+
+ return {
+ version: 1,
+ assembly: {
+ contextTokens: boundedInteger(assembly.contextTokens),
+ completionReserve: boundedInteger(assembly.completionReserve),
+ promptBudget: boundedInteger(assembly.promptBudget),
+ estimatedPromptTokens: boundedInteger(assembly.estimatedPromptTokens),
+ remainingTokens: boundedInteger(assembly.remainingTokens, { min: -1_000_000_000 }),
+ sourceHistoryMessages: boundedInteger(assembly.sourceHistoryMessages, { max: 100_000 }),
+ includedHistoryMessages: boundedInteger(assembly.includedHistoryMessages, { max: 100_000 }),
+ omittedHistoryMessages: boundedInteger(assembly.omittedHistoryMessages, { max: 100_000 }),
+ preSquashMessageCount: boundedInteger(assembly.preSquashMessageCount, { max: 100_000 }),
+ finalMessageCount: boundedInteger(assembly.finalMessageCount, { max: 100_000 }),
+ squashedSystemMessages: Boolean(assembly.squashedSystemMessages),
+ },
+ truncation: {
+ applied: Boolean(truncation.applied),
+ omittedHistoryMessages: boundedInteger(truncation.omittedHistoryMessages, { max: 100_000 }),
+ reason: boundedString(truncation.reason, 64),
+ },
+ layers,
+ inChatExtensions,
+ };
+}
 
 function getBuffer(handle) {
  if (!buffers.has(handle)) {
@@ -114,10 +198,17 @@ export function attachInspectionEndpoint(request, endpoint, apiKey, wirePayload)
  * @param {import('express').Request} request
  */
 export function startInspection(request) {
+ const body = request.body || {};
+ const promptLayers = sanitizePromptLayerSnapshot(body.luker_prompt_layers);
+ // This is a local protocol field, never an upstream provider option. Delete
+ // it before any provider adapter can inspect or spread request.body.
+ if (Object.prototype.hasOwnProperty.call(body, 'luker_prompt_layers')) {
+ delete body.luker_prompt_layers;
+ }
+
  const handle = String(request?.user?.profile?.handle || '');
  if (!handle) return;
 
- const body = request.body || {};
  const messages = Array.isArray(body.messages) ? body.messages : [];
 
  const entry = {
@@ -146,6 +237,7 @@ export function startInspection(request) {
  return sum;
  }, 0),
  maxTokens: body.max_tokens ?? body.max_completion_tokens ?? null,
+ promptLayers,
  // Deep-clone snapshot of the messages array as the client posted it.
  // Downstream send paths mutate request.body.messages in place to fit
  // the upstream provider's schema, so a live reference would expose

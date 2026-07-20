@@ -76,7 +76,7 @@ async function startSlowStreamMock({ chunkDelayMs = 80 } = {}) {
  */
 async function captureGrowthCurve(page, { samplePeriodMs = 80, maxSamples = 120 } = {}) {
     return page.evaluate(async ({ samplePeriodMs, maxSamples }) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const startCount = document.querySelectorAll('#chat .mes').length;
         const samples = [];
         const startTs = performance.now();

@@ -29,7 +29,7 @@ import { describe, test, expect, jest, beforeAll, beforeEach } from '@jest/globa
 // ─── Ambient ST globals ────────────────────────────────────────────────────
 // Same shim shape used by custom-tool-runtime-{spec,agenda,loop}.test.js so
 // the shared runtime modules (defaults.js / agenda-runtime.js / spec-runtime.js
-// / loop-runtime.js) can consume `Luker.getContext()` constants at load time.
+// / loop-runtime.js) can consume `Taverncraft.getContext()` constants at load time.
 const __sillyTavernSettings = {
     orchestrator: {
         agendaPlannerMaxRounds: 4,
@@ -38,7 +38,7 @@ const __sillyTavernSettings = {
         nodeIterationMaxRounds: 3,
     },
 };
-globalThis.Luker = {
+globalThis.Taverncraft = {
     __settings: __sillyTavernSettings,
     getContext: () => ({
         constants: {

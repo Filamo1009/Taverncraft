@@ -84,7 +84,7 @@ describe('dispatchAimlapi', () => {
         expect(init.method).toBe('POST');
         expect(init.headers['Authorization']).toBe('Bearer aimlapi-fake-key');
         expect(init.headers['HTTP-Referer']).toBe('https://sillytavern.app');
-        expect(init.headers['X-Title']).toBe('Luker');
+        expect(init.headers['X-Title']).toBe('Taverncraft');
         expect(init.signal).toBe(ctx.signal);
     });
 

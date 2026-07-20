@@ -134,7 +134,7 @@ async function fetchGitHubProfile(accessToken) {
         headers: {
             'Authorization': `Bearer ${accessToken}`,
             'Accept': 'application/vnd.github+json',
-            'User-Agent': 'Luker OAuth',
+            'User-Agent': 'Taverncraft OAuth',
         },
     });
     if (!userResponse.ok) {
@@ -147,7 +147,7 @@ async function fetchGitHubProfile(accessToken) {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
                 'Accept': 'application/vnd.github+json',
-                'User-Agent': 'Luker OAuth',
+                'User-Agent': 'Taverncraft OAuth',
             },
         });
 

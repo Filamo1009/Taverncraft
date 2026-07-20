@@ -19,7 +19,7 @@
 
 ## 欄位分類機制
 
-Luker 將預設中的每個欄位標記為「連線欄位」或「生成參數欄位」兩類：
+Taverncraft 將預設中的每個欄位標記為「連線欄位」或「生成參數欄位」兩類：
 
 - **連線欄位** — API 來源、自訂 URL、模型名稱、反向代理位址、代理密碼等
 - **生成參數欄位** — Temperature、Top-P、最大 Token 數等
@@ -42,7 +42,7 @@ ST: "SillyTavern：耦合" {
   SWITCH1 -> ST_CONN: "意外覆蓋" {style.stroke-dash: 3}
 }
 
-LK: "Luker：解耦" {
+LK: "Taverncraft：解耦" {
   LK_PRESET: "聊天補全預設"
   LK_CONN: "連線配置"
   LK_GEN: "只含生成參數"

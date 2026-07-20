@@ -15,7 +15,7 @@
 // What stays here (this file): the two real director-driven branches.
 // They commit a bubble to chat and assert on the persisted body, so
 // they require the live takeover path + message-editor handle through
-// a real Luker server.
+// a real Taverncraft server.
 //
 // What moved to Jest (`tests/orchestrator/critic-regex-search-tool-primitives.test.js`):
 //   The smoke test of the regex tool primitives (chat_search,
@@ -121,7 +121,7 @@ test.describe('#71 — Critic regex search: extended director-driven branches', 
         // and innerText strips them — the 1:1 fidelity check is about
         // the persisted body.
         const committedMes = await page.evaluate((id) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return String(ctx.chat?.[id]?.mes ?? '');
         }, replyId);
         expect(committedMes.trim()).toBe(ORIGINAL_DRAFT.trim());
@@ -205,7 +205,7 @@ test.describe('#71 — Critic regex search: extended director-driven branches', 
         // .mes_text innerText (which strips markdown rendering) so the
         // assertion is on the persisted body, not the HTML rendering.
         const committedMes = await page.evaluate((id) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return String(ctx.chat?.[id]?.mes ?? '');
         }, replyId);
         expect(committedMes).toContain(REPLACEMENT_PHRASE);

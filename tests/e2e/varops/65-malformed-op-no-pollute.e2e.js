@@ -66,7 +66,7 @@ test.describe('#65 — var_ops failure does NOT pollute next turn (rendered pane
         await selectCharacterByName(page, 'Seraphina');
 
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -92,7 +92,7 @@ test.describe('#65 — var_ops failure does NOT pollute next turn (rendered pane
         // ── Turn 1: valid + malformed ops ─────────────────────────────
         const { replyId: id1 } = await sendMessageAndAwaitReply(page, 'Read me the wind tonight.');
         await page.waitForFunction((id) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const m = ctx.chat?.[id];
             return Boolean(m && Array.isArray(m?.extra?.var_ops) && m.extra.var_ops.length >= 2);
         }, id1, { timeout: 15_000 });
@@ -109,7 +109,7 @@ test.describe('#65 — var_ops failure does NOT pollute next turn (rendered pane
 
         // Valid op landed; malformed op did NOT pollute anything.
         const stateAfter1 = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return {
                 wind: ctx.chatMetadata?.variables?.wind ?? null,
                 roster: ctx.chatMetadata?.variables?.roster ?? null,
@@ -133,7 +133,7 @@ test.describe('#65 — var_ops failure does NOT pollute next turn (rendered pane
         // ── Turn 2: a fresh valid op on a CLEAN baseline ──────────────
         const { replyId: id2 } = await sendMessageAndAwaitReply(page, 'Trim the wick, then tell me how it sits.');
         await page.waitForFunction((id) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const m = ctx.chat?.[id];
             return Boolean(m && Array.isArray(m?.extra?.var_ops) && m.extra.var_ops.length >= 1);
         }, id2, { timeout: 15_000 });
@@ -146,7 +146,7 @@ test.describe('#65 — var_ops failure does NOT pollute next turn (rendered pane
         await page.locator('.popup:visible .popup-button-cancel').last().click().catch(() => {});
 
         const stateAfter2 = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.chatMetadata?.variables ?? null;
         });
         expect(stateAfter2.wind).toBe('northerly');

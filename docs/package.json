@@ -1,9 +1,9 @@
 {
-  "name": "luker-docs",
+  "name": "taverncraft-docs",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Luker Documentation",
+  "description": "Taverncraft Documentation",
   "scripts": {
     "dev": "vitepress dev --host 127.0.0.1",
     "predev": "node scripts/render-diagrams.mjs",

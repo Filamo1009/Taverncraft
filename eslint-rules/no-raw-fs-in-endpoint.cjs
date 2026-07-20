@@ -1,6 +1,6 @@
 // eslint-rules/no-raw-fs-in-endpoint.cjs
 //
-// Custom ESLint rule for the Luker project. Flags any function inside
+// Custom ESLint rule for the Taverncraft project. Flags any function inside
 // src/endpoints/<file>.js that references BOTH:
 //   * a raw fs.* (or fsPromises.*) sync call from the FS_METHODS set, AND
 //   * a request.user.directories.* / req.user.directories.* member access.

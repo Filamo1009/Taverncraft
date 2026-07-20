@@ -18,9 +18,9 @@
 import { describe, test, expect, jest, beforeAll } from '@jest/globals';
 
 // defaults.js (transitively imported by agent-resolution's siblings)
-// reads `Luker.getContext().constants.{promptRoles,wiPosition}` at
+// reads `Taverncraft.getContext().constants.{promptRoles,wiPosition}` at
 // module load. `agent-resolution.js` itself also grabs
-// `Luker.getContext().extensionSettings` at import time. Provide a
+// `Taverncraft.getContext().extensionSettings` at import time. Provide a
 // mutable ctx so the test can install card presets by swapping the
 // characters array.
 const ctxState = {
@@ -59,7 +59,7 @@ const ctxState = {
     },
 };
 
-globalThis.Luker = {
+globalThis.Taverncraft = {
     getContext: () => ctxState,
 };
 

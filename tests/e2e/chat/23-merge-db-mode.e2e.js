@@ -78,13 +78,13 @@ test.describe('#23 — merge two chats after migrating storage to sqlite', () =>
         await selectCharacterByName(page, 'Seraphina');
         await page.waitForFunction(() => document.querySelectorAll('#chat .mes').length >= 1, { timeout: 10_000 }).catch(() => {});
 
-        const chatAId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+        const chatAId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
         expect(chatAId, 'chat A must have a real chat id').toBeTruthy();
         await sendMessageAndAwaitReply(page, 'Turn A1: do you hear that wind?');
         await sendMessageAndAwaitReply(page, 'Turn A2: how long this watch?');
 
         await createNewChatViaUI(page);
-        const chatBId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+        const chatBId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
         expect(chatBId, 'chat B must have a fresh chat id').toBeTruthy();
         expect(chatBId).not.toBe(chatAId);
         await sendMessageAndAwaitReply(page, 'Turn B1: any sign of the reef?');
@@ -101,7 +101,7 @@ test.describe('#23 — merge two chats after migrating storage to sqlite', () =>
         const mergedName = 'merged-db';
         await submitMergeDialog(page, dialog, mergedName);
         await page.waitForFunction(
-            (id) => window.Luker.getContext().getCurrentChatId() === id,
+            (id) => window.Taverncraft.getContext().getCurrentChatId() === id,
             mergedName,
             { timeout: 15_000 },
         );
@@ -128,7 +128,7 @@ test.describe('#23 — merge two chats after migrating storage to sqlite', () =>
         // ctx.chat is the in-memory mirror that the chat panel re-renders
         // from. Asserting on it as well catches any case where the panel
         // renders stale DOM from a prior chat.
-        const chatLength = await page.evaluate(() => window.Luker.getContext().chat?.length);
+        const chatLength = await page.evaluate(() => window.Taverncraft.getContext().chat?.length);
         expect(chatLength, 'ctx.chat should match the rendered bubble count').toBe(10);
     });
 });

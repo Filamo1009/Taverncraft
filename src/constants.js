@@ -385,17 +385,17 @@ export const DEFAULT_AVATAR_PATH = path.join(serverDirectory, 'public', 'img', '
 
 export const OPENROUTER_HEADERS = {
     'HTTP-Referer': 'https://sillytavern.app',
-    'X-Title': 'Luker',
+    'X-Title': 'Taverncraft',
 };
 
 export const AIMLAPI_HEADERS = {
     'HTTP-Referer': 'https://sillytavern.app',
-    'X-Title': 'Luker',
+    'X-Title': 'Taverncraft',
 };
 
 export const FEATHERLESS_HEADERS = {
     'HTTP-Referer': 'https://sillytavern.app',
-    'X-Title': 'Luker',
+    'X-Title': 'Taverncraft',
 };
 
 export const OPENROUTER_KEYS = [

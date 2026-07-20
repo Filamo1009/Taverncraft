@@ -1,18 +1,18 @@
 # Server Plugin Development
 
-Luker's plugin system supports not only frontend extensions running in the browser but also server-side plugins running in Node.js. Server plugins can access the filesystem, call native Node.js modules, and proxy external API requests — things frontend extensions cannot do.
+Taverncraft's plugin system supports not only frontend extensions running in the browser but also server-side plugins running in Node.js. Server plugins can access the filesystem, call native Node.js modules, and proxy external API requests — things frontend extensions cannot do.
 
-This document is for developers building server plugins for Luker. It covers how to enable them, the module interface, route registration, security considerations, and worked examples.
+This document is for developers building server plugins for Taverncraft. It covers how to enable them, the module interface, route registration, security considerations, and worked examples.
 
 ## What Are Server Plugins
 
-Server plugins are Node.js modules that run inside the Luker server process. Unlike frontend extensions (which run in the browser and inject UI via `manifest.json` + `index.js`), server plugins:
+Server plugins are Node.js modules that run inside the Taverncraft server process. Unlike frontend extensions (which run in the browser and inject UI via `manifest.json` + `index.js`), server plugins:
 
 - Run on the server with full Node.js runtime access
 - Register API endpoints via Express Router; routes mount automatically under `/api/plugins/{plugin-id}/`
 - Can directly read/write the filesystem and use Node built-ins like `crypto`, `child_process`
 - Can install and use npm packages
-- Have no sandbox isolation — they share the same process as the Luker server
+- Have no sandbox isolation — they share the same process as the Taverncraft server
 
 A typical pairing: a frontend extension calls a server plugin's API via `fetch`, the server plugin performs server-side work (file I/O, API proxying, etc.), and returns the result.
 
@@ -39,7 +39,7 @@ Server plugins are not loaded by default. Enable them in `config.yaml`:
 enableServerPlugins: true
 ```
 
-Restart Luker for the change to take effect. The console will log each loaded plugin:
+Restart Taverncraft for the change to take effect. The console will log each loaded plugin:
 
 ```
 [Plugin Loader] Loaded plugin: My Plugin (my-plugin)
@@ -101,7 +101,7 @@ module.exports = { init, exit, info };
 ```
 
 > [!TIP]
-> If Luker's root `package.json` has `"type": "module"`, a CommonJS plugin must place its own `package.json` in the plugin directory with `"type": "commonjs"`, otherwise Node.js will treat `.js` files as ESM.
+> If Taverncraft's root `package.json` has `"type": "module"`, a CommonJS plugin must place its own `package.json` in the plugin directory with `"type": "commonjs"`, otherwise Node.js will treat `.js` files as ESM.
 
 **ESM** (using `export`):
 
@@ -204,7 +204,7 @@ The corresponding full URLs:
 
 ### Important: Register Routes Synchronously
 
-**Routes must be registered synchronously, before the first `await` in `init`.** Luker's plugin loader only mounts the router on the app when `router.stack.length > 0`. If route registration happens after an asynchronous operation, the router may not be mounted correctly.
+**Routes must be registered synchronously, before the first `await` in `init`.** Taverncraft's plugin loader only mounts the router on the app when `router.stack.length > 0`. If route registration happens after an asynchronous operation, the router may not be mounted correctly.
 
 ```js
 // ✅ Correct: routes registered before await
@@ -249,7 +249,7 @@ export async function init(router) {
 ```
 
 > [!NOTE]
-> Server plugin routes automatically inherit Luker's authentication middleware (Basic Auth, CSRF, requireLogin, etc.); you don't need to implement auth inside the plugin. Plugin-level middleware can focus on business logic only.
+> Server plugin routes automatically inherit Taverncraft's authentication middleware (Basic Auth, CSRF, requireLogin, etc.); you don't need to implement auth inside the plugin. Plugin-level middleware can focus on business logic only.
 
 ## Plugin ID Rules
 
@@ -275,18 +275,18 @@ id: 'my plugin'     // Contains a space
 
 ### No Sandbox
 
-Server plugins run in the same process as the Luker server, with **no sandbox isolation**. A plugin can:
+Server plugins run in the same process as the Taverncraft server, with **no sandbox isolation**. A plugin can:
 
 - Access the entire filesystem
 - Call `child_process` to run system commands
-- Modify Luker's runtime state
+- Modify Taverncraft's runtime state
 - Access other plugins' data
 
 For this reason, **only install plugins you trust**.
 
 ### Path Traversal Protection
 
-Luker's plugin loader detects path traversal attempts and prevents plugins from escaping the `plugins/` directory via `../../`. However, if a plugin's route handlers accept user input as a file path, the plugin must still validate the path itself:
+Taverncraft's plugin loader detects path traversal attempts and prevents plugins from escaping the `plugins/` directory via `../../`. However, if a plugin's route handlers accept user input as a file path, the plugin must still validate the path itself:
 
 ```js
 import path from 'path';
@@ -385,11 +385,11 @@ The frontend can use `response.ok` or `response.status` to determine whether the
 
 ### Manual Installation
 
-Drop the plugin file (or directory) into the `plugins/` folder, then restart Luker.
+Drop the plugin file (or directory) into the `plugins/` folder, then restart Taverncraft.
 
 ### Git Auto-Update
 
-If a plugin was cloned from a Git repo, Luker checks for updates on startup. The loader uses `simple-git` (falling back to `isomorphic-git` if unavailable) to run `git pull` and fetch the latest code.
+If a plugin was cloned from a Git repo, Taverncraft checks for updates on startup. The loader uses `simple-git` (falling back to `isomorphic-git` if unavailable) to run `git pull` and fetch the latest code.
 
 To enable auto-update, make sure the plugin directory is a Git repository and `enableServerPlugins` is `true` in `config.yaml`.
 
@@ -402,7 +402,7 @@ cd plugins/my-plugin
 npm install
 ```
 
-A plugin can also reference packages from Luker's root `node_modules` without reinstalling. Only install dependencies inside the plugin directory if Luker doesn't already provide them.
+A plugin can also reference packages from Taverncraft's root `node_modules` without reinstalling. Only install dependencies inside the plugin directory if Taverncraft doesn't already provide them.
 
 ## Worked Examples
 
@@ -432,7 +432,7 @@ export async function init(router) {
 }
 ```
 
-After starting Luker, visit `/api/plugins/hello-world/hello` to see the JSON response.
+After starting Taverncraft, visit `/api/plugins/hello-world/hello` to see the JSON response.
 
 ### API Proxy Plugin
 
@@ -596,4 +596,4 @@ async function queryLLM(messages) {
 
 - [Frontend Plugin Development](/development/frontend-plugin) — Frontend extension development guide
 - [Extension API Reference](/development/extension-api/) — Full frontend API list
-- [Contributing](/development/contributing) — How to contribute code to Luker
+- [Contributing](/development/contributing) — How to contribute code to Taverncraft

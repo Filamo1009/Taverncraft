@@ -545,7 +545,7 @@ function syncCharacterMirrorsFromExtensions(character) {
 function warnLegacyCharacterRootWrite(field, canonicalPath) {
     const warningKey = `legacy-character-root-write:${field}`;
     if (!legacyCharacterWriteWarningKeys.has(warningKey)) {
-        console.warn(`Deprecated extension character write: root field "${field}" was written through Luker.getContext().characters. Write to "${canonicalPath}" instead.`);
+        console.warn(`Deprecated extension character write: root field "${field}" was written through Taverncraft.getContext().characters. Write to "${canonicalPath}" instead.`);
         legacyCharacterWriteWarningKeys.add(warningKey);
     }
 
@@ -2752,7 +2752,7 @@ export function getContext() {
         getTextGenServer,
         extractMessageFromData,
         getPresetManager,
-        // Preset ↔ lorebook embed pipeline (Luker symmetry with the skills
+        // Preset ↔ lorebook embed pipeline (Taverncraft symmetry with the skills
         // and character-card embed paths). Lazy-loaded to keep the heavy
         // world-info.js import out of the context module's load chain.
         presetLorebook: {

@@ -1,6 +1,6 @@
 # 世界書
 
-讀取、寫入、掃描世界書（lorebook）條目的相關 API。所有函式都透過 `Luker.getContext()` 暴露；原始 HTTP 路由列在 [底層端點](/zh-TW/development/extension-api/low-level-endpoints)。
+讀取、寫入、掃描世界書（lorebook）條目的相關 API。所有函式都透過 `Taverncraft.getContext()` 暴露；原始 HTTP 路由列在 [底層端點](/zh-TW/development/extension-api/low-level-endpoints)。
 
 ## 讀取世界書
 
@@ -13,7 +13,7 @@ loadWorldInfo(name: string): Promise<WorldInfoData | null>
 按名稱讀取單一世界書檔案。名稱查找對大小寫和重音不敏感。檔案不存在時回傳 `null`。內部有快取——對同一檔案的重複讀取會直接從記憶體返回。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const book = await ctx.loadWorldInfo('My Lorebook');
 console.log(Object.keys(book.entries).length);
 ```
@@ -230,7 +230,7 @@ getCharaAuxWorlds(charaFilename: string): string[]
 `charaFilename` 為 falsy 或無綁定時回傳 `[]`。搭配 [`getCharaFilename`](/zh-TW/development/extension-api/characters#getcharafilename) 解析當前角色：
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const auxBooks = ctx.getCharaAuxWorlds(ctx.getCharaFilename());
 const datas = await ctx.loadWorldInfoBatch(auxBooks);
 ```
@@ -261,7 +261,7 @@ context.worldInfoEntry.template: WIEntry
 條目的標準預設結構（佔位 `uid: 0`、空 key 清單、`position: 0` 等）。批次建構條目時用「複製—修改」方式使用，這樣未來 schema 新增欄位會自動跟上。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const fresh = { ...ctx.worldInfoEntry.template, uid: newUid, key: ['npc:Bob'], content: '一位麵包師。' };
 ```
 
@@ -361,7 +361,7 @@ context.constants.wiPosition: {
 條目級 `position` 值的數值列舉。建構條目或依注入槽位過濾時使用。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const entry = {
     ...ctx.worldInfoEntry.template,
     position: ctx.constants.wiPosition.before,
@@ -373,7 +373,7 @@ const entry = {
 ### 外掛讀取 + 編輯一份世界書
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 const book = await ctx.loadWorldInfo('Setting Bible');
 if (!book) {

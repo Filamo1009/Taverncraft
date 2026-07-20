@@ -108,7 +108,7 @@ async function createPresetViaUI(page, mode, name) {
     // covers both the settings write AND the editor rebuild.
     await expect.poll(async () => {
         return await page.evaluate((m) => {
-            const ext = window.Luker?.getContext()?.extensionSettings?.orchestrator;
+            const ext = window.Taverncraft?.getContext()?.extensionSettings?.orchestrator;
             const activeId = ext?.activePresetIds?.[m] || '';
             return ext?.presetLibraries?.[m]?.[activeId]?.name || '';
         }, mode);
@@ -143,7 +143,7 @@ test.describe('#122 — orchestrator preset skill cascade delete', () => {
         // the file at root path `SKILL.md` carries `name:` frontmatter;
         // the skill directory takes the frontmatter name (test-skill-122).
         await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             await ctx.skills.install({
                 scope: { kind: 'orch-preset', mode: 'director', name: 'RP122-A' },
                 payload: {

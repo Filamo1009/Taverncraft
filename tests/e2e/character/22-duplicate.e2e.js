@@ -28,7 +28,7 @@ const MODIFIED_DESC = 'EDITED IN ASH ONLY: a brass spyglass and a second smaller
  */
 async function duplicateSelectedViaUI(page, { timeoutMs = 20_000 } = {}) {
     const beforeAvatars = await page.evaluate(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return (ctx.characters || []).map(c => c?.avatar).filter(Boolean);
     });
     await page.locator('#dupe_button').click();
@@ -38,13 +38,13 @@ async function duplicateSelectedViaUI(page, { timeoutMs = 20_000 } = {}) {
     await popup.waitFor({ state: 'detached', timeout: 8000 }).catch(() => {});
     // Wait for the new avatar to land in ctx.characters.
     await page.waitForFunction((before) => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         if (!ctx?.characters) return false;
         const all = ctx.characters.map(c => c?.avatar).filter(Boolean);
         return all.length > before.length;
     }, beforeAvatars, { timeout: timeoutMs });
     const afterAvatars = await page.evaluate(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return (ctx.characters || []).map(c => c?.avatar).filter(Boolean);
     });
     return afterAvatars.find(a => !beforeAvatars.includes(a));
@@ -97,7 +97,7 @@ test.describe('#22 — Duplicate character via UI — no cross-pollution', () =>
         await dismissAnyPopup(page);
         await openCharacterEditPanel(page);
         const editedPromise = page.evaluate(() => new Promise((resolve, reject) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const t = setTimeout(() => reject(new Error('character edit timeout')), 30_000);
             const off = ctx.eventSource.on(ctx.eventTypes.CHARACTER_EDITED, () => {
                 clearTimeout(t);

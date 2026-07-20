@@ -263,7 +263,7 @@ export function registerCoreMacros() {
         returns: 'The concatenated rendered body, once per entry. Empty string when the collection resolves to nothing iterable.',
         delayArgResolution: true,
         handler: ({ unnamedArgs: [rawCollection, rawBody], env, globalOffset, flags, trimContent }) => {
-            const ctx = Luker.getContext();
+            const ctx = Taverncraft.getContext();
 
             // Resolve any nested macros inside the collection arg first. We
             // can't use the resolve callback because we need to inject our

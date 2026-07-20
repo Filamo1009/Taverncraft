@@ -1,10 +1,10 @@
 import { jest } from '@jest/globals';
 
 // defaults.js (transitively imported by preset-library.js) reads
-// `Luker.getContext().constants.{promptRoles,wiPosition}` at module
+// `Taverncraft.getContext().constants.{promptRoles,wiPosition}` at module
 // load time — added in 571c529c2 after the verbatim mock header in this
 // plan was authored. Provide a minimal shim so module evaluation succeeds.
-globalThis.Luker = {
+globalThis.Taverncraft = {
     getContext: () => ({
         constants: {
             promptRoles: { SYSTEM: 0, USER: 1, ASSISTANT: 2 },

@@ -20,7 +20,7 @@
 
 ## 消息 API
 
-Luker 提供了统一的高层消息操作 API。每个操作都是完整的一条龙流程：内存更新 + DOM 渲染 + 事件触发 + 持久化。
+Taverncraft 提供了统一的高层消息操作 API。每个操作都是完整的一条龙流程：内存更新 + DOM 渲染 + 事件触发 + 持久化。
 
 ### addMessages
 
@@ -157,7 +157,7 @@ saveChatMetadata(withMetadata?: object): Promise<boolean>
 
 ## 聊天状态
 
-聊天状态是 Luker 新增的聊天绑定状态机制，让插件可以将结构化数据绑定到特定聊天，而不是塞进 `chat_metadata`。
+聊天状态是 Taverncraft 新增的聊天绑定状态机制，让插件可以将结构化数据绑定到特定聊天，而不是塞进 `chat_metadata`。
 
 ### getChatState
 
@@ -395,7 +395,7 @@ context.buildObjectPatchOperationsAsync(
 ): Promise<RFC6902Operation[]>
 ```
 
-驱动 Luker patch-first 持久化的 diff 引擎。回传把 `previousState` 变成 `nextState` 的最小 RFC 6902 操作。需要给 `instance.patch()` 喂一份预先算好的 diff 时用。同一个引擎内部驱动聊天持久化、聊天状态、楼层状态、预设状态——直接调它能让插件代码加入同一份增量保存管道。
+驱动 Taverncraft patch-first 持久化的 diff 引擎。回传把 `previousState` 变成 `nextState` 的最小 RFC 6902 操作。需要给 `instance.patch()` 喂一份预先算好的 diff 时用。同一个引擎内部驱动聊天持久化、聊天状态、楼层状态、预设状态——直接调它能让插件代码加入同一份增量保存管道。
 
 ### 何时要 `await ready()`
 
@@ -782,7 +782,7 @@ setExtensionPrompt(
 | `filter` | 可选的门控；存在且返回 falsy 时跳过该 prompt |
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 ctx.setExtensionPrompt(
     'my-plugin-context',
@@ -830,7 +830,7 @@ context.swipe.state(): SwipeState
 | `state` | 当前 `SWIPE_STATE`（`NONE`，加上动画状态） |
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 if (ctx.swipe.isAllowed()) {
     await ctx.swipe.right();

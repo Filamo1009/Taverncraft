@@ -148,7 +148,7 @@ test.describe('#79 — Loop mode lorebookFilter blocks context injection and lor
 
         // Bind PUBLIC_BOOK as the character's aux book at runtime.
         // We can't rely on writing `settings.world_info.charLore` to
-        // disk during beforeAll — Luker's `getSettings` /
+        // disk during beforeAll — Taverncraft's `getSettings` /
         // `saveSettings` roundtrip resets `world_info.charLore` to `[]`
         // when the client-side `world_info` module hasn't populated it
         // yet, so the disk value gets clobbered before any character is
@@ -158,7 +158,7 @@ test.describe('#79 — Loop mode lorebookFilter blocks context injection and lor
         // subsequent bootstrap reads see it too.
         await page.evaluate(async ({ publicBook }) => {
             const worldInfoMod = await import('/scripts/world-info.js');
-            const ctx = Luker.getContext();
+            const ctx = Taverncraft.getContext();
             const avatarFile = ctx.characters?.[ctx.characterId]?.avatar || '';
             const fileNameNoExt = avatarFile.replace(/\.[^/.]+$/, '');
             const wi = worldInfoMod.world_info;
@@ -183,7 +183,7 @@ test.describe('#79 — Loop mode lorebookFilter blocks context injection and lor
         // so downstream WI assertions aren't debugged as filter regressions.
         const worldInfoSanity = await page.evaluate(async ({ privateBook, publicBook }) => {
             const worldInfoMod = await import('/scripts/world-info.js');
-            const ctx = Luker.getContext();
+            const ctx = Taverncraft.getContext();
             const character = ctx.characters?.[ctx.characterId];
             const primary = character?.data?.extensions?.world || '';
             let sortedEntries = [];
@@ -214,7 +214,7 @@ test.describe('#79 — Loop mode lorebookFilter blocks context injection and lor
         // hides `PRIVATE_BOOK` (whole book, by book-pattern) plus any
         // entry whose comment starts with `secret_` (in any book).
         await page.evaluate(async ({ privateBook }) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const settings = ctx.extensionSettings?.orchestrator;
             if (!settings) throw new Error('orchestrator settings missing — extension not loaded');
             settings.enabled = true;

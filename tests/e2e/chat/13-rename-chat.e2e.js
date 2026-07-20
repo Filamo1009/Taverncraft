@@ -51,11 +51,11 @@ test.describe('#13 — rename chat via Manage Chat Files UI', () => {
 
         await sendMessageAndAwaitReply(page, 'Tell me when you will be ready.');
 
-        const originalChatId = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+        const originalChatId = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
         expect(originalChatId).toBeTruthy();
 
         const avatarFolder = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return (ctx.characters[ctx.characterId]?.avatar || '').replace(/\.png$/, '');
         });
         const chatsDir = resolve(server.dataRoot, 'default-user', 'chats', avatarFolder);
@@ -85,7 +85,7 @@ test.describe('#13 — rename chat via Manage Chat Files UI', () => {
 
         // Wait for the chat to flip to the new name.
         await page.waitForFunction((expected) => {
-            return window.Luker.getContext().getCurrentChatId() === expected;
+            return window.Taverncraft.getContext().getCurrentChatId() === expected;
         }, newName, { timeout: 15_000 });
         await page.waitForTimeout(800);
 
@@ -101,7 +101,7 @@ test.describe('#13 — rename chat via Manage Chat Files UI', () => {
         // from the page rather than reading the disk index directly so
         // we exercise the same endpoint the UI uses.
         const recent = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const res = await fetch('/api/chats/recent', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': ctx.getRequestHeaders?.()?.['X-CSRF-Token'] || '' },

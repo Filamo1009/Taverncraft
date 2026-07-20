@@ -1288,9 +1288,9 @@
     "Example: username:password": "Ví dụ: tên người dùng:mật khẩu",
     "Important:": "Quan trọng:",
     "sd_auto_auth_warning_1": "chạy giao diện người dùng web SD với",
-    "sd_auto_auth_warning_2": "lá cờ! Máy chủ phải có thể truy cập được từ máy chủ Luker.",
+    "sd_auto_auth_warning_2": "lá cờ! Máy chủ phải có thể truy cập được từ máy chủ Taverncraft.",
     "sd_drawthings_url": "Ví dụ: {{drawthings_url}}",
-    "sd_drawthings_auth_txt": "chạy ứng dụng DrawThings với tính năng chuyển đổi API HTTP được bật trong giao diện người dùng! Máy chủ phải có thể truy cập được từ máy chủ Luker.",
+    "sd_drawthings_auth_txt": "chạy ứng dụng DrawThings với tính năng chuyển đổi API HTTP được bật trong giao diện người dùng! Máy chủ phải có thể truy cập được từ máy chủ Taverncraft.",
     "sd_vlad_url": "Ví dụ: {{vlad_url}}",
     "The server must be accessible from the SillyTavern host machine.": "Máy chủ phải có thể truy cập được từ máy chủ SillyTavern.",
     "Hint: Save an API key in AI Horde API settings to use it here.": "Gợi ý: Lưu khóa API trong cài đặt API AI Horde để sử dụng tại đây.",
@@ -1453,10 +1453,10 @@
     "Loading chat…": "Đang tải cuộc trò chuyện…",
     "Bulk Delete": "Xóa hàng loạt",
     "Deleting ${0} character(s)…": "Đang xóa ${0} nhân vật…",
-    "Welcome to Luker!": "Luker xin chào!",
-    "Luker is aimed at advanced users.": "Luker dành cho dân pro, dân chơi thứ thiệt.",
-    "The server must be accessible from the Luker host machine.": "Máy chủ phải có thể truy cập được từ máy chủ Luker.",
-    "To enable multi-account features, restart the Luker server with": "Để bật tính năng đa tài khoản, hãy khởi động lại máy chủ Luker bằng",
-    "Luker Documentation Site": "Tài liệu về Luker",
-    "Join the Luker Discord": "Tham gia Kênh Discord của Luker"
+    "Welcome to Taverncraft!": "Taverncraft xin chào!",
+    "Taverncraft is aimed at advanced users.": "Taverncraft dành cho dân pro, dân chơi thứ thiệt.",
+    "The server must be accessible from the Taverncraft host machine.": "Máy chủ phải có thể truy cập được từ máy chủ Taverncraft.",
+    "To enable multi-account features, restart the Taverncraft server with": "Để bật tính năng đa tài khoản, hãy khởi động lại máy chủ Taverncraft bằng",
+    "Taverncraft Documentation Site": "Tài liệu về Taverncraft",
+    "Join the Taverncraft Discord": "Tham gia Kênh Discord của Taverncraft"
 }

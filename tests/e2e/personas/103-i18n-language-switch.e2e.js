@@ -85,7 +85,7 @@ async function setLanguageViaDropdownAndReload(page, baseURL, code) {
     // The change handler triggers a full page reload — wait for the
     // preloader to vanish and the UI to come back, then we re-assert.
     await page.waitForFunction(() => document.getElementById('preloader') === null, { timeout: 60_000 });
-    await page.waitForFunction(() => !!window.Luker?.getContext, { timeout: 30_000 });
+    await page.waitForFunction(() => !!window.Taverncraft?.getContext, { timeout: 30_000 });
 }
 
 test.describe('#103 — i18n language switch via real dropdown persists and labels translate', () => {

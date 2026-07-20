@@ -646,7 +646,7 @@ router.post('/undo', express.json({ limit: '16kb' }), async (request, response) 
 const PEER_ID_SUFFIX_BYTES = 4; // 8 hex chars
 
 /**
- * Sanitize a Luker handle into the prefix half of a peerId
+ * Sanitize a Taverncraft handle into the prefix half of a peerId
  * (`<sanitized-handle>@<suffix>`).
  *
  * Exported because both `generatePeerId` and the handle-mismatch gate

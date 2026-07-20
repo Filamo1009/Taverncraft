@@ -43,7 +43,7 @@ function realizeContext() {
     // installed `ctx.character.presets` before this module's first read; if
     // the block was moved or renamed and this fails, callers reading
     // `lukerContext.character.presets.*` would silently see `undefined` and
-    // downstream Luker plugins would break at first call.  Bubble the error
+    // downstream Taverncraft plugins would break at first call.  Bubble the error
     // up loudly so it surfaces at first access rather than at first plugin
     // invocation.
     if (!ctx.character || !ctx.character.presets) {

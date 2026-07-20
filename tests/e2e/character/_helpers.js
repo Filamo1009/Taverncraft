@@ -108,7 +108,7 @@ export async function clickCharacterCard(page, nameOrSpec, { timeoutMs = 10_000 
     // .character_select directly. This avoids ambiguity when multiple
     // cards share a display name (e.g. a duplicate).
     const targetChid = await page.evaluate((spec) => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         if (!ctx?.characters) return -1;
         if (spec && typeof spec === 'object' && spec.avatar) {
             return ctx.characters.findIndex(c => c?.avatar === spec.avatar);

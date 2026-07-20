@@ -56,7 +56,7 @@ test.describe('#63 — Rollback one turn → state restored (real delete-message
         await selectCharacterByName(page, 'Seraphina');
 
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
         }, { timeout: 10_000 }).catch(() => {});
 
@@ -65,11 +65,11 @@ test.describe('#63 — Rollback one turn → state restored (real delete-message
         // off so deleteMessageViaUI's MESSAGE_DELETED listener resolves
         // without an extra OK click.
         await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             if (ctx.powerUserSettings) ctx.powerUserSettings.confirm_message_delete = false;
         });
         const cmd = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return { confirm: ctx.powerUserSettings?.confirm_message_delete, hasPus: !!ctx.powerUserSettings };
         });
         console.log(`SPEC63 confirm_message_delete=${JSON.stringify(cmd)}`);
@@ -83,7 +83,7 @@ test.describe('#63 — Rollback one turn → state restored (real delete-message
         ]) {
             const { replyId } = await sendMessageAndAwaitReply(page, text);
             await page.waitForFunction((id) => {
-                const ctx = window.Luker.getContext();
+                const ctx = window.Taverncraft.getContext();
                 const m = ctx.chat?.[id];
                 return Boolean(m && Array.isArray(m?.extra?.var_ops) && m.extra.var_ops.length > 0);
             }, replyId, { timeout: 15_000 });
@@ -91,7 +91,7 @@ test.describe('#63 — Rollback one turn → state restored (real delete-message
         }
 
         const initial = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return {
                 count: ctx.chatMetadata?.variables?.count ?? null,
                 chatLen: ctx.chat.length,
@@ -108,7 +108,7 @@ test.describe('#63 — Rollback one turn → state restored (real delete-message
         // rebuild doesn't fire as expected.
         await page.waitForTimeout(500);
         const postDeleteState = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return {
                 chatLen: ctx.chat?.length,
                 count: ctx.chatMetadata?.variables?.count,
@@ -124,13 +124,13 @@ test.describe('#63 — Rollback one turn → state restored (real delete-message
         console.log('SPEC63 postDelete:', JSON.stringify(postDeleteState));
 
         await page.waitForFunction((prev) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.chat.length === prev - 1
                 && Number(ctx.chatMetadata?.variables?.count) === 2;
         }, initial.chatLen, { timeout: 15_000 });
 
         const after1 = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return {
                 count: ctx.chatMetadata?.variables?.count ?? null,
                 chatLen: ctx.chat.length,
@@ -152,7 +152,7 @@ test.describe('#63 — Rollback one turn → state restored (real delete-message
 
         // Also expose via the public context API — same data, different surface.
         const viaContextApi = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return String(ctx.variables.local.get('count'));
         });
         expect(Number(viaContextApi)).toBe(2);
@@ -161,20 +161,20 @@ test.describe('#63 — Rollback one turn → state restored (real delete-message
         // assistant down and roll back to count=1).
         await deleteMessageViaUI(page, after1.chatLen - 1);
         await page.waitForFunction((prev) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.chat.length === prev - 1;
         }, after1.chatLen, { timeout: 15_000 });
 
         // Delete the count=2 assistant.
-        const after1Chat = await page.evaluate(() => window.Luker.getContext().chat.length);
+        const after1Chat = await page.evaluate(() => window.Taverncraft.getContext().chat.length);
         await deleteMessageViaUI(page, after1Chat - 1);
         await page.waitForFunction(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return Number(ctx.chatMetadata?.variables?.count) === 1;
         }, null, { timeout: 15_000 });
 
         const after2 = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return {
                 count: ctx.chatMetadata?.variables?.count ?? null,
                 chatLen: ctx.chat.length,
@@ -192,12 +192,12 @@ test.describe('#63 — Rollback one turn → state restored (real delete-message
         await selectCharacterByName(page, 'Seraphina');
 
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return Array.isArray(ctx?.chat) && ctx.chat.length > 0;
         }, { timeout: 15_000 });
 
         const afterRestart = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.chatMetadata?.variables?.count ?? null;
         });
         expect(Number(afterRestart), 'count survives restart at rolled-back value').toBe(1);

@@ -19,7 +19,7 @@
 
 ## 字段分类机制
 
-Luker 将预设中的每个字段标记为「连接字段」或「生成参数字段」两类：
+Taverncraft 将预设中的每个字段标记为「连接字段」或「生成参数字段」两类：
 
 - **连接字段** — API 来源、自定义 URL、模型名称、反向代理地址、代理密码等
 - **生成参数字段** — Temperature、Top-P、最大 Token 数等
@@ -42,7 +42,7 @@ ST: "SillyTavern：耦合" {
   SWITCH1 -> ST_CONN: "意外覆盖" {style.stroke-dash: 3}
 }
 
-LK: "Luker：解耦" {
+LK: "Taverncraft：解耦" {
   LK_PRESET: "聊天补全预设"
   LK_CONN: "连接配置"
   LK_GEN: "只含生成参数"

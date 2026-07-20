@@ -5,13 +5,13 @@
 // Both helpers return `{ url, host, port, stop }`. The URL targets the
 // root user against a chosen database; for two-server specs the caller
 // invokes the helper TWICE per container (or creates two databases up
-// front) so each Luker process has an isolated namespace.
+// front) so each Taverncraft process has an isolated namespace.
 //
 // `Wait.forLogMessage` is preferred over `forSuccessfulCommand`: the
 // official mysql/postgres images print a distinctive "ready for
 // connections" line as the final startup signal. The test harness
 // blocks on that and only then opens the first connection — avoiding
-// races where the schema bootstrap inside Luker hits the engine
+// races where the schema bootstrap inside Taverncraft hits the engine
 // while it's still finishing crash recovery on a cold start.
 
 import { GenericContainer, Wait } from 'testcontainers';

@@ -55,7 +55,7 @@
  *   - getRequestPresetOptions()           → { llmPresetName, apiPresetName }
  */
 
-const __ctx = Luker.getContext();
+const __ctx = Taverncraft.getContext();
 const Popup = __ctx.Popup;
 const POPUP_TYPE = __ctx.POPUP_TYPE;
 const POPUP_RESULT = __ctx.POPUP_RESULT;
@@ -109,7 +109,7 @@ import {
     buildPayloadForOutcome,
 } from '../../orchestrator/iter-studio/edit-tool-result-envelope.js';
 import { buildCpaSkillsBlock } from './skill-prompt.js';
-const skillsApi = Luker.getContext().skills;
+const skillsApi = Taverncraft.getContext().skills;
 import { createCpaIterationSessionStore, makeMessageId, normalizeMessageShape } from './session-store.js';
 import { CPA_TOOL_DISPLAY } from './tool-display.js';
 

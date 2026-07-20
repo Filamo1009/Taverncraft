@@ -5,7 +5,7 @@
 // entry) rather than the documented `{ "<uid>": {...} }` object shape.
 // Upstream SillyTavern's /api/worldinfo/import only checks `'entries'
 // in worldContent`, so array-form imports round-trip and the frontend
-// renders them fine. Luker's import endpoint added a stricter check
+// renders them fine. Taverncraft's import endpoint added a stricter check
 // (`!Array.isArray(worldContent.entries)`) that rejects these files
 // with HTTP 400 — user surface: "Failed to import world info: Bad
 // Request" toast, book never appears in the dropdown.

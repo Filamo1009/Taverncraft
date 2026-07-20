@@ -2,7 +2,7 @@
 name: voice-critic-method-zh
 description: voice_critic method — humanity / data-person prose detection, archetype-mishandling, meta-narration hard-fail scan.
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 

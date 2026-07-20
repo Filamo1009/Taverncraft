@@ -62,7 +62,7 @@ test.describe('#16 — merge dialog drag-handle reorders sources', () => {
         const ids = [];
         for (const label of ['A', 'B', 'C']) {
             if (label !== 'A') await createNewChatViaUI(page);
-            const id = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+            const id = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
             expect(id).toBeTruthy();
             ids.push(id);
             await sendMessageAndAwaitReply(page, `msg ${label}`);
@@ -99,7 +99,7 @@ test.describe('#16 — merge dialog drag-handle reorders sources', () => {
         const mergedName = 'merged-reordered';
         await submitMergeDialog(page, dialog, mergedName);
         await page.waitForFunction(
-            (id) => window.Luker.getContext().getCurrentChatId() === id,
+            (id) => window.Taverncraft.getContext().getCurrentChatId() === id,
             mergedName,
             { timeout: 15_000 },
         );
@@ -107,7 +107,7 @@ test.describe('#16 — merge dialog drag-handle reorders sources', () => {
         // Disk side: each source is greeting + 1 user + 1 reply = 3 msgs,
         // so the merged body has 9 messages in C-then-A-then-B order.
         const avatarFolder = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.characters[ctx.characterId].avatar.replace(/\.png$/, '');
         });
         const mergedPath = resolve(server.dataRoot, 'default-user', 'chats', avatarFolder, `${mergedName}.jsonl`);

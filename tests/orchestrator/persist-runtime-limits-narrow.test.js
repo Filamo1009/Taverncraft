@@ -6,7 +6,7 @@ const saveSettingsCalls = [];
 
 // Match the shim shape used by editor-persist-presets.test.js so the
 // same module chain evaluates cleanly under jsdom-free node env.
-globalThis.Luker = {
+globalThis.Taverncraft = {
     getContext: () => ({
         constants: {
             promptRoles: { SYSTEM: 0, USER: 1, ASSISTANT: 2 },

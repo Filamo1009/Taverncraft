@@ -55,7 +55,7 @@ test.describe('#19 — same source added twice keeps both slices', () => {
         await selectCharacterByName(page, 'Seraphina');
         await page.waitForFunction(() => document.querySelectorAll('#chat .mes').length >= 1, { timeout: 10_000 }).catch(() => {});
 
-        const id = await page.evaluate(() => window.Luker.getContext().getCurrentChatId());
+        const id = await page.evaluate(() => window.Taverncraft.getContext().getCurrentChatId());
         expect(id).toBeTruthy();
         for (let j = 0; j < 3; j++) await sendMessageAndAwaitReply(page, `m${j}`);
         // body = [greeting, m0, r0, m1, r1, m2, r2] = 7 entries
@@ -86,14 +86,14 @@ test.describe('#19 — same source added twice keeps both slices', () => {
         const mergedName = 'merged-dup';
         await submitMergeDialog(page, dialog, mergedName);
         await page.waitForFunction(
-            (n) => window.Luker.getContext().getCurrentChatId() === n,
+            (n) => window.Taverncraft.getContext().getCurrentChatId() === n,
             mergedName,
             { timeout: 15_000 },
         );
 
         // Disk side: header + 4 body lines = 5 total.
         const avatarFolder = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.characters[ctx.characterId].avatar.replace(/\.png$/, '');
         });
         const mergedPath = resolve(server.dataRoot, 'default-user', 'chats', avatarFolder, `${mergedName}.jsonl`);

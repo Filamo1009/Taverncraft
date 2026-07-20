@@ -1,6 +1,6 @@
 # Chat Management
 
-In Luker, each conversation with a character is an independent "chat." You can create multiple chats with the same character, each with its own separate message history. This page covers the basic chat management operations.
+In Taverncraft, each conversation with a character is an independent "chat." You can create multiple chats with the same character, each with its own separate message history. This page covers the basic chat management operations.
 
 ## Creating and Switching Chats
 
@@ -14,7 +14,7 @@ Click the chat list button to view all chats with the current character. Click a
 
 ### Deleting Chats
 
-In the chat list, you can delete chats you no longer need. Luker provides an Undo Toast — if you accidentally delete a chat, you can undo it within a short time window.
+In the chat list, you can delete chats you no longer need. Taverncraft provides an Undo Toast — if you accidentally delete a chat, you can undo it within a short time window.
 
 ### Renaming Chats
 
@@ -84,23 +84,23 @@ You can export chat logs as JSON files for backup or sharing. Exported files con
 
 Import chat logs from JSON files. Imported chats appear in the corresponding character's chat list.
 
-## Luker's Incremental Sync
+## Taverncraft's Incremental Sync
 
-Luker has made significant improvements to how chat data is saved.
+Taverncraft has made significant improvements to how chat data is saved.
 
 ### The Problem
 
 In SillyTavern, every message send, message edit, or even just swiping through responses transfers the **entire chat file** between frontend and backend. For long conversations, this means transferring large amounts of data with every operation — wasteful in bandwidth and error-prone.
 
-### Luker's Improvement
+### Taverncraft's Improvement
 
-Luker uses **incremental patch endpoints** to save chat data. Each operation only transfers the changed portion (following the RFC 6902 standard), not the entire chat file. For example:
+Taverncraft uses **incremental patch endpoints** to save chat data. Each operation only transfers the changed portion (following the RFC 6902 standard), not the entire chat file. For example:
 
 - Sending a new message: Only the new message content is transferred
 - Editing a message: Only the modified portion is transferred
 - Toggling a setting: May only require transferring a few dozen bytes
 
-Additionally, Luker's backend **persists chat data in real time**, avoiding the message loss issues that can occur in SillyTavern where the frontend is responsible for triggering saves.
+Additionally, Taverncraft's backend **persists chat data in real time**, avoiding the message loss issues that can occur in SillyTavern where the frontend is responsible for triggering saves.
 
 ::: tip
 Incremental sync is transparent to users — you don't need to do anything extra. For cloud-deployed users, this improvement significantly reduces bandwidth consumption.
@@ -108,17 +108,17 @@ Incremental sync is transparent to users — you don't need to do anything extra
 
 ## Offline and Disconnection
 
-If the connection between your browser and the Luker backend is interrupted (e.g., network fluctuations, Wi-Fi switching, device sleep), you don't need to worry about data loss:
+If the connection between your browser and the Taverncraft backend is interrupted (e.g., network fluctuations, Wi-Fi switching, device sleep), you don't need to worry about data loss:
 
 - **Sent messages won't be lost** — All messages that reached the backend have been persisted to disk in real time; frontend disconnection doesn't affect them
-- **Auto-sync on reconnection** — When the connection is restored, Luker automatically syncs the frontend and backend data states, ensuring what you see matches the server
+- **Auto-sync on reconnection** — When the connection is restored, Taverncraft automatically syncs the frontend and backend data states, ensuring what you see matches the server
 - **Generation interruption protection** — If the AI is generating a response when the connection drops, the already-generated content is safely saved by the backend and won't be lost due to frontend crashes
 
-This is made possible by Luker's [Incremental Sync](/improvements/incremental-sync) and [Backend Real-Time Storage](/improvements/backend-storage) mechanisms — data changes are persisted the instant they reach the backend, rather than relying on the frontend to trigger saves.
+This is made possible by Taverncraft's [Incremental Sync](/improvements/incremental-sync) and [Backend Real-Time Storage](/improvements/backend-storage) mechanisms — data changes are persisted the instant they reach the backend, rather than relying on the frontend to trigger saves.
 
 ## Chat Persona Lock
 
-Luker supports locking a user persona to a specific chat. When enabled, switching to that chat automatically restores the corresponding persona, and switching to other chats restores the previous one. This is very convenient when you use different personas for different characters.
+Taverncraft supports locking a user persona to a specific chat. When enabled, switching to that chat automatically restores the corresponding persona, and switching to other chats restores the previous one. This is very convenient when you use different personas for different characters.
 
 ## Next Steps
 

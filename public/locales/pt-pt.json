@@ -1288,9 +1288,9 @@
     "Example: username:password": "Exemplo: nome de usuário:senha",
     "Important:": "Importante:",
     "sd_auto_auth_warning_1": "execute SD Web UI com o",
-    "sd_auto_auth_warning_2": "bandeira! O servidor deve estar acessível a partir da máquina host Luker.",
+    "sd_auto_auth_warning_2": "bandeira! O servidor deve estar acessível a partir da máquina host Taverncraft.",
     "sd_drawthings_url": "Exemplo: {{drawthings_url}}",
-    "sd_drawthings_auth_txt": "execute o aplicativo DrawThings com a opção HTTP API habilitada na IU! O servidor deve estar acessível a partir da máquina host Luker.",
+    "sd_drawthings_auth_txt": "execute o aplicativo DrawThings com a opção HTTP API habilitada na IU! O servidor deve estar acessível a partir da máquina host Taverncraft.",
     "sd_vlad_url": "Exemplo: {{vlad_url}}",
     "The server must be accessible from the SillyTavern host machine.": "O servidor deve estar acessível a partir da máquina host SillyTavern.",
     "Hint: Save an API key in AI Horde API settings to use it here.": "Dica: salve uma chave de API nas configurações da API AI Horde para usá-la aqui.",
@@ -1453,10 +1453,10 @@
     "Loading chat…": "A carregar chat…",
     "Bulk Delete": "Eliminação em massa",
     "Deleting ${0} character(s)…": "A eliminar ${0} personagem(ns)…",
-    "Welcome to Luker!": "Bem-vindo ao Luker!",
-    "Luker is aimed at advanced users.": "Luker é voltado para usuários avançados.",
-    "The server must be accessible from the Luker host machine.": "O servidor deve estar acessível a partir da máquina host Luker.",
-    "To enable multi-account features, restart the Luker server with": "Para habilitar recursos de múltiplas contas, reinicie o servidor Luker com",
-    "Luker Documentation Site": "Site de Documentação do Luker",
-    "Join the Luker Discord": "Junte-se ao Discord do Luker"
+    "Welcome to Taverncraft!": "Bem-vindo ao Taverncraft!",
+    "Taverncraft is aimed at advanced users.": "Taverncraft é voltado para usuários avançados.",
+    "The server must be accessible from the Taverncraft host machine.": "O servidor deve estar acessível a partir da máquina host Taverncraft.",
+    "To enable multi-account features, restart the Taverncraft server with": "Para habilitar recursos de múltiplas contas, reinicie o servidor Taverncraft com",
+    "Taverncraft Documentation Site": "Site de Documentação do Taverncraft",
+    "Join the Taverncraft Discord": "Junte-se ao Discord do Taverncraft"
 }

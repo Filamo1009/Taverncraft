@@ -132,7 +132,7 @@ export const CUSTOM_TOOL_ITER_STUDIO_TOOL_DEFS = Object.freeze([
                     description: { type: 'string', description: 'Required. What the tool does, written for the runtime agent that will call it.' },
                     mode: { type: 'string', enum: ['read', 'write'], description: 'read = no side effects (safe to call in simulation); write = mutates state.' },
                     parameters: { type: 'object', description: 'OpenAI-style JSON Schema describing the runtime agent\'s arguments to this tool.' },
-                    body: { type: 'string', description: 'JavaScript async function body. `args` is the runtime agent\'s parsed call payload; `ctx` is the same object SillyTavern/Luker extensions get via getContext(), augmented with orchestration-specific fields (see ctx.director?.getDraft, ctx.__customToolRegistry). Use luker_ctx_describe + luker_docs_read FIRST to learn the actual surface.' },
+                    body: { type: 'string', description: 'JavaScript async function body. `args` is the runtime agent\'s parsed call payload; `ctx` is the same object SillyTavern/Taverncraft extensions get via getContext(), augmented with orchestration-specific fields (see ctx.director?.getDraft, ctx.__customToolRegistry). Use luker_ctx_describe + luker_docs_read FIRST to learn the actual surface.' },
                     simulateBody: { type: 'string', description: 'Optional. Body used when running in simulation review. Write-mode tools without a simulate body return a placeholder during simulation.' },
                 },
                 required: ['name', 'description', 'mode', 'parameters', 'body'],
@@ -211,7 +211,7 @@ export const CUSTOM_TOOL_ITER_STUDIO_TOOL_DEFS = Object.freeze([
         type: 'function',
         function: {
             name: CUSTOM_TOOL_ITER_STUDIO_TOOL_NAMES.CTX_LIST_KEYS,
-            description: 'List top-level properties of the runtime ctx (the same object SillyTavern/Luker extensions get via getContext(), ~200+ keys). Each entry is {key, type}. Use luker_ctx_describe for details on a specific key.',
+            description: 'List top-level properties of the runtime ctx (the same object SillyTavern/Taverncraft extensions get via getContext(), ~200+ keys). Each entry is {key, type}. Use luker_ctx_describe for details on a specific key.',
             parameters: {
                 type: 'object',
                 properties: {
@@ -240,7 +240,7 @@ export const CUSTOM_TOOL_ITER_STUDIO_TOOL_DEFS = Object.freeze([
         type: 'function',
         function: {
             name: CUSTOM_TOOL_ITER_STUDIO_TOOL_NAMES.DOCS_LIST,
-            description: 'List Luker documentation files (markdown) available locally. By default returns only English docs. Useful starting points: development/extension-api/orchestrator-tools.md, features/orchestrator/custom-tools.md, development/extension-api/chat-and-state.md, development/extension-api/generation.md, development/extension-api/world-info.md.',
+            description: 'List Taverncraft documentation files (markdown) available locally. By default returns only English docs. Useful starting points: development/extension-api/orchestrator-tools.md, features/orchestrator/custom-tools.md, development/extension-api/chat-and-state.md, development/extension-api/generation.md, development/extension-api/world-info.md.',
             parameters: {
                 type: 'object',
                 properties: {
@@ -255,7 +255,7 @@ export const CUSTOM_TOOL_ITER_STUDIO_TOOL_DEFS = Object.freeze([
         type: 'function',
         function: {
             name: CUSTOM_TOOL_ITER_STUDIO_TOOL_NAMES.DOCS_READ,
-            description: 'Read a Luker documentation markdown file. Use this to look up authoritative guidance on the ctx surface, orchestrator tool API, lorebook contracts, state-system, etc., BEFORE generating code that touches those areas.',
+            description: 'Read a Taverncraft documentation markdown file. Use this to look up authoritative guidance on the ctx surface, orchestrator tool API, lorebook contracts, state-system, etc., BEFORE generating code that touches those areas.',
             parameters: {
                 type: 'object',
                 properties: {
@@ -395,7 +395,7 @@ function defaultCtxFactory({ console: cons }) {
     // surface CardApp / orchestrator runtime use. Augment with the
     // sandbox console so dry-run logs surface without polluting the
     // page console.
-    const ctx = Luker.getContext();
+    const ctx = Taverncraft.getContext();
     return new Proxy(ctx, {
         get(target, prop) {
             if (prop === 'console') return cons;

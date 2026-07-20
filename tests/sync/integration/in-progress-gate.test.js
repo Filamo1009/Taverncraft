@@ -4,7 +4,7 @@
  *
  * The unit tests in `tests/sync/in-progress-gate.test.js`
  * pin the registry + middleware in isolation. THIS suite stands up two
- * real Luker servers (per the `full-flow` test pattern) and proves that
+ * real Taverncraft servers (per the `full-flow` test pattern) and proves that
  * the orchestrator actually invokes `markSyncInProgress` around its
  * work so a `/api/chats/save` arriving mid-pull returns the
  * documented 409 with `Retry-After` and structured body.

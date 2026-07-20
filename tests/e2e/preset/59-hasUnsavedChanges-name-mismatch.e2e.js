@@ -19,7 +19,7 @@
 // REAL USER-GESTURE flow:
 //   1. Seed a card with card-bound slot `X { temperature: 0.5 }` (default).
 //   2. Seed a global preset `OtherName { temperature: 0.5 }` on disk.
-//   3. Load Luker; select the card so the ghost auto-applies → live
+//   3. Load Taverncraft; select the card so the ghost auto-applies → live
 //      oai_settings.temperature = 0.5.
 //   4. Call `ctx.openai.hasUnsavedChanges('OtherName')`. Ref decodes to
 //      `{name: 'X', origin: character}` — name mismatch → global-branch
@@ -111,7 +111,7 @@ test.describe('#59 — hasUnsavedChanges under a ghost selection with a name mis
         // Confirm both libraries carry what the setup demands so a bogus
         // pass (e.g. missing global) can't sneak through.
         const librarySanity = await page.evaluate(({ otherName }) => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             const settingNames = ctx?.openai?.settingNames;
             const settings = ctx?.openai?.settings;
             const idx = settingNames?.[otherName];
@@ -127,14 +127,14 @@ test.describe('#59 — hasUnsavedChanges under a ghost selection with a name mis
         // 'OtherName' → name mismatch → global branch. Global body ==
         // live body → false.
         const unsavedOther = await page.evaluate((name) => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return ctx?.openai?.hasUnsavedChanges?.(name);
         }, OTHER_GLOBAL_NAME);
         expect(unsavedOther).toBe(false);
 
         // Unknown name → global branch short-circuits on missing index → false.
         const unsavedUnknown = await page.evaluate(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return ctx?.openai?.hasUnsavedChanges?.('DefinitelyNotAPreset');
         });
         expect(unsavedUnknown).toBe(false);

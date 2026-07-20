@@ -12,7 +12,7 @@
  * uniformly via the REST layer.
  *
  * Inline-tested helpers are exported for use by the test suite without
- * needing a DOM (Luker's Jest config runs in node, not jsdom). The
+ * needing a DOM (Taverncraft's Jest config runs in node, not jsdom). The
  * interactive `openSkillManagerPanel` entry point is exported for use by
  * orchestrator's main.js.
  *
@@ -841,7 +841,7 @@ export async function openSkillManagerPanel({ context, initialScope = null, init
 
     function toast(message, level) {
         // The popup is inside a dialog; toastr's container needs to be
-        // inside the dialog to be visible. Luker's popup.js already wires
+        // inside the dialog to be visible. Taverncraft's popup.js already wires
         // this via `fixToastrForDialogs` on popup open, so we just call
         // toastr directly.
         if (typeof toastr === 'undefined') {

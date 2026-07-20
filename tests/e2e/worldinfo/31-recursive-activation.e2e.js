@@ -148,7 +148,7 @@ async function sendAndCaptureBody(page, text) {
 
 async function settleFirstMes(page) {
     await page.waitForFunction(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return Array.isArray(ctx.chat) && ctx.chat.length >= 1;
     }, { timeout: 10_000 }).catch(() => {});
 }

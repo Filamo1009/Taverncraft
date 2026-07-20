@@ -9,7 +9,7 @@
  * else can call `i18n` synchronously after that.
  */
 
-const __ctx = Luker.getContext();
+const __ctx = Taverncraft.getContext();
 const addLocaleData = __ctx.addLocaleData;
 const translate = __ctx.translate;
 
@@ -519,7 +519,7 @@ export function registerLocaleData() {
         'About Schema Iteration Prompt': '关于 Schema Iteration Prompt',
         'Schema Iteration Prompt help body': 'Schema Iteration Studio 里每轮 LLM 请求的 system prompt。定义 AI 编辑 schema 的助手行为、工具语义、输出格式约束。',
         'About Include world info': '关于包含世界信息',
-        'Include world info help body': '召回和生成图的 LLM 请求上下文里是否包含 Luker 世界信息。关闭 → LLM 只看聊天历史 + memory graph 的表；开启 → 每次调用时 resolveWorldInfoForMessages activate 相关条目拼进去。',
+        'Include world info help body': '召回和生成图的 LLM 请求上下文里是否包含 Taverncraft 世界信息。关闭 → LLM 只看聊天历史 + memory graph 的表；开启 → 每次调用时 resolveWorldInfoForMessages activate 相关条目拼进去。',
         'About Exclude latest N assistant turns from memory injection': '关于记忆注入排除最近 N 条 assistant',
         'Exclude latest N assistant turns from memory injection help body': '最近 N 条 assistant 消息保持原文可见；召回排除从这些消息生成的事件节点；always-inject 快照 seqTo ≥ latestSeq − N + 1 的节点也会被排除；latest-only 类型（如角色卡、地点）例外。',
         'About Recall max iterations': '关于召回最大迭代次数',
@@ -1036,7 +1036,7 @@ export function registerLocaleData() {
         'About Schema Iteration Prompt': '關於 Schema Iteration Prompt',
         'Schema Iteration Prompt help body': 'Schema Iteration Studio 裡每輪 LLM 請求的 system prompt。定義 AI 編輯 schema 的助手行為、工具語義、輸出格式約束。',
         'About Include world info': '關於包含世界資訊',
-        'Include world info help body': '召回和生成圖的 LLM 請求上下文裡是否包含 Luker 世界資訊。關閉 → LLM 只看聊天歷史 + memory graph 的表；開啟 → 每次呼叫時 resolveWorldInfoForMessages activate 相關條目拼進去。',
+        'Include world info help body': '召回和生成圖的 LLM 請求上下文裡是否包含 Taverncraft 世界資訊。關閉 → LLM 只看聊天歷史 + memory graph 的表；開啟 → 每次呼叫時 resolveWorldInfoForMessages activate 相關條目拼進去。',
         'About Exclude latest N assistant turns from memory injection': '關於記憶注入排除最近 N 條 assistant',
         'Exclude latest N assistant turns from memory injection help body': '最近 N 條 assistant 訊息保持原文可見；召回排除從這些訊息生成的事件節點；always-inject 快照 seqTo ≥ latestSeq − N + 1 的節點也會被排除；latest-only 類型（如角色卡、地點）例外。',
         'About Recall max iterations': '關於召回最大迭代次數',

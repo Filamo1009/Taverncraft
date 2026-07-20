@@ -198,7 +198,7 @@ export async function uploadAvatarForSelected(page, avatarPath) {
  */
 export async function duplicateSelectedCharacter(page, { timeoutMs = 20_000 } = {}) {
     const beforeAvatars = await page.evaluate(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return ctx.characters.map(c => c?.avatar || '').filter(Boolean);
     });
     await page.locator('#dupe_button').click();
@@ -209,11 +209,11 @@ export async function duplicateSelectedCharacter(page, { timeoutMs = 20_000 } = 
     }
     // Wait for the character list to grow.
     await page.waitForFunction((before) => {
-        const ctx = window.Luker.getContext?.();
+        const ctx = window.Taverncraft.getContext?.();
         return ctx && Array.isArray(ctx.characters) && ctx.characters.length > before;
     }, beforeAvatars.length, { timeout: timeoutMs });
     const afterAvatars = await page.evaluate(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         return ctx.characters.map(c => c?.avatar || '').filter(Boolean);
     });
     const newAvatar = afterAvatars.find(a => !beforeAvatars.includes(a));

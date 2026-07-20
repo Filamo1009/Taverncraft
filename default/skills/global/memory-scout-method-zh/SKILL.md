@@ -2,7 +2,7 @@
 name: memory-scout-method-zh
 description: memory_scout method — LLM-grade memory-graph recall pipeline (enumerate → search → expand → cite), API-grounded signal levels.
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.1.0
 ---
 

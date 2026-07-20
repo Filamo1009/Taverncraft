@@ -1,5 +1,5 @@
 /**
- * Library facade for Luker frontend modules.
+ * Library facade for Taverncraft frontend modules.
  *
  * Core libraries are bundled into /lib.core.bundle.js and loaded synchronously.
  * Heavier or less common libraries live in /lib.optional.bundle.js and are

@@ -9,7 +9,7 @@
 //   c) After server restart, both chats persist on disk.
 //
 // Real-user gesture: click .extraMesButtonsHint (ellipsis) to reveal
-// the action row, then click .mes_create_branch. Luker's branch handler
+// the action row, then click .mes_create_branch. Taverncraft's branch handler
 // emits CHAT_CHANGED on the switch — we wait for that.
 
 import { test, expect } from '@playwright/test';
@@ -68,7 +68,7 @@ test.describe('#12 — branch-from-message regression', () => {
         const originalLen = beforeBranch.length;
         expect(originalLen).toBeGreaterThanOrEqual(8); // greeting + 4 user + 4 assistant
         const avatarFolder = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return (ctx.characters[ctx.characterId]?.avatar || '').replace(/\.png$/, '');
         });
         const chatsDir = resolve(server.dataRoot, 'default-user', 'chats', avatarFolder);
@@ -82,7 +82,7 @@ test.describe('#12 — branch-from-message regression', () => {
         // Real user gesture: ellipsis → .mes_create_branch.
         await branchFromMessageViaUI(page, branchAt);
         await page.waitForFunction((origId) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const cur = ctx.getCurrentChatId?.();
             return cur && cur !== origId;
         }, originalChatId, { timeout: 15_000 });
@@ -127,14 +127,14 @@ test.describe('#12 — branch-from-message regression', () => {
         // here keeps the test honest about WHICH chat we expect to
         // assert on.
         const switched = await page.evaluate(async (origId) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const fn = ctx.openCharacterChat || (await import('/script.js')).openCharacterChat;
             await fn(origId);
             return ctx.getCurrentChatId?.();
         }, originalChatId);
         expect(switched).toBe(originalChatId);
         await page.waitForFunction(({ id, len }) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return ctx.getCurrentChatId?.() === id && document.querySelectorAll('#chat .mes').length >= len;
         }, { id: originalChatId, len: originalLen }, { timeout: 10_000 });
 

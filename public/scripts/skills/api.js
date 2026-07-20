@@ -19,7 +19,7 @@ import { getRequestHeaders } from '../../script.js';
  * Wrap fetch + JSON handling. Throws an Error whose `.status` and `.body`
  * mirror the server's error response so call sites can branch on them.
  *
- * Headers come from `getRequestHeaders()` so the CSRF token (Luker enables
+ * Headers come from `getRequestHeaders()` so the CSRF token (Taverncraft enables
  * `csrfSyncProtection` globally in server-main.js) is always present on
  * writes; callers may override or add headers via `options.headers`.
  *

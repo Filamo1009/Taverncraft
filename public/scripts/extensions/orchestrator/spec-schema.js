@@ -27,7 +27,7 @@
  * with the spec schema.
  */
 
-const extension_settings = Luker.getContext().extensionSettings;
+const extension_settings = Taverncraft.getContext().extensionSettings;
 import {
     ORCH_NODE_TYPE_REVIEW,
     ORCH_NODE_TYPE_WORKER,

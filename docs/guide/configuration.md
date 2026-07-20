@@ -1,6 +1,6 @@
 # Configuration
 
-Luker's configuration file is `config.yaml` in the project root directory. On first launch, if the file doesn't exist, Luker will copy a default configuration from `default/config.yaml`.
+Taverncraft's configuration file is `config.yaml` in the project root directory. On first launch, if the file doesn't exist, Taverncraft will copy a default configuration from `default/config.yaml`.
 
 ## Core Settings
 
@@ -44,7 +44,7 @@ To enable HTTPS, set `enabled` to `true` and provide the certificate and private
 
 ### Proxy Settings
 
-SillyTavern supports forwarding outbound requests (such as API calls) through HTTP, HTTPS, or SOCKS proxies, and Luker inherits this feature:
+SillyTavern supports forwarding outbound requests (such as API calls) through HTTP, HTTPS, or SOCKS proxies, and Taverncraft inherits this feature:
 
 ```yaml
 requestProxy:
@@ -64,7 +64,7 @@ requestProxy:
 enableCorsProxy: false
 ```
 
-When enabled, Luker provides a CORS proxy endpoint for frontend cross-origin request forwarding.
+When enabled, Taverncraft provides a CORS proxy endpoint for frontend cross-origin request forwarding.
 
 ## Authentication and Multi-User
 
@@ -77,7 +77,7 @@ basicAuthUser:
   password: password
 ```
 
-When enabled, accessing Luker requires a username and password. Suitable for single-user scenarios.
+When enabled, accessing Taverncraft requires a username and password. Suitable for single-user scenarios.
 
 ### Multi-User Mode
 
@@ -107,7 +107,7 @@ node recover.js default-user
 ```
 
 ::: tip
-This command must be run from the Luker project root directory. The server does not need to be running.
+This command must be run from the Taverncraft project root directory. The server does not need to be running.
 :::
 
 ### SSO (Single Sign-On)
@@ -118,7 +118,7 @@ sso:
   authentikAuth: false
 ```
 
-Luker supports single sign-on through reverse proxy authentication solutions like Authelia or Authentik. For detailed configuration, see [Authentication and Quotas](/improvements/auth-and-quota).
+Taverncraft supports single sign-on through reverse proxy authentication solutions like Authelia or Authentik. For detailed configuration, see [Authentication and Quotas](/improvements/auth-and-quota).
 
 ### Host Whitelist
 
@@ -147,7 +147,7 @@ whitelistDockerHosts: true
 Whitelist mode is enabled by default, allowing only local access. To allow LAN access, add the corresponding IPs to the `whitelist` list, or disable `whitelistMode`.
 
 ::: warning Disabling the whitelist can cause the process to exit
-If you set `whitelistMode: false`, Luker requires another protection layer. Otherwise it will detect an insecure setup at startup and terminate the process (in Docker, this manifests as the container restarting in a loop). To expose the server safely, do at least one of the following:
+If you set `whitelistMode: false`, Taverncraft requires another protection layer. Otherwise it will detect an insecure setup at startup and terminate the process (in Docker, this manifests as the container restarting in a loop). To expose the server safely, do at least one of the following:
 
 - Enable `basicAuthMode` and configure `basicAuthUser` — see [Authentication](/guide/authentication)
 - Enable multi-user mode (`enableUserAccounts: true`) **and** set a password for every admin user via `node recover.js default-user <password>` — see [Authentication › Password Reset](/guide/authentication#password-reset). Both are required: enabling accounts alone still fails the check while admin users have no password, and setting a password alone still fails while accounts are disabled.
@@ -197,7 +197,7 @@ storage:
     poolSize: 10
 ```
 
-Luker can persist user data through one of four backends. The `mode` key chooses which one; the matching sub-block is only consulted when its mode is selected.
+Taverncraft can persist user data through one of four backends. The `mode` key chooses which one; the matching sub-block is only consulted when its mode is selected.
 
 - `fs` (default): one file per chat / preset / world / etc. under `<dataRoot>/<handle>/`. Recommended for single-user installs and the easiest backend to inspect by hand.
 - `sqlite`: one self-contained `luker-storage.sqlite` file per user under `<dataRoot>/<handle>/`. Suits installs that want a single transactional file without operating a separate database service.

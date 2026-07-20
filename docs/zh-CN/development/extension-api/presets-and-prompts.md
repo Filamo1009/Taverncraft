@@ -312,7 +312,7 @@ resolveWorldInfoForMessages(
 
 ```js
 import { sendOpenAIRequest } from '../../../openai.js';
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 
 // 1. 解析世界书激活结果
 const wi = await context.resolveWorldInfoForMessages(myCustomMessages, {
@@ -358,7 +358,7 @@ getActivePromptPresetEnvelope(options?: {
 - `mainApi` / `completionApi`——活动 API 标识
 - `presetRefs`——已解析的 completion / context / instruct / sysprompt / reasoning 预设名
 - `promptCore`——每个预设里影响 prompt 的字段
-- `promptLayout`——合并后的 Luker layout（来自 `extensions.luker.prompt_layout`）
+- `promptLayout`——合并后的 Taverncraft layout（来自 `extensions.luker.prompt_layout`）
 - `promptCatalog`——`prompt.identifier` → `{ name, role, content, marker, systemPrompt }` 的映射
 - `characterCard`——当前角色字段（`includeCharacterCard !== false` 时）
 
@@ -381,7 +381,7 @@ formatPromptPresetEnvelope(envelope?: object, options?: { label?: string }): str
 把信封格式化为 `[[LABEL]]\n<json>` 形式，便于嵌入另一段 prompt（例如委托给一个需要推理用户 prompt 配置的 meta-LLM）。未提供时默认使用当前信封。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const envelope = ctx.getActivePromptPresetEnvelope({ includeCharacterCard: true });
 const serialized = ctx.formatPromptPresetEnvelope(envelope);
 console.log(serialized);
@@ -435,7 +435,7 @@ removeReasoningFromString(str: string): string
 按当前 reasoning 模板从字符串里剥掉 reasoning 前后缀块。没有配置模板或没匹配到 reasoning 段时原样返回。当你只想要模型输出里给用户看的最终答复（去掉 `<thinking>……</thinking>` 之类）时用。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const parsed = ctx.parseReasoningFromString(modelOutput);
 if (parsed) {
     console.log('Reasoning:', parsed.reasoning);
@@ -490,7 +490,7 @@ context.openai: {
 处理 chat completion 连接状态的辅助集合。`proxies` 是用户配置的反向代理实时列表；`ZAI_ENDPOINT` 列出已知的智谱 / Z.AI 端点 URL;`stripPresetConnectionFields` 返回去掉连接相关字段（API 源、模型、proxy 等）的预设克隆——导出「不同用户环境也能用」的预设时使用。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const portable = ctx.openai.stripPresetConnectionFields(preset);
 const json = JSON.stringify(portable, null, 2);
 ```

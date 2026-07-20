@@ -100,7 +100,7 @@ async function initializeApplication() {
         safePerfMark('luker:init:import:app:end');
         safePerfMeasure('luker:init:import:app', 'luker:init:import:app:start', 'luker:init:import:app:end');
     } catch (error) {
-        console.error('Failed to initialize Luker application:', error);
+        console.error('Failed to initialize Taverncraft application:', error);
     } finally {
         safePerfMark('luker:init:end');
         safePerfMeasure('luker:init:total', 'luker:init:start', 'luker:init:end');

@@ -1,10 +1,10 @@
 # API Connections
 
-Luker doesn't include AI models itself — it connects to external Large Language Model (LLM) services via APIs to generate responses. This page explains how to configure and manage API connections.
+Taverncraft doesn't include AI models itself — it connects to external Large Language Model (LLM) services via APIs to generate responses. This page explains how to configure and manage API connections.
 
 ## Supported API Types
 
-Luker supports a wide range of mainstream LLM APIs:
+Taverncraft supports a wide range of mainstream LLM APIs:
 
 ### Chat Completion
 
@@ -31,7 +31,7 @@ Chat Completion and Text Completion are two different API modes. Most commercial
 
 ## Connection Manager
 
-Luker provides a **Connection Manager** to manage multiple API connection profiles.
+Taverncraft provides a **Connection Manager** to manage multiple API connection profiles.
 
 ### Creating a Connection Profile
 
@@ -68,17 +68,17 @@ Each API provider has its own way to obtain keys:
 
 ### Entering Keys
 
-Enter the corresponding API key in the connection profile. Keys are securely stored on Luker's server side and are never exposed on the frontend.
+Enter the corresponding API key in the connection profile. Keys are securely stored on Taverncraft's server side and are never exposed on the frontend.
 
 ::: tip
-If you're using a self-hosted Luker instance, API keys are stored on your own server. If you're using someone else's Luker instance, be mindful of key security.
+If you're using a self-hosted Taverncraft instance, API keys are stored on your own server. If you're using someone else's Taverncraft instance, be mindful of key security.
 :::
 
 ## Model Selection
 
-After configuring an API connection, you need to select the specific model to use. Luker dynamically loads the list of available models based on the API type.
+After configuring an API connection, you need to select the specific model to use. Taverncraft dynamically loads the list of available models based on the API type.
 
-For APIs like Claude and Gemini, Luker supports **dynamic model lists** — automatically fetching the latest available models from the API without manual updates. You can also customize the model list for each API source. See [Other Improvements](/improvements/other) for details.
+For APIs like Claude and Gemini, Taverncraft supports **dynamic model lists** — automatically fetching the latest available models from the API without manual updates. You can also customize the model list for each API source. See [Other Improvements](/improvements/other) for details.
 
 ## Proxy Settings
 
@@ -91,7 +91,7 @@ Proxy settings are part of the connection profile — different profiles can use
 
 ## Relationship with Preset Decoupling
 
-In Luker, API connections and chat completion presets are **completely independent** concepts:
+In Taverncraft, API connections and chat completion presets are **completely independent** concepts:
 
 - **Connection profiles** manage "which API, which model, and through what address"
 - **Chat completion presets** manage "which prompts and which sampling parameters"
@@ -107,7 +107,7 @@ See [Preset System](/basics/presets) and [Preset Decoupling](/improvements/prese
 
 ## Slash Commands
 
-Luker's Connection Manager provides slash commands for power users:
+Taverncraft's Connection Manager provides slash commands for power users:
 
 | Command | Description |
 |---------|-------------|
@@ -118,7 +118,7 @@ Luker's Connection Manager provides slash commands for power users:
 
 ## Request Inspector
 
-Luker includes a built-in Request Inspector that lets you view detailed information about each generation request, including the complete request content sent to the API and the returned response. This is very useful for debugging connection issues or optimizing prompts.
+Taverncraft includes a built-in Request Inspector that lets you view detailed information about each generation request, including the complete request content sent to the API and the returned response. This is very useful for debugging connection issues or optimizing prompts.
 
 ## Next Steps
 

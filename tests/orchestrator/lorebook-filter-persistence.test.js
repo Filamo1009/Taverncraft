@@ -7,7 +7,7 @@
 
 import { describe, test, expect, jest, beforeAll } from '@jest/globals';
 
-globalThis.Luker = {
+globalThis.Taverncraft = {
     getContext: () => ({
         constants: {
             promptRoles: { SYSTEM: 0, USER: 1, ASSISTANT: 2 },

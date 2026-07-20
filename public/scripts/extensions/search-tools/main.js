@@ -23,7 +23,7 @@ import {
 } from './persistence.js';
 import { registerSearchToolsOrchestrationTools } from './orchestrator-tools.js';
 
-const __ctx = Luker.getContext();
+const __ctx = Taverncraft.getContext();
 const eventSource = __ctx.eventSource;
 const event_types = __ctx.eventTypes;
 const extension_prompt_roles = __ctx.constants.promptRoles;
@@ -31,7 +31,7 @@ const getRequestHeaders = __ctx.getRequestHeaders;
 const saveSettings = __ctx.saveSettings;
 const saveSettingsDebounced = __ctx.saveSettingsDebounced;
 const extension_settings = __ctx.extensionSettings;
-const getContext = Luker.getContext;
+const getContext = Taverncraft.getContext;
 const addLocaleData = __ctx.addLocaleData;
 const translate = __ctx.translate;
 const SECRET_KEYS = __ctx.secrets.KEYS;
@@ -1109,10 +1109,10 @@ async function invokeSharedSearchToolCall(call, { abortSignal = null } = {}) {
 
 function installGlobalApi() {
     const root = globalThis;
-    if (!root.Luker || typeof root.Luker !== 'object') {
-        root.Luker = {};
+    if (!root.Taverncraft || typeof root.Taverncraft !== 'object') {
+        root.Taverncraft = {};
     }
-    root.Luker.searchTools = {
+    root.Taverncraft.searchTools = {
         toolNames: EXPORTED_TOOL_NAMES,
         getToolDefs: () => getSharedSearchToolDefs(),
         isToolName: (name) => isSharedSearchToolName(name),

@@ -1,6 +1,6 @@
 # Extension API Reference
 
-This is the complete reference for the Luker Extension API, intended for plugin developers. All APIs are exposed through `Luker.getContext()`. The reference is split into the following pages:
+This is the complete reference for the Taverncraft Extension API, intended for plugin developers. All APIs are exposed through `Taverncraft.getContext()`. The reference is split into the following pages:
 
 | Page | What's covered |
 | --- | --- |
@@ -20,16 +20,16 @@ This is the complete reference for the Luker Extension API, intended for plugin 
 ## Global Entry Point
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 ```
 
 | Alias | Description |
 |------|------|
-| `Luker.getContext()` | Recommended |
+| `Taverncraft.getContext()` | Recommended |
 | `SillyTavern.getContext()` | Compatibility alias |
 | `st.getContext()` | Compatibility alias |
 
-New plugins should use `Luker.getContext()` exclusively. Compatibility aliases are retained only for the migration period.
+New plugins should use `Taverncraft.getContext()` exclusively. Compatibility aliases are retained only for the migration period.
 
 ## Namespace Quick Reference
 
@@ -56,9 +56,9 @@ For quickly finding where an API lives, the context object groups related APIs i
 
 ## API Differences from SillyTavern
 
-Luker is built on SillyTavern but has the following major API-level differences:
+Taverncraft is built on SillyTavern but has the following major API-level differences:
 
-| Area | SillyTavern | Luker |
+| Area | SillyTavern | Taverncraft |
 |------|-------------|-------|
 | Chat persistence | Full-file overwrite | Patch-first (RFC 6902 incremental updates) |
 | Chat-bound state | `chat_metadata` only | New Chat State mechanism + Floor State |
@@ -70,14 +70,14 @@ Luker is built on SillyTavern but has the following major API-level differences:
 | Generation hooks | Basic events | New fine-grained hooks such as `GENERATION_CONTEXT_READY`, `GENERATION_BEFORE_WORLD_INFO_SCAN`, etc. |
 | Event ordering | Registration order | Supports `priority`, `pluginOrder`, `makeFirst`/`makeLast` |
 | Regex runtime | No plugin API | `registerManagedRegexProvider()` |
-| Search tools | No plugin API | `Luker.searchTools` global API |
+| Search tools | No plugin API | `Taverncraft.searchTools` global API |
 | Function calling | Basic `ToolManager` | Plain-text mode support + connection-level toggle + `sendOpenAIRequest` preset override |
 | Connection config | Single global config | `context.presets.resolve()` supports per-preset connection resolution |
 | Macro engine | String substitution | Structured `macros.register()` with handler context, args, categories |
 | Character object | Plain V1/V2 fields | Proxy with V2 canonicalization and legacy-write deprecation warnings |
 
 > [!IMPORTANT]
-> Prefer the APIs provided by `Luker.getContext()` over calling the underlying HTTP endpoints directly. The Context API encapsulates patch-first semantics, conflict handling, and retry logic; calling endpoints directly requires you to handle these details yourself.
+> Prefer the APIs provided by `Taverncraft.getContext()` over calling the underlying HTTP endpoints directly. The Context API encapsulates patch-first semantics, conflict handling, and retry logic; calling endpoints directly requires you to handle these details yourself.
 
 ## Related Pages
 

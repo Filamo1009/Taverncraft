@@ -95,7 +95,7 @@ test.describe('#81 — Orchestrator iter-studio Apply → director profile persi
         // In-memory: active director preset slot carries the new prompt.
         await expect.poll(async () => {
             return await page.evaluate(() => {
-                const ctx = window.Luker.getContext();
+                const ctx = window.Taverncraft.getContext();
                 const s = ctx.extensionSettings.orchestrator;
                 const activeId = s?.activePresetIds?.director || '';
                 return s?.presetLibraries?.director?.[activeId]?.mainAgent?.systemPrompt || '';
@@ -114,7 +114,7 @@ test.describe('#81 — Orchestrator iter-studio Apply → director profile persi
         expect(afterRestart.mainAgent?.systemPrompt).toBe(NEW_DIRECTOR_PROMPT);
 
         const inMem = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const s = ctx.extensionSettings.orchestrator;
             const activeId = s?.activePresetIds?.director || '';
             return s?.presetLibraries?.director?.[activeId]?.mainAgent?.systemPrompt || '';

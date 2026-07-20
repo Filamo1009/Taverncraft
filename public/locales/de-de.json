@@ -1290,9 +1290,9 @@
     "Example: username:password": "Beispiel: Benutzername:Passwort",
     "Important:": "Wichtig:",
     "sd_auto_auth_warning_1": "Führen Sie die SD Web UI mit dem",
-    "sd_auto_auth_warning_2": "Flagge! Der Server muss vom Luker-Hostcomputer aus erreichbar sein.",
+    "sd_auto_auth_warning_2": "Flagge! Der Server muss vom Taverncraft-Hostcomputer aus erreichbar sein.",
     "sd_drawthings_url": "Beispiel: {{drawthings_url}}",
-    "sd_drawthings_auth_txt": "Führen Sie die DrawThings-App mit aktiviertem HTTP-API-Schalter in der Benutzeroberfläche aus! Der Server muss vom Luker-Hostcomputer aus zugänglich sein.",
+    "sd_drawthings_auth_txt": "Führen Sie die DrawThings-App mit aktiviertem HTTP-API-Schalter in der Benutzeroberfläche aus! Der Server muss vom Taverncraft-Hostcomputer aus zugänglich sein.",
     "sd_vlad_url": "Beispiel: {{vlad_url}}",
     "The server must be accessible from the SillyTavern host machine.": "Der Server muss vom SillyTavern-Hostcomputer aus zugänglich sein.",
     "Hint: Save an API key in AI Horde API settings to use it here.": "Tipp: Speichern Sie einen API-Schlüssel in den AI Horde API-Einstellungen, um ihn hier zu verwenden.",
@@ -1455,10 +1455,10 @@
     "Loading chat…": "Chat wird geladen…",
     "Bulk Delete": "Massenlöschung",
     "Deleting ${0} character(s)…": "${0} Charakter(e) werden gelöscht…",
-    "Welcome to Luker!": "Willkommen bei Luker!",
-    "Luker is aimed at advanced users.": "Luker richtet sich an fortgeschrittene Benutzer.",
-    "The server must be accessible from the Luker host machine.": "Der Server muss vom Luker-Hostcomputer aus zugänglich sein.",
-    "To enable multi-account features, restart the Luker server with": "Um die Multi-Account-Funktion zu aktivieren, starten Sie den Luker-Server neu mit",
-    "Luker Documentation Site": "Luker-Dokumentationsseite",
-    "Join the Luker Discord": "Trete dem Luker Discord bei"
+    "Welcome to Taverncraft!": "Willkommen bei Taverncraft!",
+    "Taverncraft is aimed at advanced users.": "Taverncraft richtet sich an fortgeschrittene Benutzer.",
+    "The server must be accessible from the Taverncraft host machine.": "Der Server muss vom Taverncraft-Hostcomputer aus zugänglich sein.",
+    "To enable multi-account features, restart the Taverncraft server with": "Um die Multi-Account-Funktion zu aktivieren, starten Sie den Taverncraft-Server neu mit",
+    "Taverncraft Documentation Site": "Taverncraft-Dokumentationsseite",
+    "Join the Taverncraft Discord": "Trete dem Taverncraft Discord bei"
 }

@@ -12,7 +12,7 @@
  * mangle.
  *
  * Tickets: 32-byte random hex (256-bit), 30-second TTL, single-use.
- * Storage is in-process — Luker is single-process, so no shared store
+ * Storage is in-process — Taverncraft is single-process, so no shared store
  * needed.
  */
 

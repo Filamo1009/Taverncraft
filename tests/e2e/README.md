@@ -29,7 +29,7 @@ tests/e2e/
 ## Running
 
 Default (single worker is the most reliable; the harness spawns one
-real Luker server per spec scenario and shares APFS-cloned dataRoots):
+real Taverncraft server per spec scenario and shares APFS-cloned dataRoots):
 
 ```sh
 cd tests
@@ -70,7 +70,7 @@ LIVE=1 ANTHROPIC_API_KEY=... OPENAI_API_KEY=... PW_WORKERS=1 \
 See `tests/e2e/AGENT_BRIEF.md` for the full briefing used when
 generating these specs. Quick rules:
 
-1. Every spec spawns its own Luker server via `startServer({ batchKey,
+1. Every spec spawns its own Taverncraft server via `startServer({ batchKey,
    scenarioId })` — port + dataRoot are scenario-scoped.
 2. Mock LLM is `_lib/mockLLM.js`; `scriptReply(s)` / `scriptToolCall(t)`
    queue responses, `mock.requests` records every request.

@@ -119,6 +119,12 @@ import { unescapeMacroBracesInRequestData } from './macros/util/escape.js';
 import { encodeCardBoundOptionValue, decodeCardBoundOptionValue } from './character/preset-ref-codec.js';
 import { readSelectedPresetRef, decideSavePresetDispatch } from './character/save-dispatch.js';
 import { hasUnsavedOpenAIPresetChanges as hasUnsavedOpenAIPresetChangesImpl } from './character/has-unsaved-openai-preset-changes.js';
+import {
+    createPromptLayerSnapshot,
+    finalizePromptLayerSnapshot,
+    getPromptLayerSnapshot,
+    rememberPromptLayerSnapshot,
+} from './prompt-inspector-snapshot.js';
 import { updateCharacterBoundPresetActiveState, clearCharacterBoundActiveAfterRemoval } from './character/character-bound-preset-state-sync.js';
 import {
     listCharacterBoundPresets,
@@ -279,7 +285,7 @@ const characterBoundPresetState = {
 // assert invariants I / III (characterBoundPresetState.active ≡ ghost DOM-
 // selected; previousPreset preserved across ghost ↔ global toggles) against
 // the live in-memory field the refactor is defined against. The `__` prefix
-// signals "internal, don't consume from third-party extensions" — Luker's
+// signals "internal, don't consume from third-party extensions" — Taverncraft's
 // other preset e2es (39/40/41/42/45/46/49) assert on the DOM signal
 // (`option[data-luker-char-bound="1"]`); this hook only exists because
 // Invariant III cannot be observed from the DOM alone.
@@ -2002,6 +2008,11 @@ export async function prepareOpenAIMessages({
     if (!promptManager.activeCharacter && dryRun) return [null, false];
 
     const chatCompletion = new ChatCompletion();
+    // populationInjectionPrompts mutates and reverses the input array. Keep a
+    // shallow pre-assembly copy so Request Inspector can report how many real
+    // history messages were omitted by the context budget.
+    const promptInspectorSourceMessages = Array.isArray(messages) ? [...messages] : [];
+    let promptInspectorSnapshot = null;
     if (power_user.console_log_prompts) chatCompletion.enableLogging();
 
     const userSettings = promptManager.serviceSettings;
@@ -2055,6 +2066,19 @@ export async function prepareOpenAIMessages({
         // Pass chat completion to prompt manager for inspection
         promptManager.setChatCompletion(chatCompletion);
 
+        if (!dryRun) {
+            promptInspectorSnapshot = createPromptLayerSnapshot({
+                messageTree: chatCompletion.getMessages(),
+                finalMessages: chatCompletion.getChat(),
+                sourceMessages: promptInspectorSourceMessages,
+                extensionPrompts,
+                contextTokens: userSettings.openai_max_context,
+                completionReserve: userSettings.openai_max_tokens,
+                remainingTokens: chatCompletion.tokenBudget,
+                substitute: substituteParams,
+            });
+        }
+
         if (oai_settings.squash_system_messages && dryRun == false) {
             await chatCompletion.squashSystemMessages();
         }
@@ -2064,6 +2088,12 @@ export async function prepareOpenAIMessages({
     }
 
     const chat = chatCompletion.getChat();
+    if (!dryRun && promptInspectorSnapshot) {
+        finalizePromptLayerSnapshot(promptInspectorSnapshot, chat, {
+            squashedSystemMessages: Boolean(oai_settings.squash_system_messages),
+        });
+        rememberPromptLayerSnapshot(chat, promptInspectorSnapshot);
+    }
 
     const eventData = { chat, dryRun };
     await eventSource.emit(event_types.CHAT_COMPLETION_PROMPT_READY, eventData);
@@ -4215,6 +4245,9 @@ async function sendOpenAIRequest(type, messages, signal, {
     }
 
     const requestSettings = getSettingsForRequest({ llmPresetName, apiPresetName, apiSettingsOverride });
+    // WeakMap lookup keeps diagnostics out of the messages themselves. Only
+    // main-chat requests created by prepareOpenAIMessages have a snapshot.
+    const promptLayerSnapshot = requestScope === 'chat' ? getPromptLayerSnapshot(messages) : null;
     const resolvedFunctionCallMode = resolveFunctionCallMode({
         requestedMode: functionCallMode,
         plainTextEnabled: Boolean(requestSettings?.function_calling_plain_text),
@@ -4289,6 +4322,9 @@ async function sendOpenAIRequest(type, messages, signal, {
     }
 
     let requestBody = structuredClone(generate_data);
+    if (promptLayerSnapshot) {
+        requestBody.luker_prompt_layers = structuredClone(promptLayerSnapshot);
+    }
     const requestSecretId = String(
         apiSettingsOverride?.secret_id
         || apiSettingsOverride?.['secret-id']
@@ -7383,7 +7419,7 @@ async function onSettingsPresetChange(event) {
                 continue;
             }
             if (isConnection) {
-                // Luker decouples chat-completion presets from API connection/profile state.
+                // Taverncraft decouples chat-completion presets from API connection/profile state.
                 continue;
             }
 

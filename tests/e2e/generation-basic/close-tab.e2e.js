@@ -99,7 +99,7 @@ test('generation-basic: closing the tab mid-stream leaves the job running; a fre
     // character-select path again (character selection is not itself
     // what's under test here — the recovery HTTP + ws-delivery replay is).
     persistTarget = await pageA.evaluate(() => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const c = ctx.characters[ctx.characterId];
         return {
             avatar_url: c?.avatar || '',

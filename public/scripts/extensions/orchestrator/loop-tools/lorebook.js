@@ -72,7 +72,7 @@ async function loadAllEnabledEntries(context) {
         const result = await context.__getSortedEntriesFn();
         entries = Array.isArray(result) ? result : [];
     } else {
-        const getSorted = Luker.getContext().worldInfoEntry?.getSorted;
+        const getSorted = Taverncraft.getContext().worldInfoEntry?.getSorted;
         if (typeof getSorted !== 'function') return [];
         const raw = await getSorted();
         entries = Array.isArray(raw) ? raw : [];
@@ -201,10 +201,10 @@ export async function execLorebookGet(args, context) {
  * global — and the first writer wins so a book bound at multiple scopes
  * is tagged by its strongest binding.
  *
- * Production reads everything off `Luker.getContext()`. Tests inject
+ * Production reads everything off `Taverncraft.getContext()`. Tests inject
  * `context.__getWorldScopesFn` to bypass the global, matching the
  * `__getSortedEntriesFn` seam used by `loadAllEnabledEntries`. When
- * Luker is unavailable (or fields throw), the map is returned as-is
+ * Taverncraft is unavailable (or fields throw), the map is returned as-is
  * and per-book lookups gracefully fall back to `unknown`.
  */
 async function loadWorldBookScopes(context) {
@@ -215,8 +215,8 @@ async function loadWorldBookScopes(context) {
         return new Map();
     }
     const scopes = new Map();
-    if (typeof Luker === 'undefined' || typeof Luker.getContext !== 'function') return scopes;
-    const ctx = Luker.getContext();
+    if (typeof Taverncraft === 'undefined' || typeof Taverncraft.getContext !== 'function') return scopes;
+    const ctx = Taverncraft.getContext();
     if (!ctx) return scopes;
 
     const push = (name, scope) => {

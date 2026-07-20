@@ -2116,14 +2116,14 @@ export const UNSET_VALUE = '__@@UNSET@@__';
  * @param {number|string} characterId Index in the character array
  * @param {string} key Field name
  * @param {any} value Field value, or {@link UNSET_VALUE} to delete
- * @returns {Promise<void>} When the field is written
+ * @returns {Promise<boolean>} Whether the server persisted the field
  */
 export async function writeExtensionField(characterId, key, value) {
     const context = getContext();
     const character = context.characters[characterId];
     if (!character) {
         console.warn('Character not found', characterId);
-        return;
+        return false;
     }
 
     const summary = Array.isArray(value)
@@ -2208,6 +2208,7 @@ export async function writeExtensionField(characterId, key, value) {
     if (!mergeResponse.ok) {
         console.error('Failed to save extension field', mergeResponse.statusText);
     }
+    return mergeResponse.ok;
 }
 
 /**

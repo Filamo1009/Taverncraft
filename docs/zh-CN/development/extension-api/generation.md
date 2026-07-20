@@ -4,7 +4,7 @@
 
 ## 发送 LLM 请求
 
-推荐使用 `context.generateTask` —— 一次调用同时处理 profile 解析、世界书激活、prompt 组装、分发与响应归一化。Luker 内置的 search-tools、completion-preset-assistant、character-editor-assistant、记忆图、orchestrator 都通过它发起 LLM 请求。第三方插件也应该用这个 API，而不是自己拼装 `sendOpenAIRequest` + `buildPresetAwarePromptMessages` + `connectionProfiles.resolve`。
+推荐使用 `context.generateTask` —— 一次调用同时处理 profile 解析、世界书激活、prompt 组装、分发与响应归一化。Taverncraft 内置的 search-tools、completion-preset-assistant、character-editor-assistant、记忆图、orchestrator 都通过它发起 LLM 请求。第三方插件也应该用这个 API，而不是自己拼装 `sendOpenAIRequest` + `buildPresetAwarePromptMessages` + `connectionProfiles.resolve`。
 
 ::: info 为什么要统一成一个 API
 手动拼装意味着每个插件都得自己重做 profile 解析、世界书激活、家族分发（openai vs kobold/novel/textgen）、响应解析。`generateTask` 把这些都收敛到一处，无论底层 API 家族是哪种，都返回归一化的结果结构。
@@ -15,7 +15,7 @@
 最简单的纯文本请求 —— 自动遵循当前 prompt preset、角色卡和聊天世界书：
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 
 const result = await context.generateTask({
     taskMessages: [
@@ -73,7 +73,7 @@ context.generateTask({
 
 ### 宏替换
 
-`substituteMacros` 默认为 `true`，`generateTask` 会在拼装前对每条 task 消息的字符串 `content` 跑一遍 `substituteParams`。这样插件请求里也能解析跟主聊天路径一致的 <span v-pre>`{{...}}`</span> 宏 —— 包括 Luker 内置宏（<span v-pre>`{{user}}`</span>、<span v-pre>`{{char}}`</span>、<span v-pre>`{{persona}}`</span>、<span v-pre>`{{datetime}}`</span>、<span v-pre>`{{random:a,b}}`</span> 等）和经由同一引擎注册的扩展宏（例如 MagVarUpdate 的 <span v-pre>`{{getvar::}}`</span> 系列）。
+`substituteMacros` 默认为 `true`，`generateTask` 会在拼装前对每条 task 消息的字符串 `content` 跑一遍 `substituteParams`。这样插件请求里也能解析跟主聊天路径一致的 <span v-pre>`{{...}}`</span> 宏 —— 包括 Taverncraft 内置宏（<span v-pre>`{{user}}`</span>、<span v-pre>`{{char}}`</span>、<span v-pre>`{{persona}}`</span>、<span v-pre>`{{datetime}}`</span>、<span v-pre>`{{random:a,b}}`</span> 等）和经由同一引擎注册的扩展宏（例如 MagVarUpdate 的 <span v-pre>`{{getvar::}}`</span> 系列）。
 
 带副作用的宏（<span v-pre>`{{setvar::}}`</span>、<span v-pre>`{{addvar::}}`</span>、<span v-pre>`{{incvar::}}`</span>、<span v-pre>`{{decvar::}}`</span>、<span v-pre>`{{deletevar::}}`</span>）会通过 `skipSideEffects: true` 直接剥除，否则插件每次请求都会重新触发这些写入并污染 `chat_metadata.variables`。
 
@@ -210,7 +210,7 @@ try {
 一个搜索代理 —— 遵循用户选择的连接配置、循环工具调用直到模型给出最终结果、支持取消：
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 const settings = extension_settings.my_search_agent;
 
 const result = await context.generateTask({
@@ -404,7 +404,7 @@ const calls = result.toolCalls.filter(c => allowedNames.has(c.name));
 插件可以通过 `getContext()` 将工具注册到全局工具注册表。注册的工具会出现在主聊天的工具调用流程中——模型可以在正常对话中调用它们。
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 
 context.registerFunctionTool({
     name: 'my_plugin_tool',
@@ -455,7 +455,7 @@ context.unregisterFunctionTool('my_plugin_tool');
 
 ### 连接配置 （Connection Profile） 解析
 
-Connection profile 是 Luker 连接管理器管理的一组**连接配置**（API 类型、模型、密钥、代理等），与 chat completion preset 是**两个独立的东西**——前者描述「连到哪」，后者描述「按什么参数生成」，可自由组合。
+Connection profile 是 Taverncraft 连接管理器管理的一组**连接配置**（API 类型、模型、密钥、代理等），与 chat completion preset 是**两个独立的东西**——前者描述「连到哪」，后者描述「按什么参数生成」，可自由组合。
 
 当插件需要让用户从 connection profile 中挑一个发请求时（例如自带「使用哪个 API 配置」的下拉框），用 `context.connectionProfiles.list()` 填充 UI:
 
@@ -662,7 +662,7 @@ ConnectionManagerRequestService.getAllowedTypes(): { openai, textgenerationwebui
 通过指定 id 的 Connection Manager profile 发起一次生成，与 UI 当前活动的 profile 无关。Connection Manager 扩展未启用时抛出 `'Connection Manager is not available'`。
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const result = await ctx.ConnectionManagerRequestService.sendRequest(
     settings.profileId,
     [

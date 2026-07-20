@@ -1,10 +1,10 @@
 # 鉴权与安全
 
-Luker 提供了多层次的访问控制和安全机制，从简单的密码保护到 OAuth 社交登录，再到存储配额管理，满足从个人使用到团队共享的各种部署场景。
+Taverncraft 提供了多层次的访问控制和安全机制，从简单的密码保护到 OAuth 社交登录，再到存储配额管理，满足从个人使用到团队共享的各种部署场景。
 
 ## Basic Auth 模式
 
-最简单的访问保护方式。启用后，访问 Luker 时需要输入用户名和密码：
+最简单的访问保护方式。启用后，访问 Taverncraft 时需要输入用户名和密码：
 
 ```yaml
 basicAuthMode: true
@@ -13,7 +13,7 @@ basicAuthUser:
   password: password
 ```
 
-适用于单用户场景，例如你在服务器上部署了 Luker 并希望防止他人访问。
+适用于单用户场景，例如你在服务器上部署了 Taverncraft 并希望防止他人访问。
 
 ::: tip
 Basic Auth 是 HTTP 层面的认证，浏览器会弹出原生的登录对话框。如果你需要更友好的登录界面和多用户支持，请使用多用户账户系统。
@@ -51,12 +51,12 @@ node recover.js default-user
 ```
 
 ::: tip
-此命令需要在 Luker 项目根目录下执行，服务无需处于运行状态。
+此命令需要在 Taverncraft 项目根目录下执行，服务无需处于运行状态。
 :::
 
 ### 网页端密码恢复
 
-除了命令行工具，Luker 还支持通过网页端发起密码恢复流程。用户在登录页面点击「忘记密码」后，系统会生成一个恢复码并**打印在服务端控制台**中。管理员将恢复码告知用户，用户即可在网页上完成密码重置。
+除了命令行工具，Taverncraft 还支持通过网页端发起密码恢复流程。用户在登录页面点击「忘记密码」后，系统会生成一个恢复码并**打印在服务端控制台**中。管理员将恢复码告知用户，用户即可在网页上完成密码重置。
 
 ::: warning
 恢复码仅在服务端控制台输出，请确保只有受信任的管理员能够查看控制台日志。
@@ -68,7 +68,7 @@ node recover.js default-user
 enableDiscreetLogin: true
 ```
 
-启用后，登录页面不会显示明显的 Luker 标识，适用于需要低调部署的场景。
+启用后，登录页面不会显示明显的 Taverncraft 标识，适用于需要低调部署的场景。
 
 ## 自助注册
 
@@ -83,12 +83,12 @@ enableDiscreetLogin: true
 只有在启用该功能后，登录页面才会出现「没有账户？创建一个」入口；功能关闭时，直接调用注册接口同样会被拒绝。
 
 ::: warning
-自助注册适用于可信网络或邀请制部署。若 Luker 暴露在公网，建议改用 OAuth 或由管理员手动创建账户，以便核验新用户身份。
+自助注册适用于可信网络或邀请制部署。若 Taverncraft 暴露在公网，建议改用 OAuth 或由管理员手动创建账户，以便核验新用户身份。
 :::
 
 ## GitHub OAuth 登录
 
-Luker 支持通过 GitHub 账号登录。用户点击登录后会被重定向到 GitHub 授权页面，授权完成后自动创建或关联本地用户账户。
+Taverncraft 支持通过 GitHub 账号登录。用户点击登录后会被重定向到 GitHub 授权页面，授权完成后自动创建或关联本地用户账户。
 
 配置方式：在管理面板（Admin Panel）中配置 GitHub OAuth App 凭据，包括 `clientId` 和 `clientSecret`。OAuth 相关设置通过 `node-persist` 持久化存储在 `data/_storage` 目录中，而非 `config.yaml`。
 
@@ -96,14 +96,14 @@ Luker 支持通过 GitHub 账号登录。用户点击登录后会被重定向到
 
 ## Discord OAuth 登录
 
-Luker 同样支持 Discord OAuth 登录，并提供更细粒度的访问控制——可以校验用户是否为指定 Discord 服务器的成员，以及是否拥有特定身份组（Role）。
+Taverncraft 同样支持 Discord OAuth 登录，并提供更细粒度的访问控制——可以校验用户是否为指定 Discord 服务器的成员，以及是否拥有特定身份组（Role）。
 
 同样在管理面板中配置 Discord OAuth 凭据（`clientId`、`clientSecret`），并可设置 `allowedGuildIds` 和 `requiredRoleIds` 来限制访问权限。回调地址为 `https://your-domain/api/users/oauth/callback/discord`。
 
-这对于社区共享的 Luker 实例特别有用——只有你 Discord 服务器中的特定成员才能登录使用。
+这对于社区共享的 Taverncraft 实例特别有用——只有你 Discord 服务器中的特定成员才能登录使用。
 
 ::: tip
-如果不需要 OAuth 登录，无需在管理面板中启用 OAuth。Luker 仍然支持上述的 Basic Auth 和多用户账户认证方式。
+如果不需要 OAuth 登录，无需在管理面板中启用 OAuth。Taverncraft 仍然支持上述的 Basic Auth 和多用户账户认证方式。
 :::
 
 ## 存储配额管理
@@ -118,9 +118,9 @@ Luker 同样支持 Discord OAuth 登录，并提供更细粒度的访问控制�
 
 ## 白名单
 
-Luker 默认启用 IP 白名单模式，且 `listen` 默认为 `false`（仅监听本机回环地址），局域网无法直接访问。如需局域网访问，需要同时做两件事：
+Taverncraft 默认启用 IP 白名单模式，且 `listen` 默认为 `false`（仅监听本机回环地址），局域网无法直接访问。如需局域网访问，需要同时做两件事：
 
-1. **开启监听** — 将 `listen` 设为 `true`，使 Luker 监听所有网络接口：
+1. **开启监听** — 将 `listen` 设为 `true`，使 Taverncraft 监听所有网络接口：
 
 ```yaml
 listen: true
@@ -136,20 +136,20 @@ whitelist:
 - 192.168.1.0/24  # 你的局域网网段
 ```
 
-此外，Luker 还支持主机白名单（`hostWhitelist`），可以限制允许访问的主机地址，并支持自动扫描局域网主机。
+此外，Taverncraft 还支持主机白名单（`hostWhitelist`），可以限制允许访问的主机地址，并支持自动扫描局域网主机。
 
 ## 安全最佳实践
 
-如果你需要将 Luker 暴露到公网，请务必做好以下安全防护：
+如果你需要将 Taverncraft 暴露到公网，请务必做好以下安全防护：
 
 1. **使用反向代理 + HTTPS** — 通过 Nginx、Caddy 等反向代理提供 HTTPS 加密，防止数据在传输过程中被窃听
 2. **启用登录机制** — 开启 Basic Auth 或多用户账户系统，防止未授权访问
 3. **配置白名单** — 如果只需要特定 IP 访问，保持白名单模式开启
 4. **保护配置文件** — `config.yaml` 中包含 OAuth 密钥等敏感信息，请勿提交到公开仓库
-5. **定期更新** — 及时更新 Luker 以获取最新的安全修复
+5. **定期更新** — 及时更新 Taverncraft 以获取最新的安全修复
 
 ::: warning
-不要在没有任何认证机制的情况下将 Luker 暴露到公网。即使是内网部署，也建议至少启用 Basic Auth 保护。
+不要在没有任何认证机制的情况下将 Taverncraft 暴露到公网。即使是内网部署，也建议至少启用 Basic Auth 保护。
 :::
 
 ## 相关页面

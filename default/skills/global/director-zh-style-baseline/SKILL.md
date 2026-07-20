@@ -2,7 +2,7 @@
 name: director-zh-style-baseline
 description: Chinese RP language baseline — bilingual signals are Chinese-first; in-world time frames use Chinese phrasings.
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 

@@ -95,7 +95,7 @@ async function createPresetViaUI(page, mode, name) {
     await popup.waitFor({ state: 'detached', timeout: 5000 }).catch(() => {});
     await expect.poll(async () => {
         return await page.evaluate((m) => {
-            const ext = window.Luker?.getContext()?.extensionSettings?.orchestrator;
+            const ext = window.Taverncraft?.getContext()?.extensionSettings?.orchestrator;
             const activeId = ext?.activePresetIds?.[m] || '';
             return ext?.presetLibraries?.[m]?.[activeId]?.name || '';
         }, mode);
@@ -126,7 +126,7 @@ test.describe('#123 — orchestrator preset skill embed roundtrip', () => {
         // root must contain the SKILL.md file (repository.validatePayloadFiles).
         const SKILL_MD_CONTENT = '---\nname: test-skill-123\ndescription: embed fixture\n---\n\nBody.\n';
         await page.evaluate(async (content) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             await ctx.skills.install({
                 scope: { kind: 'orch-preset', mode: 'loop', name: 'RP123-A' },
                 payload: {

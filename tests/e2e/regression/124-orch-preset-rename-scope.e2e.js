@@ -92,7 +92,7 @@ async function createPresetViaUI(page, mode, name) {
     await popup.waitFor({ state: 'detached', timeout: 5000 }).catch(() => {});
     await expect.poll(async () => {
         return await page.evaluate((m) => {
-            const ext = window.Luker?.getContext()?.extensionSettings?.orchestrator;
+            const ext = window.Taverncraft?.getContext()?.extensionSettings?.orchestrator;
             const activeId = ext?.activePresetIds?.[m] || '';
             return ext?.presetLibraries?.[m]?.[activeId]?.name || '';
         }, mode);
@@ -114,7 +114,7 @@ test.describe('#124 — orchestrator preset rename → skill scope rename', () =
         // path `SKILL.md`; the skill directory takes the frontmatter name.
         const SKILL_MD_CONTENT = '---\nname: test-skill-124\ndescription: rename fixture\n---\n\nRename-me body.\n';
         await page.evaluate(async (content) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             await ctx.skills.install({
                 scope: { kind: 'orch-preset', mode: 'agenda', name: 'RP124-Old' },
                 payload: {
@@ -170,7 +170,7 @@ test.describe('#124 — orchestrator preset rename → skill scope rename', () =
 
         // Verify orchestrator settings reflect the new preset name.
         const activeName = await page.evaluate(() => {
-            const ext = window.Luker?.getContext()?.extensionSettings?.orchestrator;
+            const ext = window.Taverncraft?.getContext()?.extensionSettings?.orchestrator;
             const activeId = ext?.activePresetIds?.agenda || '';
             return ext?.presetLibraries?.agenda?.[activeId]?.name || '';
         });

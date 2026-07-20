@@ -192,7 +192,7 @@ test.describe('#58 — MG vector-index rebuild via real button → semantic reca
         // post-rebuild click would do once the extractor confirms there's
         // nothing new to extract.
         await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const settings = ctx.extensionSettings?.memory_graph;
             const main = await import('/scripts/extensions/memory-graph/main.js');
             const vi = await import('/scripts/extensions/memory-graph/vector-index.js');
@@ -212,7 +212,7 @@ test.describe('#58 — MG vector-index rebuild via real button → semantic reca
 
         // Pre-snapshot seed ids by hint for ranking assertions.
         const idsByHint = await page.evaluate(async () => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const mg = ctx.getExtensionApi?.('memory-graph');
             const session = await mg?.openSession?.(ctx);
             if (!session) return {};
@@ -236,7 +236,7 @@ test.describe('#58 — MG vector-index rebuild via real button → semantic reca
             const expectedId = idsByHint[expectedTitle];
             if (!expectedId) continue;
             const hits = await page.evaluate(async ({ query }) => {
-                const ctx = window.Luker.getContext();
+                const ctx = window.Taverncraft.getContext();
                 const mg = ctx.getExtensionApi?.('memory-graph');
                 const session = await mg?.openSession?.(ctx);
                 if (!session) return [];

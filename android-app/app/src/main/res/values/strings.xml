@@ -2,8 +2,8 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 <!-- Copyright (C) 2026 FunnyCups (https://github.com/funnycups) -->
 <resources>
-    <string name="app_name">Luker</string>
-    <string name="loading_runtime">Starting local Luker service...</string>
+    <string name="app_name">Taverncraft</string>
+    <string name="loading_runtime">Starting local Taverncraft service...</string>
     <string name="loading_webview">Service is ready. Loading interface...</string>
     <string name="loading_failed">Failed to start the service. Please restart the app.</string>
     <string name="loading_failed_with_reason">Failed to start the service: %1$s</string>
@@ -11,31 +11,31 @@
     <string name="runtime_error_dialog_title">Startup Failure Diagnostics</string>
     <string name="runtime_error_dialog_intro">Please copy the diagnostics below and send them to the developer.</string>
     <string name="runtime_error_report_saved">Diagnostic report saved to: %1$s</string>
-    <string name="runtime_error_share_subject">Luker runtime startup report</string>
+    <string name="runtime_error_share_subject">Taverncraft runtime startup report</string>
     <string name="diagnostics_export_bundle">Export Diagnostics Bundle</string>
     <string name="crash_dialog_close">Close</string>
     <string name="diagnostics_export_saved">Diagnostics zip saved to: %1$s</string>
     <string name="diagnostics_export_failed">Failed to export diagnostics: %1$s</string>
     <string name="diagnostics_open_link">Open diagnostics…</string>
-    <string name="diagnostics_dialog_title">Luker Diagnostics</string>
+    <string name="diagnostics_dialog_title">Taverncraft Diagnostics</string>
     <string name="diagnostics_dialog_intro">Data root: %1$s\n\nSnapshot of the local runtime state below; copy or export the bundle if you need to share it.</string>
     <string name="crash_report_dialog_title">Previous Crash Detected</string>
     <string name="crash_report_dialog_intro">The app exited unexpectedly during the previous session. Tap \"Export Diagnostics Bundle\" to save a zip and share it with the developer; the full report is inside the zip under crashes/.</string>
-    <string name="crash_report_share_subject">Luker previous crash report</string>
+    <string name="crash_report_share_subject">Taverncraft previous crash report</string>
     <string name="webview_crash_dialog_title">Web Interface Crashed</string>
     <string name="webview_crash_dialog_intro">The web interface renderer terminated. Tap \"Export Diagnostics Bundle\" to save a zip and share it with the developer; the full report is inside the zip under crashes/. Closing this dialog will reload the interface.</string>
-    <string name="webview_crash_share_subject">Luker web interface crash report</string>
-    <string name="runtime_notification_channel_name">Luker Background Service</string>
-    <string name="runtime_notification_channel_description">Keep the local Luker service running in the background</string>
-    <string name="runtime_notification_title">Luker</string>
+    <string name="webview_crash_share_subject">Taverncraft web interface crash report</string>
+    <string name="runtime_notification_channel_name">Taverncraft Background Service</string>
+    <string name="runtime_notification_channel_description">Keep the local Taverncraft service running in the background</string>
+    <string name="runtime_notification_title">Taverncraft</string>
     <string name="runtime_notification_text">Local service is running in the background</string>
     <string name="runtime_notification_endpoint">Endpoint</string>
     <string name="runtime_notification_reload">Reload</string>
     <string name="runtime_notification_exit">Exit App</string>
     <string name="loading_custom_endpoint">Connecting to endpoint: %1$s</string>
-    <string name="endpoint_status_notification_channel_name">Luker Custom Endpoint</string>
+    <string name="endpoint_status_notification_channel_name">Taverncraft Custom Endpoint</string>
     <string name="endpoint_status_notification_channel_description">Keep endpoint configuration entry available when the local service is not running</string>
-    <string name="endpoint_status_notification_title">Luker Custom Endpoint</string>
+    <string name="endpoint_status_notification_title">Taverncraft Custom Endpoint</string>
     <string name="endpoint_status_notification_text">Currently using custom endpoint: %1$s. Tap to edit or reset the endpoint.</string>
     <string name="endpoint_dialog_title">Configure Service Endpoint</string>
     <string name="endpoint_dialog_current_default">Current: default local endpoint</string>
@@ -48,11 +48,11 @@
     <string name="endpoint_invalid_url">Please enter a valid http(s) endpoint</string>
     <string name="endpoint_saved">Switched to endpoint: %1$s</string>
     <string name="endpoint_reset_default_done">Restored the default local endpoint</string>
-    <string name="message_alert_channel_name">Luker Message Alerts</string>
+    <string name="message_alert_channel_name">Taverncraft Message Alerts</string>
     <string name="message_alert_channel_description">Notifications when assistant replies finish or fail</string>
-    <string name="message_progress_channel_name">Luker Message Progress</string>
+    <string name="message_progress_channel_name">Taverncraft Message Progress</string>
     <string name="message_progress_channel_description">Ongoing status notification while an assistant reply is being generated</string>
-    <string name="message_notification_default_title">Luker</string>
+    <string name="message_notification_default_title">Taverncraft</string>
     <string name="message_notification_default_body">A new reply is ready</string>
     <string name="message_notification_progress_body">Reply is being generated...</string>
     <string name="download_queued">File download queued</string>
@@ -65,7 +65,7 @@
     <string name="download_progress_bytes_only">Downloading… %1$s</string>
     <string name="download_progress_with_total">Downloading… %1$s / %2$s</string>
     <string name="http_auth_dialog_title">Sign in required</string>
-    <string name="http_auth_dialog_message">This endpoint requires HTTP Basic authentication before Luker can load.</string>
+    <string name="http_auth_dialog_message">This endpoint requires HTTP Basic authentication before Taverncraft can load.</string>
     <string name="http_auth_dialog_host">Endpoint: %1$s</string>
     <string name="http_auth_dialog_realm">Realm: %1$s</string>
     <string name="http_auth_dialog_username_hint">Username</string>
@@ -84,6 +84,6 @@
     <string name="runtime_start_error_no_available_port">No available port in range %1$d..%2$d</string>
     <string name="press_back_again_to_exit">Press back again to exit</string>
     <string name="safe_mode_tripped_toast">The previous launch failed before the service became ready. All third-party extensions have been disabled for this launch — re-enable them one by one in Extensions to find the offender.</string>
-    <string name="debug_export_share_subject">Luker diagnostics bundle</string>
+    <string name="debug_export_share_subject">Taverncraft diagnostics bundle</string>
     <string name="crash_dialog_debug_hint">\n\nTip: enable “Android debug recording” in User Settings and reproduce the issue for more detailed diagnostics.</string>
 </resources>

@@ -1,26 +1,26 @@
-# Luker 是什么
+# Taverncraft 酒馆工坊是什么
 
-Luker 是基于 [SillyTavern](https://github.com/SillyTavern/SillyTavern) 深度重构的角色扮演聊天平台。它保留了 SillyTavern 成熟的角色卡生态和数据格式兼容性，同时在数据传输架构、扩展能力和内置工具链上进行了大量创新，为角色扮演场景提供更高效、更强大的体验。
+Taverncraft 酒馆工坊是基于 [Luker](https://github.com/funnycups/Luker) 深度开发的世界模拟与角色扮演平台；Luker 本身源自 [SillyTavern](https://github.com/SillyTavern/SillyTavern)。它保留了 SillyTavern 成熟的角色卡生态和数据格式兼容性，同时加入权威世界状态、提示词检查、长期记忆和可扩展 Mod 架构。
 
-Luker 完全兼容 SillyTavern 的数据——角色卡、世界书、预设均可直接使用，迁移成本为零。如果你不想继续使用 Luker，也可以随时降级回 SillyTavern，数据不会被破坏。
+Taverncraft 完全兼容 SillyTavern 的数据——角色卡、世界书、预设均可直接使用，迁移成本为零。如果你不想继续使用 Taverncraft，也可以随时降级回 SillyTavern，数据不会被破坏。
 
-## 为什么选择 Luker
+## 为什么选择 Taverncraft
 
-SillyTavern 是一款优秀的角色扮演前端，拥有活跃的社区和丰富的角色卡生态。Luker 在此基础上，针对以下方向做了系统性改进：
+SillyTavern 是一款优秀的角色扮演前端，拥有活跃的社区和丰富的角色卡生态。Taverncraft 在此基础上，针对以下方向做了系统性改进：
 
 ### 更高效的数据传输
 
 SillyTavern 的大部分保存操作采用全量传输——每次编辑消息、切换设置、修改世界书，都会将完整数据发送到后端。对于云端部署的用户，这意味着显著的流量消耗。
 
-Luker 引入了增量同步机制，统一使用遵循 [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902) 标准的 patch 端点。以前开关一个插件设置可能传输 3MB 数据，现在不到 200 字节。保存操作还支持延迟触发和冲突检测，从根本上避免了并发写入导致的数据损坏。
+Taverncraft 引入了增量同步机制，统一使用遵循 [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902) 标准的 patch 端点。以前开关一个插件设置可能传输 3MB 数据，现在不到 200 字节。保存操作还支持延迟触发和冲突检测，从根本上避免了并发写入导致的数据损坏。
 
 ### 更强的扩展能力
 
-Luker 为插件开发者提供了更丰富的基础设施：角色/预设状态 API、托管正则提供者、统一的扩展注入设置、函数调用运行时等。插件可以方便地复用用户已有的 API 预设和聊天补全预设，无需重复配置。
+Taverncraft 为插件开发者提供了更丰富的基础设施：角色/预设状态 API、托管正则提供者、统一的扩展注入设置、函数调用运行时等。插件可以方便地复用用户已有的 API 预设和聊天补全预设，无需重复配置。
 
 ### 内置专业工具链
 
-Luker 内置了多个面向角色扮演场景的专业工具——记忆图、多 Agent 编排、角色卡编辑助手、搜索插件等，开箱即用，无需额外安装第三方扩展。
+Taverncraft 内置了多个面向角色扮演场景的专业工具——记忆图、多 Agent 编排、角色卡编辑助手、搜索插件等，开箱即用，无需额外安装第三方扩展。
 
 ## 核心特性概览
 
@@ -50,7 +50,7 @@ Luker 内置了多个面向角色扮演场景的专业工具——记忆图、�
 
 ### 预设解耦
 
-SillyTavern 中 API 预设和聊天补全预设是联动切换的。Luker 将两者解耦，切换 API 连接不会连带切换聊天补全预设，你可以自由搭配不同的 LLM 后端和提示词预设。
+SillyTavern 中 API 预设和聊天补全预设是联动切换的。Taverncraft 将两者解耦，切换 API 连接不会连带切换聊天补全预设，你可以自由搭配不同的 LLM 后端和提示词预设。
 
 ### 增量同步
 
@@ -84,12 +84,12 @@ SillyTavern 中 API 预设和聊天补全预设是联动切换的。Luker 将两
 支持 GitHub / Discord OAuth 登录，管理员可为每位用户配置空间大小配额。Discord 登录可额外要求用户必须在指定服务器中或拥有特定身份组。
 
 ::: tip 更多特性
-Luker 还包含许多其他改进：Undo Toast 撤销系统、聊天人设锁定（Chat Persona Lock）、动态模型列表、世界书激活链路追踪、预设关联世界书、大量移动端 / Android 适配优化、启动性能优化等。这些特性将在各自的专题页面中详细介绍。
+Taverncraft 还包含许多其他改进：Undo Toast 撤销系统、聊天人设锁定（Chat Persona Lock）、动态模型列表、世界书激活链路追踪、预设关联世界书、大量移动端 / Android 适配优化、启动性能优化等。这些特性将在各自的专题页面中详细介绍。
 :::
 
 ## 兼容性
 
-Luker 与 SillyTavern 保持数据格式层面的完全兼容：
+Taverncraft 与 SillyTavern 保持数据格式层面的完全兼容：
 
 | 数据类型 | 兼容性 |
 |---------|--------|
@@ -101,11 +101,11 @@ Luker 与 SillyTavern 保持数据格式层面的完全兼容：
 | 用户设置 | ✅ 完全兼容 |
 
 ::: info 双向迁移
-你可以随时从 SillyTavern 迁移到 Luker，也可以从 Luker 降级回 SillyTavern。Luker 新增的功能数据（如记忆图、编排配置等）存储在独立的状态文件中，不会影响 SillyTavern 的核心数据结构。但仍建议在迁移前做好备份。
+你可以随时从 SillyTavern 迁移到 Taverncraft，也可以从 Taverncraft 降级回 SillyTavern。Taverncraft 新增的功能数据（如记忆图、编排配置等）存储在独立的状态文件中，不会影响 SillyTavern 的核心数据结构。但仍建议在迁移前做好备份。
 :::
 
 ## 下一步
 
 准备好开始使用了吗？
 
-→ [快速开始](/zh-CN/guide/getting-started) — 安装和部署 Luker
+→ [快速开始](/zh-CN/guide/getting-started) — 安装和部署 Taverncraft

@@ -2,7 +2,7 @@
 name: plot-brainstormer-method-zh
 description: plot_brainstormer method — angle-driven structural sketch for the next beat (tension, moves, turning point, foreshadow payoffs).
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 

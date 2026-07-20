@@ -516,7 +516,7 @@ const READ_TOOL_LEGACY_NAMES = Object.freeze({
     // helper API (no legacy `luker_card_*` alias exists); the runner
     // dispatches on the short name itself.
     inspect_bound_preset: 'inspect_bound_preset',
-    // web_search has no fixed legacy name — `Luker.searchTools.toolNames.SEARCH`
+    // web_search has no fixed legacy name — `Taverncraft.searchTools.toolNames.SEARCH`
     // resolves it at runtime. We handle it specially in runCeaEditorReadTool.
     web_search: null,
 });
@@ -687,7 +687,7 @@ const WEB_SEARCH_TOOL_DEF = Object.freeze({
  * @param {Object} _settings       CEA settings (reserved).
  * @param {Object} [opts]
  * @param {Object} [opts.live]     Current state.live { character, lorebooks }.
- * @param {boolean} [opts.hasSearchTools] Whether Luker.searchTools is wired.
+ * @param {boolean} [opts.hasSearchTools] Whether Taverncraft.searchTools is wired.
  * @returns {Array<Object>} Tool defs.
  */
 export function buildCeaEditorToolSet(_context, _settings, opts = {}) {
@@ -810,7 +810,7 @@ function annotateTarget(edit, call, live = null) {
  * Translates the short canonical tool name (lorebook_query, …) to the
  * legacy on-the-wire name (luker_card_query_lorebook_entries, …) and
  * dispatches to main.js's `runCharacterEditorHelperToolCall`. For
- * web_search, resolves the live tool name from `Luker.searchTools` at
+ * web_search, resolves the live tool name from `Taverncraft.searchTools` at
  * call time (the legacy name isn't a constant).
  *
  * Returns `{ ok: true, result }` on success and `{ ok: false, error }`
@@ -851,7 +851,7 @@ export async function runCeaEditorReadTool(call, opts = {}) {
     if (shortName === 'web_search') {
         legacyName = resolveWebSearchLegacyName(helperApis);
         if (!legacyName) {
-            return { ok: false, error: 'web_search is not wired (Luker.searchTools missing).' };
+            return { ok: false, error: 'web_search is not wired (Taverncraft.searchTools missing).' };
         }
     }
     if (!legacyName) {

@@ -1,12 +1,12 @@
 # Announcements
 
-Announcements let an administrator broadcast a Markdown message to every local account on the same Luker instance. Typical uses:
+Announcements let an administrator broadcast a Markdown message to every local account on the same Taverncraft instance. Typical uses:
 
 - Telling other accounts about an upgrade that moved or renamed a UI element.
 - Notifying users about scheduled downtime or maintenance.
 - Acknowledging an incident ("I just restored the staging CardApp from backup, your bookmarks may be stale").
 
-If you run Luker on your own without other local accounts, this feature has nothing to do for you.
+If you run Taverncraft on your own without other local accounts, this feature has nothing to do for you.
 
 ## Prerequisites
 
@@ -57,7 +57,7 @@ The button only appears on the welcome screen, not inside an open chat. To check
 
 ### Critical Modal at Login
 
-When a user opens Luker and there are unread `Critical` announcements, a modal pops up listing all of them. The **Mark all as read** button closes the modal and marks every listed announcement as read in one call. The user is not interrupted again on subsequent loads unless a new `Critical` announcement is published.
+When a user opens Taverncraft and there are unread `Critical` announcements, a modal pops up listing all of them. The **Mark all as read** button closes the modal and marks every listed announcement as read in one call. The user is not interrupted again on subsequent loads unless a new `Critical` announcement is published.
 
 ### Warning Banner
 

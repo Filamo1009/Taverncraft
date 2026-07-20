@@ -49,7 +49,7 @@ test.describe('#23b — Bulk delete via UI', () => {
         await awaitMainUI(page, server.baseURL);
         // Wait for all three seeded characters to appear in the list.
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             const names = (ctx?.characters || []).map(c => c?.name).filter(Boolean);
             return ['Ash the Cartographer', 'Bryn the Reefwarden', 'Cael of the Causeway'].every(n => names.includes(n));
         }, { timeout: 20_000 });
@@ -88,7 +88,7 @@ test.describe('#23b — Bulk delete via UI', () => {
         // .character_select element. Resolve each card by walking the
         // DOM in the page context and click its bulk_select_checkbox.
         const tickResult = await page.evaluate((avatars) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const cards = Array.from(document.querySelectorAll('#rm_print_characters_block .character_select'));
             const out = [];
             for (const wantAvatar of avatars) {
@@ -144,7 +144,7 @@ test.describe('#23b — Bulk delete via UI', () => {
 
         // Wait for both Bryn and Cael to be gone from ctx.
         await page.waitForFunction(({ avatars }) => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             const all = (ctx?.characters || []).map(c => c?.avatar);
             return !avatars.some(a => all.includes(a));
         }, { avatars: [av2, av3] }, { timeout: 20_000 });
@@ -160,7 +160,7 @@ test.describe('#23b — Bulk delete via UI', () => {
         await reloadAndAwait(page, server.baseURL);
 
         const namesAfterRestart = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             return (ctx.characters || []).map(c => c?.name);
         });
         expect(namesAfterRestart).toContain(ASH_NAME);

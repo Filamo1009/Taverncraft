@@ -1046,7 +1046,7 @@ async function generateStreamCallback(args, value) {
 }
 
 /**
- * Luker one-shot migration: collapse legacy proxy fields onto the unified
+ * Taverncraft one-shot migration: collapse legacy proxy fields onto the unified
  * base-url + secret-store path. Safe to call repeatedly — uses a marker on
  * `extension_settings.connectionManager` to skip after the first run.
  */
@@ -1153,7 +1153,7 @@ export async function init() {
         }
     }
 
-    // Luker: fully decouple connection profiles from chat-completion presets and regex presets.
+    // Taverncraft: fully decouple connection profiles from chat-completion presets and regex presets.
     // Legacy profiles might still carry stale fields or invalid mode metadata.
     let migrated = false;
     if (Array.isArray(extension_settings.connectionManager.profiles)) {

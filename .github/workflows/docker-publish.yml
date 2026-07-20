@@ -25,7 +25,7 @@ env:
 
 jobs:
   prepare:
-    if: github.repository == 'funnycups/Luker'
+    if: github.repository == 'Filamo1009/Taverncraft'
     runs-on: ubuntu-latest
     outputs:
       image: ${{ steps.image.outputs.image }}
@@ -49,7 +49,7 @@ jobs:
             type=raw,value=manual,enable=${{ github.event_name == 'workflow_dispatch' }}
 
   build-amd64:
-    if: github.repository == 'funnycups/Luker'
+    if: github.repository == 'Filamo1009/Taverncraft'
     needs: prepare
     runs-on: ubuntu-latest
     outputs:
@@ -79,7 +79,7 @@ jobs:
           outputs: type=image,name=${{ needs.prepare.outputs.image }},push-by-digest=true,name-canonical=true,push=true
 
   build-arm64:
-    if: github.repository == 'funnycups/Luker'
+    if: github.repository == 'Filamo1009/Taverncraft'
     needs: prepare
     runs-on: ubuntu-24.04-arm
     outputs:
@@ -109,7 +109,7 @@ jobs:
           outputs: type=image,name=${{ needs.prepare.outputs.image }},push-by-digest=true,name-canonical=true,push=true
 
   publish-manifest:
-    if: github.repository == 'funnycups/Luker'
+    if: github.repository == 'Filamo1009/Taverncraft'
     needs:
       - prepare
       - build-amd64

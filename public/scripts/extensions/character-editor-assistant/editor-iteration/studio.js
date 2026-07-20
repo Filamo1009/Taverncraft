@@ -54,7 +54,7 @@
  * matches the pre-Apply state byte-for-byte.
  */
 
-const __ctx = Luker.getContext();
+const __ctx = Taverncraft.getContext();
 const Popup = __ctx.Popup;
 const POPUP_TYPE = __ctx.POPUP_TYPE;
 import {

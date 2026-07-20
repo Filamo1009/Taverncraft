@@ -1,6 +1,6 @@
 # 快速开始
 
-本指南将帮助你在几分钟内启动并运行 Luker。
+本指南将帮助你在几分钟内启动并运行 Taverncraft。
 
 ## 前置条件
 
@@ -19,8 +19,8 @@
 ### 1. 克隆仓库
 
 ```bash
-git clone https://github.com/funnycups/Luker.git
-cd Luker
+git clone https://github.com/Filamo1009/Taverncraft.git
+cd Taverncraft
 ```
 
 ### 2. 安装依赖
@@ -42,7 +42,7 @@ bash start.sh
 ```
 
 ::: tip 其他运行时
-Luker 也支持通过 Deno 或 Bun 启动：
+Taverncraft 也支持通过 Deno 或 Bun 启动：
 ```bash
 # Deno
 npm run start:deno
@@ -61,7 +61,7 @@ npm install
 
 ## 安装方式二：Docker
 
-适合服务器部署或希望开箱即用的用户。Luker 提供了预构建的 Docker 镜像。
+适合服务器部署或希望开箱即用的用户。Taverncraft 提供了预构建的 Docker 镜像。
 
 ### 1. 创建 `docker-compose.yml`
 
@@ -69,9 +69,9 @@ npm install
 
 ```yaml
 services:
-  luker:
-    image: ghcr.io/funnycups/luker:latest
-    container_name: luker
+  taverncraft:
+    image: ghcr.io/filamo1009/taverncraft:latest
+    container_name: taverncraft
     ports:
       - 127.0.0.1:8000:8000
     volumes:
@@ -104,17 +104,17 @@ docker compose up -d
 
 ## 安装方式三：Android APK
 
-Luker 提供安卓 APP，你可以直接在手机上运行 Luker，无需依赖云服务器或 Termux。
+Taverncraft 提供安卓 APP，你可以直接在手机上运行 Taverncraft，无需依赖云服务器或 Termux。
 
 前往 GitHub Release 页面下载最新版 APK：
 
-👉 [https://github.com/funnycups/Luker/releases/latest](https://github.com/funnycups/Luker/releases/latest)
+👉 [https://github.com/Filamo1009/Taverncraft/releases/latest](https://github.com/Filamo1009/Taverncraft/releases/latest)
 
 下载并安装 APK 后，打开应用即可直接使用。
 
 ## 首次配置
 
-### 访问 Luker
+### 访问 Taverncraft
 
 启动成功后，在浏览器中访问：
 
@@ -128,7 +128,7 @@ APK 版本是一个独立的 App，打开后直接显示完整界面，不需要
 
 ### 配置 API 连接
 
-首次进入 Luker 后，你需要配置至少一个 LLM API 才能开始对话：
+首次进入 Taverncraft 后，你需要配置至少一个 LLM API 才能开始对话：
 
 1. 点击顶部的 **API 连接** 图标
 2. 选择你的 API 类型（如 OpenAI、Claude 等）
@@ -148,10 +148,10 @@ APK 版本是一个独立的 App，打开后直接显示完整界面，不需要
 
 ## 从 SillyTavern 迁移
 
-Luker 完全兼容 SillyTavern 的数据。如果你是 SillyTavern 用户，可以直接将 `data` 目录复制到 Luker 中使用。如果之后不想用 Luker 了，也可以随时降级回 SillyTavern，数据不会被破坏。
+Taverncraft 完全兼容 SillyTavern 的数据。如果你是 SillyTavern 用户，可以直接将 `data` 目录复制到 Taverncraft 中使用。如果之后不想用 Taverncraft 了，也可以随时降级回 SillyTavern，数据不会被破坏。
 
 ::: warning 备份提醒
-虽然 Luker 兼容 SillyTavern 数据，但在迁移前仍建议做好备份。
+虽然 Taverncraft 兼容 SillyTavern 数据，但在迁移前仍建议做好备份。
 :::
 
 详细迁移指南请参阅 [从 SillyTavern 迁移](/zh-CN/guide/migration)。

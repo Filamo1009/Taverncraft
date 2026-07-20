@@ -1,10 +1,10 @@
 # Plugin Integration
 
-APIs that connect plugins to Luker's pipelines and to each other: regex processing, search tools, the cross-plugin API registry, and the event system.
+APIs that connect plugins to Taverncraft's pipelines and to each other: regex processing, search tools, the cross-plugin API registry, and the event system.
 
 ## Regex Runtime API
 
-Plugins can register managed regex processors via `registerManagedRegexProvider()` to participate in Luker's regex processing pipeline. This function is exported from the regex engine module:
+Plugins can register managed regex processors via `registerManagedRegexProvider()` to participate in Taverncraft's regex processing pipeline. This function is exported from the regex engine module:
 
 ```js
 import { registerManagedRegexProvider } from '../../extensions/regex/engine.js';
@@ -30,21 +30,21 @@ The handle returned by `registerManagedRegexProvider` provides `upsertScript`, `
 
 ## Search Tools API
 
-The search plugin exposes its API through the `Luker.searchTools` global object so other plugins can leverage search capabilities:
+The search plugin exposes its API through the `Taverncraft.searchTools` global object so other plugins can leverage search capabilities:
 
 ```js
 // Check whether the search plugin is available
-if (globalThis?.Luker?.searchTools) {
+if (globalThis?.Taverncraft?.searchTools) {
   // Get the list of available search tool names
-  const toolNames = Luker.searchTools.toolNames;
+  const toolNames = Taverncraft.searchTools.toolNames;
   // Get tool definitions (for function calling)
-  const toolDefs = Luker.searchTools.getToolDefs();
+  const toolDefs = Taverncraft.searchTools.getToolDefs();
   // Check whether a tool name belongs to search tools
-  const isSearchTool = Luker.searchTools.isToolName('web_search');
+  const isSearchTool = Taverncraft.searchTools.isToolName('web_search');
 }
 ```
 
-`Luker.searchTools` exposes tool definition metadata; actual search execution happens via the internal tool-calling loop. See [Search Tools](/features/search-tools) for details.
+`Taverncraft.searchTools` exposes tool definition metadata; actual search execution happens via the internal tool-calling loop. See [Search Tools](/features/search-tools) for details.
 
 ## Inter-Extension Communication
 
@@ -159,7 +159,7 @@ addLocaleData(localeId: string, data: Record<string, string>): void
 Merges plugin-supplied translations into the loaded locale data. Call after the i18n system has booted (e.g., on `APP_READY`). When `localeId` is the primary locale, entries always overwrite; when it's a fallback locale, entries only fill missing keys.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 ctx.eventSource.on(ctx.eventTypes.APP_READY, () => {
     ctx.addLocaleData('zh-cn', {
@@ -184,7 +184,7 @@ context.extensionSettings: object
 Global plain object where extensions store their configuration. Each extension typically uses its own namespace key:
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 
 if (!ctx.extensionSettings.my_extension) {
     ctx.extensionSettings.my_extension = { enabled: true, level: 1 };
@@ -248,7 +248,7 @@ context.accountStorage: {
 Account-scoped key/value store. Values are coerced to strings. Persists through `saveSettingsDebounced`. Use this for user-specific settings that should survive across chats but not be exported with character cards.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 ctx.accountStorage.setItem('my-extension:last-seen', String(Date.now()));
 const lastSeen = ctx.accountStorage.getItem('my-extension:last-seen');
 ```
@@ -269,7 +269,7 @@ registerDebugFunction(
 Adds a button to the user-settings debug menu. The button calls `func` when clicked. Useful for plugin maintenance actions (clear cache, dump state, force reload, etc.).
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 ctx.registerDebugFunction(
     'my-plugin-clear-cache',
     'Clear my-plugin cache',
@@ -476,7 +476,7 @@ context.lib: {
 | `yaml` | YAML parse/stringify ([yaml](https://eemeli.org/yaml/)) |
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const safe = ctx.lib.DOMPurify.sanitize(userHtml);
 const md = new ctx.lib.showdown.Converter().makeHtml(text);
 ```
@@ -502,7 +502,7 @@ context.secrets.state: Record<string, boolean>
 Live boolean map indicating whether each secret slot is currently populated. Read-only snapshot — mutations are not persisted.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 if (!ctx.secrets.state[ctx.secrets.KEYS.OPENAI]) {
     toastr.warning('OpenAI API key not set.');
 }
@@ -554,7 +554,7 @@ context.constants.promptTypes: { NONE, IN_PROMPT, IN_CHAT, BEFORE_PROMPT }
 Numeric enums for `setExtensionPrompt` and related injection paths. `promptRoles` selects the message role of the injected prompt; `promptTypes` selects its insertion slot.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 ctx.setExtensionPrompt(
     'my-plugin-pre',
     'Pre-context note.',

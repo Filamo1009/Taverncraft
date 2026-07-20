@@ -101,7 +101,7 @@ async function exportSelectedCharacterAsPng(page) {
  */
 async function readCardBoundStateForActive(page) {
     return page.evaluate(() => {
-        const ctx = window.Luker?.getContext?.();
+        const ctx = window.Taverncraft?.getContext?.();
         const chid = ctx?.characterId ?? window.this_chid;
         const c = ctx?.characters?.[chid];
         const listApi = ctx?.character?.presets?.list;
@@ -162,7 +162,7 @@ test.describe('#49 — card-bound preset export/import round-trip preserves shap
         // confirm delete propagated (list reflection is async through
         // getCharacters()).
         await page.waitForFunction((n) => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return Array.isArray(ctx?.characters) && !ctx.characters.some(c => c?.name === n);
         }, SRC_CHAR_NAME, { timeout: 15_000 });
 
@@ -207,7 +207,7 @@ test.describe('#49 — card-bound preset export/import round-trip preserves shap
         expect(byName[SLOT1_NAME]).toEqual({ name: SLOT1_NAME, isDefault: true, hasBody: true });
         expect(byName[SLOT2_NAME]).toEqual({ name: SLOT2_NAME, isDefault: false, hasBody: true });
 
-        // Assertion 4: on-disk parse of the NEWLY-IMPORTED PNG (Luker's
+        // Assertion 4: on-disk parse of the NEWLY-IMPORTED PNG (Taverncraft's
         // uploader materializes the file back into characters/), confirms
         // the chat_completion_preset shape survived import.
         const importedAvatar = state.avatar;

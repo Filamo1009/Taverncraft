@@ -7,7 +7,7 @@
 //
 // REAL USER-GESTURE flow:
 //   1. Seed 卡 A 携带一个 slot X (default, temperature=0.42)。
-//   2. Load Luker → 卡自动选中 → ghost X 自动 apply。
+//   2. Load Taverncraft → 卡自动选中 → ghost X 自动 apply。
 //   3. 通过真 DOM click 触发铅笔按钮 → Popup.show.input 打开 popup →
 //      Playwright fill input + click OK 按钮 (真用户手势)。
 //   4. 断言:

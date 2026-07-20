@@ -1,7 +1,7 @@
 # 多Agent上手：预设、记忆图、网络搜索
 
 ::: tip 这篇文档解决什么问题
-Luker 的[多 Agent 编排](/zh-CN/features/orchestrator/)、[记忆图](/zh-CN/features/memory-graph)、[搜索插件](/zh-CN/features/search-tools)三块功能各自独立可用，但要让它们协同形成一套完整流程——由 Agent 团队抽取记忆、检索同人设定、构思剧情走向、起草正文——需要按顺序完成几项配置。
+Taverncraft 的[多 Agent 编排](/zh-CN/features/orchestrator/)、[记忆图](/zh-CN/features/memory-graph)、[搜索插件](/zh-CN/features/search-tools)三块功能各自独立可用，但要让它们协同形成一套完整流程——由 Agent 团队抽取记忆、检索同人设定、构思剧情走向、起草正文——需要按顺序完成几项配置。
 
 这篇从一份空白配置出发，一步步引导你配完预设、Director、记忆与搜索，不假设你看过上面三篇深入文档。完成后你会得到一份开箱即用的默认配置，之后随时可以在迭代工作台里让 AI 帮你继续调整。
 :::
@@ -42,7 +42,7 @@ start -> orch.scouts -> orch.brain -> orch.draft -> orch.curate -> end
 
 ## 你需要先有什么
 
-- 已经能跑的 Luker 实例，主对话能正常发回复
+- 已经能跑的 Taverncraft 实例，主对话能正常发回复
 - 一份能用的 [RP 预设](/zh-CN/basics/presets)，最好已经调教过文风、越狱、NSFW 指导
 
 ## Step 1 — 挑一份起点预设
@@ -51,7 +51,7 @@ start -> orch.scouts -> orch.brain -> orch.draft -> orch.curate -> end
 
 ## Step 2 — 配置预设助手，派生 Director 要用的两份预设
 
-Luker 的插件里调 LLM 大致分**两类**，要用的预设形态完全不同：一类是**插件产出 RP 内容**的（比如 Director 的 Agent 团队起草正文、评审子 Agent 复审等），需要带越狱 / 文风 / 反八股的 RP 预设；另一类是**插件的迭代 AI**（预设助手、记忆图 Schema 工作台、CardApp Studio、Director 的迭代工作台等），它们用工具调用改配置或抽结构，不写故事——任何 RP 指令漏进去都会干扰模型执行插件指令，所以要挂一份**只保留越狱**的精简预设。
+Taverncraft 的插件里调 LLM 大致分**两类**，要用的预设形态完全不同：一类是**插件产出 RP 内容**的（比如 Director 的 Agent 团队起草正文、评审子 Agent 复审等），需要带越狱 / 文风 / 反八股的 RP 预设；另一类是**插件的迭代 AI**（预设助手、记忆图 Schema 工作台、CardApp Studio、Director 的迭代工作台等），它们用工具调用改配置或抽结构，不写故事——任何 RP 指令漏进去都会干扰模型执行插件指令，所以要挂一份**只保留越狱**的精简预设。
 
 Director 这条流程同时涉及这两类：
 
@@ -81,11 +81,11 @@ RP 预设默认假设「主 LLM 一个人独自写完整个回复」，塞进 Ag
 
 ![预设助手设置面板：迭代 AI 提示词预设（带 ? 按钮）+ 迭代 AI API 预设](/images/recipes/agent-onboarding/step-02a-preset-help-button.png)
 
-? 按钮会弹出一个说明窗口，底部带一个**导入 plugin-only 预设**按钮——点一下就把 Luker 内置的纯净预设导入并自动选中。
+? 按钮会弹出一个说明窗口，底部带一个**导入 plugin-only 预设**按钮——点一下就把 Taverncraft 内置的纯净预设导入并自动选中。
 
 ![? 按钮弹窗：解释这一栏要挂什么预设，底部一键导入 plugin-only](/images/recipes/agent-onboarding/step-02a-help-popup.png)
 
-Luker 内置的其他迭代 AI 入口（Director 的迭代工作台、记忆图 Schema 工作台、CardApp Studio 等）旁边都有同一个 **?** 按钮——一键导入操作完全一致。
+Taverncraft 内置的其他迭代 AI 入口（Director 的迭代工作台、记忆图 Schema 工作台、CardApp Studio 等）旁边都有同一个 **?** 按钮——一键导入操作完全一致。
 
 ### 2b —— 用预设助手派生 **Agent 路径** 的预设
 

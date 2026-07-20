@@ -1,16 +1,16 @@
 # Contributing Guide
 
-Thank you for your interest in the Luker project! This document explains how to contribute code, documentation, and other improvements to Luker.
+Thank you for your interest in the Taverncraft project! This document explains how to contribute code, documentation, and other improvements to Taverncraft.
 
 ## Setting Up the Development Environment
 
-1. **Fork the repository**: Fork the Luker repository to your own GitHub account.
+1. **Fork the repository**: Fork the Taverncraft repository to your own GitHub account.
 
 2. **Clone locally**:
 
 ```bash
-git clone https://github.com/<your-username>/Luker.git
-cd Luker
+git clone https://github.com/<your-username>/Taverncraft.git
+cd Taverncraft
 ```
 
 3. **Install dependencies**:
@@ -37,7 +37,7 @@ git checkout -b feat/my-new-feature release
 ```
 
 > [!IMPORTANT]
-> Luker's stable branch is `release`.
+> Taverncraft's stable branch is `release`.
 
 Recommended branch naming conventions:
 
@@ -51,7 +51,7 @@ Recommended branch naming conventions:
 
 ## Commit Convention
 
-Luker follows the [Conventional Commits](https://www.conventionalcommits.org/) specification:
+Taverncraft follows the [Conventional Commits](https://www.conventionalcommits.org/) specification:
 
 ```
 <type>(<scope>): <description>
@@ -142,7 +142,7 @@ git push origin feat/my-new-feature
 ## Project Structure Overview
 
 ```
-Luker/
+Taverncraft/
 ├── server.js              # Server entry point
 ├── src/                   # Backend source code
 │   ├── endpoints/         # API routes

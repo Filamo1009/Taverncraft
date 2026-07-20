@@ -2,8 +2,8 @@
 <!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
 <!-- Copyright (C) 2026 FunnyCups (https://github.com/funnycups) -->
 <resources>
-    <string name="app_name">Luker</string>
-    <string name="loading_runtime">正在啟動本地 Luker 服務…</string>
+    <string name="app_name">Taverncraft 酒館工坊</string>
+    <string name="loading_runtime">正在啟動本地 Taverncraft 服務…</string>
     <string name="loading_webview">服務已啟動，正在載入介面…</string>
     <string name="loading_failed">服務啟動失敗，請重新啟動應用程式。</string>
     <string name="loading_failed_with_reason">服務啟動失敗：%1$s</string>
@@ -11,31 +11,31 @@
     <string name="runtime_error_dialog_title">啟動失敗診斷</string>
     <string name="runtime_error_dialog_intro">請複製下方診斷資訊並回報給開發者。</string>
     <string name="runtime_error_report_saved">診斷報告已儲存到：%1$s</string>
-    <string name="runtime_error_share_subject">Luker 執行階段啟動報告</string>
+    <string name="runtime_error_share_subject">Taverncraft 執行階段啟動報告</string>
     <string name="diagnostics_export_bundle">匯出診斷壓縮包</string>
     <string name="crash_dialog_close">關閉</string>
     <string name="diagnostics_export_saved">診斷壓縮包已儲存到：%1$s</string>
     <string name="diagnostics_export_failed">診斷包匯出失敗：%1$s</string>
     <string name="diagnostics_open_link">開啟診斷資訊…</string>
-    <string name="diagnostics_dialog_title">Luker 診斷</string>
+    <string name="diagnostics_dialog_title">Taverncraft 診斷</string>
     <string name="diagnostics_dialog_intro">資料目錄：%1$s\n\n下方是本地服務的目前狀態快照，如需回報可複製或匯出診斷壓縮包。</string>
     <string name="crash_report_dialog_title">偵測到上次異常退出</string>
     <string name="crash_report_dialog_intro">應用程式在上次執行時異常退出。點擊「匯出診斷壓縮包」儲存診斷壓縮檔並回報給開發者；完整報告在壓縮檔內的 crashes/ 目錄下。</string>
-    <string name="crash_report_share_subject">Luker 上次崩潰報告</string>
+    <string name="crash_report_share_subject">Taverncraft 上次崩潰報告</string>
     <string name="webview_crash_dialog_title">網頁介面崩潰</string>
     <string name="webview_crash_dialog_intro">網頁介面渲染處理程序已終止。點擊「匯出診斷壓縮包」儲存診斷壓縮檔並回報給開發者；完整報告在壓縮檔內的 crashes/ 目錄下。關閉此對話框後介面將自動重載。</string>
-    <string name="webview_crash_share_subject">Luker 網頁介面崩潰報告</string>
-    <string name="runtime_notification_channel_name">Luker 背景服務</string>
-    <string name="runtime_notification_channel_description">保持本地 Luker 服務在背景執行</string>
-    <string name="runtime_notification_title">Luker</string>
+    <string name="webview_crash_share_subject">Taverncraft 網頁介面崩潰報告</string>
+    <string name="runtime_notification_channel_name">Taverncraft 背景服務</string>
+    <string name="runtime_notification_channel_description">保持本地 Taverncraft 服務在背景執行</string>
+    <string name="runtime_notification_title">Taverncraft</string>
     <string name="runtime_notification_text">本地服務正在背景執行</string>
     <string name="runtime_notification_endpoint">端點</string>
     <string name="runtime_notification_reload">重新整理頁面</string>
     <string name="runtime_notification_exit">退出應用程式</string>
     <string name="loading_custom_endpoint">正在連線到端點：%1$s</string>
-    <string name="endpoint_status_notification_channel_name">Luker 自訂端點</string>
+    <string name="endpoint_status_notification_channel_name">Taverncraft 自訂端點</string>
     <string name="endpoint_status_notification_channel_description">在未啟動本地服務時保留端點設定入口</string>
-    <string name="endpoint_status_notification_title">Luker 自訂端點</string>
+    <string name="endpoint_status_notification_title">Taverncraft 自訂端點</string>
     <string name="endpoint_status_notification_text">目前使用自訂端點：%1$s。點擊即可修改或重設端點。</string>
     <string name="endpoint_dialog_title">設定服務端點</string>
     <string name="endpoint_dialog_current_default">目前：預設本地端點</string>
@@ -48,11 +48,11 @@
     <string name="endpoint_invalid_url">請輸入有效的 http(s) 端點</string>
     <string name="endpoint_saved">已切換到端點：%1$s</string>
     <string name="endpoint_reset_default_done">已恢復預設本地端點</string>
-    <string name="message_alert_channel_name">Luker 訊息提醒</string>
+    <string name="message_alert_channel_name">Taverncraft 訊息提醒</string>
     <string name="message_alert_channel_description">助手回覆完成或出錯時的提醒通知</string>
-    <string name="message_progress_channel_name">Luker 訊息進度</string>
+    <string name="message_progress_channel_name">Taverncraft 訊息進度</string>
     <string name="message_progress_channel_description">助手回覆生成過程中的常駐狀態通知</string>
-    <string name="message_notification_default_title">Luker</string>
+    <string name="message_notification_default_title">Taverncraft</string>
     <string name="message_notification_default_body">新回覆已生成完成</string>
     <string name="message_notification_progress_body">回覆生成中…</string>
     <string name="download_queued">檔案下載已加入佇列</string>
@@ -65,7 +65,7 @@
     <string name="download_progress_bytes_only">下載中… %1$s</string>
     <string name="download_progress_with_total">下載中… %1$s / %2$s</string>
     <string name="http_auth_dialog_title">需要登入</string>
-    <string name="http_auth_dialog_message">此端點啟用了 HTTP Basic 驗證，Luker 需要先完成帳號密碼驗證後才能載入。</string>
+    <string name="http_auth_dialog_message">此端點啟用了 HTTP Basic 驗證，Taverncraft 需要先完成帳號密碼驗證後才能載入。</string>
     <string name="http_auth_dialog_host">端點：%1$s</string>
     <string name="http_auth_dialog_realm">驗證領域：%1$s</string>
     <string name="http_auth_dialog_username_hint">使用者名稱</string>
@@ -84,6 +84,6 @@
     <string name="runtime_start_error_no_available_port">在連接埠範圍 %1$d..%2$d 內沒有可用連接埠</string>
     <string name="press_back_again_to_exit">再按一次返回鍵退出</string>
     <string name="safe_mode_tripped_toast">上次啟動在服務就緒前已失敗。本次啟動已停用所有第三方擴充功能——請到擴充功能頁面逐個啟用，定位問題擴充功能。</string>
-    <string name="debug_export_share_subject">Luker 診斷包</string>
+    <string name="debug_export_share_subject">Taverncraft 診斷包</string>
     <string name="crash_dialog_debug_hint">\n\n提示：在使用者設定中開啟「Android 偵錯記錄」後重現問題，可獲得更詳細的診斷資訊。</string>
 </resources>

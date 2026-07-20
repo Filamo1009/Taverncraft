@@ -1,7 +1,7 @@
 # 多Agent上手：預設、記憶圖、網路搜尋
 
 ::: tip 這篇文件解決什麼問題
-Luker 的[多 Agent 編排](/zh-TW/features/orchestrator/)、[記憶圖](/zh-TW/features/memory-graph)、[搜尋外掛](/zh-TW/features/search-tools)三塊功能各自獨立可用，但要讓它們協同形成一套完整流程——由 Agent 團隊抽取記憶、檢索同人設定、構思劇情走向、起草正文——需要按順序完成幾項配置。
+Taverncraft 的[多 Agent 編排](/zh-TW/features/orchestrator/)、[記憶圖](/zh-TW/features/memory-graph)、[搜尋外掛](/zh-TW/features/search-tools)三塊功能各自獨立可用，但要讓它們協同形成一套完整流程——由 Agent 團隊抽取記憶、檢索同人設定、構思劇情走向、起草正文——需要按順序完成幾項配置。
 
 這篇從一份空白配置出發，一步步引導你配完預設、Director、記憶與搜尋，不假設你看過上面三篇深入文件。完成後你會得到一份開箱即用的預設配置，之後隨時可以在迭代工作台裡讓 AI 幫你繼續調整。
 :::
@@ -42,7 +42,7 @@ start -> orch.scouts -> orch.brain -> orch.draft -> orch.curate -> end
 
 ## 你需要先有什麼
 
-- 已經能跑的 Luker 實例，主對話能正常發回覆
+- 已經能跑的 Taverncraft 實例，主對話能正常發回覆
 - 一份能用的 [RP 預設](/zh-TW/basics/presets)，最好已經調教過文風、越獄、NSFW 指導
 
 ## Step 1 — 挑一份起點預設
@@ -51,7 +51,7 @@ start -> orch.scouts -> orch.brain -> orch.draft -> orch.curate -> end
 
 ## Step 2 — 配置預設助手，派生 Director 要用的兩份預設
 
-Luker 的外掛裡呼叫 LLM 大致分**兩類**，要用的預設形態完全不同：一類是**外掛產出 RP 內容**的（比如 Director 的 Agent 團隊起草正文、評審子 Agent 複審等），需要帶越獄 / 文風 / 反八股的 RP 預設；另一類是**外掛的迭代 AI**（預設助手、記憶圖 Schema 工作台、CardApp Studio、Director 的迭代工作台等），它們用工具呼叫改配置或抽結構，不寫故事——任何 RP 指令漏進去都會干擾模型執行外掛指令，所以要掛一份**只保留越獄**的精簡預設。
+Taverncraft 的外掛裡呼叫 LLM 大致分**兩類**，要用的預設形態完全不同：一類是**外掛產出 RP 內容**的（比如 Director 的 Agent 團隊起草正文、評審子 Agent 複審等），需要帶越獄 / 文風 / 反八股的 RP 預設；另一類是**外掛的迭代 AI**（預設助手、記憶圖 Schema 工作台、CardApp Studio、Director 的迭代工作台等），它們用工具呼叫改配置或抽結構，不寫故事——任何 RP 指令漏進去都會干擾模型執行外掛指令，所以要掛一份**只保留越獄**的精簡預設。
 
 Director 這條流程同時涉及這兩類：
 
@@ -81,11 +81,11 @@ RP 預設預設假設「主 LLM 一個人獨自寫完整個回覆」，塞進 Ag
 
 ![預設助手設定面板：迭代 AI 提示詞預設（帶 ? 按鈕）+ 迭代 AI API 預設](/images/recipes/agent-onboarding/step-02a-preset-help-button.png)
 
-? 按鈕會彈出一個說明視窗，底部帶一個**匯入 plugin-only 預設**按鈕——點一下就把 Luker 內建的純淨預設匯入並自動選中。
+? 按鈕會彈出一個說明視窗，底部帶一個**匯入 plugin-only 預設**按鈕——點一下就把 Taverncraft 內建的純淨預設匯入並自動選中。
 
 ![? 按鈕彈窗：解釋這一欄要掛什麼預設，底部一鍵匯入 plugin-only](/images/recipes/agent-onboarding/step-02a-help-popup.png)
 
-Luker 內建的其他迭代 AI 入口（Director 的迭代工作台、記憶圖 Schema 工作台、CardApp Studio 等）旁邊都有同一個 **?** 按鈕——一鍵匯入操作完全一致。
+Taverncraft 內建的其他迭代 AI 入口（Director 的迭代工作台、記憶圖 Schema 工作台、CardApp Studio 等）旁邊都有同一個 **?** 按鈕——一鍵匯入操作完全一致。
 
 ### 2b —— 用預設助手派生 **Agent 路徑** 的預設
 

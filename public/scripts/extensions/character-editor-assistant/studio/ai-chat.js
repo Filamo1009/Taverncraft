@@ -1,7 +1,7 @@
 /**
  * CardApp Studio AI Chat - Function-calling based AI assistant for CardApp development.
  *
- * Routes requests through Luker.context.generateTask with tool definitions to let AI
+ * Routes requests through Taverncraft.context.generateTask with tool definitions to let AI
  * read/write CardApp files. Studio is a dev/authoring tool — it never injects character
  * card or world info into the prompt; the system prompt and conversation messages flow
  * through verbatim.
@@ -21,7 +21,7 @@ import {
  readLukerDoc,
 } from '../../../iteration-library/tools/ctx-and-docs-discovery.js';
 
-const __ctx = Luker.getContext();
+const __ctx = Taverncraft.getContext();
 const characters = __ctx.characters;
 const saveMetadata = __ctx.saveMetadata;
 const getRequestHeaders = __ctx.getRequestHeaders;
@@ -37,7 +37,7 @@ const importEmbeddedWorldInfo = __ctx.importEmbeddedWorldInfo;
 const getCharacterEmbeddedWorld = __ctx.getCharacterEmbeddedWorld;
 const getCharaFilename = __ctx.getCharaFilename;
 const SlashCommandParser = __ctx.SlashCommandParser;
-const getContext = Luker.getContext;
+const getContext = Taverncraft.getContext;
 const extension_settings = __ctx.extensionSettings;
 const writeExtensionField = __ctx.writeExtensionField;
 const uuidv4 = __ctx.uuidv4;
@@ -206,7 +206,7 @@ function buildTools() {
  type: 'function',
  function: {
  name: TOOL_NAMES.WORLDINFO_LIST_BOOKS,
- description: 'List world book names visible to the current character: character primary (from character.data.extensions.world — the card\'s primary book), character auxiliary (from world_info.charLore[].extraBooks — extra books bound via Luker\'s lorebook editor), chat-bound (from chat metadata — per-save state, resets on new chat), and globally activated (every chat). Returns { books: string[], sources: { [name]: \'character\'|\'character_aux\'|\'chat\'|\'global\' } } so you can tell which book lives at which scope. Chat-bound mutation is a CardApp runtime concern (use ctx.setChatWorldBooks in card code) — Studio reads via this tool but never mutates chat-bound bindings.',
+ description: 'List world book names visible to the current character: character primary (from character.data.extensions.world — the card\'s primary book), character auxiliary (from world_info.charLore[].extraBooks — extra books bound via Taverncraft\'s lorebook editor), chat-bound (from chat metadata — per-save state, resets on new chat), and globally activated (every chat). Returns { books: string[], sources: { [name]: \'character\'|\'character_aux\'|\'chat\'|\'global\' } } so you can tell which book lives at which scope. Chat-bound mutation is a CardApp runtime concern (use ctx.setChatWorldBooks in card code) — Studio reads via this tool but never mutates chat-bound bindings.',
  parameters: { type: 'object', properties: {}, additionalProperties: false },
  },
  },
@@ -560,7 +560,7 @@ function buildTools() {
  type: 'function',
  function: {
  name: TOOL_NAMES.LUKER_CTX_LIST_KEYS,
- description: 'List top-level properties of ctx.lukerContext (the full Luker extension API, ~200+ keys). Each entry is {key, type}. Use luker_context_describe for details on a specific key. Useful when you need a Luker capability not exposed on ctx directly.',
+ description: 'List top-level properties of ctx.lukerContext (the full Taverncraft extension API, ~200+ keys). Each entry is {key, type}. Use luker_context_describe for details on a specific key. Useful when you need a Taverncraft capability not exposed on ctx directly.',
  parameters: {
  type: 'object',
  properties: {
@@ -589,7 +589,7 @@ function buildTools() {
  type: 'function',
  function: {
  name: TOOL_NAMES.DOCS_LIST,
- description: 'List Luker documentation files (markdown) available locally. By default returns only English docs (zh-CN/zh-TW translations are hidden because their content matches English). Returns each file as {path, size}. Useful starting points: development/card-developers.md (CardApp creator guide), features/cardapp.md (CardApp concepts), features/state-system.md (state overview), development/extension-api/chat-and-state.md (Floor State, chat state, character state), development/extension-api/generation.md, development/extension-api/presets-and-prompts.md.',
+ description: 'List Taverncraft documentation files (markdown) available locally. By default returns only English docs (zh-CN/zh-TW translations are hidden because their content matches English). Returns each file as {path, size}. Useful starting points: development/card-developers.md (CardApp creator guide), features/cardapp.md (CardApp concepts), features/state-system.md (state overview), development/extension-api/chat-and-state.md (Floor State, chat state, character state), development/extension-api/generation.md, development/extension-api/presets-and-prompts.md.',
  parameters: {
  type: 'object',
  properties: {
@@ -604,7 +604,7 @@ function buildTools() {
  type: 'function',
  function: {
  name: TOOL_NAMES.DOCS_READ,
- description: 'Read a Luker documentation markdown file. Use this to look up authoritative guidance on Floor State, state-system, CardApp lifecycle, extension API conventions, etc., before generating code that touches those areas.',
+ description: 'Read a Taverncraft documentation markdown file. Use this to look up authoritative guidance on Floor State, state-system, CardApp lifecycle, extension API conventions, etc., before generating code that touches those areas.',
  parameters: {
  type: 'object',
  properties: {
@@ -1494,7 +1494,7 @@ const DEFAULT_SYSTEM_PROMPT = `You are a CardApp development assistant. Help the
 
 ## What CardApp is
 
-A CardApp is a per-character custom frontend. When \`data.extensions.card_app.enabled\` is true, Luker mounts your code inside \`#card-app-container\` and **hides the entire default chat UI** — \`#chat\` (message log), \`#form_sheld\` (input bar, send button, wand menu, regenerate, continue, stop button), and \`#qr--bar\` (quick replies). While CardApp is active the user has **no fallback UI**: if your code doesn't expose a feature, they cannot reach it without going back to the editor and disabling CardApp.
+A CardApp is a per-character custom frontend. When \`data.extensions.card_app.enabled\` is true, Taverncraft mounts your code inside \`#card-app-container\` and **hides the entire default chat UI** — \`#chat\` (message log), \`#form_sheld\` (input bar, send button, wand menu, regenerate, continue, stop button), and \`#qr--bar\` (quick replies). While CardApp is active the user has **no fallback UI**: if your code doesn't expose a feature, they cannot reach it without going back to the editor and disabling CardApp.
 
 CardApp is not a skin. It is a full UI replacement. \`init(ctx)\` runs once when the chat opens; from there your code drives every interaction the user needs during the chat, until the dispose hook fires.
 
@@ -1637,12 +1637,12 @@ Same operations as the Studio tools (\`regex_*\`, \`character_*_orchestrator\`, 
 ### Utilities
 - ctx.container — The CardApp DOM container element
 - ctx.charId — Character ID string
-- ctx.eventSource — Luker event bus
+- ctx.eventSource — Taverncraft event bus
 - ctx.setInterval(fn, ms) — Auto-cleaned interval
 - ctx.setTimeout(fn, ms) — Auto-cleaned timeout
 - ctx.addEventListener(target, event, handler, options?) — Auto-cleaned event listener
 - ctx.onDispose(fn) — Register cleanup callback
-- ctx.renderText(rawText, messageId?) — Render text through Luker's formatting pipeline
+- ctx.renderText(rawText, messageId?) — Render text through Taverncraft's formatting pipeline
 - ctx.executeSlashCommand(command) — Execute a slash command
 
 ## Required UX (don't strand the user)
@@ -1663,13 +1663,13 @@ Because the default chat UI is hidden while CardApp is active, your CardApp must
 
 When **editing an existing CardApp**, scan its source for the four required items before layering on the user's new feature. If any are missing, mention it to the user — the original author may not have realized their card was stranding visitors, and shipping more features on top of a strand-trap doubles the problem.
 
-## Escape Hatch — Full Luker API
+## Escape Hatch — Full Taverncraft API
 
 ctx above is a curated, lifecycle-managed subset. For anything not on ctx,
 two routes are available:
 
-- **ctx.lukerContext** — The full Luker/SillyTavern extension API (200+ properties,
-  the same object every Luker extension gets via getContext()). Useful for:
+- **ctx.lukerContext** — The full Taverncraft/SillyTavern extension API (200+ properties,
+  the same object every Taverncraft extension gets via getContext()). Useful for:
   prompt generation (generate, generateRaw, generateQuietPrompt), world info
   (loadWorldInfo, saveWorldInfo), preset management (presets.*), tokenizers
   (getTokenCountAsync), popups (callGenericPopup, Popup), group chats, character
@@ -1702,7 +1702,7 @@ exact slash command name, argument shape, or lukerContext property:
 - **luker_context_describe({path})** — Inspect a specific path: function arity
   + source preview, or sub-keys for objects. Supports dot paths like
   "presets.state.patch" or "swipe.right".
-- **list_luker_docs({filter?})** — List Luker's local markdown docs (the same
+- **list_luker_docs({filter?})** — List Taverncraft's local markdown docs (the same
   source as luker.cups.moe). Useful when you need design rationale, not just
   signatures.
 - **read_luker_doc({path})** — Read a doc by path, e.g.
@@ -1752,7 +1752,7 @@ exact slash command name, argument shape, or lukerContext property:
 
 ### Regex tools
 
-Regex scripts are find/replace rules Luker applies at specific lifecycle points (user input, AI output, world-info injection, …). They are how you reshape text *between* layers — what the user types vs. what the AI sees, what the AI writes vs. what the chat stores vs. what the user reads. See "Regex post-processing" below for the conceptual map (placements, visibility flags, recipes); these are the tools.
+Regex scripts are find/replace rules Taverncraft applies at specific lifecycle points (user input, AI output, world-info injection, …). They are how you reshape text *between* layers — what the user types vs. what the AI sees, what the AI writes vs. what the chat stores vs. what the user reads. See "Regex post-processing" below for the conceptual map (placements, visibility flags, recipes); these are the tools.
 
 - **regex_list_scripts({scope?})** — List scripts at \`'character'\` (card-level, lives in \`character.data.extensions.regex_scripts\`), \`'global'\` (user-level, \`extension_settings.regex\`), or \`'all'\` (default — returns both). Each record carries id, scriptName, findRegex, replaceString, placement (number[]), and the gating flags (\`disabled\`/\`markdownOnly\`/\`promptOnly\`/\`pluginOnly\`/\`runOnEdit\`).
 - **regex_create_script({scope, ...})** — Create a script. id is auto-assigned. Without at least one \`placement\` value (1=USER_INPUT, 2=AI_OUTPUT, 3=SLASH_COMMAND, 5=WORLD_INFO, 6=REASONING) the script is stored but inactive.
@@ -1772,7 +1772,7 @@ Per-chat state in CardApps lives in one of two places, picked by **what kind of 
 
 - **Scalars the AI mutates** (HP, gold, affinity, inventory text, quest flags) → \`ctx.setVariable\` / \`ctx.getVariable\`. Driven by op-log macros (\`{{setvar::...}}\`, \`{{addvar::...}}\`) the AI emits inside replies; world books and the CardApp UI read them via \`{{getvar::name}}\` and \`ctx.getVariable\`. Survives swipes / deletes through the op-log replay. **This is the default** — reach for chat-state below only when chat variables genuinely don't fit.
 
-- **Structured namespaces only the CardApp owns** (UI panel state objects, settled tracker payloads, anything you'd otherwise reach for "a JSON store" for) → \`ctx.getChatState\` / \`ctx.updateChatState\` / \`ctx.patchChatState\`. These hit the chat state store (server-backed at \`/api/chats/state/\`) — the same store the rest of Luker (memory-graph, orchestrator, search-tools) uses via \`getContext().getChatState\`. Per-chat scope; the data is durable across reloads but resets on a new chat. Don't put AI-mutable scalars here — they belong in chat variables where macros can reach them.
+- **Structured namespaces only the CardApp owns** (UI panel state objects, settled tracker payloads, anything you'd otherwise reach for "a JSON store" for) → \`ctx.getChatState\` / \`ctx.updateChatState\` / \`ctx.patchChatState\`. These hit the chat state store (server-backed at \`/api/chats/state/\`) — the same store the rest of Taverncraft (memory-graph, orchestrator, search-tools) uses via \`getContext().getChatState\`. Per-chat scope; the data is durable across reloads but resets on a new chat. Don't put AI-mutable scalars here — they belong in chat variables where macros can reach them.
 
 When any of these state writes fails, the call returns \`{ ok: false, reason, hint }\` instead of throwing. Always check \`result.ok\` before treating the write as successful, and surface \`hint\` to the user via toastr only when the write was user-initiated (not for background autosaves). The \`reason\` enum has 9 values — branch on it to retry CONFLICT or to give up on HTTP_ERROR.
 
@@ -2032,7 +2032,7 @@ Reach for variable-driven dynamic entries only when keyword activation matters *
 
 ## Stateful CardApps — let the op-log do the work
 
-For state that both the UI and the LLM care about (HP, gold, floor, flags, relationships, …), Luker's **variable op-log** is the path. The AI emits \`{{setvar/addvar/incvar/decvar/deletevar}}\` macros in its reply; Luker scans them out, applies them to chat variables, and rolls them back automatically on swipe / message delete / chat change. Your CardApp reads via \`ctx.getVariable\` and repaints on render events. Don't roll your own marker grammar (\`[HP-10]\`) and don't \`parseStateChanges(data.raw)\` — homegrown parsers double-apply on swipe.
+For state that both the UI and the LLM care about (HP, gold, floor, flags, relationships, …), Taverncraft's **variable op-log** is the path. The AI emits \`{{setvar/addvar/incvar/decvar/deletevar}}\` macros in its reply; Taverncraft scans them out, applies them to chat variables, and rolls them back automatically on swipe / message delete / chat change. Your CardApp reads via \`ctx.getVariable\` and repaints on render events. Don't roll your own marker grammar (\`[HP-10]\`) and don't \`parseStateChanges(data.raw)\` — homegrown parsers double-apply on swipe.
 
 ### Plan in this order: data → UI → AI instructions
 
@@ -2068,7 +2068,7 @@ Each scanned op is recorded in \`message.extra.var_ops\` (per-swipe), forward-ap
        ctx.setVariable('aw_maxHp', 100);
    }
    \`\`\`
-   \`ctx.setVariable\` writes directly to \`__ctx.chatMetadata.variables\` (no var_op recorded) — appropriate for one-time init. Alternatively, embed \`{{setvar::aw_hp::100}}\` etc. in the character's \`first_mes\`; Luker scans first_mes the same way it scans replies, so the bootstrap rides in chat history and resets if the user deletes the first message.
+   \`ctx.setVariable\` writes directly to \`__ctx.chatMetadata.variables\` (no var_op recorded) — appropriate for one-time init. Alternatively, embed \`{{setvar::aw_hp::100}}\` etc. in the character's \`first_mes\`; Taverncraft scans first_mes the same way it scans replies, so the bootstrap rides in chat history and resets if the user deletes the first message.
 3. **Render UI from variables.** Read with sync \`ctx.getVariable('aw_hp')\` and paint.
 4. **Refresh on render events.** In your renderer's \`renderMessage(messageId, data)\`, call \`updateUI()\` whenever \`!data.isStreaming\` — covers new replies (op-log already applied), swipe switches (rebuild already happened), and edited messages. Do not parse \`data.raw\` for state; macros are already gone.
 
@@ -2254,7 +2254,7 @@ If the user is asking for a UI tweak, a status bar, "make her remember my name" 
 
 ## Regex post-processing — sculpting prompt and display
 
-Regex scripts are find/replace rules Luker applies at specific lifecycle points. They are the cleanest answer when the user describes a **pattern over text** — "AI 总是输出 X，帮我把 X 处理掉/换成 Y", "把这个标记格式化一下", "我说的某种括号 AI 不要看到", "永久去掉它的某段套话". Reach for regex *before* trying to teach the model via system_prompt or by rewriting world book entries — system_prompt is fragile against the model's habits, regex is deterministic.
+Regex scripts are find/replace rules Taverncraft applies at specific lifecycle points. They are the cleanest answer when the user describes a **pattern over text** — "AI 总是输出 X，帮我把 X 处理掉/换成 Y", "把这个标记格式化一下", "我说的某种括号 AI 不要看到", "永久去掉它的某段套话". Reach for regex *before* trying to teach the model via system_prompt or by rewriting world book entries — system_prompt is fragile against the model's habits, regex is deterministic.
 
 ### When to act vs hold off (read this first)
 
@@ -2320,7 +2320,7 @@ Pick by intent:
 
 ### Card-level vs global — default to character
 
-**Default to \`scope: 'character'\` for any regex you create through the Studio.** Card-level writes go to \`character.data.extensions.regex_scripts\` — the script travels with the card file, so export/import/sharing all carry it, and a future user opening the card gets the intended experience without re-creating rules from documentation. The card's owner has to opt the card into running scoped scripts (Luker tracks this in \`extension_settings.character_allowed_regex\`); first-time users may need to flip the toggle in the regex extension UI before a card-level script fires. Use card-level when the rule belongs to **this** character — cleanup of marker syntax this card uses, formatting tied to this card's UI, scrubbing patterns this character is known to produce.
+**Default to \`scope: 'character'\` for any regex you create through the Studio.** Card-level writes go to \`character.data.extensions.regex_scripts\` — the script travels with the card file, so export/import/sharing all carry it, and a future user opening the card gets the intended experience without re-creating rules from documentation. The card's owner has to opt the card into running scoped scripts (Taverncraft tracks this in \`extension_settings.character_allowed_regex\`); first-time users may need to flip the toggle in the regex extension UI before a card-level script fires. Use card-level when the rule belongs to **this** character — cleanup of marker syntax this card uses, formatting tied to this card's UI, scrubbing patterns this character is known to produce.
 
 \`scope: 'global'\` writes to \`extension_settings.regex\` — active in every chat for every character, no per-card opt-in needed. **Only choose global when the user has explicitly framed the request as universal** ("我所有卡都要这样", "for every character I have", "always strip this regardless of which card", "add this to my global setup"). A request phrased about a single card — even one the user uses heavily — is *not* a global request; treat it as card-level.
 

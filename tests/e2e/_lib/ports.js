@@ -28,6 +28,7 @@ export const PORT_RANGES = {
     sync:           { base: 8591, count: 4 },
     xmode:          { base: 8601, count: 8 }, // cross-mode-recovery specs need 2 servers per pair
     generation:     { base: 8621, count: 6 },
+    livephase1:     { base: 8631, count: 2 },
 };
 
 /**
@@ -55,4 +56,3 @@ export function reservePort(batchKey) {
         });
     });
 }
-

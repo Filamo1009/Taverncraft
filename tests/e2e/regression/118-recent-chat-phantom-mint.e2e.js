@@ -91,7 +91,7 @@ test.describe('#118 — opening a recent chat must not mint a second chat file',
 
         // Step 2: strip the .chat field from the PNG. This is the
         // real-world precondition that lets the bug fire — a card
-        // PNG without a persisted .chat value. (One Luker user
+        // PNG without a persisted .chat value. (One Taverncraft user
         // surveyed their character library and found exactly one
         // such card out of ~100; that single card reproduced the
         // bug deterministically.)

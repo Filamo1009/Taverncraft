@@ -1,7 +1,7 @@
 # 底层端点参考
 
 > [!WARNING]
-> 以下端点仅供高级调试和无法使用 `Luker.getContext()` 的集成场景参考。它们是同源 Web 应用路由，不是主要的插件 API 契约。正常插件开发应使用其他扩展 API 子页面所述的 Context API。
+> 以下端点仅供高级调试和无法使用 `Taverncraft.getContext()` 的集成场景参考。它们是同源 Web 应用路由，不是主要的插件 API 契约。正常插件开发应使用其他扩展 API 子页面所述的 Context API。
 
 插件也可以通过 context API 读写世界书条目；下面列出世界书的原始 HTTP 路由。
 

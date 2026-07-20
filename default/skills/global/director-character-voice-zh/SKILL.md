@@ -2,7 +2,7 @@
 name: director-character-voice-zh
 description: Character voice consistency rules — living-being principle, archetype handling, voice-register matching.
 metadata:
-  author: Luker Team
+  author: Taverncraft Team
   version: 1.0.0
 ---
 

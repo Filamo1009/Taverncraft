@@ -44,7 +44,7 @@ export function encodeScopePath(scope) {
             // (apiId, name) shape forced users to bind skills to a specific
             // connection-profile + preset pair, even though a chat-completion
             // preset is decoupled from any particular connection profile in
-            // Luker. Flattening means the skill follows the preset wherever
+            // Taverncraft. Flattening means the skill follows the preset wherever
             // the user routes it.
             assertSafe(scope.name);
             return `preset/${scope.name}`;

@@ -15,7 +15,7 @@ Manual stitching means every extension reimplements profile resolution, world-in
 For a plain text request that respects the active prompt preset, character card, and chat world info:
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 
 const result = await context.generateTask({
     taskMessages: [
@@ -73,7 +73,7 @@ If you already have a resolved WI snapshot (e.g., cached across retries), pass `
 
 ### Macro Substitution
 
-When `substituteMacros` is `true` (the default), `generateTask` runs `substituteParams` over each task message's string `content` before assembly. This lets plugin requests resolve the same <span v-pre>`{{...}}`</span> macros the main chat path resolves — Luker built-ins (<span v-pre>`{{user}}`</span>, <span v-pre>`{{char}}`</span>, <span v-pre>`{{persona}}`</span>, <span v-pre>`{{datetime}}`</span>, <span v-pre>`{{random:a,b}}`</span>, ...) and any extension-registered macros that flow through the same engine (e.g. MagVarUpdate's <span v-pre>`{{getvar::}}`</span> family).
+When `substituteMacros` is `true` (the default), `generateTask` runs `substituteParams` over each task message's string `content` before assembly. This lets plugin requests resolve the same <span v-pre>`{{...}}`</span> macros the main chat path resolves — Taverncraft built-ins (<span v-pre>`{{user}}`</span>, <span v-pre>`{{char}}`</span>, <span v-pre>`{{persona}}`</span>, <span v-pre>`{{datetime}}`</span>, <span v-pre>`{{random:a,b}}`</span>, ...) and any extension-registered macros that flow through the same engine (e.g. MagVarUpdate's <span v-pre>`{{getvar::}}`</span> family).
 
 Side-effect macros (<span v-pre>`{{setvar::}}`</span>, <span v-pre>`{{addvar::}}`</span>, <span v-pre>`{{incvar::}}`</span>, <span v-pre>`{{decvar::}}`</span>, <span v-pre>`{{deletevar::}}`</span>) are stripped via `skipSideEffects: true`. Without this, every plugin request would re-fire those mutations and corrupt `chat_metadata.variables` on each dispatch.
 
@@ -210,7 +210,7 @@ try {
 A search agent that respects the user-selected connection profile, runs tool calls until the model finalizes, and aborts cleanly:
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 const settings = extension_settings.my_search_agent;
 
 const result = await context.generateTask({
@@ -404,7 +404,7 @@ const calls = result.toolCalls.filter(c => allowedNames.has(c.name));
 Plugins can register tools into the global tool registry via `getContext()`. Registered tools appear in the main chat's tool calling flow — the model can invoke them during normal conversation.
 
 ```js
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 
 context.registerFunctionTool({
     name: 'my_plugin_tool',
@@ -455,7 +455,7 @@ These primitives back `generateTask`. Use them directly only when `generateTask`
 
 ### Connection Profile Resolution
 
-A connection profile is a bundle of **connection configuration** (API kind, model, secret, proxy, etc.) managed by Luker's Connection Manager. It's a **separate concept** from chat completion presets — profiles describe "where to connect", presets describe "how to generate". The two compose freely.
+A connection profile is a bundle of **connection configuration** (API kind, model, secret, proxy, etc.) managed by Taverncraft's Connection Manager. It's a **separate concept** from chat completion presets — profiles describe "where to connect", presets describe "how to generate". The two compose freely.
 
 When a plugin needs to let the user pick a connection profile (e.g., a "which API config to use" dropdown), use `context.connectionProfiles.list()` to populate the UI:
 
@@ -662,7 +662,7 @@ ConnectionManagerRequestService.getAllowedTypes(): { openai, textgenerationwebui
 Sends a generation through a Connection Manager profile by id, regardless of which profile is currently active in the UI. Throws `'Connection Manager is not available'` when the Connection Manager extension is disabled.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const result = await ctx.ConnectionManagerRequestService.sendRequest(
     settings.profileId,
     [

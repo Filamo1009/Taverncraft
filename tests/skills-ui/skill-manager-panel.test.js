@@ -8,7 +8,7 @@
  * conflict, import bundled) that exercises the wired `openSkillManagerPanel`
  * via a stub context + stub DOM.
  *
- * Luker's Jest config runs in `testEnvironment: "node"` (see
+ * Taverncraft's Jest config runs in `testEnvironment: "node"` (see
  * tests/jest.config.json), with no jsdom installed. We stub just enough
  * DOM surface (document.createElement, document.body, document.getElementById,
  * querySelector, addEventListener) on globalThis for the panel's render +

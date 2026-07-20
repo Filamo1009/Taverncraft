@@ -1290,9 +1290,9 @@
     "Example: username:password": "مثال: اسم المستخدم: كلمة المرور",
     "Important:": "مهم:",
     "sd_auto_auth_warning_1": "قم بتشغيل SD Web UI باستخدام",
-    "sd_auto_auth_warning_2": "علَم! يجب أن يكون الخادم قابلاً للوصول من الجهاز المضيف Luker.",
+    "sd_auto_auth_warning_2": "علَم! يجب أن يكون الخادم قابلاً للوصول من الجهاز المضيف Taverncraft.",
     "sd_drawthings_url": "مثال: {{drawthings_url}}",
-    "sd_drawthings_auth_txt": "قم بتشغيل تطبيق DrawThings مع تمكين مفتاح HTTP API في واجهة المستخدم! يجب أن يكون الخادم قابلاً للوصول من الجهاز المضيف Luker.",
+    "sd_drawthings_auth_txt": "قم بتشغيل تطبيق DrawThings مع تمكين مفتاح HTTP API في واجهة المستخدم! يجب أن يكون الخادم قابلاً للوصول من الجهاز المضيف Taverncraft.",
     "sd_vlad_url": "مثال: {{vlad_url}}",
     "The server must be accessible from the SillyTavern host machine.": "يجب أن يكون الخادم قابلاً للوصول من الجهاز المضيف SillyTavern.",
     "Hint: Save an API key in AI Horde API settings to use it here.": "تلميح: احفظ مفتاح API في إعدادات AI Horde API لاستخدامه هنا.",
@@ -1455,10 +1455,10 @@
     "Loading chat…": "جارٍ تحميل المحادثة…",
     "Bulk Delete": "حذف جماعي",
     "Deleting ${0} character(s)…": "جارٍ حذف ${0} شخصية (شخصيات)…",
-    "Welcome to Luker!": "مرحبا بكم في Luker!",
-    "Luker is aimed at advanced users.": "يستهدف Luker المستخدمين المتقدمين.",
-    "The server must be accessible from the Luker host machine.": "يجب أن يكون الخادم قابلاً للوصول من الجهاز المضيف Luker.",
-    "To enable multi-account features, restart the Luker server with": "لتمكين ميزات الحسابات المتعددة، أعد تشغيل خادم Luker باستخدام",
-    "Luker Documentation Site": "موقع وثائق Luker",
-    "Join the Luker Discord": "انضم إلى ديسكورد Luker"
+    "Welcome to Taverncraft!": "مرحبا بكم في Taverncraft!",
+    "Taverncraft is aimed at advanced users.": "يستهدف Taverncraft المستخدمين المتقدمين.",
+    "The server must be accessible from the Taverncraft host machine.": "يجب أن يكون الخادم قابلاً للوصول من الجهاز المضيف Taverncraft.",
+    "To enable multi-account features, restart the Taverncraft server with": "لتمكين ميزات الحسابات المتعددة، أعد تشغيل خادم Taverncraft باستخدام",
+    "Taverncraft Documentation Site": "موقع وثائق Taverncraft",
+    "Join the Taverncraft Discord": "انضم إلى ديسكورد Taverncraft"
 }

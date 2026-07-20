@@ -6,7 +6,7 @@ import { resolveVarPath } from '../util/var-path.js';
  * variables (e.g. {{setvar}}, {{getvar}}, {{incvar}}, etc.).
  */
 export function registerVariableMacros() {
-    const ctx = Luker.getContext();
+    const ctx = Taverncraft.getContext();
 
     // {{setvar::name::value}} -> '' (side-effect on local variable)
     MacroRegistry.registerMacro('setvar', {

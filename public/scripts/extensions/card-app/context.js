@@ -4,7 +4,7 @@
 
 import { getScriptsByType, saveScriptsByType, SCRIPT_TYPES } from '../regex/engine.js';
 
-const __ctx = Luker.getContext();
+const __ctx = Taverncraft.getContext();
 const eventSource = __ctx.eventSource;
 const event_types = __ctx.eventTypes;
 const chat = __ctx.chat;
@@ -26,7 +26,7 @@ const lukerDeleteChatState = __ctx.deleteChatState;
 const deleteCharacterChatByName = __ctx.deleteCharacterChat;
 const lukerRenameChat = __ctx.renameChat;
 const lukerSetVariable = __ctx.setVariable;
-const getContext = Luker.getContext;
+const getContext = Taverncraft.getContext;
 const extension_settings = __ctx.extensionSettings;
 const lukerGetCharacterState = __ctx.getCharacterState;
 const lukerSetCharacterState = __ctx.setCharacterState;
@@ -97,11 +97,11 @@ export function buildContext(container, charId, config) {
         /** @type {string} The character ID */
         charId,
 
-        /** @type {import('../../extensions.js').SillyTavernContext} Luker event bus (direct reference) */
+        /** @type {import('../../extensions.js').SillyTavernContext} Taverncraft event bus (direct reference) */
         eventSource,
 
         /**
-         * Escape hatch: the full Luker/SillyTavern extension API (same object every other
+         * Escape hatch: the full Taverncraft/SillyTavern extension API (same object every other
          * extension gets via getContext()). Use this when ctx doesn't expose what you need.
          * Re-evaluated on each access so it always reflects current state.
          *
@@ -146,7 +146,7 @@ export function buildContext(container, charId, config) {
         // ==================== Messages ====================
 
         /**
-         * Send a message through Luker's message pipeline.
+         * Send a message through Taverncraft's message pipeline.
          *
          * @param {string} text - Message text
          * @param {object} [options] - Options
@@ -417,7 +417,7 @@ export function buildContext(container, charId, config) {
 
         /**
          * Read chat-bound sidecar state for a namespace. Same data the rest
-         * of Luker reads via `getContext().getChatState` — chat-state is
+         * of Taverncraft reads via `getContext().getChatState` — chat-state is
          * persisted server-side under `/api/chats/state/`, NOT in
          * `chat_metadata`. Use `updateChatState` / `patchChatState` to write.
          *
@@ -749,7 +749,7 @@ export function buildContext(container, charId, config) {
          * globally activated books, deduped). Pass `{ withSource: true }` to
          * get structured entries that distinguish `'character'` (the card's
          * primary book), `'character_aux'` (auxiliary books bound to this
-         * character via Luker's lorebook editor), `'chat'` (chat-bound books
+         * character via Taverncraft's lorebook editor), `'chat'` (chat-bound books
          * from `chat_metadata.world_info`), and `'global'` (selected world
          * info active for every chat).
          *
@@ -790,7 +790,7 @@ export function buildContext(container, charId, config) {
         /**
          * Get the list of *auxiliary* world book names bound to the current
          * character. These live alongside the primary book (the one stored at
-         * `character.data.extensions.world`) and are managed via Luker's
+         * `character.data.extensions.world`) and are managed via Taverncraft's
          * lorebook editor — they participate in prompt assembly the same way
          * the primary book does, so a CardApp that needs to reason about
          * "what lore does this character pull in?" should consider both.
@@ -822,7 +822,7 @@ export function buildContext(container, charId, config) {
 
         /**
          * Replace the chat-bound world book list. Names that don't match an
-         * existing world book are silently dropped (matches Luker's UI
+         * existing world book are silently dropped (matches Taverncraft's UI
          * behavior). Pass `[]` (or nothing) to clear.
          * @param {string[]} [names]
          * @returns {Promise<string[]>} the resolved list actually written
@@ -1012,7 +1012,7 @@ export function buildContext(container, charId, config) {
          * Create a new card-level regex script.
          *
          * Always writes to `character.data.extensions.regex_scripts` (via
-         * Luker's `writeExtensionField`) — ctx intentionally has no path to
+         * Taverncraft's `writeExtensionField`) — ctx intentionally has no path to
          * mutate the user's global regex list (`extension_settings.regex`),
          * matching the same character-scoped boundary applied to the
          * orchestrator and memory-graph overrides. To create a global
@@ -1027,7 +1027,7 @@ export function buildContext(container, charId, config) {
          * - `scriptName`/`findRegex`/`replaceString`: empty string
          * - `trimStrings`: []
          * - `placement`: [] (script will not fire until at least one
-         *   placement is set — see Luker's `regex_placement` enum:
+         *   placement is set — see Taverncraft's `regex_placement` enum:
          *   1=USER_INPUT, 2=AI_OUTPUT, 3=SLASH_COMMAND, 5=WORLD_INFO,
          *   6=REASONING)
          * - `disabled`/`markdownOnly`/`promptOnly`/`pluginOnly`/`runOnEdit`: false

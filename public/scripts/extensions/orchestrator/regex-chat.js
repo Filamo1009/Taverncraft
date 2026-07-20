@@ -22,16 +22,16 @@
  * `maxDepth: 4` do the same thing here that it does in Generate().
  *
  * Regex engine access:
- *   We consume the regex primitives through `Luker.getContext().regex`
+ *   We consume the regex primitives through `Taverncraft.getContext().regex`
  *   (three-layer API). Direct `import` from
  *   `../regex/engine.js` would transitively pull `public/script.js` and
  *   its DOM bootstrap chain — poison for the jest module graph. The
  *   context surface stays test-friendly because jest.setup.js already
- *   installs a Luker stub.
+ *   installs a Taverncraft stub.
  *
  *   Ctx resolution is lazy (first-call, memoized): reading
- *   `Luker.getContext()` at module load would fire before jest.setup.js
- *   finishes wiring `globalThis.Luker`, and in the browser it would
+ *   `Taverncraft.getContext()` at module load would fire before jest.setup.js
+ *   finishes wiring `globalThis.Taverncraft`, and in the browser it would
  *   fire before `st-context.js` finishes exposing the `regex` field.
  *   Lazy avoids both hazards.
  */
@@ -41,7 +41,7 @@ let __regexApiCache = undefined;
 function getRegexApi() {
     if (__regexApiCache !== undefined) return __regexApiCache;
     try {
-        const ctx = globalThis.Luker?.getContext?.();
+        const ctx = globalThis.Taverncraft?.getContext?.();
         const api = ctx?.regex;
         if (api && typeof api.applyRegex === 'function' && api.placement
             && typeof api.placement.USER_INPUT === 'number'
@@ -95,7 +95,7 @@ export function computeDepthsFromEnd(messages) {
 /**
  * Apply prompt-scoped regex scripts to a single chat message's text.
  * Returns raw `mes` when the regex API isn't reachable (e.g. bare unit
- * tests without a Luker stub) so orchestrator degrades gracefully rather
+ * tests without a Taverncraft stub) so orchestrator degrades gracefully rather
  * than crashing.
  *
  * @param {object} message — chat message object (needs `mes` + `is_user`)
@@ -139,7 +139,7 @@ export function regexChatMessageForAgent(message, depth) {
  *     `applyPluginRegexToPromptMessages` treats an undepthed message.
  *
  * Returns raw text when the regex API isn't reachable (bare unit tests
- * without a Luker stub) so orchestrator degrades gracefully.
+ * without a Taverncraft stub) so orchestrator degrades gracefully.
  *
  * @param {string} text — raw agent output text
  * @returns {string} text after plugin-scoped AI_OUTPUT regex application

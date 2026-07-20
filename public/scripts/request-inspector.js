@@ -119,7 +119,7 @@ function formatMessage(msg) {
 
 /**
  * Collect reasoning artifacts (thinking blocks, encrypted signatures, plain
- * reasoning text) attached to a message across every provider dialect Luker
+ * reasoning text) attached to a message across every provider dialect Taverncraft
  * touches. Returns a flat ordered list so the UI can render each item with a
  * dedicated block style, replacing the raw-JSON fallback for opaque payloads.
  *
@@ -570,6 +570,77 @@ function buildWireRequestHtml(detail, q) {
  </div>`;
 }
 
+function renderPromptLayer(layer, q, { extension = false } = {}) {
+ const preview = String(layer?.preview || '');
+ const identifier = String(layer?.identifier || '');
+ const label = String(layer?.label || identifier || 'Prompt Layer');
+ const category = String(layer?.category || (extension ? 'extension' : 'prompt'));
+ const role = String(layer?.role || 'system');
+ const qLower = String(q || '').trim().toLowerCase();
+ const hit = Boolean(qLower && [preview, identifier, label, category].some(value => value.toLowerCase().includes(qLower)));
+ const metrics = extension
+ ? `depth ${Number(layer?.depth) || 0} · ${Number(layer?.charLength || 0).toLocaleString()} ${t`chars`}`
+ : `${Number(layer?.estimatedTokens || 0).toLocaleString()} tok · ${Number(layer?.charLength || 0).toLocaleString()} ${t`chars`}`;
+ const location = Number(layer?.messageIndex) >= 0 ? `message #${layer.messageIndex}` : 'message not located';
+ const source = extension ? identifier : [layer?.collection, identifier].filter(Boolean).join(' / ');
+ const resolvedSource = extension && layer?.sourceLabel
+ ? `<span>${escapeHtml(`${layer.sourceLabel}${layer.configurationMode ? ` · ${layer.configurationMode}` : ''}`)}</span>`
+ : '';
+ const truncated = layer?.previewTruncated
+ ? `<div class="ri-layer-truncated">${escapeHtml(t`Preview truncated; inspect Source Messages or Wire Request for the complete assembled content.`)}</div>`
+ : '';
+ return `
+ <details class="ri-prompt-layer${hit ? ' ri-msg-hit' : ''}"${hit ? ' open' : ''}>
+ <summary class="ri-prompt-layer-summary">
+ <span class="ri-msg-index">#${Number(layer?.order) || 0}</span>
+ <span class="ri-msg-role ri-role-${escapeHtml(role)}">${escapeHtml(role)}</span>
+ <span class="ri-layer-category ri-layer-${escapeHtml(category)}">${escapeHtml(category)}</span>
+ <span class="ri-layer-title">${highlightHtml(label, q)}</span>
+ <span class="ri-msg-len">${escapeHtml(metrics)}</span>
+ </summary>
+ <div class="ri-layer-meta"><code>${escapeHtml(source)}</code>${resolvedSource}<span>${escapeHtml(location)}</span></div>
+ ${preview ? `<pre class="ri-msg-content">${highlightHtml(preview, q)}</pre>` : ''}
+ ${truncated}
+ </details>`;
+}
+
+function buildPromptLayersHtml(detail, q) {
+ const snapshot = detail?.promptLayers;
+ if (!snapshot || snapshot.version !== 1) return '';
+ const assembly = snapshot.assembly || {};
+ const truncation = snapshot.truncation || {};
+ const layers = Array.isArray(snapshot.layers) ? snapshot.layers : [];
+ const extensions = Array.isArray(snapshot.inChatExtensions) ? snapshot.inChatExtensions : [];
+ const warning = truncation.applied
+ ? `<div class="ri-layer-warning">${escapeHtml(`${truncation.omittedHistoryMessages || 0} history messages were omitted because the prompt reached its context budget.`)}</div>`
+ : `<div class="ri-layer-ok">${escapeHtml(t`No chat-history truncation was detected.`)}</div>`;
+ const extensionHtml = extensions.length
+ ? `
+ <h5>${escapeHtml(t`In-Chat Extension Layers`)} (${extensions.length})</h5>
+ <div class="ri-prompt-layers">${extensions.map(layer => renderPromptLayer(layer, q, { extension: true })).join('\n')}</div>`
+ : '';
+
+ return `
+ <div class="ri-detail-section ri-prompt-layer-section">
+ <h4>${escapeHtml(t`Prompt Assembly`)}</h4>
+ <table class="ri-kv ri-layer-summary-table">
+ <tr><td>${escapeHtml(t`Context Window`)}</td><td>${Number(assembly.contextTokens || 0).toLocaleString()} tok</td></tr>
+ <tr><td>${escapeHtml(t`Completion Reserve`)}</td><td>${Number(assembly.completionReserve || 0).toLocaleString()} tok</td></tr>
+ <tr><td>${escapeHtml(t`Prompt Budget`)}</td><td>${Number(assembly.promptBudget || 0).toLocaleString()} tok</td></tr>
+ <tr><td>${escapeHtml(t`Estimated Prompt`)}</td><td>${Number(assembly.estimatedPromptTokens || 0).toLocaleString()} tok</td></tr>
+ <tr><td>${escapeHtml(t`History Included`)}</td><td>${Number(assembly.includedHistoryMessages || 0).toLocaleString()} / ${Number(assembly.sourceHistoryMessages || 0).toLocaleString()}</td></tr>
+ <tr><td>${escapeHtml(t`Messages`)}</td><td>${Number(assembly.preSquashMessageCount || 0).toLocaleString()} pre-squash → ${Number(assembly.finalMessageCount || 0).toLocaleString()} final</td></tr>
+ <tr><td>${escapeHtml(t`System Squash`)}</td><td>${assembly.squashedSystemMessages ? t`Yes` : t`No`}</td></tr>
+ </table>
+ ${warning}
+ ${extensionHtml}
+ <h5>${escapeHtml(t`Ordered Prompt Layers`)} (${layers.length})</h5>
+ <div class="ri-prompt-layers">
+ ${layers.map(layer => renderPromptLayer(layer, q)).join('\n') || `<div class="ri-empty">${escapeHtml(t`No prompt layers captured.`)}</div>`}
+ </div>
+ </div>`;
+}
+
 function buildChatDetailBody(detail) {
  const q = currentDetailSearch;
  let sourceMessagesHtml = '';
@@ -601,6 +672,8 @@ function buildChatDetailBody(detail) {
  </div>
 
  ${buildWireRequestHtml(detail, q)}
+
+ ${buildPromptLayersHtml(detail, q)}
 
  <div class="ri-detail-section">
  <h4>${t`Source Messages`} (${detail.messageCount})</h4>

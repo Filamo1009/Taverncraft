@@ -64,7 +64,7 @@ describe.each(CONTRACT_HARNESSES)('ChatRepo.listForGroup / listAllGroupChats on 
     });
     afterEach(async () => { if (h) await h.cleanup(); });
 
-    // In Luker, a group chat's `name` and `groupId` are the same string —
+    // In Taverncraft, a group chat's `name` and `groupId` are the same string —
     // the on-disk FS engine stores one .jsonl per group keyed by id, and the
     // endpoint code does {name: safeGroupId, groupId: safeGroupId}. SQL
     // engines store them as separate columns but the runtime always passes

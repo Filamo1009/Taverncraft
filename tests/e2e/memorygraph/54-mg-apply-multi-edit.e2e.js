@@ -108,7 +108,7 @@ async function enableMgViaCheckbox(page) {
         // call routes through the active oai_settings (our mock) instead
         // of the dev's "Claude" connection profile which points at the
         // real Claude API.
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const s = ctx.extensionSettings?.memory_graph;
         if (s) {
             s.requestApiPresetName = '';
@@ -147,7 +147,7 @@ test.describe('#54 — MG schema-iter Studio: 5 set-node-type rounds land every 
         // settings include a Claude API + custom base_url from the dev's
         // pollution that bootstrapCustomBackend doesn't fully neutralize.
         await page.evaluate((mockURL) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const s = ctx.chatCompletionSettings;
             if (!s) return;
             s.chat_completion_source = 'custom';
@@ -174,7 +174,7 @@ test.describe('#54 — MG schema-iter Studio: 5 set-node-type rounds land every 
 
         // Verify the setting took effect.
         const verifyState = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const s = ctx.chatCompletionSettings;
             return { source: s?.chat_completion_source, url: s?.custom_url, stream: s?.stream_openai };
         });
@@ -187,7 +187,7 @@ test.describe('#54 — MG schema-iter Studio: 5 set-node-type rounds land every 
         // RE-apply our settings override after character switch (which
         // can trigger settings reload from the active preset).
         await page.evaluate((mockURL) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const s = ctx.chatCompletionSettings;
             if (!s) return;
             s.chat_completion_source = 'custom';
@@ -231,7 +231,7 @@ test.describe('#54 — MG schema-iter Studio: 5 set-node-type rounds land every 
         // schemaOverride when one is selected (Seraphina here), so read
         // the per-character override path first and fall back to global.
         const persistedColumns = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const character = ctx?.characters?.[ctx?.characterId];
             const override = character?.data?.extensions?.memory_graph?.schemaOverride;
             const overrideEvent = Array.isArray(override)

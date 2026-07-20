@@ -1,7 +1,7 @@
 # Low-Level Endpoint Reference
 
 > [!WARNING]
-> The following endpoints are provided only as a reference for advanced debugging and integration scenarios where `Luker.getContext()` cannot be used. They are same-origin web application routes, not the primary plugin API contract. Normal plugin development should use the Context API described in the other Extension API pages.
+> The following endpoints are provided only as a reference for advanced debugging and integration scenarios where `Taverncraft.getContext()` cannot be used. They are same-origin web application routes, not the primary plugin API contract. Normal plugin development should use the Context API described in the other Extension API pages.
 
 Plugins can also read and write World Info entries through the context API; the raw HTTP routes for World Info are listed below.
 

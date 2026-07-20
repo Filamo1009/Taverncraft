@@ -3,15 +3,15 @@ import { jest } from '@jest/globals';
 const extensionSettings = { orchestrator: {} };
 
 // defaults.js (transitively imported by preset-library.js) reads
-// `Luker.getContext().constants.{promptRoles,wiPosition}` at module
+// `Taverncraft.getContext().constants.{promptRoles,wiPosition}` at module
 // load time — added in 571c529c2 after the verbatim mock header in this
 // plan was authored. Provide a minimal shim so module evaluation succeeds.
 //
 // editor-state.js (the module under test) also captures
-// `Luker.getContext().extensionSettings` at module-load time into a
+// `Taverncraft.getContext().extensionSettings` at module-load time into a
 // local `extension_settings` const. Expose the shared `extensionSettings`
 // here so beforeEach() mutations propagate into getSettings().
-globalThis.Luker = {
+globalThis.Taverncraft = {
     getContext: () => ({
         constants: {
             promptRoles: { SYSTEM: 0, USER: 1, ASSISTANT: 2 },

@@ -106,7 +106,7 @@ test.describe('#86 — Orchestrator iter-studio LOOP mode Apply persists across 
         // In-memory: active loop preset slot has the new system_prompt.
         await expect.poll(async () => {
             return await page.evaluate(() => {
-                const ctx = window.Luker.getContext();
+                const ctx = window.Taverncraft.getContext();
                 const s = ctx.extensionSettings.orchestrator;
                 const activeId = s?.activePresetIds?.loop || '';
                 return s?.presetLibraries?.loop?.[activeId]?.system_prompt || '';
@@ -125,7 +125,7 @@ test.describe('#86 — Orchestrator iter-studio LOOP mode Apply persists across 
         expect(afterRestart.system_prompt).toBe(NEW_LOOP_SYSTEM_PROMPT);
 
         const inMem = await page.evaluate(() => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const s = ctx.extensionSettings.orchestrator;
             const activeId = s?.activePresetIds?.loop || '';
             return s?.presetLibraries?.loop?.[activeId]?.system_prompt || '';

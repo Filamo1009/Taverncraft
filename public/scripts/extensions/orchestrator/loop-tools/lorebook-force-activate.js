@@ -87,7 +87,7 @@ function describeRoute(position) {
 }
 
 /**
- * Loader hook — production reads from `Luker.getContext().loadWorldInfo`,
+ * Loader hook — production reads from `Taverncraft.getContext().loadWorldInfo`,
  * tests inject `context.__loadWorldInfoFn` to avoid pulling the build-only
  * `lib.js` bundle into the Jest runner.
  */
@@ -95,7 +95,7 @@ async function loadBookSafe(context, bookName) {
     if (typeof context?.__loadWorldInfoFn === 'function') {
         return context.__loadWorldInfoFn(bookName);
     }
-    const loader = Luker.getContext()?.loadWorldInfo;
+    const loader = Taverncraft.getContext()?.loadWorldInfo;
     if (typeof loader !== 'function') return null;
     return loader(bookName);
 }

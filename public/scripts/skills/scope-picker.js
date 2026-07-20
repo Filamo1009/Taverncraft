@@ -7,7 +7,7 @@
  *
  * The preset-scope sub-row asks for a single thing: the chat completion
  * preset to bind to. There is no "connection profile" field, because a
- * preset is decoupled from any particular connection profile in Luker —
+ * preset is decoupled from any particular connection profile in Taverncraft —
  * a skill bound to preset X should travel with X regardless of which
  * connection profile is currently routing requests. The runtime matches
  * preset-scope skills by preset name alone (see
@@ -42,7 +42,7 @@ export function listAllPresets(context) {
     // The set of APIs whose preset managers we walk. ST exposes one preset
     // manager per chat-completion-flavored backend; "openai" is the legacy
     // fallback that every install has, and the rest cover the actively-
-    // supported backends in Luker today.
+    // supported backends in Taverncraft today.
     const APIS = ['openai', 'claude', 'textgenerationwebui', 'kobold', 'novel'];
     const seen = new Map(); // name → api (first manager that claimed the name)
     const out = [];

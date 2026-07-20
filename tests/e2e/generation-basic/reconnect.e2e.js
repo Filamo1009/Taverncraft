@@ -80,7 +80,7 @@ test('generation-basic: ws-delivery replays every chunk across a mid-stream offl
     // The event we care about (GENERATION_ENDED) is set up first as a
     // page-side promise so we can rendezvous after the offline blip.
     const doneP = page.evaluate((to) => new Promise((resolve, reject) => {
-        const ctx = window.Luker.getContext();
+        const ctx = window.Taverncraft.getContext();
         const t = setTimeout(() => reject(new Error('generation timeout')), to);
         const off = ctx.eventSource.on(ctx.eventTypes.GENERATION_ENDED, (chatLength) => {
             clearTimeout(t);

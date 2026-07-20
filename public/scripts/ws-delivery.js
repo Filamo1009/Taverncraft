@@ -288,6 +288,15 @@ export function createLukerDelivery({ reconnectBackoffMs = DEFAULT_RECONNECT_BAC
                 }
             } catch { /* controller may already be closed */ }
         }
+        // proxiedFetch waits for the upstream `head` frame before it can
+        // return a Response. When the user aborts before the provider has
+        // answered, no head will ever arrive. Resolve that wait with the
+        // abort reason as an explicit error marker so the fetch promise and
+        // its generation mutex unwind immediately instead of hanging forever.
+        if (entry && !entry.headResolved) {
+            entry.headResolved = true;
+            entry.resolveHead({ status: 0, headers: {}, error: reason || null });
+        }
         pending.delete(requestId);
     }
 
@@ -409,11 +418,13 @@ export function installFetchProxy(delivery, options = {}) {
     // constructs a parent-realm Response returned to iframe consumers, so
     // `response instanceof Response` inside the iframe evaluates to `false`
     // (iframe.Response !== parent.Response). Same for Headers instance-checks
-    // on caller `init.headers`, and DOMException-typed abort errors. Shadowing
-    // the outer globals via destructure means the function body below keeps
-    // its existing `Response` / `Headers` / `DOMException` identifiers with no
-    // further edits, but they now resolve to the target-window classes.
-    const { Response, Headers, DOMException } = targetWindow;
+    // on caller `init.headers`, and DOMException-typed abort errors. Some
+    // sandbox windows and older WebViews do not expose every constructor on
+    // their window proxy; fall back to the current realm in that case rather
+    // than throwing at `instanceof` before the request can be sent.
+    const ResponseCtor = targetWindow.Response || globalThis.Response;
+    const HeadersCtor = targetWindow.Headers || globalThis.Headers;
+    const DOMExceptionCtor = targetWindow.DOMException || globalThis.DOMException;
 
     const shouldProxy = options.shouldProxy || defaultShouldProxy;
     const originalFetch = options.originalFetch || targetWindow.fetch.bind(targetWindow);
@@ -462,7 +473,7 @@ export function installFetchProxy(delivery, options = {}) {
         // when the caller passed a `Headers` instance (spread on Headers
         // yields empty because Headers isn't a plain object).
         const callerHeaders = init?.headers;
-        const normalizedHeaders = callerHeaders instanceof Headers
+        const normalizedHeaders = HeadersCtor && callerHeaders instanceof HeadersCtor
             ? Object.fromEntries(callerHeaders.entries())
             : (callerHeaders || {});
         const headers = { ...normalizedHeaders, 'x-luker-request-id': requestId };
@@ -490,7 +501,7 @@ export function installFetchProxy(delivery, options = {}) {
                 // Terminate the caller's ReadableStream with an AbortError
                 // so any `for await response.body` loop unwinds immediately.
                 // Then notify the server so upstream generation stops.
-                const abortErr = new DOMException('The user aborted a request.', 'AbortError');
+                const abortErr = new DOMExceptionCtor('The user aborted a request.', 'AbortError');
                 unsubscribe(abortErr);
                 sendAbortNotification(requestId);
             };
@@ -508,13 +519,16 @@ export function installFetchProxy(delivery, options = {}) {
         // synthetic 200, so existing client-side branches that check
         // `response.status` or `!response.ok` fire correctly.
         const head = await headPromise;
+        if (head?.error) {
+            throw head.error;
+        }
         console.info(`[ws-delivery] head resolved request_id=${requestId} status=${head.status}`);
         const mergedHeaders = {
             ...initialHeaders,
             'content-type': 'text/event-stream',
             ...(head.headers || {}),
         };
-        return new Response(stream, {
+        return new ResponseCtor(stream, {
             status: head.status || 200,
             headers: mergedHeaders,
         });

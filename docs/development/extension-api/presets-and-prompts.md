@@ -312,7 +312,7 @@ When a plugin needs to make independent LLM calls (e.g., AI-assisted features in
 
 ```js
 import { sendOpenAIRequest } from '../../../openai.js';
-const context = Luker.getContext();
+const context = Taverncraft.getContext();
 
 // 1. Resolve World Info activation results
 const wi = await context.resolveWorldInfoForMessages(myCustomMessages, {
@@ -358,7 +358,7 @@ Returns a snapshot of the resolved prompt configuration including:
 - `mainApi` / `completionApi` — active API identifiers
 - `presetRefs` — names of resolved completion / context / instruct / sysprompt / reasoning presets
 - `promptCore` — extracted prompt-affecting fields per preset
-- `promptLayout` — the merged Luker layout (from `extensions.luker.prompt_layout`)
+- `promptLayout` — the merged Taverncraft layout (from `extensions.luker.prompt_layout`)
 - `promptCatalog` — map of `prompt.identifier` → `{ name, role, content, marker, systemPrompt }`
 - `characterCard` — current character fields (when `includeCharacterCard !== false`)
 
@@ -381,7 +381,7 @@ formatPromptPresetEnvelope(envelope?: object, options?: { label?: string }): str
 Formats an envelope as `[[LABEL]]\n<json>` for embedding into another prompt (e.g., when delegating to a meta-LLM that needs to reason about the user's prompt config). Defaults to the current envelope when none is supplied.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const envelope = ctx.getActivePromptPresetEnvelope({ includeCharacterCard: true });
 const serialized = ctx.formatPromptPresetEnvelope(envelope);
 console.log(serialized);
@@ -435,7 +435,7 @@ removeReasoningFromString(str: string): string
 Strips the reasoning prefix/suffix block from a string using the active reasoning template. Returns the input unchanged when no template is configured or no reasoning span is found. Use when you need just the user-facing answer text from a model output that may include `<thinking>...</thinking>`-style sections.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const parsed = ctx.parseReasoningFromString(modelOutput);
 if (parsed) {
     console.log('Reasoning:', parsed.reasoning);
@@ -490,7 +490,7 @@ context.openai: {
 Helpers for working with chat-completion connection state. `proxies` is the live list of user-configured reverse proxies. `ZAI_ENDPOINT` enumerates the well-known Zhipu / Z.AI endpoint URLs. `stripPresetConnectionFields` returns a clone of a preset with connection-specific fields (api source, model, proxy, etc.) removed — used when exporting a preset that should be portable across user setups.
 
 ```js
-const ctx = Luker.getContext();
+const ctx = Taverncraft.getContext();
 const portable = ctx.openai.stripPresetConnectionFields(preset);
 const json = JSON.stringify(portable, null, 2);
 ```

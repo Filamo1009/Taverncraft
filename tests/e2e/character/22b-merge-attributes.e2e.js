@@ -42,7 +42,7 @@ test.describe('#22b — /api/characters/merge-attributes API integration (no use
     test('merge lifts an arbitrary extension key into data.extensions.* and UNSET deletes it', async ({ page }) => {
         await awaitMainUI(page, server.baseURL);
         await page.waitForFunction(() => {
-            const ctx = window.Luker?.getContext?.();
+            const ctx = window.Taverncraft?.getContext?.();
             return !!ctx?.characters?.find?.(c => c?.name === 'Ash the Cartographer');
         }, { timeout: 15_000 });
 
@@ -52,7 +52,7 @@ test.describe('#22b — /api/characters/merge-attributes API integration (no use
         // sister flows. Drive it via fetch from the page session so
         // cookies + CSRF + handle resolution stay accurate.
         const mergeResult = await page.evaluate(async (avatar) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const body = {
                 avatar,
                 data: {
@@ -77,7 +77,7 @@ test.describe('#22b — /api/characters/merge-attributes API integration (no use
         expect(mergeResult.ok, `merge failed: ${mergeResult.status} ${mergeResult.body}`).toBe(true);
 
         const afterMerge = await page.evaluate(async (avatar) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const res = await fetch('/api/characters/get', {
                 method: 'POST', headers: ctx.getRequestHeaders(),
                 body: JSON.stringify({ avatar_url: avatar }), cache: 'no-cache',
@@ -94,7 +94,7 @@ test.describe('#22b — /api/characters/merge-attributes API integration (no use
         await reloadAndAwait(page, server.baseURL);
 
         const persisted = await page.evaluate(async (avatar) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const res = await fetch('/api/characters/get', {
                 method: 'POST', headers: ctx.getRequestHeaders(),
                 body: JSON.stringify({ avatar_url: avatar }), cache: 'no-cache',
@@ -107,7 +107,7 @@ test.describe('#22b — /api/characters/merge-attributes API integration (no use
 
         // Step 2: UNSET sentinel — delete the key.
         const unsetResult = await page.evaluate(async ({ avatar, UNSET }) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const body = {
                 avatar,
                 data: {
@@ -126,7 +126,7 @@ test.describe('#22b — /api/characters/merge-attributes API integration (no use
         expect(unsetResult.ok, `unset merge failed: ${unsetResult.status} ${unsetResult.body}`).toBe(true);
 
         const afterUnset = await page.evaluate(async (avatar) => {
-            const ctx = window.Luker.getContext();
+            const ctx = window.Taverncraft.getContext();
             const res = await fetch('/api/characters/get', {
                 method: 'POST', headers: ctx.getRequestHeaders(),
                 body: JSON.stringify({ avatar_url: avatar }), cache: 'no-cache',

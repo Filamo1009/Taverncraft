@@ -19,7 +19,7 @@
  *     authoring tools return `pendingSkillEdit` blobs the popups park for
  *     per-card user review and commit at Apply time.
  *   - ctx-and-docs-discovery.js — pure async executors for ctx
- *     introspection (listCtxKeys / describeCtxPath) and Luker doc lookup
+ *     introspection (listCtxKeys / describeCtxPath) and Taverncraft doc lookup
  *     (listLukerDocs / readLukerDoc). Used by CardApp Studio AI chat and
  *     the orchestrator iter-studio. Callers pick their own tool names +
  *     JSON-Schemas around these executors.

@@ -6,7 +6,7 @@
 //   1. Seed a card with `data.extensions.luker.chat_completion_preset =
 //      { presets: [{name, preset:{temperature,...}}], defaultPresetName }`
 //      via writeEmbeddedCharacter (uses writePngCard directly — the same
-//      writer real card exports use, so this is on-disk state Luker's
+//      writer real card exports use, so this is on-disk state Taverncraft's
 //      /api/characters loader parses natively).
 //   2. Select the card via the visible list.
 //   3. Assert ghost <optgroup data-luker-card-bound="1"> exists in

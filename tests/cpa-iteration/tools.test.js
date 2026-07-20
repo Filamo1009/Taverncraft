@@ -2,7 +2,7 @@
 import { describe, test, expect, beforeAll, jest } from '@jest/globals';
 
 // iteration-library/tools/skill-iter-studio.js captures `skillsApi` + `yaml` from
-// `Luker.getContext()` at module load. Stub it before the dynamic
+// `Taverncraft.getContext()` at module load. Stub it before the dynamic
 // import so the module's eval succeeds. The CPA-exposed tools all touch
 // these (skill_list_visible / skill_inspect / skill_create / etc), but
 // these unit tests never fire those handlers — the stub just satisfies
@@ -12,7 +12,7 @@ import { describe, test, expect, beforeAll, jest } from '@jest/globals';
 // at module load; the lib.lodash slot must be a real lodash so the editable
 // tool tests' lodash.get/lodash.cloneDeep calls work.
 const lodashDefault = (await import('lodash')).default;
-globalThis.Luker = {
+globalThis.Taverncraft = {
     getContext: () => ({
         skills: {
             list: jest.fn(async () => []),
