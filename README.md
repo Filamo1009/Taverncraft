@@ -4,21 +4,51 @@ Taverncraft is a moddable world-simulation and interactive narrative engine buil
 [Luker](https://github.com/funnycups/Luker), which is itself derived from
 [SillyTavern](https://github.com/SillyTavern/SillyTavern). It keeps the established
 character-card, lorebook, preset, and extension ecosystem while adding authoritative
-world state, inspectable prompt assembly, stronger long-term memory, and a staged path
-from a single NPC to a multi-actor simulated world.
+world state, inspectable prompt assembly, stronger long-term memory, and a validated
+single-NPC story path. Multi-NPC autonomous simulation is future work, not a current
+Phase 1 capability.
+
+## Start here
+
+- **New users / 新用户**: [AI 酒馆完整使用说明与功能优势](docs/zh-CN/guide/complete-user-manual.md)
+- **Install and connect a model**: [Getting started](docs/guide/getting-started.md) · [简体中文快速开始](docs/zh-CN/guide/getting-started.md)
+- **Understand the Luker/SillyTavern improvements**: [Improvement overview](docs/improvements/overview.md) · [简体中文改进总览](docs/zh-CN/improvements/overview.md)
+- **Operate World Engine safely**: [World Engine guide](docs/features/world-engine.md) · [简体中文世界引擎指南](docs/zh-CN/features/world-engine.md)
+- **Maintain or extend the project**: [Developer maintenance map / 开发维护地图](docs/development/maintenance-map.md)
+- **Check the acceptance evidence**: [Phase 1 development and acceptance plan](docs/development/phase1-single-npc-world-engine.md)
+
+### Where to make the next change
+
+| Change area | Start with | Source/test map |
+| --- | --- | --- |
+| Character cards, World Info, personas, presets, or chat | [User feature catalog](docs/zh-CN/guide/complete-user-manual.md#角色世界设定与提示词) | [Compatibility and module map](docs/development/maintenance-map.md#按改动类型定位) |
+| World state, rollback, Post-History, prompt inspection, or memory bridge | [World Engine acceptance plan](docs/development/phase1-single-npc-world-engine.md) | [World Engine source map](docs/development/maintenance-map.md#world-engine-源码地图) |
+| Memory Graph, Orchestrator, card/preset editors, Skills, or CardApp | [Advanced feature catalog](docs/zh-CN/guide/complete-user-manual.md#ai-创作与自动化工具) | [Luker capability map](docs/development/maintenance-map.md#luker-能力地图) |
+| Persistence, storage engines, generation delivery, auth, or networking | [Improvement overview](docs/improvements/overview.md) | [Change routing table](docs/development/maintenance-map.md#按改动类型定位) |
+| Plugin or extension API | [Extension API reference](docs/development/extension-api/index.md) | [Plugin integration guide](docs/development/extension-api/plugin-integration.md) |
+| Branding, compatibility aliases, release notes, or docs | [Branding policy](docs/development/branding-and-compatibility.md) | [Documentation update rules](docs/development/maintenance-map.md#文档更新规则) |
+
+Every user-visible change should update the relevant user guide, development contract,
+tests, and changelog. The maintenance map records the expected path from a root README
+entry to implementation and verification.
 
 ## World Engine (Phase 1)
 
-This branch adds a user-controllable, single-NPC world engine on top of Taverncraft's existing
+This release adds a user-controllable, single-NPC world engine on top of Taverncraft's existing
 SillyTavern-compatible chat flow. It supports Character Card V1/V2/V3 and
 World Info round-tripping, inspectable prompt layers, authoritative world
 state, rollback-aware Memory Graph integration, and validated state backup and
 restore. Taverncraft's multi-agent features remain available but are not part of the
 Phase 1 path and stay disabled by default.
 
+Automated gates, synthetic 200-turn runs, and the authorized real-model 50-turn gate
+passed on 2026-07-20 with no P0/P1 issue. The Phase 1 completion definition still
+retains final user confirmation.
+
 - [World Engine user and operations guide](docs/features/world-engine.md)
 - [Phase 1 development and acceptance plan](docs/development/phase1-single-npc-world-engine.md)
 - [简体中文使用与运维指南](docs/zh-CN/features/world-engine.md)
+- [完整中文使用说明与优势总结](docs/zh-CN/guide/complete-user-manual.md)
 
 ## Why Taverncraft
 

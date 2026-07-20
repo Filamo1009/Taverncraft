@@ -1,6 +1,6 @@
 # 从 SillyTavern 迁移
 
-Taverncraft 是 SillyTavern 的下游分支，保持了完整的数据兼容性。从 SillyTavern 迁移到 Taverncraft 只需几个简单步骤，你的所有数据都可以无缝使用。
+Taverncraft 是 Luker 与 SillyTavern 的下游项目，保留当前兼容测试覆盖的标准数据路径。角色卡、世界书、Persona、预设和 JSONL 聊天通常可以直接迁移，但必须保留备份，并单独验证第三方扩展和 Taverncraft 专属状态。
 
 ::: tip 在 Android 上从 Termux 迁移？
 本指南适用于 PC / Linux / Docker → Taverncraft，以及 **Termux(Sillytavern) → Termux(Taverncraft)**，两端共享文件系统，按下面步骤复制 `data/` 即可。
@@ -58,18 +58,17 @@ node server.js
 
 ## 数据兼容性
 
-Taverncraft 与 SillyTavern 的数据格式完全兼容，以下数据类型均可直接使用：
+当前兼容测试覆盖以下标准数据路径：
 
 | 数据类型 | 兼容性 | 说明 |
 | --- | --- | --- |
-| 角色卡（PNG/JSON） | ✅ 完全兼容 | 支持 V1/V2 规范 |
-| 聊天记录（.jsonl） | ✅ 完全兼容 | 增量同步端点向下兼容 |
-| 世界书（World Info） | ✅ 完全兼容 | 条目格式不变 |
-| 预设 | ✅ 完全兼容 | Taverncraft 会自动分离连接参数 |
-| 用户人设（Persona） | ✅ 完全兼容 | — |
-| 扩展设置 | ✅ 完全兼容 | 第三方扩展照常工作 |
-| 群聊 | ✅ 完全兼容 | — |
-| API 密钥（secrets） | ✅ 完全兼容 | `secrets.json` 格式不变 |
+| 角色卡（PNG/JSON） | 已测试 | V1/V2/V3、内嵌世界书和未知字段往返 |
+| 聊天记录（.jsonl） | 已测试 | 导入导出及常用编辑、Swipe、分支路径 |
+| 世界书（World Info） | 已测试 | 内嵌与独立世界书路径 |
+| 预设 / Persona | 支持 | 迁移后核对绑定的 Taverncraft 扩展状态 |
+| 扩展设置 | 需逐项验证 | 加载界面兼容，但不保证任意扩展直接可用 |
+| 群聊 | 继承路径 | 迁移后核对部署中重要的分组聊天 |
+| API 密钥（secrets） | 敏感数据 | 只在可信本地安装间迁移，禁止提交或公开文件 |
 
 ## Taverncraft 新增的状态文件
 
@@ -83,14 +82,14 @@ Taverncraft 在运行过程中会在数据目录中生成一些额外的**状态
 
 ## 注意事项
 
-1. **Node.js 版本**：Taverncraft 要求 Node.js >= 20。迁移前请确认你的 Node.js 版本。
+1. **Node.js 版本**：Taverncraft 要求 Node.js >= 20.18.1。迁移前请以当前 `package.json` 为准。
 
-2. **第三方扩展**：SillyTavern 的第三方扩展在 Taverncraft 中照常工作。Taverncraft 使用相同的扩展加载机制，扩展目录位于 `public/scripts/extensions/third-party/`。
+2. **第三方扩展**：Taverncraft 使用兼容的扩展加载界面，扩展目录位于 `public/scripts/extensions/third-party/`。重要扩展必须逐个测试，不保证任意前端扩展直接可用。
 
 3. **配置文件**：SillyTavern 的 `config.yaml` 与 Taverncraft 的格式兼容，但 Taverncraft 新增了一些配置段（如 `sso`、`hostWhitelist` 等）。`requestProxy` 等配置项是 SillyTavern 已有的，无需额外处理。建议以 Taverncraft 的默认 `config.yaml` 为基础，将你的自定义配置迁移过来。详见 [基础配置](/zh-CN/guide/configuration)。
 
 4. **预设解耦**：Taverncraft 将 API 连接参数与预设分离。迁移后，你的预设仍然正常工作，Taverncraft 会在加载时自动处理字段分类。
 
-5. **双向兼容**：由于 Taverncraft 不修改 SillyTavern 的原始数据格式，你可以随时在两者之间切换。只需注意 Taverncraft 独有功能（如记忆图、编排器）产生的数据在 SillyTavern 中不可用。
+5. **迁回其他客户端**：标准导出可由兼容客户端读取，但世界引擎、记忆图和编排器状态可能被忽略。必须保留原始备份，并验证目标客户端会保留未知字段，才能把迁回路径视为无损。
 
 6. **Docker 部署**：如果你使用 Docker 部署，请参考 Taverncraft 提供的 `docker-compose.yml` 参考配置，将数据目录挂载为卷。

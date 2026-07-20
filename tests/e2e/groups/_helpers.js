@@ -237,6 +237,12 @@ export async function openGroupForChat(page, groupId) {
  * @param {import('@playwright/test').Page} page
  */
 export async function openGroupEditPanel(page) {
+    if (await page.locator('#tc-modern-shell').count()) {
+        await page.evaluate(() => window.Taverncraft.ui.openCurrentGroupManager());
+        await page.locator('#rm_group_chats_block').waitFor({ state: 'visible', timeout: 10_000 });
+        await page.locator('#rm_group_members .group_member').first().waitFor({ state: 'visible', timeout: 10_000 });
+        return;
+    }
     // Open the right-nav drawer if it's closed.
     const drawerClosed = await page.evaluate(() => {
         const i = document.querySelector('#rightNavDrawerIcon');

@@ -99,6 +99,11 @@ async function initializeApplication() {
         await import('./script.js');
         safePerfMark('luker:init:import:app:end');
         safePerfMeasure('luker:init:import:app', 'luker:init:import:app:start', 'luker:init:import:app:end');
+
+        safePerfMark('taverncraft:init:modern-ui:start');
+        await import('./scripts/taverncraft-ui/main.js');
+        safePerfMark('taverncraft:init:modern-ui:end');
+        safePerfMeasure('taverncraft:init:modern-ui', 'taverncraft:init:modern-ui:start', 'taverncraft:init:modern-ui:end');
     } catch (error) {
         console.error('Failed to initialize Taverncraft application:', error);
     } finally {

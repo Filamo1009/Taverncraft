@@ -2,7 +2,7 @@
 
 Taverncraft 酒馆工坊是基于 [Luker](https://github.com/funnycups/Luker) 深度开发的世界模拟与角色扮演平台；Luker 本身源自 [SillyTavern](https://github.com/SillyTavern/SillyTavern)。它保留了 SillyTavern 成熟的角色卡生态和数据格式兼容性，同时加入权威世界状态、提示词检查、长期记忆和可扩展 Mod 架构。
 
-Taverncraft 完全兼容 SillyTavern 的数据——角色卡、世界书、预设均可直接使用，迁移成本为零。如果你不想继续使用 Taverncraft，也可以随时降级回 SillyTavern，数据不会被破坏。
+Taverncraft 支持当前兼容测试覆盖的标准 SillyTavern 数据路径，包括 Character Card V1/V2/V3、世界书、Persona、预设和 JSONL 聊天。Taverncraft 专属状态以附加数据保存，其他客户端可能忽略它。迁移或降级前必须备份，不要在未经验证时假设任意第三方扩展都会保留全部字段。
 
 ## 为什么选择 Taverncraft
 
@@ -32,7 +32,7 @@ Taverncraft 内置了多个面向角色扮演场景的专业工具——记忆�
 
 ### 多 Agent 编排（Orchestrator）
 
-在创作 LLM 生成回复之前，自动运行多个 Agent 进行剧情分析和编排。提供三种执行模式：Spec 工作流（预定义阶段和节点）、单 Agent 模式和 Agenda 规划器（动态调度）。编排配置可绑定到角色卡并随角色卡导入导出。
+在创作 LLM 生成回复之前，可以先由 Agent 分析和编排剧情。当前提供五种运行模式：Spec、单 Agent、Agenda、Loop 和 Director。多数模式生成精简 capsule 交给主模型，Director 则直接接管最终正文。角色卡绑定与文件级导入导出能力因模式而异，以各模式专题为准。
 
 → [多 Agent 编排详细文档](/zh-CN/features/orchestrator/)
 
@@ -89,19 +89,19 @@ Taverncraft 还包含许多其他改进：Undo Toast 撤销系统、聊天人设
 
 ## 兼容性
 
-Taverncraft 与 SillyTavern 保持数据格式层面的完全兼容：
+Taverncraft 对以下标准 SillyTavern 数据路径保持经过测试的兼容性：
 
 | 数据类型 | 兼容性 |
 |---------|--------|
-| 角色卡（PNG/JSON） | ✅ 完全兼容，可双向导入导出 |
-| 世界书 / Lorebook | ✅ 完全兼容 |
-| 聊天记录 | ✅ 完全兼容 |
-| 聊天补全预设 | ✅ 完全兼容 |
-| 第三方扩展 | ✅ 兼容，支持 isomorphic-git 回退 |
-| 用户设置 | ✅ 完全兼容 |
+| 角色卡（PNG/JSON） | 已覆盖 V1/V2/V3 导入导出和未知字段往返 |
+| 世界书 / Lorebook | 已覆盖内嵌与独立世界书路径 |
+| 聊天记录 | 已覆盖 JSONL 导入导出和常用聊天操作 |
+| 聊天补全预设 / Persona | 支持；迁移后需核对绑定的 Taverncraft 扩展状态 |
+| 第三方扩展 | 使用兼容加载界面，但不保证任意扩展直接可用 |
+| 用户设置 | 支持；应以 Taverncraft 默认配置为基础逐项迁移 |
 
 ::: info 双向迁移
-你可以随时从 SillyTavern 迁移到 Taverncraft，也可以从 Taverncraft 降级回 SillyTavern。Taverncraft 新增的功能数据（如记忆图、编排配置等）存储在独立的状态文件中，不会影响 SillyTavern 的核心数据结构。但仍建议在迁移前做好备份。
+世界引擎、记忆图和编排配置等 Taverncraft 专属数据保存在附加状态或扩展元数据中；不理解它的客户端可能忽略这些内容，不同客户端保留未知字段的能力也不同。双向迁移都必须保留备份，并在完成后核对一张已知角色卡和聊天。
 :::
 
 ## 下一步

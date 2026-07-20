@@ -71,6 +71,7 @@ const zhCNSidebar = [
   text: '入门指南',
   items: [
   { text: 'Taverncraft 是什么', link: '/zh-CN/guide/what-is-taverncraft' },
+  { text: '完整使用说明与功能优势', link: '/zh-CN/guide/complete-user-manual' },
   { text: '快速开始', link: '/zh-CN/guide/getting-started' },
   { text: '从 SillyTavern 迁移', link: '/zh-CN/guide/migration' },
   { text: '从 Termux 迁移到 APK', link: '/zh-CN/guide/migration-from-termux' },
@@ -186,6 +187,8 @@ const zhCNSidebar = [
   {
   text: '开发文档',
   items: [
+  { text: '开发维护地图', link: '/development/maintenance-map' },
+  { text: '第一阶段开发与验收', link: '/development/phase1-single-npc-world-engine' },
   { text: '前端插件开发', link: '/zh-CN/development/frontend-plugin' },
           { text: '后端插件开发', link: '/zh-CN/development/server-plugin' },
           {
@@ -489,6 +492,8 @@ const enSidebar = [
   {
     text: 'Development',
     items: [
+      { text: 'Maintenance Map', link: '/development/maintenance-map' },
+      { text: 'Phase 1 Development & Acceptance', link: '/development/phase1-single-npc-world-engine' },
       { text: 'Frontend Plugin Development', link: '/development/frontend-plugin' },
               { text: 'Server Plugin Development', link: '/development/server-plugin' },
               {

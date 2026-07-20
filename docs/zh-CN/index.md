@@ -14,6 +14,9 @@ hero:
       link: https://github.com/Filamo1009/Taverncraft
 
 features:
+  - icon: 🌍
+    title: 权威世界引擎
+    details: 面向单活动 NPC 的可验证世界状态，提供受约束操作、事件哈希、历史联动回滚、提示词检查和可移植状态备份。
   - icon: 🧠
     title: 记忆图
     details: 基于知识图谱的长期记忆系统，让角色真正「记住」每一次对话中的关键信息，构建持久且连贯的角色关系网络。

@@ -160,9 +160,14 @@ export async function selectCharacterByName(page, name) {
         await onboardingHeader.waitFor({ state: 'detached', timeout: 5000 }).catch(() => {});
     }
 
-    const drawer = page.locator('#rightNavDrawerIcon');
-    const drawerClosed = await drawer.evaluate(el => el.classList.contains('closedIcon')).catch(() => true);
-    if (drawerClosed) await drawer.click();
+    const modernUi = await page.locator('#tc-modern-shell').count();
+    if (modernUi) {
+        await page.locator('[data-tc-route="library"]').first().click();
+    } else {
+        const drawer = page.locator('#rightNavDrawerIcon');
+        const drawerClosed = await drawer.evaluate(el => el.classList.contains('closedIcon')).catch(() => true);
+        if (drawerClosed) await drawer.click();
+    }
 
     // If a prior character was already selected, the right drawer is
     // showing the character-edit panel rather than the list. Click the
@@ -206,6 +211,11 @@ export async function selectCharacterByName(page, name) {
  * dispatch the click via JS to bypass the overlay reliably.
  */
 export async function closeRightNavDrawer(page) {
+    if (await page.locator('#tc-modern-shell').count()) {
+        await page.locator('[data-tc-route="chat"]').first().click();
+        await page.locator('#send_textarea').waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
+        return;
+    }
     const isOpen = await page.evaluate(() => {
         const i = document.querySelector('#rightNavDrawerIcon');
         return i && i.classList.contains('openIcon');

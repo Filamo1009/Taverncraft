@@ -1,6 +1,6 @@
 # Character Card Developer Guide
 
-This guide is for character card creators, covering how to leverage Taverncraft's extension capabilities to create richer, smarter character cards. Taverncraft provides several enhancements while maintaining full compatibility with the SillyTavern character card format.
+This guide is for character card creators, covering how to leverage Taverncraft's extension capabilities to create richer, smarter character cards. Taverncraft preserves the standard SillyTavern V1/V2/V3 paths covered by its compatibility tests while adding extension metadata and tools.
 
 ## Character Card Extension Fields
 

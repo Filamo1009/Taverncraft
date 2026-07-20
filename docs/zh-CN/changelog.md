@@ -4,6 +4,15 @@
 
 ## 当前版本
 
+### Taverncraft 第一阶段世界引擎（2026-07-20）
+
+- 新增单活动 NPC 权威世界状态，覆盖时钟、地点、玩家、NPC、物品、关系、任务、标记和扩展命名空间；
+- 新增经过校验的 `WorldOperationV1` 工具操作、前置/结果状态哈希、确定性事件重放，以及与编辑、删除、重生成、Swipe、分支对齐的回滚；
+- 新增四级 World Engine Post-History、提示层快照、本地 Dry Run、Request Inspector 集成、旧 `<initvar>` 导入和带哈希状态备份/恢复；
+- 加固 Character Card V1/V2/V3 与真实 V4 PNG 往返，包含 `ccv3` 优先级及角色卡/世界书未知字段保留；
+- 自动门禁、200 回合合成长跑和获授权的真实模型 50 回合硬门均通过，未发现 P0/P1；完成定义仍保留最终用户确认；
+- 新增[完整使用说明与功能优势](/zh-CN/guide/complete-user-manual)和[开发维护地图](/development/maintenance-map)。
+
 ### 编排器
 
 - **搜索工具支持正则** —— `draft_search`（新增）以及已有的 `chat_search` / `lorebook_search` / `skill_search` 都接受 `pattern` 参数（JavaScript 正则表达式源码），并返回 grep `-n` 风格输出。批评者用它系统性地扫描词汇模式，而不再依赖肉眼通读。
@@ -15,7 +24,7 @@
 ### 核心功能
 
 - **记忆图**：基于知识图谱的长期记忆系统，9 层混合召回管线
-- **多Agent编排**：三种执行模式（Spec 工作流、单 Agent、Agenda 规划器）
+- **多Agent编排**：五种运行模式（Spec、单 Agent、Agenda、Loop、Director）
 - **角色卡编辑助手**：AI 驱动的对话式角色卡编辑，7 个工具
 - **搜索插件**：DuckDuckGo、SearXNG、Brave Search 三引擎支持
 - **补全预设助手**：AI 辅助预设参数理解和优化

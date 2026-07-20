@@ -14,6 +14,9 @@ hero:
       link: https://github.com/Filamo1009/Taverncraft
 
 features:
+  - icon: 🌍
+    title: Authoritative World Engine
+    details: A validated single-NPC world state with auditable operations, event hashes, history-aware rollback, prompt inspection, and portable state backups.
   - icon: 🧠
     title: Memory Graph
     details: A knowledge-graph-based long-term memory system that lets characters truly "remember" key information across conversations, building persistent and coherent relationship networks.

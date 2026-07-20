@@ -43,6 +43,15 @@ export function disableTagImportPopup({ dataRoot, handle = 'default-user' }) {
  * script.js:15722).
  */
 export async function openCharacterEditPanel(page, { timeoutMs = 10_000 } = {}) {
+    if (await page.locator('#tc-modern-shell').count()) {
+        const editor = page.locator('#rm_ch_create_block');
+        if (!(await editor.isVisible().catch(() => false))) {
+            await page.evaluate(() => window.Taverncraft.ui.editCurrentCharacter());
+        }
+        await editor.waitFor({ state: 'visible', timeout: timeoutMs });
+        await page.locator('#description_textarea').waitFor({ state: 'visible', timeout: timeoutMs });
+        return;
+    }
     const drawer = page.locator('#rightNavDrawerIcon');
     const closed = await drawer.evaluate(el => el.classList.contains('closedIcon')).catch(() => true);
     if (closed) {
@@ -75,9 +84,14 @@ export async function openCharacterEditPanel(page, { timeoutMs = 10_000 } = {}) 
  * two cards share the same display name (e.g. a duplicate).
  */
 export async function clickCharacterCard(page, nameOrSpec, { timeoutMs = 10_000 } = {}) {
-    const drawer = page.locator('#rightNavDrawerIcon');
-    const closed = await drawer.evaluate(el => el.classList.contains('closedIcon')).catch(() => true);
-    if (closed) await drawer.click();
+    const modernUi = await page.locator('#tc-modern-shell').count();
+    if (modernUi) {
+        await page.locator('[data-tc-route="library"]').first().click();
+    } else {
+        const drawer = page.locator('#rightNavDrawerIcon');
+        const closed = await drawer.evaluate(el => el.classList.contains('closedIcon')).catch(() => true);
+        if (closed) await drawer.click();
+    }
     const blockHidden = await page.evaluate(() => {
         const el = document.querySelector('#rm_print_characters_block');
         if (!el) return true;
@@ -121,6 +135,12 @@ export async function clickCharacterCard(page, nameOrSpec, { timeoutMs = 10_000 
     const card = page.locator(`#rm_print_characters_block .character_select[chid="${targetChid}"], #rm_print_characters_block .character_select[data-chid="${targetChid}"]`).first();
     await card.waitFor({ state: 'attached', timeout: timeoutMs });
     await card.click();
+    if (modernUi) {
+        await page.waitForFunction(() => Number.isInteger(Number(window.Taverncraft?.getContext?.()?.characterId)), { timeout: timeoutMs });
+        await page.waitForFunction(() => document.body.dataset.tcView === 'chat', { timeout: timeoutMs });
+        await page.waitForTimeout(300);
+        await page.evaluate(() => window.Taverncraft.ui.editCurrentCharacter());
+    }
     await page.locator('#rm_ch_create_block').waitFor({ state: 'visible', timeout: timeoutMs });
     await page.locator('#description_textarea').waitFor({ state: 'visible', timeout: timeoutMs });
 }

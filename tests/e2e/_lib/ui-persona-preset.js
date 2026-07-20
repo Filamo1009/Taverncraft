@@ -19,6 +19,11 @@ import { acceptTopmostPopup, fillTopmostPopupAndAccept } from './page.js';
 // ──────────────────────────────────────────────────────────────────────────
 
 export async function openPersonaPanel(page) {
+    if (await page.locator('#tc-modern-shell').count()) {
+        await page.locator('[data-tc-route="persona"]').first().click();
+        await page.locator('#persona-management-block').waitFor({ state: 'visible', timeout: 5000 });
+        return;
+    }
     const drawer = page.locator('#persona-management-button');
     const closed = await drawer.locator('.drawer-icon').first().evaluate(el => el.classList.contains('closedIcon')).catch(() => true);
     if (closed) {
