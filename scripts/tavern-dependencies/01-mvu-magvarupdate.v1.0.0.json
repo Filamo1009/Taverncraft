@@ -1,0 +1,17 @@
+{
+  "type": "script",
+  "enabled": true,
+  "name": "MVU / MagVarUpdate",
+  "id": "c8e43a47-da8f-4c47-b67e-82942c4a6a95",
+  "content": "// Version: 1.0.0\n// MVU / MagVarUpdate stable loader\n// Source: https://github.com/MagicalAstrogy/MagVarUpdate\nimport 'https://testingcf.jsdelivr.net/gh/MagicalAstrogy/MagVarUpdate@master/artifact/bundle.js';",
+  "info": "全局 MVU 运行时加载器。使用 MagVarUpdate 官方 stable/master 构建；供所有角色卡使用。",
+  "button": {
+    "enabled": false,
+    "buttons": []
+  },
+  "data": {},
+  "export_with": {
+    "data": true,
+    "button": true
+  }
+}
