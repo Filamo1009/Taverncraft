@@ -1,0 +1,73 @@
+dataRoot: ./data
+serverPluginsPath: ./plugins
+globalExtensionsPath: ./public/scripts/extensions/third-party
+
+storage:
+  mode: fs
+  failFast: true
+
+listen: true
+listenAddress:
+  ipv4: 0.0.0.0
+  ipv6: "[::]"
+protocol:
+  ipv4: true
+  ipv6: false
+port: 8000
+heartbeatInterval: 30
+enableKeepAlive: true
+
+browserLaunch:
+  enabled: false
+
+ssl:
+  enabled: false
+
+whitelistMode: false
+enableForwardedWhitelist: false
+whitelistDockerHosts: false
+basicAuthMode: false
+enableUserAccounts: false
+enableDiscreetLogin: true
+perUserBasicAuth: false
+
+cors:
+  enabled: false
+
+hostWhitelist:
+  enabled: false
+  scan: true
+  hosts: []
+
+privateAddressWhitelist:
+  enabled: true
+  allowUnresolvedHosts: false
+  log:
+    blockedRequests: true
+    allowedRequests: false
+  allowedRanges:
+    - 127.0.0.0/8
+    - ::1/128
+
+sessionTimeout: 604800
+disableCsrfProtection: false
+securityOverride: true
+allowKeysExposure: false
+
+logging:
+  enableAccessLog: true
+  minLogLevel: 1
+
+forwardedHeaders:
+  xRealIp: false
+  xForwardedFor: true
+  cfConnectingIp: true
+
+extensions:
+  enabled: true
+  autoUpdate: false
+  models:
+    autoDownload: false
+
+enableServerPlugins: false
+enableServerPluginsAutoUpdate: false

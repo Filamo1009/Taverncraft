@@ -17,8 +17,8 @@ describe('TavernCraft modern UI integration contract', () => {
 
     test('loads the redesign after the original application modules', () => {
         expect(index).toContain('css/taverncraft-modern.css');
-        expect(init).toContain('import(\'./scripts/taverncraft-ui/main.js\')');
-        expect(init.indexOf('import(\'./script.js\')')).toBeLessThan(init.indexOf('import(\'./scripts/taverncraft-ui/main.js\')'));
+        expect(init).toContain('import(\'./scripts/taverncraft-ui/main.js?v=2026-07-21.2\')');
+        expect(init.indexOf('import(\'./script.js\')')).toBeLessThan(init.indexOf('import(\'./scripts/taverncraft-ui/main.js?v=2026-07-21.2\')'));
     });
 
     test('normalizes forced UI mode before the application and background tabs initialize', () => {
@@ -77,6 +77,9 @@ describe('TavernCraft modern UI integration contract', () => {
         expect(css).toContain('data-tc-theme=\'light\'] .drawer-content.tc-active-native');
         expect(ui).not.toContain('SETTINGS_MODE_STORAGE_KEY');
         expect(ui).not.toContain('data-tc-advanced');
+        expect(ui).not.toContain('进阶模式');
+        expect(ui).not.toContain('高级工具');
+        expect(ui).toContain('其他工具');
         expect(css).not.toContain('data-tc-settings-mode');
         expect(css).toContain('@media (max-width: 768px)');
         expect(css).toContain('.tc-mobile-nav');

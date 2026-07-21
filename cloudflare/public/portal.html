@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0a0f">
+  <meta name="robots" content="noindex, nofollow">
+  <title>私人工作区 — TavernCraft</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/site.css">
+  <script src="/portal.js" defer></script>
+</head>
+<body class="portal-page">
+  <header class="portal-header">
+    <a class="wordmark" href="/portal"><span class="brand-rune" aria-hidden="true">T</span><span>TavernCraft</span></a>
+    <div class="portal-account"><span><small>私人工作区</small><b id="accountEmail">正在验证…</b></span><button id="logoutButton" type="button">退出</button></div>
+  </header>
+  <main class="portal-main">
+    <section class="portal-welcome">
+      <p class="eyebrow"><span></span> Owner workspace</p>
+      <h1>今晚，想从哪里继续？</h1>
+      <p>同一个登录入口连接你的酒馆、角色卡与世界书。编辑器会先保存到当前设备，再同步到私人云端。</p>
+    </section>
+    <section class="workspace-cards" aria-label="工作区应用">
+      <a class="workspace-card tavern-card" href="/play?ui=modern">
+        <div class="workspace-art tavern-art"><span class="door-glow"></span><b>T</b></div>
+        <div class="workspace-copy"><span class="workspace-index">01 · Play</span><h2>TavernCraft</h2><p>进入 AI 酒馆，继续聊天、故事和角色扮演。</p><span class="workspace-link">打开酒馆 <i>→</i></span></div>
+      </a>
+      <a class="workspace-card" href="/editor?view=character">
+        <div class="workspace-art card-art"><div class="mini-character"><span>CCv3</span><b>角色档案</b><i></i><i></i><i></i></div></div>
+        <div class="workspace-copy"><span class="workspace-index">02 · Create</span><h2>角色卡编辑器</h2><p>编辑字段、封面、问候语和扩展结构。</p><span class="workspace-link">编辑角色卡 <i>→</i></span></div>
+      </a>
+      <a class="workspace-card" href="/editor?view=world">
+        <div class="workspace-art book-art"><div class="mini-book"><span></span><i></i><i></i><i></i></div></div>
+        <div class="workspace-copy"><span class="workspace-index">03 · Build</span><h2>世界书编辑器</h2><p>组织地点、人物、规则和触发条目。</p><span class="workspace-link">编辑世界书 <i>→</i></span></div>
+      </a>
+    </section>
+    <section class="portal-status">
+      <div><span class="status-light"></span><p><b>私人云同步已连接</b><small>项目内容仅对当前账号可见</small></p></div>
+      <div><span>登录有效期</span><b id="sessionExpiry">7 天</b></div>
+    </section>
+  </main>
+  <footer class="portal-footer"><span>TavernCraft Private Preview</span><a href="/">查看产品页</a></footer>
+</body>
+</html>

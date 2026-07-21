@@ -206,7 +206,7 @@ import {
 } from './scripts/utils.js';
 import { debounce_timeout, GENERATION_TYPE_TRIGGERS, IGNORE_SYMBOL, inject_ids, MEDIA_DISPLAY, MEDIA_SOURCE, MEDIA_TYPE, OVERSWIPE_BEHAVIOR, SCROLL_BEHAVIOR, SWIPE_DIRECTION, SWIPE_SOURCE, SWIPE_STATE } from './scripts/constants.js';
 
-import { bootstrapExtensions, cancelDebouncedMetadataSave, doDailyExtensionUpdatesCheck, extension_settings, initExtensions, loadExtensionSettings, primeExtensionSettings, runGenerationInterceptors, saveMetadataDebounced } from './scripts/extensions.js';
+import { bootstrapExtensions, cancelDebouncedMetadataSave, doDailyExtensionUpdatesCheck, extension_settings, initExtensions, primeExtensionSettings, runGenerationInterceptors, saveMetadataDebounced } from './scripts/extensions.js';
 import { STATE_ERROR_REASONS, makeStateError, makeStateOk } from './scripts/state-errors.js';
 import {
     formatHttpErrorHint,
@@ -216,7 +216,6 @@ import {
     formatValidationTargetHint,
 } from './scripts/state-errors/format.js';
 import { COMMENT_NAME_DEFAULT, CONNECT_API_MAP, consumeEphemeralScriptInjectsForMainGeneration, executeSlashCommandsOnChatInput, initDefaultSlashCommands, initSlashCommandAutoComplete, isExecutingCommandsFromChatInput, pauseScriptExecution, processChatSlashCommands, stopScriptExecution, UNIQUE_APIS } from './scripts/slash-commands.js';
-import { initMacroAutoComplete } from './scripts/autocomplete/MacroAutoComplete.js';
 import {
     tag_map,
     tags,
@@ -272,7 +271,7 @@ import {
     updatePersonaConnectionsAvatarList,
     isPersonaPanelOpen,
 } from './scripts/personas.js';
-import { getBackgrounds, initBackgrounds, loadBackgroundSettings, background_settings } from './scripts/backgrounds.js';
+import { initBackgrounds, loadBackgroundSettings, background_settings } from './scripts/backgrounds.js';
 import { hideLoader, isLoaderVisible, showLoader } from './scripts/loader.js';
 import { loader } from './scripts/action-loader.js';
 import { BulkEditOverlay } from './scripts/BulkEditOverlay.js';
@@ -321,7 +320,6 @@ import { getSystemMessageByType, initSystemMessages, SAFETY_CHAT, sendSystemMess
 import { initAnnouncements } from './scripts/announcements.js';
 import { event_types, eventSource } from './scripts/events.js';
 import {
-    settleBranchCreated,
     settleChatChanged,
     settleMessageDeleted,
     settleMessageSwipeDeleted,
@@ -339,8 +337,8 @@ import { MacroEngine } from './scripts/macros/engine/MacroEngine.js';
 import { addChatBackupsBrowser } from './scripts/chat-backups.js';
 import { onboardingExperimentalMacroEngine } from './scripts/macros/engine/MacroDiagnostics.js';
 import { showUndoToast } from './scripts/undo-toast.js';
-import { compressRequest, setRequestCompressionConfig } from './scripts/request-compression.js';
-import { canJumpToSwipeForMessage, canOpenSwipePickerForMessage, initSwipePicker } from './scripts/swipe-picker.js';
+import { setRequestCompressionConfig } from './scripts/request-compression.js';
+import { canJumpToSwipeForMessage, canOpenSwipePickerForMessage } from './scripts/swipe-picker.js';
 import { bootSelfProfilerFromStorage } from './scripts/self-profiler.js';
 import { createLukerDelivery, installFetchProxy, installFetchProxyForAllIframes, installLifecycleHooks } from './scripts/ws-delivery.js';
 
@@ -695,7 +693,7 @@ function renderLukerRecoveryPreview(text, status = 'running') {
             ? getThumbnailUrl('avatar', characters[this_chid].avatar)
             : 'img/ai4.png';
         const escapeAttr = (s) => String(s).replace(/[<>&"']/g, c => ({
-            '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#39;',
+            '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', '\'': '&#39;',
         })[c] || c);
         preview = $(`
             <div id="${LUKER_RECOVERY_PREVIEW_ID}" class="mes luker-recovery-mes" is_user="false" is_system="false" style="opacity: 0.85;">
@@ -1398,7 +1396,7 @@ async function doLukerUpdateCheck(versionData) {
     }
 
     try {
-        const response = await fetch('/api/system/update-check', { 
+        const response = await fetch('/api/system/update-check', {
             method: 'POST',
             headers: getRequestHeaders(),
         });
@@ -12964,13 +12962,6 @@ export function invalidateChatWriteSnapshot(target = resolveChatStateTarget()) {
     chatMetadataSnapshotCache.delete(snapshotKey);
 }
 
-function invalidateCurrentChatWriteSnapshot() {
-    invalidateChatWriteSnapshot(resolveChatStateTarget());
-    if (chat_metadata && typeof chat_metadata === 'object') {
-        delete chat_metadata.integrity;
-    }
-}
-
 async function readChatWriteConflictPayload(response) {
     if (!response || typeof response.clone !== 'function') {
         return null;
@@ -13187,7 +13178,7 @@ function notifyChatWriteConflict({ kind, errorType, target, retryCount, currentI
                 ? t`Chat sync: integrity drift detected, auto-recovering.`
                 : t`Chat sync: snapshot conflict detected, auto-recovering.`;
             const escape = (s) => String(s).replace(/[<>&"']/g, ch => ({
-                '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#39;',
+                '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', '\'': '&#39;',
             })[ch] || ch);
             const detailParts = [];
             if (endpoint) detailParts.push(escape(endpoint));
@@ -13342,10 +13333,6 @@ export async function resolveChatWriteConflictForTarget(response, target = null,
         divergenceDetails,
     });
     return 'snapshot';
-}
-
-async function shouldRetryChatWriteOnConflict(response, retryCount = 0) {
-    return (await resolveChatWriteConflict(response, retryCount)) !== 'none';
 }
 
 /**
@@ -15551,7 +15538,7 @@ async function messageEditDone(div) {
     }
     const editedMessageId = Number(this_edit_mes_id);
 
-    let { mesBlock, text, mes, bias } = updateMessage(div);
+    let { mesBlock, bias } = updateMessage(div);
 
     const messageElement = chatElement.children('.mes').filter(`[mesid="${editedMessageId}"]`);
     messageElement.find('.mes_edit_buttons').css('display', 'none');
@@ -17171,8 +17158,8 @@ export async function updateCharacterData(charId, patch, { persist = true, immed
         if (key === 'extensions' || key.startsWith('extensions.')) {
             throw new Error(
                 `updateCharacterData: refuses to write '${key}' — use ` +
-                `writeExtensionField/writeExtensionFieldBulk for extension data ` +
-                `(per-extension replace semantics).`,
+                'writeExtensionField/writeExtensionFieldBulk for extension data ' +
+                '(per-extension replace semantics).',
             );
         }
     }

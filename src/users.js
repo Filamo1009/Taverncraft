@@ -694,6 +694,10 @@ export function getPasswordSalt() {
  * @returns {string} The session name
  */
 export function getCookieSessionName() {
+    const configuredName = process.env.TAVERNCRAFT_COOKIE_NAME?.trim();
+    if (configuredName && /^[A-Za-z0-9_-]{1,64}$/.test(configuredName)) {
+        return configuredName;
+    }
     // Get server hostname and hash it to generate a session suffix
     const hostname = os.hostname() || 'localhost';
     const suffix = crypto.createHash('sha256').update(hostname).digest('hex').slice(0, 8);

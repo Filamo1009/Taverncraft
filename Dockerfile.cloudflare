@@ -1,0 +1,46 @@
+ARG NODE_BASE_IMAGE=node:lts-alpine3.23
+FROM ${NODE_BASE_IMAGE}
+
+ARG APP_HOME=/home/node/app
+ARG TIGRISFS_VERSION=1.2.1
+ARG TIGRISFS_SHA256=9fd6e7a9f3e7d86571ea55c66459205e94dfa5f6a25887d7e95c0a46f7641ed4
+
+RUN apk add --no-cache \
+    bash \
+    ca-certificates \
+    curl \
+    dos2unix \
+    fuse3 \
+    gcompat \
+    git \
+    git-lfs \
+    shadow \
+    su-exec \
+    tini \
+  && curl -fsSL "https://github.com/tigrisdata/tigrisfs/releases/download/v${TIGRISFS_VERSION}/tigrisfs_${TIGRISFS_VERSION}_linux_amd64.tar.gz" -o /tmp/tigrisfs.tar.gz \
+  && echo "${TIGRISFS_SHA256}  /tmp/tigrisfs.tar.gz" | sha256sum -c - \
+  && tar -xzf /tmp/tigrisfs.tar.gz -C /usr/local/bin \
+  && chmod 0755 /usr/local/bin/tigrisfs \
+  && rm /tmp/tigrisfs.tar.gz
+
+WORKDIR ${APP_HOME}
+ENV NODE_ENV=production
+
+COPY --chown=node:node . ./
+
+RUN npm ci --no-audit --no-fund --loglevel=error --no-progress --omit=dev --ignore-scripts \
+  && npm cache clean --force \
+  && rm -f config.yaml \
+  && mkdir -p config data plugins public/scripts/extensions/third-party backups \
+  && cp cloudflare/container/config.yaml config/config.yaml \
+  && ln -s ./config/config.yaml config.yaml \
+  && node ./docker/build-lib.js \
+  && cp cloudflare/container/start-cloudflare.sh /usr/local/bin/start-taverncraft-cloudflare \
+  && chmod 0755 /usr/local/bin/start-taverncraft-cloudflare \
+  && dos2unix /usr/local/bin/start-taverncraft-cloudflare \
+  && rm -rf docker cloudflare \
+  && git config --global --add safe.directory "*"
+
+EXPOSE 8000
+
+ENTRYPOINT ["tini", "--", "/usr/local/bin/start-taverncraft-cloudflare"]
