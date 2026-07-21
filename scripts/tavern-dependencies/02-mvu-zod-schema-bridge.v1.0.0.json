@@ -1,0 +1,17 @@
+{
+  "type": "script",
+  "enabled": true,
+  "name": "mvu_zod / Schema Bridge",
+  "id": "0b35043e-e92a-4a9d-8bb6-d6f408e47c57",
+  "content": "// Version: 1.0.0\n// mvu_zod reusable schema bridge\n// Source: https://github.com/StageDog/tavern_resource\nimport { registerMvuSchema } from 'https://testingcf.jsdelivr.net/gh/StageDog/tavern_resource/dist/util/mvu_zod.js';\n\nconst api = Object.freeze({ registerMvuSchema });\nObject.defineProperty(window.parent, 'MvuZod', {\n  configurable: true,\n  value: api,\n});\n\nwindow.addEventListener('pagehide', () => {\n  if (window.parent.MvuZod === api) {\n    delete window.parent.MvuZod;\n  }\n}, { once: true });",
+  "info": "全局 mvu_zod 注册桥。仅暴露 registerMvuSchema；具体 Zod Schema 必须由每张角色卡自行定义并注册。",
+  "button": {
+    "enabled": false,
+    "buttons": []
+  },
+  "data": {},
+  "export_with": {
+    "data": true,
+    "button": true
+  }
+}
