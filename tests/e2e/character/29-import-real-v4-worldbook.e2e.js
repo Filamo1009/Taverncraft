@@ -67,8 +67,10 @@ async function acceptEmbeddedWorldBookPopup(page) {
         hasText: /embedded World|World\/Lorebook|世界书|世界信息|导入|匯入/i,
     }).last();
     if (!(await popup.isVisible({ timeout: 2_000 }).catch(() => false))) {
-        await clickCharacterCard(page, CHARACTER_NAME);
-        await openCharacterEditPanel(page);
+        await clickCharacterCard(page, CHARACTER_NAME, { waitForEditor: false });
+        if (!(await popup.isVisible({ timeout: 2_000 }).catch(() => false))) {
+            await openCharacterEditPanel(page);
+        }
     }
     await popup.waitFor({ state: 'visible', timeout: 10_000 });
     await popup.locator('.popup-button-ok').first().click();

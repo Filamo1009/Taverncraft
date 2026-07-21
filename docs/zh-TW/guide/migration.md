@@ -1,6 +1,6 @@
 # 從 SillyTavern 遷移
 
-Taverncraft 是 SillyTavern 的下游分支，保持了完整的資料相容性。從 SillyTavern 遷移到 Taverncraft 只需幾個簡單步驟，你的所有資料都可以無縫使用。
+Taverncraft 是 Luker 與 SillyTavern 的下游專案，保留目前相容性測試涵蓋的標準資料路徑。角色卡、世界書、Persona、預設與 JSONL 聊天通常可以直接遷移，但必須保留備份，並分別驗證第三方擴充和 Taverncraft 專屬狀態。
 
 ::: tip 在 Android 上從 Termux 遷移？
 本指南適用於 PC / Linux / Docker → Taverncraft，以及 **Termux(SillyTavern) → Termux(Taverncraft)**，兩端共用檔案系統，按下面步驟複製 `data/` 即可。
@@ -58,18 +58,17 @@ node server.js
 
 ## 資料相容性
 
-Taverncraft 與 SillyTavern 的資料格式完全相容，以下資料類型均可直接使用：
+目前相容性測試涵蓋以下標準資料路徑：
 
 | 資料類型 | 相容性 | 說明 |
 | --- | --- | --- |
-| 角色卡（PNG/JSON） | ✅ 完全相容 | 支援 V1/V2 規範 |
-| 聊天記錄（.jsonl） | ✅ 完全相容 | 增量同步端點向下相容 |
-| 世界書（World Info） | ✅ 完全相容 | 條目格式不變 |
-| 預設 | ✅ 完全相容 | Taverncraft 會自動分離連線參數 |
-| 使用者人設（Persona） | ✅ 完全相容 | — |
-| 擴充設定 | ✅ 完全相容 | 第三方擴充照常運作 |
-| 群聊 | ✅ 完全相容 | — |
-| API 金鑰（secrets） | ✅ 完全相容 | `secrets.json` 格式不變 |
+| 角色卡（PNG/JSON） | 已測試 | V1/V2/V3、內嵌世界書與未知欄位往返 |
+| 聊天記錄（.jsonl） | 已測試 | 匯入匯出與常用編輯、Swipe、分支路徑 |
+| 世界書（World Info） | 已測試 | 內嵌與獨立世界書路徑 |
+| 預設 / Persona | 支援 | 遷移後核對綁定的 Taverncraft 擴充狀態 |
+| 擴充設定 | 需逐項驗證 | 載入介面相容，但不保證任意擴充直接可用 |
+| 群聊 | 繼承路徑 | 遷移後核對部署中重要的群組聊天 |
+| API 金鑰（secrets） | 敏感資料 | 只在可信本機安裝間遷移，禁止提交或公開檔案 |
 
 ## Taverncraft 新增的狀態檔案
 
@@ -83,14 +82,14 @@ Taverncraft 在執行過程中會在資料目錄中產生一些額外的**狀態
 
 ## 注意事項
 
-1. **Node.js 版本**：Taverncraft 要求 Node.js >= 20。遷移前請確認你的 Node.js 版本。
+1. **Node.js 版本**：Taverncraft 要求 Node.js >= 20.18.1。遷移前請以目前 `package.json` 為準。
 
-2. **第三方擴充**：SillyTavern 的第三方擴充在 Taverncraft 中照常運作。Taverncraft 使用相同的擴充載入機制，擴充目錄位於 `public/scripts/extensions/third-party/`。
+2. **第三方擴充**：Taverncraft 使用相容的擴充載入介面，擴充目錄位於 `public/scripts/extensions/third-party/`。重要擴充必須逐一測試，不保證任意前端擴充直接可用。
 
 3. **設定檔**：SillyTavern 的 `config.yaml` 與 Taverncraft 的格式相容，但 Taverncraft 新增了一些設定段（如 `sso`、`hostWhitelist` 等）。`requestProxy` 等設定項是 SillyTavern 已有的，無需額外處理。建議以 Taverncraft 的預設 `config.yaml` 為基礎，將你的自訂設定遷移過來。詳見 [基礎設定](/zh-TW/guide/configuration)。
 
 4. **預設解耦**：Taverncraft 將 API 連線參數與預設分離。遷移後，你的預設仍然正常運作，Taverncraft 會在載入時自動處理欄位分類。
 
-5. **雙向相容**：由於 Taverncraft 不修改 SillyTavern 的原始資料格式，你可以隨時在兩者之間切換。只需注意 Taverncraft 獨有功能（如記憶圖、編排器）產生的資料在 SillyTavern 中不可用。
+5. **遷回其他客戶端**：標準匯出可由相容客戶端讀取，但世界引擎、記憶圖和編排器狀態可能被忽略。必須保留原始備份，並驗證目標客戶端會保留未知欄位，才能把遷回路徑視為無損。
 
 6. **Docker 部署**：如果你使用 Docker 部署，請參考 Taverncraft 提供的 `docker-compose.yml` 參考設定，將資料目錄掛載為卷。

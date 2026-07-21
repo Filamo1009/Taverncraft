@@ -4,6 +4,14 @@
 
 ## 當前版本
 
+### Taverncraft 第一階段世界引擎（2026-07-20）
+
+- 新增單一活動 NPC 權威世界狀態，涵蓋時鐘、地點、玩家、NPC、物品、關係、任務、標記與擴充命名空間；
+- 新增經過驗證的 `WorldOperationV1` 工具操作、前置/結果狀態雜湊、確定性事件重播，以及與編輯、刪除、重新生成、Swipe、分支對齊的回滾；
+- 新增四級 World Engine Post-History、提示層快照、本機 Dry Run、Request Inspector 整合、舊 `<initvar>` 匯入與帶雜湊狀態備份/復原；
+- 強化 Character Card V1/V2/V3 與真實 V4 PNG 往返，包含 `ccv3` 優先級及角色卡/世界書未知欄位保留；
+- 自動門禁、200 回合合成長跑與獲授權的真實模型 50 回合硬門均通過，未發現 P0/P1；完成定義仍保留最終使用者確認。
+
 ### 編排器
 
 - **搜尋工具支援正則** —— `draft_search`（新增）以及既有的 `chat_search` / `lorebook_search` / `skill_search` 都接受 `pattern` 參數（JavaScript 正則表達式來源），並回傳 grep `-n` 風格輸出。批評者用它系統性地掃描詞彙模式，而不再仰賴肉眼通讀。
@@ -15,7 +23,7 @@
 ### 核心功能
 
 - **記憶圖**：基於知識圖譜的長期記憶系統，9 層混合召回管線
-- **多 Agent 編排**：三種執行模式（Spec 工作流、單 Agent、Agenda 規劃器）
+- **多 Agent 編排**：五種執行模式（Spec、單 Agent、Agenda、Loop、Director）
 - **角色卡編輯助手**：AI 驅動的對話式角色卡編輯，7 個工具
 - **搜尋外掛**：DuckDuckGo、SearXNG、Brave Search 三引擎支援
 - **補全預設助手**：AI 輔助預設參數理解和最佳化

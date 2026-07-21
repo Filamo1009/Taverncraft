@@ -1,8 +1,15 @@
 # Migrating from Termux SillyTavern to the Taverncraft APK
 
-If you've been running original SillyTavern in Termux and want to switch to the Taverncraft Android APK, this guide walks you through bringing your data along. Taverncraft is fully data-compatible with SillyTavern, and the APK shows an import wizard on first launch — you usually don't need to touch the `Android/data` private directory.
+If you've been running original SillyTavern in Termux and want to switch to the
+Taverncraft Android APK, this guide walks you through bringing your data along. The
+current compatibility suite covers standard character cards, World Info, personas,
+presets, and JSONL chats. The APK shows an import wizard on first launch, so you usually
+do not need to touch the `Android/data` private directory. Back up first and verify
+third-party extensions separately.
 
-After migration, your character cards, chat logs, lorebooks, presets, personas, and extension settings will load normally.
+After migration, verify character cards, chat logs, lorebooks, presets, and personas in
+the APK. Extension settings may be copied, but each important third-party extension
+still needs a compatibility check.
 
 ::: tip Scope
 This guide covers **Termux SillyTavern → Taverncraft APK**. For PC / Linux / Docker SillyTavern → Taverncraft server, or Termux ↔ Termux migrations, see [Migrating from SillyTavern](/guide/migration).

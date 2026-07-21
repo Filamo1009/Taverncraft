@@ -48,7 +48,7 @@ module.exports = {
         },
         {
             // Browser-side files
-            files: ['public/**/*.js'],
+            files: ['public/**/*.js', 'cloudflare/public/**/*.js'],
             env: {
                 browser: true,
                 jquery: true,

@@ -1,0 +1,48 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "taverncraft-portal-test",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-20",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "vars": {
+    "ENVIRONMENT": "test",
+    "CONTAINER_ENABLED": "false",
+    "R2_BUCKET_NAME": "unused-test-bucket",
+    "R2_PREFIX": "test",
+    "LOGIN_EMAIL": "owner@example.test",
+    "LOGIN_PASSWORD_SCRYPT": "scrypt$16384$8$1$dGVzdC1zYWx0LW9ubHktbm90LXNlY3JldA==$cLSAKySiovCSwdRyifTZBKEoJiBsZw+Ibpw5ZZpDYeyjU1x7xblFjfK9xDNI74aZ+hLMGyxyl3GRezQuc9RsIA==",
+    "SESSION_SIGNING_SECRET": "test-signing-secret-with-sufficient-entropy-for-tests-only",
+    "AWS_ACCESS_KEY_ID": "test-access-key",
+    "AWS_SECRET_ACCESS_KEY": "test-secret-key",
+    "R2_ACCOUNT_ID": "test-account-id"
+  },
+  "r2_buckets": [
+    {
+      "binding": "EDITOR_BUCKET",
+      "bucket_name": "taverncraft-editor-test"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "RATE_LIMITER",
+        "class_name": "LoginRateLimiter"
+      },
+      {
+        "name": "TAVERN",
+        "class_name": "TavernContainer"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["LoginRateLimiter", "TavernContainer"]
+    }
+  ]
+}

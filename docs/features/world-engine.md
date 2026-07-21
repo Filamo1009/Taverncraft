@@ -115,9 +115,10 @@ moving to clients whose unknown-field preservation has not been verified.
 
 ## Known limitations
 
-- Final Phase 1 acceptance still requires a user-selected real model and a
-  50-turn narrative run; offline dry runs and synthetic 200-turn tests do not
-  prove a provider's narrative quality.
+- The authorized real-model 50-turn gate and synthetic 200-turn runs passed on
+  2026-07-20. These runs validate the tested scenario, not every provider or a
+  general guarantee of narrative quality; final user confirmation remains in the
+  Phase 1 completion definition.
 - Only one active NPC is accepted in Phase 1. Far-away NPC scheduling and
   catch-up simulation belong to later work.
 - Memory Graph can add model calls and token cost when enabled. It remains
@@ -138,5 +139,5 @@ network hosting.
 
 The authoritative implementation and acceptance checklist is the
 [Phase 1 plan](../development/phase1-single-npc-world-engine.md). A green local
-test run does not by itself mean Phase 1 is accepted; the real-model gate and
-user confirmation are required.
+test run does not by itself mean Phase 1 is accepted. The real-model gate has
+passed, and final user confirmation remains required by the completion definition.

@@ -4,6 +4,21 @@
 
 ## Current version
 
+### Taverncraft Phase 1 World Engine (2026-07-20)
+
+- Added a user-controllable, single-active-NPC authoritative world state for clock,
+  location, player, NPC, items, relationships, tasks, flags, and extension namespaces.
+- Added validated `WorldOperationV1` tool operations, expected/result state hashes,
+  deterministic event replay, and rollback aligned with edit/delete/regenerate/swipe/branch.
+- Added four-scope World Engine Post-History, prompt-layer snapshots, local dry run,
+  Request Inspector integration, legacy `<initvar>` import, and hashed state backup/restore.
+- Hardened Character Card V1/V2/V3 and real V4 PNG round-trips, including `ccv3`
+  precedence and preservation of unknown card/book fields.
+- Automated gates, synthetic 200-turn runs, and the authorized real-model 50-turn gate
+  passed with no P0/P1 issue. Final user confirmation remains in the completion definition.
+- Added the [complete Chinese user manual](/zh-CN/guide/complete-user-manual) and
+  [developer maintenance map](/development/maintenance-map).
+
 ### Orchestrator
 
 - **Search tools support regex** — `draft_search` (new) and the existing `chat_search` / `lorebook_search` / `skill_search` all accept a `pattern` (JavaScript RegExp source) and return grep `-n` style output. Critics use this to systematically scan for vocabulary patterns instead of relying on eye-reading.
@@ -15,7 +30,7 @@
 ### Core features
 
 - **Memory Graph** — Knowledge-graph long-term memory with two recall modes: LLM Recall (multi-round LLM-driven node selection) and RAG Recall (vector retrieval with optional rerank and optional LLM query rewrite).
-- **Multi-Agent Orchestrator** — Three execution modes (Spec workflow, Single agent, Agenda planner)
+- **Multi-Agent Orchestrator** — Five runtime modes: Spec, Single Agent, Agenda, Loop, and Director
 - **Card Editor Assistant** — AI-driven conversational character-card editing with 7 tools
 - **Search Tools** — Three-engine support: DuckDuckGo, SearXNG, Brave Search
 - **Preset Assistant** — AI-assisted preset editing with IDE-style drift handling and per-message rollback; new fine-grained tools (str_replace / str_insert / list_insert / list_move) save tokens on long fields

@@ -6,7 +6,7 @@ This guide will help you get Taverncraft up and running in minutes.
 
 | Dependency | Requirement |
 | --- | --- |
-| **Node.js** | >= 24.0 (Git Clone method only) |
+| **Node.js** | >= 20.18.1 (Git Clone method only; use the version declared in `package.json`) |
 | **Git** | Any version (Git Clone method only) |
 | **Docker** | Any modern version (Docker method only) |
 
@@ -26,7 +26,7 @@ cd Taverncraft
 ### 2. Install Dependencies
 
 ```bash
-npm install
+npm ci
 ```
 
 ### 3. Start the Server
@@ -56,7 +56,7 @@ npm run start:bun
 
 ```bash
 git pull
-npm install
+npm ci
 ```
 
 ## Method 2: Docker
@@ -148,10 +148,16 @@ Learn more at [Character Cards](/basics/character-cards).
 
 ## Migrating from SillyTavern
 
-Taverncraft is fully compatible with SillyTavern data. If you're a SillyTavern user, you can simply copy the `data` directory into Taverncraft. If you later decide to stop using Taverncraft, you can downgrade back to SillyTavern at any time without data loss.
+Taverncraft supports the standard SillyTavern character-card, World Info, persona,
+preset, and JSONL chat formats covered by the current compatibility tests. Back up the
+source data, follow the migration guide, and verify a known chat after migration.
+Taverncraft-specific state is stored as extension data and may be ignored by clients
+that do not understand it; arbitrary third-party extensions are not guaranteed to be
+portable.
 
 ::: warning Backup Reminder
-Although Taverncraft is compatible with SillyTavern data, it's still recommended to back up before migrating.
+Always back up before migrating or downgrading. Do not assume another client preserves
+unknown extension fields unless that path has been verified.
 :::
 
 For a detailed migration guide, see [Migrating from SillyTavern](/guide/migration).

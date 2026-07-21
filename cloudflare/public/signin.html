@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0a0f">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Sign in — TavernCraft</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/site.css">
+  <script src="/signin.js" defer></script>
+</head>
+<body class="auth-page">
+  <a class="skip-link" href="#signinForm">跳到登录表单</a>
+  <header class="minimal-header">
+    <a class="wordmark" href="/"><span class="brand-rune" aria-hidden="true">T</span><span>TavernCraft</span></a>
+    <a href="/">返回产品页</a>
+  </header>
+  <main class="auth-main">
+    <section class="auth-story" aria-hidden="true">
+      <div class="auth-story-copy">
+        <p class="eyebrow light"><span></span> 私人创作空间</p>
+        <h1>欢迎回到<br>你的酒馆。</h1>
+        <p>角色仍在等待，世界也记得你上一次停下的地方。</p>
+      </div>
+      <div class="auth-orbit orbit-one"></div><div class="auth-orbit orbit-two"></div>
+      <div class="auth-sigil">T</div>
+    </section>
+    <section class="auth-panel">
+      <form class="auth-form" id="signinForm" novalidate>
+        <p class="form-kicker">Owner access</p>
+        <h2>Sign in</h2>
+        <p class="form-intro">使用已配置的 TavernCraft 账号进入私人工作区。</p>
+        <div class="form-field">
+          <label for="email">邮箱</label>
+          <input id="email" name="email" type="email" autocomplete="username" inputmode="email" required maxlength="320" placeholder="name@example.com">
+        </div>
+        <div class="form-field">
+          <label for="password">密码</label>
+          <div class="password-field">
+            <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="1024" placeholder="输入密码">
+            <button type="button" id="togglePassword" aria-label="显示密码">显示</button>
+          </div>
+        </div>
+        <div class="remember-note"><span class="check-mark" aria-hidden="true">✓</span><span><b>此设备保持登录</b><small>登录有效期为 7 天，关闭浏览器不会退出。</small></span></div>
+        <div class="form-error" id="formError" role="alert" aria-live="polite"></div>
+        <button class="button button-primary button-submit" type="submit"><span>进入工作区</span><i aria-hidden="true">→</i></button>
+        <p class="security-note">凭据通过加密连接发送；密码不会保存在页面或浏览器存储中。</p>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,98 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "taverncraft-portal",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-20",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "vars": {
+    "ENVIRONMENT": "production",
+    "CONTAINER_ENABLED": "true",
+    "R2_BUCKET_NAME": "taverncraft-data-prod",
+    "R2_PREFIX": "production"
+  },
+  "r2_buckets": [
+    {
+      "binding": "EDITOR_BUCKET",
+      "bucket_name": "taverncraft-editor-prod"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "RATE_LIMITER",
+        "class_name": "LoginRateLimiter"
+      },
+      {
+        "name": "TAVERN",
+        "class_name": "TavernContainer"
+      }
+    ]
+  },
+  "containers": [
+    {
+      "class_name": "TavernContainer",
+      "image": "../Dockerfile.cloudflare",
+      "instance_type": "basic",
+      "max_instances": 1
+    }
+  ],
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["LoginRateLimiter", "TavernContainer"]
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1
+    },
+    "traces": {
+      "enabled": true,
+      "head_sampling_rate": 0.05
+    }
+  },
+  "env": {
+    "staging": {
+      "name": "taverncraft-portal-staging",
+      "vars": {
+        "ENVIRONMENT": "staging",
+        "CONTAINER_ENABLED": "true",
+        "R2_BUCKET_NAME": "taverncraft-data-staging",
+        "R2_PREFIX": "staging"
+      },
+      "r2_buckets": [
+        {
+          "binding": "EDITOR_BUCKET",
+          "bucket_name": "taverncraft-editor-staging"
+        }
+      ],
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "RATE_LIMITER",
+            "class_name": "LoginRateLimiter"
+          },
+          {
+            "name": "TAVERN",
+            "class_name": "TavernContainer"
+          }
+        ]
+      },
+      "containers": [
+        {
+          "class_name": "TavernContainer",
+          "image": "../Dockerfile.cloudflare",
+          "instance_type": "basic",
+          "max_instances": 1
+        }
+      ]
+    }
+  }
+}

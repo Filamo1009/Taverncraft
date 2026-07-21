@@ -32,9 +32,14 @@ module.exports = {
                 '**/skills-ui/playwright/**/*.spec.js',
                 '**/skills-ui/playwright/helpers.js',
                 'e2e/_lib/*.js',
+                'e2e/**/_helpers.js',
+                'character-presets/*.test.js',
             ],
             env: {
                 browser: true,
+            },
+            globals: {
+                globalThis: 'readonly',
             },
         },
     ],

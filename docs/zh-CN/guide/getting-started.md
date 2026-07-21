@@ -6,7 +6,7 @@
 
 | 依赖 | 要求 |
 | --- | --- |
-| **Node.js** | >= 24.0（仅 Git Clone 方式需要） |
+| **Node.js** | >= 20.18.1（仅 Git Clone 方式需要；以 `package.json` 声明为准） |
 | **Git** | 任意版本（仅 Git Clone 方式需要） |
 | **Docker** | 任意现代版本（仅 Docker 方式需要） |
 
@@ -26,7 +26,7 @@ cd Taverncraft
 ### 2. 安装依赖
 
 ```bash
-npm install
+npm ci
 ```
 
 ### 3. 启动服务
@@ -56,7 +56,7 @@ npm run start:bun
 
 ```bash
 git pull
-npm install
+npm ci
 ```
 
 ## 安装方式二：Docker
@@ -148,10 +148,10 @@ APK 版本是一个独立的 App，打开后直接显示完整界面，不需要
 
 ## 从 SillyTavern 迁移
 
-Taverncraft 完全兼容 SillyTavern 的数据。如果你是 SillyTavern 用户，可以直接将 `data` 目录复制到 Taverncraft 中使用。如果之后不想用 Taverncraft 了，也可以随时降级回 SillyTavern，数据不会被破坏。
+Taverncraft 支持当前兼容测试覆盖的标准 SillyTavern 角色卡、世界书、Persona、预设和 JSONL 聊天格式。迁移前请备份源数据，按照迁移指南操作，并在完成后打开一段已知聊天进行核对。Taverncraft 专属状态保存在扩展数据中，不理解它的客户端可能忽略这些内容；任意第三方扩展不保证可直接迁移。
 
 ::: warning 备份提醒
-虽然 Taverncraft 兼容 SillyTavern 数据，但在迁移前仍建议做好备份。
+迁移或降级前必须备份。除非相应路径已经验证，不要假设其他客户端一定会保留未知扩展字段。
 :::
 
 详细迁移指南请参阅 [从 SillyTavern 迁移](/zh-CN/guide/migration)。

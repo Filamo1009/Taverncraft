@@ -6,12 +6,15 @@
 // bulk-edit popup via the bulk-edit button + apply, export/delete via
 // the dedicated icons.
 
-import { expect } from '@playwright/test';
-
 /**
  * Open the WI panel drawer (#WIDrawerIcon). Idempotent.
  */
 export async function openWorldInfoDrawer(page) {
+    if (await page.locator('#tc-modern-shell').count()) {
+        await page.evaluate(() => window.Taverncraft.ui.navigate('world'));
+        await page.locator('#world_popup').waitFor({ state: 'visible', timeout: 5000 });
+        return;
+    }
     const icon = page.locator('#WIDrawerIcon');
     const isClosed = await icon.evaluate(el => el.classList.contains('closedIcon')).catch(() => true);
     if (isClosed) {

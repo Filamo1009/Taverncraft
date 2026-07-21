@@ -27,6 +27,13 @@
 /dist
 /node_modules
 /tests
+/android-app
+/docs
+/.design-qa
+/design-qa.md
+/cloudflare/*
+!/cloudflare/container
+!/cloudflare/container/**
 
 # --- Sensitive Info ---
 **/.env*

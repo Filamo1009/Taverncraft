@@ -77,8 +77,17 @@ jobs:
       - name: Install root dependencies
         run: npm ci --ignore-scripts
 
+      - name: Rebuild native SQLite dependency
+        run: npm rebuild better-sqlite3 --ignore-scripts=false
+
       - name: Install test dependencies
         run: npm ci --ignore-scripts --prefix tests
 
+      - name: Prepare test configuration
+        run: cp default/config.yaml config.yaml
+
       - name: Run unit tests
         run: npm run test:unit --prefix tests
+        env:
+          LUKER_DISABLE_MYSQL_TESTS: '1'
+          LUKER_DISABLE_POSTGRES_TESTS: '1'

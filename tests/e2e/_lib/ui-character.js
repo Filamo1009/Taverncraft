@@ -6,13 +6,15 @@
 // no direct ctx.characters mutation. Tests that bypass these helpers are
 // going against the audit's intent.
 
-import { expect } from '@playwright/test';
-import { acceptTopmostPopup, fillTopmostPopupAndAccept } from './page.js';
-
 /**
  * Open the right nav (character list) drawer if it's closed.
  */
 async function ensureRightDrawerOpen(page) {
+    if (await page.locator('#tc-modern-shell').count()) {
+        await page.locator('[data-tc-route="library"]').first().click();
+        await page.locator('#rm_print_characters_block').waitFor({ state: 'visible', timeout: 10_000 });
+        return;
+    }
     const drawer = page.locator('#rightNavDrawerIcon');
     const closed = await drawer.evaluate(el => el.classList.contains('closedIcon')).catch(() => true);
     if (closed) {

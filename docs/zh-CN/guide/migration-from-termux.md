@@ -1,6 +1,6 @@
 # 从 Termux 原版酒馆迁移到 Taverncraft APK
 
-如果你之前在 Termux 里跑原版 SillyTavern，想换用 Taverncraft 的 Android APK，这篇指南说明如何把原有数据搬到 APK 中。Taverncraft 与 SillyTavern 数据格式完全兼容，APK 在首次启动时会弹出导入向导，正常情况下不需要碰 `Android/data` 私有目录。
+如果你之前在 Termux 里跑原版 SillyTavern，想换用 Taverncraft 的 Android APK，这篇指南说明如何把原有数据搬到 APK 中。当前兼容测试覆盖标准角色卡、世界书、Persona、预设和 JSONL 聊天路径；APK 首次启动时会弹出导入向导，正常情况下不需要碰 `Android/data` 私有目录。迁移前仍需备份并核对第三方扩展。
 
 迁移完成后，你的角色卡、聊天记录、世界书、预设、用户人设、扩展设置都会照常加载。
 
