@@ -8,18 +8,18 @@ import {
     isCharacterFavorite,
     deleteCharacterChatByName,
     selectCharacterById,
+    select_rm_characters,
     select_selected_character,
     this_chid,
     user_avatar,
     getUserAvatar,
 } from '../../script.js';
 import { deleteGroupChatByName, editGroup, select_group_chats } from '../group-chats.js';
-import { fetchRecentChatsSnapshot } from '../welcome-screen.js';
+import { fetchRecentChatsSnapshot, renameRecentChatByReference, toggleRecentChatPin } from '../welcome-screen.js';
 import { getCurrentLocale } from '../i18n.js';
 
 const MODE_STORAGE_KEY = 'taverncraft.ui.mode';
 const THEME_STORAGE_KEY = 'taverncraft.ui.theme';
-const SETTINGS_MODE_STORAGE_KEY = 'taverncraft.ui.settingsMode';
 const CONTEXT_COLLAPSED_STORAGE_KEY = 'taverncraft.ui.contextCollapsed';
 
 const dictionaries = {
@@ -33,6 +33,9 @@ const dictionaries = {
         pinned: 'Pinned',
         recent: 'Recent',
         noRecent: 'No recent conversations',
+        pinChat: 'Pin conversation',
+        unpinChat: 'Unpin conversation',
+        renameChat: 'Rename conversation',
         deleteChat: 'Delete conversation',
         deleteChatConfirm: 'Delete this conversation? You can undo the deletion from the notification that follows.',
         deleteChatFailed: 'Conversation could not be deleted.',
@@ -66,14 +69,15 @@ const dictionaries = {
         saveCharacter: 'Save character',
         back: 'Back',
         createPersona: 'Create persona',
-        simple: 'Simple',
-        advanced: 'Advanced',
         connection: 'Connection & model',
         generation: 'Generation',
         prompts: 'Prompts & presets',
         world: 'World Info',
         appearance: 'Appearance',
+        background: 'Backgrounds',
         extensions: 'Advanced tools',
+        modernAppearance: 'TavernCraft interface',
+        modernAppearanceDescription: 'Modern interface theme and compatibility controls.',
         importWorld: 'Import World Info',
         newWorld: 'New World Info',
         manageMembers: 'Manage members',
@@ -106,6 +110,9 @@ const dictionaries = {
         pinned: '已置顶',
         recent: '最近',
         noRecent: '暂无最近会话',
+        pinChat: '置顶对话',
+        unpinChat: '取消置顶',
+        renameChat: '重命名对话',
         deleteChat: '删除对话',
         deleteChatConfirm: '确定要删除这条对话吗？删除后可通过随后出现的通知撤销。',
         deleteChatFailed: '对话删除失败。',
@@ -139,14 +146,15 @@ const dictionaries = {
         saveCharacter: '保存角色',
         back: '返回',
         createPersona: '新建人设',
-        simple: '简易模式',
-        advanced: '进阶模式',
         connection: '连接与模型',
         generation: '生成参数',
         prompts: '提示词与预设',
         world: '世界书',
         appearance: '界面与体验',
+        background: '背景',
         extensions: '高级工具',
+        modernAppearance: '酒馆工坊界面',
+        modernAppearanceDescription: '新版界面的主题与兼容模式设置。',
         importWorld: '导入世界书',
         newWorld: '新建世界书',
         manageMembers: '管理成员',
@@ -179,6 +187,9 @@ const dictionaries = {
         pinned: '已置頂',
         recent: '最近',
         noRecent: '暫無最近會話',
+        pinChat: '置頂對話',
+        unpinChat: '取消置頂',
+        renameChat: '重新命名對話',
         deleteChat: '刪除對話',
         deleteChatConfirm: '確定要刪除這條對話嗎？刪除後可透過隨後出現的通知復原。',
         deleteChatFailed: '對話刪除失敗。',
@@ -212,14 +223,15 @@ const dictionaries = {
         saveCharacter: '儲存角色',
         back: '返回',
         createPersona: '新增人設',
-        simple: '簡易模式',
-        advanced: '進階模式',
         connection: '連接與模型',
         generation: '生成參數',
         prompts: '提示詞與預設',
         world: '世界書',
         appearance: '介面與體驗',
+        background: '背景',
         extensions: '進階工具',
+        modernAppearance: '酒館工坊介面',
+        modernAppearanceDescription: '新版介面的主題與相容模式設定。',
         importWorld: '匯入世界書',
         newWorld: '新增世界書',
         manageMembers: '管理成員',
@@ -250,7 +262,6 @@ const dictionary = dictionaries[dictionaryKey];
 const state = {
     view: 'chat',
     settingsSection: 'connection',
-    settingsMode: localStorage.getItem(SETTINGS_MODE_STORAGE_KEY) === 'advanced' ? 'advanced' : 'simple',
     libraryFilter: 'all',
     recentChats: [],
     recentSearch: '',
@@ -266,7 +277,8 @@ const settingsPanels = {
     persona: '#PersonaManagement',
     world: '#WorldInfo',
     appearance: '#user-settings-block',
-    extensions: '#extensionsMenu',
+    background: '#Backgrounds',
+    extensions: '#rm_extensions_block',
 };
 
 function text(key) {
@@ -349,6 +361,11 @@ function navButton(view, icon, label) {
     return `<button type="button" class="tc-nav-button" data-tc-route="${view}" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}"><i class="fa-solid ${icon}" aria-hidden="true"></i><span>${escapeHtml(label)}</span></button>`;
 }
 
+function settingsButton(section, icon, label) {
+    const panelId = settingsPanels[section].slice(1);
+    return `<button type="button" id="tc-settings-tab-${section}" role="tab" aria-selected="false" aria-controls="${escapeHtml(panelId)}" tabindex="-1" data-tc-settings-section="${section}"><i class="fa-solid ${icon}" aria-hidden="true"></i><span>${escapeHtml(label)}</span></button>`;
+}
+
 function createShell() {
     const isLightTheme = document.body.dataset.tcTheme === 'light';
     const themeToggleLabel = text(isLightTheme ? 'darkTheme' : 'lightTheme');
@@ -361,7 +378,6 @@ function createShell() {
             <div class="tc-rail-nav">
                 ${navButton('chat', 'fa-comments', text('chat'))}
                 ${navButton('library', 'fa-table-cells-large', text('library'))}
-                ${navButton('persona', 'fa-user', text('persona'))}
                 ${navButton('settings', 'fa-gear', text('settings'))}
             </div>
             <div class="tc-rail-footer">
@@ -378,19 +394,19 @@ function createShell() {
         <aside id="tc-context-panel" class="tc-context-panel"></aside>
         <button type="button" id="tc-context-toggle" class="tc-context-toggle" aria-label="${escapeHtml(text('hideContext'))}"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
         <header id="tc-view-header" class="tc-view-header"></header>
-        <nav id="tc-settings-nav" class="tc-settings-nav" aria-label="${escapeHtml(text('settings'))}">
-            <button type="button" data-tc-settings-section="connection"><i class="fa-solid fa-plug" aria-hidden="true"></i><span>${escapeHtml(text('connection'))}</span></button>
-            <button type="button" data-tc-settings-section="generation"><i class="fa-solid fa-sliders" aria-hidden="true"></i><span>${escapeHtml(text('generation'))}</span></button>
-            <button type="button" data-tc-settings-section="persona"><i class="fa-solid fa-user" aria-hidden="true"></i><span>${escapeHtml(text('persona'))}</span></button>
-            <button type="button" data-tc-settings-section="appearance"><i class="fa-solid fa-palette" aria-hidden="true"></i><span>${escapeHtml(text('appearance'))}</span></button>
-            <button type="button" data-tc-settings-section="prompts" data-tc-advanced="true"><i class="fa-solid fa-message" aria-hidden="true"></i><span>${escapeHtml(text('prompts'))}</span></button>
-            <button type="button" data-tc-settings-section="world" data-tc-advanced="true"><i class="fa-solid fa-book-atlas" aria-hidden="true"></i><span>${escapeHtml(text('world'))}</span></button>
-            <button type="button" data-tc-settings-section="extensions" data-tc-advanced="true"><i class="fa-solid fa-cubes" aria-hidden="true"></i><span>${escapeHtml(text('extensions'))}</span></button>
+        <nav id="tc-settings-nav" class="tc-settings-nav" role="tablist" aria-label="${escapeHtml(text('settings'))}">
+            ${settingsButton('connection', 'fa-plug', text('connection'))}
+            ${settingsButton('generation', 'fa-sliders', text('generation'))}
+            ${settingsButton('persona', 'fa-user', text('persona'))}
+            ${settingsButton('appearance', 'fa-palette', text('appearance'))}
+            ${settingsButton('background', 'fa-panorama', text('background'))}
+            ${settingsButton('prompts', 'fa-message', text('prompts'))}
+            ${settingsButton('world', 'fa-book-atlas', text('world'))}
+            ${settingsButton('extensions', 'fa-cubes', text('extensions'))}
         </nav>
         <nav class="tc-mobile-nav" aria-label="${escapeHtml(text('brand'))}">
             ${navButton('chat', 'fa-comments', text('chat'))}
             ${navButton('library', 'fa-table-cells-large', text('library'))}
-            ${navButton('persona', 'fa-user', text('persona'))}
             ${navButton('settings', 'fa-gear', text('settings'))}
         </nav>
     `;
@@ -431,24 +447,64 @@ function bindShell() {
     document.querySelector('#tc-theme-toggle')?.addEventListener('click', toggleTheme);
     document.querySelector('#tc-classic-toggle')?.addEventListener('click', requestClassicUi);
     document.querySelector('#tc-context-toggle')?.addEventListener('click', toggleContextPanel);
+    document.querySelector('#tc-settings-nav')?.addEventListener('keydown', handleSettingsTabKeydown);
+}
+
+function handleSettingsTabKeydown(event) {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) {
+        return;
+    }
+    const tabs = [...document.querySelectorAll('#tc-settings-nav [role="tab"]')];
+    const currentIndex = tabs.indexOf(event.target.closest('[role="tab"]'));
+    if (currentIndex < 0 || !tabs.length) {
+        return;
+    }
+    event.preventDefault();
+    const nextIndex = event.key === 'Home'
+        ? 0
+        : event.key === 'End'
+            ? tabs.length - 1
+            : (currentIndex + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+    const nextTab = tabs[nextIndex];
+    nextTab.focus();
+    selectSettingsSection(nextTab.dataset.tcSettingsSection);
+}
+
+function configureSettingsPanels() {
+    for (const [section, selector] of Object.entries(settingsPanels)) {
+        const panel = document.querySelector(selector);
+        if (!panel) {
+            continue;
+        }
+        panel.setAttribute('role', 'tabpanel');
+        panel.setAttribute('aria-labelledby', `tc-settings-tab-${section}`);
+        panel.setAttribute('aria-hidden', 'true');
+    }
 }
 
 function activateNativePanel(selector) {
-    document.querySelectorAll('.drawer-content.tc-active-native').forEach(panel => panel.classList.remove('tc-active-native'));
+    document.querySelectorAll('.drawer-content.tc-active-native').forEach(panel => {
+        panel.classList.remove('tc-active-native');
+        panel.setAttribute('aria-hidden', 'true');
+    });
     const panel = document.querySelector(selector);
     if (!panel) {
         return;
     }
     panel.classList.remove('closedDrawer');
     panel.classList.add('openDrawer', 'tc-active-native');
+    panel.setAttribute('aria-hidden', 'false');
 }
 
 function clearNativePanels() {
-    document.querySelectorAll('.drawer-content.tc-active-native').forEach(panel => panel.classList.remove('tc-active-native'));
+    document.querySelectorAll('.drawer-content.tc-active-native').forEach(panel => {
+        panel.classList.remove('tc-active-native');
+        panel.setAttribute('aria-hidden', 'true');
+    });
 }
 
 function navigate(view) {
-    if (!['chat', 'library', 'persona', 'settings', 'world', 'creator', 'group'].includes(view)) {
+    if (!['chat', 'library', 'settings', 'world', 'creator', 'group'].includes(view)) {
         return;
     }
     state.view = view;
@@ -460,11 +516,9 @@ function navigate(view) {
     } else if (view === 'library' || view === 'creator' || view === 'group') {
         activateNativePanel('#right-nav-panel');
         if (view === 'library') {
-            document.querySelector('#rm_button_characters')?.click();
+            select_rm_characters();
             ensureLibraryControls();
         }
-    } else if (view === 'persona') {
-        activateNativePanel('#PersonaManagement');
     } else if (view === 'world') {
         activateNativePanel('#WorldInfo');
     } else if (view === 'settings') {
@@ -486,20 +540,11 @@ function updateNavigationState() {
         button.setAttribute('aria-current', isActive ? 'page' : 'false');
     });
     document.querySelectorAll('[data-tc-settings-section]').forEach(button => {
-        button.classList.toggle('active', button.dataset.tcSettingsSection === state.settingsSection);
+        const isActive = button.dataset.tcSettingsSection === state.settingsSection;
+        button.classList.toggle('active', isActive);
+        button.setAttribute('aria-selected', String(isActive));
+        button.tabIndex = isActive ? 0 : -1;
     });
-    document.body.dataset.tcSettingsMode = state.settingsMode;
-}
-
-function setSettingsMode(mode) {
-    state.settingsMode = mode === 'simple' ? 'simple' : 'advanced';
-    localStorage.setItem(SETTINGS_MODE_STORAGE_KEY, state.settingsMode);
-    if (state.settingsMode === 'simple' && ['prompts', 'world', 'extensions'].includes(state.settingsSection)) {
-        state.settingsSection = 'connection';
-        selectSettingsSection('connection', { updateView: false });
-    }
-    updateNavigationState();
-    renderViewHeader();
 }
 
 function selectSettingsSection(section, { updateView = true } = {}) {
@@ -513,6 +558,7 @@ function selectSettingsSection(section, { updateView = true } = {}) {
     }
     activateNativePanel(settingsPanels[section]);
     updateNavigationState();
+    document.querySelector(`[data-tc-settings-section="${section}"]`)?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 
 function viewHeaderAction(action, icon, label, variant = '') {
@@ -544,12 +590,8 @@ function renderViewHeader() {
     } else if (state.view === 'group') {
         title = text('manageMembers');
         actions = viewHeaderAction('back-library', 'fa-arrow-left', text('back'));
-    } else if (state.view === 'persona') {
-        title = text('persona');
-        actions = viewHeaderAction('create-persona', 'fa-plus', text('createPersona'), 'primary');
     } else if (state.view === 'settings') {
         title = text('settings');
-        actions = `<div class="tc-segmented"><button type="button" class="${state.settingsMode === 'simple' ? 'active' : ''}" data-tc-action="settings-simple">${escapeHtml(text('simple'))}</button><button type="button" class="${state.settingsMode === 'advanced' ? 'active' : ''}" data-tc-action="settings-advanced">${escapeHtml(text('advanced'))}</button></div>`;
     } else if (state.view === 'world') {
         title = text('worldInfo');
         actions = viewHeaderAction('import-world', 'fa-file-import', text('importWorld'))
@@ -588,14 +630,10 @@ async function runAction(action, button) {
         setTimeout(() => navigate('library'), 0);
     } else if (action === 'save-character') {
         document.querySelector('#form_create')?.requestSubmit();
-    } else if (action === 'settings-simple') {
-        setSettingsMode('simple');
-    } else if (action === 'settings-advanced') {
-        setSettingsMode('advanced');
     } else if (action === 'manage-world') {
         navigate('world');
     } else if (action === 'switch-persona') {
-        navigate('persona');
+        selectSettingsSection('persona');
     } else if (action === 'toggle-mobile-recents') {
         document.body.classList.toggle('tc-mobile-recents-open');
     } else if (action === 'toggle-mobile-context') {
@@ -608,6 +646,10 @@ async function runAction(action, button) {
         await toggleGroupMember(button.dataset.avatar);
     } else if (action === 'open-recent') {
         await openRecentChat(Number(button.dataset.recentIndex));
+    } else if (action === 'pin-recent') {
+        await pinRecentChat(Number(button.dataset.recentIndex));
+    } else if (action === 'rename-recent') {
+        await renameRecentChat(Number(button.dataset.recentIndex));
     } else if (action === 'delete-recent') {
         await deleteRecentChat(Number(button.dataset.recentIndex));
     }
@@ -621,14 +663,44 @@ function toggleTheme() {
     }
     document.body.dataset.tcTheme = nextTheme;
     localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
-    const button = document.querySelector('#tc-theme-toggle');
-    if (button) {
-        const isLight = nextTheme === 'light';
-        button.innerHTML = `<i class="fa-solid ${isLight ? 'fa-moon' : 'fa-sun'}" aria-hidden="true"></i>`;
-        button.title = isLight ? text('darkTheme') : text('lightTheme');
-        button.setAttribute('aria-label', button.title);
-    }
+    syncThemeButtons();
     return true;
+}
+
+function syncThemeButtons() {
+    const isLight = document.body.dataset.tcTheme === 'light';
+    const label = text(isLight ? 'darkTheme' : 'lightTheme');
+    for (const button of document.querySelectorAll('#tc-theme-toggle, #tc-settings-theme-toggle')) {
+        button.innerHTML = button.id === 'tc-theme-toggle'
+            ? `<i class="fa-solid ${isLight ? 'fa-moon' : 'fa-sun'}" aria-hidden="true"></i>`
+            : `<i class="fa-solid ${isLight ? 'fa-moon' : 'fa-sun'}" aria-hidden="true"></i><span>${escapeHtml(label)}</span>`;
+        button.title = label;
+        button.setAttribute('aria-label', label);
+    }
+}
+
+function ensureAppearanceUtilities() {
+    const panel = document.querySelector('#user-settings-block');
+    if (!panel || document.querySelector('#tc-interface-utilities')) {
+        return;
+    }
+    const utilities = document.createElement('section');
+    utilities.id = 'tc-interface-utilities';
+    utilities.className = 'tc-interface-utilities';
+    utilities.setAttribute('aria-labelledby', 'tc-interface-utilities-title');
+    utilities.innerHTML = `
+        <div>
+            <h3 id="tc-interface-utilities-title">${escapeHtml(text('modernAppearance'))}</h3>
+            <p>${escapeHtml(text('modernAppearanceDescription'))}</p>
+        </div>
+        <div class="tc-interface-utility-actions">
+            <button type="button" id="tc-settings-theme-toggle"></button>
+            <button type="button" id="tc-settings-classic-toggle"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i><span>${escapeHtml(text('classicUi'))}</span></button>
+        </div>`;
+    panel.prepend(utilities);
+    utilities.querySelector('#tc-settings-theme-toggle')?.addEventListener('click', toggleTheme);
+    utilities.querySelector('#tc-settings-classic-toggle')?.addEventListener('click', requestClassicUi);
+    syncThemeButtons();
 }
 
 function toggleContextPanel() {
@@ -720,13 +792,17 @@ function renderRecentSection(title, items) {
         return '';
     }
     return `<section class="tc-recent-section"><h2>${escapeHtml(title)}</h2>${items.map(item => `
-        <div class="tc-recent-row">
+        <div class="tc-recent-row${item.pinned ? ' pinned' : ''}">
             <button type="button" class="tc-recent-open" data-tc-action="open-recent" data-recent-index="${item.index}">
                 <img src="${escapeHtml(item.avatar)}" alt="">
                 <span class="tc-recent-copy"><strong>${escapeHtml(item.name)}</strong><span>${escapeHtml(item.message)}</span></span>
                 <time>${escapeHtml(item.date)}</time>
             </button>
-            <button type="button" class="tc-recent-delete" data-tc-action="delete-recent" data-recent-index="${item.index}" aria-label="${escapeHtml(text('deleteChat'))}" title="${escapeHtml(text('deleteChat'))}"><i class="fa-solid fa-trash-can" aria-hidden="true"></i></button>
+            <div class="tc-recent-actions">
+                <button type="button" class="tc-recent-pin${item.pinned ? ' active' : ''}" data-tc-action="pin-recent" data-recent-index="${item.index}" aria-pressed="${String(item.pinned)}" aria-label="${escapeHtml(text(item.pinned ? 'unpinChat' : 'pinChat'))}" title="${escapeHtml(text(item.pinned ? 'unpinChat' : 'pinChat'))}"><i class="fa-solid fa-thumbtack" aria-hidden="true"></i></button>
+                <button type="button" class="tc-recent-rename" data-tc-action="rename-recent" data-recent-index="${item.index}" aria-label="${escapeHtml(text('renameChat'))}" title="${escapeHtml(text('renameChat'))}"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></button>
+                <button type="button" class="tc-recent-delete" data-tc-action="delete-recent" data-recent-index="${item.index}" aria-label="${escapeHtml(text('deleteChat'))}" title="${escapeHtml(text('deleteChat'))}"><i class="fa-solid fa-trash-can" aria-hidden="true"></i></button>
+            </div>
         </div>`).join('')}</section>`;
 }
 
@@ -764,6 +840,31 @@ async function openRecentChat(index) {
         }
     }
     navigate('chat');
+}
+
+async function pinRecentChat(index) {
+    const item = state.recentChats[index];
+    if (!item) {
+        return false;
+    }
+    const pinned = toggleRecentChatPin(item);
+    if (pinned === null) {
+        return false;
+    }
+    await refreshRecentChats();
+    return true;
+}
+
+async function renameRecentChat(index) {
+    const item = state.recentChats[index];
+    if (!item) {
+        return false;
+    }
+    const renamed = await renameRecentChatByReference(item);
+    if (renamed) {
+        await refreshRecentChats();
+    }
+    return renamed;
 }
 
 async function deleteRecentChat(index) {
@@ -1106,7 +1207,6 @@ function installPublicUiApi() {
         getState: () => ({
             view: state.view,
             theme: document.body.dataset.tcTheme,
-            settingsMode: state.settingsMode,
             settingsSection: state.settingsSection,
         }),
         useClassic: requestClassicUi,
@@ -1123,10 +1223,11 @@ function initializeModernUi() {
     localStorage.setItem(MODE_STORAGE_KEY, 'modern');
     document.body.classList.add('tc-modern-ui');
     document.body.dataset.tcTheme = localStorage.getItem(THEME_STORAGE_KEY) === 'light' ? 'light' : 'dark';
-    document.body.dataset.tcSettingsMode = state.settingsMode;
     document.body.classList.toggle('tc-context-collapsed', state.contextCollapsed);
     createShell();
     bindShell();
+    configureSettingsPanels();
+    ensureAppearanceUtilities();
     bindApplicationEvents();
     observeNativeUi();
     ensureQuickActions();
@@ -1138,4 +1239,4 @@ function initializeModernUi() {
     syncContextPanel();
 }
 
-initializeModernUi();
+eventSource.on(event_types.APP_READY, initializeModernUi);

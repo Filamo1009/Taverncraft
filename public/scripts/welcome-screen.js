@@ -633,18 +633,18 @@ async function openRecentGroupChat(groupId, fileName) {
  * @param {string} avatarId Avatar file name
  * @param {string} fileName Chat file name
  */
-async function renameRecentCharacterChat(avatarId, fileName) {
+async function renameRecentCharacterChat(avatarId, fileName, { refresh = true } = {}) {
     const characterId = characters.findIndex(x => x.avatar === avatarId);
     if (characterId === -1) {
         console.error(`Character not found for avatar ID: ${avatarId}`);
-        return;
+        return false;
     }
     try {
         const popupText = await renderTemplateAsync('chatRename');
         const newName = await callGenericPopup(popupText, POPUP_TYPE.INPUT, fileName);
         if (!newName || typeof newName !== 'string' || newName === fileName) {
             console.log('No new name provided, aborting');
-            return;
+            return false;
         }
         await renameGroupOrCharacterChat({
             characterId: String(characterId),
@@ -653,11 +653,15 @@ async function renameRecentCharacterChat(avatarId, fileName) {
             loader: false,
         });
         await updateRemoteChatName(characterId, newName);
-        await refreshWelcomeScreen();
+        if (refresh) {
+            await refreshWelcomeScreen();
+        }
         toastr.success(t`Chat renamed.`);
+        return true;
     } catch (error) {
         console.error('Error renaming recent character chat:', error);
         toastr.error(t`Failed to rename recent chat. See console for details.`);
+        return false;
     }
 }
 
@@ -666,18 +670,18 @@ async function renameRecentCharacterChat(avatarId, fileName) {
  * @param {string} groupId Group ID
  * @param {string} fileName Chat file name
  */
-async function renameRecentGroupChat(groupId, fileName) {
+async function renameRecentGroupChat(groupId, fileName, { refresh = true } = {}) {
     const group = groups.find(x => x.id === groupId);
     if (!group) {
         console.error(`Group not found for ID: ${groupId}`);
-        return;
+        return false;
     }
     try {
         const popupText = await renderTemplateAsync('chatRename');
         const newName = await callGenericPopup(popupText, POPUP_TYPE.INPUT, fileName);
         if (!newName || newName === fileName) {
             console.log('No new name provided, aborting');
-            return;
+            return false;
         }
         await renameGroupOrCharacterChat({
             groupId: String(groupId),
@@ -685,11 +689,15 @@ async function renameRecentGroupChat(groupId, fileName) {
             newFileName: String(newName),
             loader: false,
         });
-        await refreshWelcomeScreen();
+        if (refresh) {
+            await refreshWelcomeScreen();
+        }
         toastr.success(t`Group chat renamed.`);
+        return true;
     } catch (error) {
         console.error('Error renaming recent group chat:', error);
         toastr.error(t`Failed to rename recent group chat. See console for details.`);
+        return false;
     }
 }
 
@@ -912,6 +920,39 @@ async function getRecentChats() {
     return dataWithEntities.map(t => t.chat);
 }
 
+/**
+ * Renames a recent chat without forcing the welcome screen to replace the current chat view.
+ * @param {RecentChat} recentChat Recent chat reference returned by the recent chats API
+ * @returns {Promise<boolean>} Whether the chat was renamed
+ */
+export async function renameRecentChatByReference(recentChat) {
+    const fileName = String(recentChat?.chat_name || recentChat?.file_name || '').replace(/\.jsonl$/i, '');
+    if (!fileName) {
+        return false;
+    }
+    if (recentChat?.group) {
+        return await renameRecentGroupChat(String(recentChat.group), fileName, { refresh: false });
+    }
+    if (recentChat?.avatar) {
+        return await renameRecentCharacterChat(String(recentChat.avatar), fileName, { refresh: false });
+    }
+    return false;
+}
+
+/**
+ * Toggles the persisted pinned state for a recent chat.
+ * @param {RecentChat} recentChat Recent chat reference returned by the recent chats API
+ * @returns {boolean|null} The new pinned state, or null when the reference is invalid
+ */
+export function toggleRecentChatPin(recentChat) {
+    if (!recentChat?.file_name || (!recentChat?.group && !recentChat?.avatar)) {
+        return null;
+    }
+    const nextPinned = !PinnedChatsManager.isPinned(recentChat);
+    PinnedChatsManager.toggle(recentChat, nextPinned);
+    return nextPinned;
+}
+
 export async function fetchRecentChatsSnapshot() {
     const response = await fetch('/api/chats/recent', {
         method: 'POST',
@@ -926,7 +967,9 @@ export async function fetchRecentChatsSnapshot() {
     }
 
     const data = await response.json();
-    return Array.isArray(data) ? data : [];
+    return Array.isArray(data)
+        ? data.map(chat => ({ ...chat, pinned: PinnedChatsManager.isPinned(chat) }))
+        : [];
 }
 
 export async function openPermanentAssistantChat({ tryCreate = true, created = false } = {}) {

@@ -91,7 +91,6 @@ body.tc-modern-ui *::after {
     box-sizing: border-box;
 }
 
-body.tc-modern-ui #bg1,
 body.tc-modern-ui #top-bar,
 body.tc-modern-ui #immersiveExitButton,
 body.tc-modern-ui #top-settings-holder > .drawer > .drawer-toggle,
@@ -304,7 +303,7 @@ body.tc-modern-ui .tc-settings-nav {
 .tc-recent-row {
     display: grid;
     width: 100%;
-    grid-template-columns: minmax(0, 1fr) 30px;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     gap: 2px;
     padding: 3px;
@@ -335,30 +334,43 @@ body.tc-modern-ui .tc-settings-nav {
 }
 
 .tc-recent-open:focus-visible,
+.tc-recent-pin:focus-visible,
+.tc-recent-rename:focus-visible,
 .tc-recent-delete:focus-visible {
     outline: 1px solid var(--tc-accent);
     outline-offset: 1px;
 }
 
-.tc-recent-delete {
+.tc-recent-actions {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+}
+
+.tc-recent-actions button {
     display: grid;
-    width: 28px;
-    height: 28px;
+    width: 25px;
+    height: 25px;
     place-items: center;
     border: 0;
-    border-radius: 7px;
+    border-radius: 6px;
     color: var(--tc-text-faint);
     background: transparent;
     opacity: 0.48;
     transition: color 150ms ease, background-color 150ms ease, opacity 150ms ease;
 }
 
-.tc-recent-row:hover .tc-recent-delete,
-.tc-recent-row:focus-within .tc-recent-delete,
-.tc-recent-delete:hover {
-    color: var(--tc-danger);
+.tc-recent-row:hover .tc-recent-actions button,
+.tc-recent-row:focus-within .tc-recent-actions button,
+.tc-recent-actions button:hover,
+.tc-recent-pin.active {
+    color: var(--tc-accent);
     background: var(--tc-surface);
     opacity: 1;
+}
+
+.tc-recent-delete:hover {
+    color: var(--tc-danger);
 }
 
 .tc-recent-open img {
@@ -693,7 +705,8 @@ body.tc-modern-ui #sheld {
     min-width: 0;
     border: 0;
     color: var(--tc-text);
-    background: var(--tc-canvas);
+    background: color-mix(in srgb, var(--tc-canvas) 84%, transparent);
+    backdrop-filter: blur(4px);
     transition: right 180ms ease;
 }
 
@@ -706,7 +719,7 @@ body.tc-modern-ui #chat {
     max-height: none;
     padding: calc(var(--tc-header-height) + 22px) max(24px, 4vw) 22px;
     color: var(--tc-text);
-    background: var(--tc-canvas);
+    background: transparent;
     backdrop-filter: none;
     text-shadow: none;
     scrollbar-color: var(--tc-border) transparent;
@@ -716,7 +729,7 @@ body.tc-modern-ui #form_sheld {
     flex: 0 0 auto;
     margin: 0;
     padding: 0 max(24px, 4vw) 20px;
-    background: var(--tc-canvas);
+    background: transparent;
 }
 
 .tc-quick-actions {
@@ -1121,11 +1134,65 @@ body.tc-modern-ui .drawer-content.tc-active-native .right_menu_button:hover {
     border-color: var(--tc-accent) !important;
 }
 
-body.tc-modern-ui #right-nav-panel.tc-active-native > #CharListButtonAndHotSwaps,
-body.tc-modern-ui #right-nav-panel.tc-active-native > #rm_PinAndTabs,
 body.tc-modern-ui #rm_button_panel_pin_div,
 body.tc-modern-ui #right-nav-panelheader {
     display: none !important;
+}
+
+body.tc-modern-ui #right-nav-panel.tc-active-native > #CharListButtonAndHotSwaps,
+body.tc-modern-ui #right-nav-panel.tc-active-native > #rm_PinAndTabs {
+    display: none !important;
+}
+
+body.tc-modern-ui[data-tc-view='library'] #right-nav-panel.tc-active-native > #CharListButtonAndHotSwaps {
+    display: flex !important;
+    width: min(1240px, calc(100% - 52px));
+    min-height: 52px;
+    flex: 0 0 auto;
+    align-items: center;
+    margin: 0 auto 14px;
+    padding: 7px 10px;
+    overflow-x: auto;
+    border: 1px solid var(--tc-border);
+    border-radius: 12px;
+    background: var(--tc-sidebar);
+}
+
+body.tc-modern-ui[data-tc-view='library'] #CharListButtonAndHotSwaps > .flex-container:first-child {
+    display: none !important;
+}
+
+body.tc-modern-ui[data-tc-view='library'] #HotSwapWrapper {
+    min-width: 0;
+    margin: 0;
+}
+
+body.tc-modern-ui[data-tc-view='library'] #HotSwapWrapper .hotswap {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+body.tc-modern-ui[data-tc-view='creator'] #right-nav-panel.tc-active-native > #rm_PinAndTabs {
+    display: block !important;
+    width: min(1240px, calc(100% - 52px));
+    flex: 0 0 auto;
+    margin: 0 auto 12px;
+    padding: 8px 12px;
+    border: 1px solid var(--tc-border);
+    border-radius: 12px;
+    background: var(--tc-sidebar);
+}
+
+body.tc-modern-ui[data-tc-view='creator'] #right-nav-panel-tabs,
+body.tc-modern-ui[data-tc-view='creator'] #result_info {
+    align-items: center;
+    gap: 10px;
+}
+
+body.tc-modern-ui[data-tc-view='creator'] #rm_button_selected_ch h2 {
+    margin: 0;
+    color: var(--tc-text);
+    font: 500 20px/1.2 var(--tc-display-font);
 }
 
 body.tc-modern-ui #right-nav-panel.tc-active-native .scrollableInner {
@@ -1397,8 +1464,64 @@ body.tc-modern-ui[data-tc-view='settings'] .tc-settings-nav {
     outline: none;
 }
 
-body.tc-modern-ui[data-tc-settings-mode='simple'] .tc-settings-nav [data-tc-advanced='true'] {
-    display: none;
+.tc-interface-utilities {
+    display: flex;
+    width: min(1180px, 100%);
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin: 0 auto 18px;
+    padding: 16px 18px;
+    border: 1px solid var(--tc-border);
+    border-radius: 13px;
+    background: var(--tc-sidebar);
+}
+
+.tc-interface-utilities h3,
+.tc-interface-utilities p {
+    margin: 0;
+}
+
+.tc-interface-utilities p {
+    margin-top: 4px;
+    color: var(--tc-text-soft);
+    font-size: 12px;
+}
+
+.tc-interface-utility-actions {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 8px;
+}
+
+.tc-interface-utility-actions button {
+    display: inline-flex;
+    min-height: 38px;
+    align-items: center;
+    gap: 8px;
+    padding: 0 13px;
+    border: 1px solid var(--tc-border);
+    border-radius: 9px;
+    color: var(--tc-text);
+    background: var(--tc-input);
+    cursor: pointer;
+}
+
+.tc-interface-utility-actions button:hover,
+.tc-interface-utility-actions button:focus-visible {
+    color: var(--tc-accent);
+    border-color: var(--tc-accent);
+}
+
+body.tc-modern-ui #Backgrounds.tc-active-native {
+    display: flex !important;
+    flex-direction: column;
+}
+
+body.tc-modern-ui #Backgrounds.tc-active-native #bg_tabs,
+body.tc-modern-ui #Backgrounds.tc-active-native #bg-header-fixed {
+    width: min(1240px, 100%);
+    margin-inline: auto;
 }
 
 body.tc-modern-ui[data-tc-view='settings'] .drawer-content.tc-active-native {
@@ -1717,19 +1840,60 @@ body.tc-modern-ui :is(button, input, select, textarea, [tabindex]):focus-visible
         flex-direction: row;
         gap: 4px;
         overflow-x: auto;
-        padding: 6px 8px;
+        scroll-snap-type: x proximity;
+        scrollbar-width: thin;
+        padding: 6px 16px;
         border-right: 0;
         border-bottom: 1px solid var(--tc-border);
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent);
+        mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent);
     }
 
     .tc-settings-nav button {
         min-height: 44px;
         flex: 0 0 auto;
         padding: 0 10px;
+        scroll-snap-align: center;
     }
 
     body.tc-modern-ui[data-tc-view='settings'] .drawer-content.tc-active-native {
         inset: calc(var(--tc-view-header-height) + 50px) 0 var(--tc-mobile-nav-height) 0 !important;
+    }
+
+    body.tc-modern-ui #rm_api_block.tc-active-native {
+        overflow-x: hidden !important;
+    }
+
+    body.tc-modern-ui #rm_api_block.tc-active-native :is(.flex-container, .range-block, label, input, select, textarea, .text_pole) {
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    body.tc-modern-ui #rm_api_block.tc-active-native .connection_profile_picker #connection_profiles.select2-hidden-accessible {
+        width: 1px !important;
+        min-width: 1px !important;
+        max-width: 1px !important;
+    }
+
+    .tc-interface-utilities {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 12px;
+        padding: 14px;
+    }
+
+    .tc-interface-utility-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .tc-interface-utility-actions button {
+        justify-content: center;
+    }
+
+    body.tc-modern-ui[data-tc-view='library'] #right-nav-panel.tc-active-native > #CharListButtonAndHotSwaps,
+    body.tc-modern-ui[data-tc-view='creator'] #right-nav-panel.tc-active-native > #rm_PinAndTabs {
+        width: calc(100% - 28px);
     }
 
     body.tc-modern-ui #rm_print_characters_block {

@@ -16150,7 +16150,7 @@ function select_rm_create({ switchMenu = true } = {}) {
     $('#character_open_media_overrides').hide();
 }
 
-function select_rm_characters() {
+export function select_rm_characters() {
     const doFullRefresh = menu_type === 'characters';
     setMenuType('characters');
     selectRightMenuWithAnimation('rm_characters_block');
