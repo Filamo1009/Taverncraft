@@ -24,6 +24,29 @@ test.afterAll(async () => {
 });
 
 test.describe('#126 — TavernCraft modern/classic parity', () => {
+    test('keeps fragment tabs local when the application is mounted at /play', async ({ page }) => {
+        await page.route('**/play?ui=modern', async route => {
+            const response = await page.request.get(`${server.baseURL}/`);
+            await route.fulfill({
+                status: response.status(),
+                contentType: 'text/html; charset=utf-8',
+                body: await response.text(),
+            });
+        });
+
+        await openApplication(page, `${server.baseURL}/play?ui=modern`);
+        await page.locator('#tc-modern-shell').waitFor({ state: 'attached' });
+        await page.waitForTimeout(250);
+
+        await expect(page.locator('base')).toHaveAttribute('href', '/play');
+        await expect(page.locator('#top-settings-holder')).toHaveCount(1);
+        await expect(page.locator('#right-nav-panel')).toHaveCount(1);
+        await expect(page.locator('#PersonaManagement')).toHaveCount(1);
+        await expect(page.locator('#Backgrounds')).toHaveCount(1);
+        await expect(page.locator('#right-nav-panel.tc-active-native')).toBeVisible();
+        expect(await page.locator('#rm_print_characters_block .character_select:visible, #rm_print_characters_block .group_select:visible').count()).toBeGreaterThan(0);
+    });
+
     test('forced modes normalize early and never duplicate the application DOM', async ({ page }) => {
         await openApplication(page, `${server.baseURL}/?ui=modern`);
         await page.locator('#tc-modern-shell').waitFor({ state: 'attached' });

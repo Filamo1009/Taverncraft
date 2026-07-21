@@ -23,7 +23,7 @@ describe("public and private surfaces", () => {
   it("exposes the deployed UI release for production verification", async () => {
     const response = await request("/_portal/health");
     expect(response.status).toBe(200);
-    expect(await response.json()).toMatchObject({ ok: true, uiRelease: "2026-07-21.2" });
+    expect(await response.json()).toMatchObject({ ok: true, uiRelease: "2026-07-21.3" });
   });
 
   it("serves marketing without exposing the configured owner", async () => {

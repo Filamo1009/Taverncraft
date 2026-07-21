@@ -17,14 +17,16 @@ describe('TavernCraft modern UI integration contract', () => {
 
     test('loads the redesign after the original application modules', () => {
         expect(index).toContain('css/taverncraft-modern.css');
-        expect(init).toContain('import(\'./scripts/taverncraft-ui/main.js?v=2026-07-21.2\')');
-        expect(init.indexOf('import(\'./script.js\')')).toBeLessThan(init.indexOf('import(\'./scripts/taverncraft-ui/main.js?v=2026-07-21.2\')'));
+        expect(init).toContain('import(\'./scripts/taverncraft-ui/main.js?v=2026-07-21.3\')');
+        expect(init.indexOf('import(\'./script.js\')')).toBeLessThan(init.indexOf('import(\'./scripts/taverncraft-ui/main.js?v=2026-07-21.3\')'));
     });
 
     test('normalizes forced UI mode before the application and background tabs initialize', () => {
         expect(index).toContain('scripts/taverncraft-ui/bootstrap.js');
         expect(index.indexOf('scripts/taverncraft-ui/bootstrap.js')).toBeLessThan(index.indexOf('<meta charset="utf-8">'));
         expect(bootstrap).toContain('requestedMode !== \'modern\' && requestedMode !== \'classic\'');
+        expect(bootstrap).toContain('url.pathname === \'/play\'');
+        expect(bootstrap).toContain('base.setAttribute(\'href\', url.pathname)');
         expect(bootstrap).toContain('url.searchParams.delete(\'ui\')');
         expect(bootstrap).toContain('history.replaceState');
     });

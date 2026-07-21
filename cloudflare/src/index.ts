@@ -23,7 +23,7 @@ const MAX_LOGIN_BODY = 8 * 1024;
 const MAX_WORKSPACE_BODY = 8 * 1024 * 1024;
 const MAX_ASSET_PART = 10 * 1024 * 1024;
 const HASH_PATTERN = /^[a-f0-9]{64}$/;
-const UI_RELEASE = "2026-07-21.2";
+const UI_RELEASE = "2026-07-21.3";
 const CRITICAL_APP_PATHS = new Set([
   "/play",
   "/init.js",
